@@ -6,9 +6,6 @@ import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 import { useWindowSize } from "@/utils/useWindowSize";
 
-// Set up the worker for pdf.js
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
-
 interface PDFViewerProps {
   pdfFile: string;
   messages: {
@@ -25,7 +22,13 @@ const PDFViewer = ({ pdfFile, messages }: PDFViewerProps) => {
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [scale, setScale] = useState<number>(1);
   const { width } = useWindowSize();
-  
+    // Set up the worker for pdf.js
+  useEffect(() => {
+    // Only set the worker source in the browser environment
+    // Use the static file from the public directory
+    pdfjs.GlobalWorkerOptions.workerSrc = `/pdf-worker/pdf.worker.min.js`;
+  }, []);
+
   // Adjust scale based on screen width
   useEffect(() => {
     if (width < 640) {
@@ -41,7 +44,7 @@ const PDFViewer = ({ pdfFile, messages }: PDFViewerProps) => {
     setNumPages(numPages);
     setPageNumber(1);
   }
-  
+
   function changePage(offset: number) {
     setPageNumber(prevPageNumber => {
       const newPageNumber = prevPageNumber + offset;
@@ -94,7 +97,7 @@ const PDFViewer = ({ pdfFile, messages }: PDFViewerProps) => {
             </svg>
           </button>
         </div>
-        
+
         <div className="flex rounded-md shadow-sm">
           <button
             onClick={zoomOut}
@@ -116,7 +119,7 @@ const PDFViewer = ({ pdfFile, messages }: PDFViewerProps) => {
           </button>
         </div>
       </div>
-      
+
       <div className="pdf-container border border-gray-300 rounded-lg shadow-lg overflow-auto bg-white max-w-full">
         <Document
           file={pdfFile}
