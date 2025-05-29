@@ -1,0 +1,72 @@
+{
+  "common": {
+    "language": "English",
+    "switchLanguage": "العربية",
+    "home": "Home",
+    "magazine": "Magazine",
+    "dawah": "Dawah",
+    "library": "Library",
+    "contact": "Contact"
+  },
+  "home": {
+    "title": "Hurass Home",
+    "description": "Hurass Platform for Islamic Outreach",
+    "welcome": "Welcome to Hurass Platform",
+    "about": "About the Team",
+    "aboutText": "Hurass team is a group of Islamic preachers and specialists in the field of Islamic dawah, seeking to spread accurate knowledge about Islam and provide useful dawah materials.",
+    "sections": "Website Sections",
+    "exploreMore": "Explore More"
+  },
+  "magazine": {
+    "title": "Hurass Magazine",
+    "description": "Browse magazine issues and PDF files with high quality",
+    "latestIssues": "Latest Issues",
+    "allIssues": "All Issues",
+    "categories": "Categories",
+    "readNow": "Read Now",
+    "download": "Download",
+    "previousPage": "Previous Page",
+    "nextPage": "Next Page",
+    "zoomIn": "Zoom In",
+    "zoomOut": "Zoom Out",
+    "loading": "Loading..."
+  },
+  "dawah": {
+    "title": "Dawah Outreach",
+    "description": "Introductory materials about Islam for non-Muslims",
+    "introToIslam": "Introduction to Islam",
+    "newMuslims": "New Muslims",
+    "materials": "Dawah Materials",
+    "download": "Download",
+    "share": "Share"
+  },
+  "library": {
+    "title": "Dawah Library",
+    "description": "Comprehensive library of images and brochures",
+    "categories": "Categories",
+    "images": "Images",
+    "brochures": "Brochures",
+    "download": "Download",
+    "preview": "Preview"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "description": "Contact us via email or Telegram",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send",
+    "directContact": "Direct Contact",
+    "emailAddress": "Email Address",
+    "phoneNumber": "Phone Number",
+    "telegram": "Telegram"
+  },
+  "footer": {
+    "rightsReserved": "© 2025 Hurass. All rights reserved.",
+    "terms": "Terms and Conditions",
+    "privacy": "Privacy Policy"
+  },
+  "seo": {
+    "keywords": "Hurass, Islamic Outreach, Islamic Magazine, Dawah Library, Introduction to Islam"
+  }
+}

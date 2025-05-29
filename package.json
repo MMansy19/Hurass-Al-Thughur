@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fontsource/cairo": "^5.2.5",
+    "@fontsource/roboto": "^5.2.5",
     "next": "15.3.2",
     "next-intl": "^4.1.0",
     "postcss": "^8.5.4",
