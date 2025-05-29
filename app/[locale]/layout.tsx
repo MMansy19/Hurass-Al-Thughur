@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Cairo, Roboto } from "next/font/google";
 import "../globals.css";
+import Header from "@/components/ui/Header";
+import Footer from "@/components/ui/Footer";
 
 // Import the Cairo font for Arabic
 const cairoFont = Cairo({
@@ -24,11 +26,11 @@ export async function generateMetadata({
   params: { locale: string };
 }): Promise<Metadata> {
   // Import translations dynamically
-  const messages = (await import(`../../locales/${locale}.json`)).default;
+  const messages = (await import(`@/locales/${locale}.json`)).default;
 
   return {
     title: {
-      template: `%s | ${messages.common.language === "العربية" ? "حُراس الثغور" : "Hurass"}`,
+      template: `%s | ${messages.common.language === "العربية" ? "حُراس الثغور" : "Hurass Al-Thughur"}`,
       default: messages.home.title,
     },
     description: messages.home.description,
@@ -43,7 +45,7 @@ export async function generateMetadata({
   };
 }
 
-export default function LocaleLayout({
+export default async function LocaleLayout({
   children,
   params: { locale },
 }: {
@@ -52,15 +54,20 @@ export default function LocaleLayout({
 }) {
   // Set the direction based on locale
   const dir = locale === "ar" ? "rtl" : "ltr";
-  
-  // Choose the font based on the locale
-  const fontClass = locale === "ar" ? cairoFont.variable : robotoFont.variable;
 
+    // Choose the font based on the locale
+    const fontClass = locale === "ar" ? cairoFont.variable : robotoFont.variable;
+    
+    const messages = (await import(`@/locales/${locale}.json`)).default;
   return (
     <html lang={locale} dir={dir} className={`${fontClass}`}>
-      <body className="antialiased min-h-screen flex flex-col">
-        {children}
-      </body>
+        <body className="antialiased min-h-screen flex flex-col">
+            <Header locale={locale} messages={messages.common} />
+            <main className="container mx-auto px-4 py-8 flex-grow">
+                {children}
+            </main>
+            <Footer locale={locale} messages={messages.footer} />
+        </body>
     </html>
   );
 }

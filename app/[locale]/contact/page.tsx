@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Metadata } from "next";
-import SEO from "../../../components/ui/SEO";
+import SEO from "@/components/ui/SEO";
 
 // Generate metadata for the page
 export async function generateMetadata({ 
@@ -10,7 +10,7 @@ export async function generateMetadata({
 }: { 
   params: { locale: string } 
 }): Promise<Metadata> {
-  const messages = (await import(`../../../locales/${locale}.json`)).default;
+  const messages = (await import(`@/locales/${locale}.json`)).default;
   return SEO({
     title: messages.contact.title,
     description: messages.contact.description,
@@ -69,7 +69,7 @@ export default function ContactPage({
   };
 
   // Get translations based on locale
-  const messages = require(`../../../locales/${locale}.json`);
+  const messages = require(`@/locales/${locale}.json`);
   const { contact } = messages;
   const isRtl = locale === "ar";
 

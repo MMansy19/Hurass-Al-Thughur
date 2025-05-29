@@ -1,28 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { match } from '@formatjs/intl-localematcher';
 
 const LOCALES = ['en', 'ar'];
 const DEFAULT_LOCALE = 'ar';
 
-function getPreferredLocale(request: NextRequest): string {
-  const acceptLanguage = request.headers.get('accept-language');
-  
-  if (acceptLanguage) {
-    const languages = acceptLanguage
-      .split(',')
-      .map(lang => lang.split(';')[0].trim().toLowerCase())
-      .filter(Boolean);
-    
-    return match(languages, LOCALES, DEFAULT_LOCALE);
-  }
-
-  return DEFAULT_LOCALE;
-}
-
 function isMissingLocale(pathname: string): boolean {
+  // Check if the pathname already includes a locale
   if (LOCALES.some(locale => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`)) {
     return false;
   }
+  // Exclude static files and API routes
   return !pathname.match(/^\/(_next|favicon\.ico|api|public|images|pdfs|assets)\//);
 }
 
@@ -33,7 +19,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const locale = getPreferredLocale(request);
+  const locale = DEFAULT_LOCALE;
   const newUrl = new URL(`/${locale}${pathname === '/' ? '' : pathname}`, request.url);
 
   return NextResponse.redirect(newUrl, { status: 307 });

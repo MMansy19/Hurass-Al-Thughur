@@ -1,7 +1,6 @@
 import { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
-import SEO from "../../../components/ui/SEO";
+import SEO from "@/components/ui/SEO";
 
 // Generate metadata for the page
 export async function generateMetadata({ 
@@ -9,7 +8,7 @@ export async function generateMetadata({
 }: { 
   params: { locale: string } 
 }): Promise<Metadata> {
-  const messages = (await import(`../../../locales/${locale}.json`)).default;
+  const messages = (await import(`@/locales/${locale}.json`)).default;
   return SEO({
     title: messages.dawah.title,
     description: messages.dawah.description,
@@ -24,7 +23,7 @@ export default async function DawahPage({
   params: { locale: string };
 }) {
   // Import translations
-  const messages = (await import(`../../../locales/${locale}.json`)).default;
+  const messages = (await import(`@/locales/${locale}.json`)).default;
   const { dawah } = messages;
   const isRtl = locale === "ar";
 

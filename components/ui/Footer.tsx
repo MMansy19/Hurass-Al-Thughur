@@ -16,7 +16,7 @@ const Footer = ({ locale, messages }: FooterProps) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <h3 className="text-xl font-bold mb-4">
-              {locale === "ar" ? "حُراس الثغور" : "Hurass"}
+              {locale === "ar" ? "حُراس الثغور" : "Hurass Al-Thughur"}
             </h3>
             <p className="text-gray-300">
               {locale === "ar" 

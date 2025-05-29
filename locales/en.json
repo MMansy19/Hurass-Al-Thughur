@@ -10,10 +10,10 @@
   },
   "home": {
     "title": "Hurass Home",
-    "description": "Hurass Platform for Islamic Outreach",
-    "welcome": "Welcome to Hurass Platform",
+    "description": "Hurass Al-Thughur Platform for Islamic Outreach",
+    "welcome": "Welcome to Hurass Al-Thughur Platform",
     "about": "About the Team",
-    "aboutText": "Hurass team is a group of Islamic preachers and specialists in the field of Islamic dawah, seeking to spread accurate knowledge about Islam and provide useful dawah materials.",
+    "aboutText": "Hurass Al-Thughur team is a group of Islamic preachers and specialists in the field of Islamic dawah, seeking to spread accurate knowledge about Islam and provide useful dawah materials.",
     "sections": "Website Sections",
     "exploreMore": "Explore More"
   },
@@ -62,11 +62,11 @@
     "telegram": "Telegram"
   },
   "footer": {
-    "rightsReserved": "© 2025 Hurass. All rights reserved.",
+    "rightsReserved": "© 2025 Hurass Al-Thughur. All rights reserved.",
     "terms": "Terms and Conditions",
     "privacy": "Privacy Policy"
   },
   "seo": {
-    "keywords": "Hurass, Islamic Outreach, Islamic Magazine, Dawah Library, Introduction to Islam"
+    "keywords": "Hurass Al-Thughur, Islamic Outreach, Islamic Magazine, Dawah Library, Introduction to Islam"
   }
 }

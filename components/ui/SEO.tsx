@@ -18,7 +18,7 @@ export default function SEO({ title, description, locale, pageName }: SEOProps) 
       title,
       description,
       url,
-      siteName: locale === "ar" ? "حُراس الثغور" : "Hurass",
+        siteName: locale === "ar" ? "حُراس الثغور" : "Hurass Al-Thughur",
       locale: locale === "ar" ? "ar_SA" : "en_US",
       type: "website",
     },

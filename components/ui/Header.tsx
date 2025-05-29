@@ -25,14 +25,14 @@ const Header = ({ locale, messages }: HeaderProps) => {
         <div className="flex items-center mb-4 md:mb-0">
           <Link href={`/${locale}`} className="flex items-center">
             <Image 
-              src="/globe.svg" 
-              alt="Hurass Logo" 
+              src="/logo.jpg" 
+              alt="Hurass Al-Thughur Logo" 
               width={40} 
               height={40} 
               className="mr-2" 
             />
             <span className="font-bold text-2xl text-emerald-700">
-              {isArabic ? "حُراس الثغور" : "Hurass"}
+              {isArabic ? "حُراس الثغور" : "Hurass Al-Thughur"}
             </span>
           </Link>
         </div>

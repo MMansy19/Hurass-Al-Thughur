@@ -1,18 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
-import dynamic from "next/dynamic";
-import SEO from "../../../components/ui/SEO";
-
-// Dynamic import for PDFViewer component to ensure it only loads on the client
-const PDFViewer = dynamic(() => import("../../../components/pdf/PDFViewer"), {
-  ssr: false,
-  loading: () => (
-    <div className="flex justify-center items-center h-96">
-      <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-emerald-600"></div>
-    </div>
-  ),
-});
+import SEO from "@/components/ui/SEO";
+import PDFViewerSection from "@/components/pdf/PDFViewerSection";
 
 // Generate metadata for the page
 export async function generateMetadata({ 
@@ -20,7 +9,7 @@ export async function generateMetadata({
 }: { 
   params: { locale: string } 
 }): Promise<Metadata> {
-  const messages = (await import(`../../../locales/${locale}.json`)).default;
+  const messages = (await import(`@/locales/${locale}.json`)).default;
   return SEO({
     title: messages.magazine.title,
     description: messages.magazine.description,
@@ -35,7 +24,7 @@ export default async function MagazinePage({
   params: { locale: string };
 }) {
   // Import translations
-  const messages = (await import(`../../../locales/${locale}.json`)).default;
+  const messages = (await import(`@/locales/${locale}.json`)).default;
   const { magazine } = messages;
 
   // Mock data for magazine issues
@@ -109,21 +98,12 @@ export default async function MagazinePage({
             ))}
           </div>
         </div>
-      </section>
-
-      {/* PDF Viewer Section */}
-      <section className="bg-gray-50 py-10 rounded-lg">
-        <div className="container mx-auto px-4">
-          <h2 className="text-2xl font-bold mb-6">{selectedIssue.title}</h2>
-          <div className="my-8">
-            {/* For demonstration, we're using a sample PDF */}
-            <PDFViewer 
-              pdfFile="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" 
-              messages={magazine}
-            />
-          </div>
-        </div>
-      </section>
+      </section>      {/* PDF Viewer Section */}
+      <PDFViewerSection 
+        pdfUrl="/pdfs/1.pdf"
+        title={selectedIssue.title}
+        messages={magazine}
+      />
 
       {/* Categories Section */}
       <section>

@@ -1,7 +1,7 @@
 import { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
-import SEO from "../../../components/ui/SEO";
+import SEO from "@/components/ui/SEO";
+import PDFBrowser from "@/components/pdf/PDFBrowser";
 
 // Generate metadata for the page
 export async function generateMetadata({ 
@@ -9,7 +9,7 @@ export async function generateMetadata({
 }: { 
   params: { locale: string } 
 }): Promise<Metadata> {
-  const messages = (await import(`../../../locales/${locale}.json`)).default;
+  const messages = (await import(`@/locales/${locale}.json`)).default;
   return SEO({
     title: messages.library.title,
     description: messages.library.description,
@@ -24,10 +24,10 @@ export default async function LibraryPage({
   params: { locale: string };
 }) {
   // Import translations
-  const messages = (await import(`../../../locales/${locale}.json`)).default;
+  const messages = (await import(`@/locales/${locale}.json`)).default;
   const { library } = messages;
 
-  // Mock data for categories
+  // Categories for the library
   const categories = [
     { id: 1, name: locale === "ar" ? "التوحيد" : "Tawheed", count: 12 },
     { id: 2, name: locale === "ar" ? "العبادات" : "Worship", count: 15 },
