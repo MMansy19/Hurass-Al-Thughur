@@ -39,15 +39,21 @@
     "materials": "المواد الدعوية",
     "download": "تحميل",
     "share": "مشاركة"
-  },
-  "library": {
+  },  "library": {
     "title": "المكتبة الدعوية",
-    "description": "مكتبة شاملة من الصور والمطويات",
+    "description": "مكتبة شاملة من الصور والمطويات وملفات PDF",
     "categories": "التصنيفات",
     "images": "الصور",
     "brochures": "المطويات",
+    "pdfs": "ملفات PDF",
+    "browsePDFs": "تصفح ملفات PDF",
+    "viewPDF": "عرض الملف",
+    "noPDFsFound": "لم يتم العثور على ملفات PDF",
+    "search": "بحث",
+    "searchPlaceholder": "ابحث عن ملفات PDF...",
     "download": "تحميل",
-    "preview": "معاينة"
+    "preview": "معاينة",
+    "viewAll": "عرض الكل"
   },
   "contact": {
     "title": "اتصل بنا",

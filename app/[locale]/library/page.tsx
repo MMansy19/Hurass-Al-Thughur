@@ -110,13 +110,29 @@ export default async function LibraryPage({
 
   return (
     <div className="space-y-12">
-      <section className="bg-emerald-700 text-white py-10 rounded-lg">
+      <section className="bg-gradient-to-r from-emerald-700 to-emerald-900 text-white py-10 rounded-lg shadow-lg">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-4xl font-bold">{library.title}</h1>
           <p className="text-xl mt-2 max-w-2xl mx-auto">{library.description}</p>
         </div>
       </section>
 
+      {/* PDF Browser Section */}
+      <section className="py-8">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl font-bold mb-6">{library.pdfs}</h2>
+          <PDFBrowser
+            translations={{
+              browseAllPDFs: library.browsePDFs,
+              viewPDF: library.viewPDF,
+              noPDFsFound: library.noPDFsFound,
+              search: library.search,
+              searchPlaceholder: library.searchPlaceholder
+            }}
+          />
+        </div>
+      </section>
+      
       {/* Categories Section */}
       <section>
         <div className="container mx-auto px-4">

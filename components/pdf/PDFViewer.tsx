@@ -64,61 +64,80 @@ const PDFViewer = ({ pdfFile, messages }: PDFViewerProps) => {
   function zoomOut() {
     setScale(prevScale => Math.max(prevScale - 0.2, 0.5));
   }
-
   return (
-    <div className="flex flex-col items-center bg-neutral-100 p-4 rounded-lg">
-      <div className="flex justify-center w-full mb-4">
-        <button
-          onClick={previousPage}
-          disabled={pageNumber <= 1}
-          className="px-4 py-2 bg-emerald-600 text-white rounded-l-md disabled:bg-gray-400"
-          aria-label={messages.previousPage}
-        >
-          {messages.previousPage}
-        </button>
-        <span className="px-4 py-2 bg-white border-t border-b">
-          {pageNumber} / {numPages}
-        </span>
-        <button
-          onClick={nextPage}
-          disabled={pageNumber >= numPages}
-          className="px-4 py-2 bg-emerald-600 text-white rounded-r-md disabled:bg-gray-400"
-          aria-label={messages.nextPage}
-        >
-          {messages.nextPage}
-        </button>
+    <div className="flex flex-col items-center bg-gray-50 p-6 rounded-lg shadow-inner">
+      <div className="flex flex-wrap justify-center items-center w-full mb-6 gap-3">
+        <div className="flex rounded-md shadow-sm">
+          <button
+            onClick={previousPage}
+            disabled={pageNumber <= 1}
+            className="px-4 py-2 bg-emerald-600 text-white rounded-l-md disabled:bg-gray-400 disabled:cursor-not-allowed hover:bg-emerald-700 transition-colors flex items-center"
+            aria-label={messages.previousPage}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 me-1 rtl:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            {messages.previousPage}
+          </button>
+          <span className="px-4 py-2 bg-white border-t border-b flex items-center justify-center min-w-[100px]">
+            {pageNumber} / {numPages}
+          </span>
+          <button
+            onClick={nextPage}
+            disabled={pageNumber >= numPages}
+            className="px-4 py-2 bg-emerald-600 text-white rounded-r-md disabled:bg-gray-400 disabled:cursor-not-allowed hover:bg-emerald-700 transition-colors flex items-center"
+            aria-label={messages.nextPage}
+          >
+            {messages.nextPage}
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ms-1 rtl:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
         
-        <div className="ml-4">
+        <div className="flex rounded-md shadow-sm">
           <button
             onClick={zoomOut}
-            className="px-3 py-2 bg-blue-600 text-white rounded-l-md"
+            className="px-3 py-2 bg-blue-600 text-white rounded-l-md hover:bg-blue-700 transition-colors"
             aria-label={messages.zoomOut}
           >
-            -
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+            </svg>
           </button>
           <button
             onClick={zoomIn}
-            className="px-3 py-2 bg-blue-600 text-white rounded-r-md"
+            className="px-3 py-2 bg-blue-600 text-white rounded-r-md hover:bg-blue-700 transition-colors"
             aria-label={messages.zoomIn}
           >
-            +
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+            </svg>
           </button>
         </div>
       </div>
       
-      <div className="pdf-container border border-gray-300 rounded shadow-lg overflow-auto">
+      <div className="pdf-container border border-gray-300 rounded-lg shadow-lg overflow-auto bg-white max-w-full">
         <Document
           file={pdfFile}
           onLoadSuccess={onDocumentLoadSuccess}
           loading={
-            <div className="flex justify-center items-center h-[600px]">
-              <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-emerald-600"></div>
-              <p className="ml-2">{messages.loading}</p>
+            <div className="flex flex-col justify-center items-center h-[600px]">
+              <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-emerald-600 mb-4"></div>
+              <p className="text-gray-600 font-medium">{messages.loading}</p>
             </div>
           }
           error={
-            <div className="flex justify-center items-center h-96">
-              <p className="text-red-500">Error loading PDF</p>
+            <div className="flex justify-center items-center h-[600px]">
+              <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md">
+                <div className="flex items-center text-red-600 mb-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <h3 className="text-lg font-bold">Error loading PDF</h3>
+                </div>
+                <p className="text-gray-700">The PDF file could not be loaded. Please try again later or contact support.</p>
+              </div>
             </div>
           }
         >

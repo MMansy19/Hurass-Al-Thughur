@@ -39,15 +39,21 @@
     "materials": "Dawah Materials",
     "download": "Download",
     "share": "Share"
-  },
-  "library": {
+  },  "library": {
     "title": "Dawah Library",
-    "description": "Comprehensive library of images and brochures",
+    "description": "Comprehensive library of images, brochures and PDF files",
     "categories": "Categories",
     "images": "Images",
     "brochures": "Brochures",
+    "pdfs": "PDF Files",
+    "browsePDFs": "Browse PDF Files",
+    "viewPDF": "View PDF",
+    "noPDFsFound": "No PDF files found",
+    "search": "Search",
+    "searchPlaceholder": "Search PDF files...",
     "download": "Download",
-    "preview": "Preview"
+    "preview": "Preview",
+    "viewAll": "View All"
   },
   "contact": {
     "title": "Contact Us",

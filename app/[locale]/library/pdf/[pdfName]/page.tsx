@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import { notFound } from "next/navigation";
 import SEO from "@/components/ui/SEO";
 import PDFViewerSection from "@/components/pdf/PDFViewerSection";
 
