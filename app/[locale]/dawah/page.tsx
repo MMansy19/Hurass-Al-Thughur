@@ -189,7 +189,7 @@ export default async function DawahPage({
                     <button className="px-4 py-2 bg-white text-emerald-700 rounded-md hover:bg-gray-100 transition-colors">
                       {dawah.download}
                     </button>
-                    <button className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors ml-2">
+                    <button className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors mx-2">
                       {dawah.share}
                     </button>
                   </div>

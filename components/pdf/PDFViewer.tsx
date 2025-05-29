@@ -22,11 +22,25 @@ const PDFViewer = ({ pdfFile, messages }: PDFViewerProps) => {
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [scale, setScale] = useState<number>(1);
   const { width } = useWindowSize();
-    // Set up the worker for pdf.js
+
+  // Set up the worker for pdf.js
   useEffect(() => {
     // Only set the worker source in the browser environment
-    // Use the static file from the public directory
-    pdfjs.GlobalWorkerOptions.workerSrc = `/pdf-worker/pdf.worker.min.js`;
+    // Dynamically import the PDF.js worker
+    const loadPdfWorker = async () => {
+      if (typeof window !== 'undefined') {
+        try {
+          // Try to use the CDN worker
+          pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
+        } catch (error) {
+          console.error("Failed to load PDF worker:", error);
+          // Fallback to static file
+          pdfjs.GlobalWorkerOptions.workerSrc = `/pdf-worker/pdf.worker.min.js`;
+        }
+      }
+    };
+
+    loadPdfWorker();
   }, []);
 
   // Adjust scale based on screen width
@@ -67,6 +81,9 @@ const PDFViewer = ({ pdfFile, messages }: PDFViewerProps) => {
   function zoomOut() {
     setScale(prevScale => Math.max(prevScale - 0.2, 0.5));
   }
+
+  const isRTL = typeof document !== 'undefined' ? document.dir === 'rtl' : false;
+
   return (
     <div className="flex flex-col items-center bg-gray-50 p-6 rounded-lg shadow-inner">
       <div className="flex flex-wrap justify-center items-center w-full mb-6 gap-3">
@@ -134,12 +151,12 @@ const PDFViewer = ({ pdfFile, messages }: PDFViewerProps) => {
             <div className="flex justify-center items-center h-[600px]">
               <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md">
                 <div className="flex items-center text-red-600 mb-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mx-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <h3 className="text-lg font-bold">Error loading PDF</h3>
+                  <h3 className="text-lg font-bold rtl:text-right">{isRTL ? 'خطأ في تحميل ملف PDF' : 'Error loading PDF'}</h3>
                 </div>
-                <p className="text-gray-700">The PDF file could not be loaded. Please try again later or contact support.</p>
+                <p className="text-gray-700 rtl:text-right">{isRTL ? 'تعذر تحميل ملف PDF. يرجى المحاولة مرة أخرى لاحقًا أو الاتصال بالدعم.' : 'The PDF file could not be loaded. Please try again later or contact support.'}</p>
               </div>
             </div>
           }

@@ -1,9 +1,11 @@
 {
-  "name": "Hurass Al-Thughur",
+  "name": "hurass-al-thughur",
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "node ./scripts/copy-pdf-worker.js",
     "dev": "next dev --turbopack",
+    "prebuild": "node ./scripts/copy-pdf-worker.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -13,7 +15,7 @@
     "@fontsource/roboto": "^5.2.5",
     "next": "15.3.2",
     "next-intl": "^4.1.0",
-    "pdfjs-dist": "^4.8.69",
+    "pdfjs-dist": "^5.2.133",
     "postcss": "^8.5.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -23,6 +25,7 @@
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4.1.8",
     "@types/node": "^20",
+    "@types/pdfjs-dist": "^2.10.378",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",

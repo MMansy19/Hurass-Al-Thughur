@@ -143,7 +143,7 @@ export default function ContactPage({
                   >
                     {isSubmitting ? (
                       <span className="flex items-center justify-center">
-                        <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <svg className="animate-spin -mx-1 mx-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
@@ -168,7 +168,7 @@ export default function ContactPage({
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                   </div>
-                  <div className="ml-4">
+                  <div className="mx-4">
                     <h3 className="font-medium">{contact.emailAddress}</h3>
                     <a href={`mailto:${contactDetails.email}`} className="text-emerald-600 hover:text-emerald-700 transition-colors">
                       {contactDetails.email}
@@ -182,7 +182,7 @@ export default function ContactPage({
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                     </svg>
                   </div>
-                  <div className="ml-4">
+                  <div className="mx-4">
                     <h3 className="font-medium">{contact.phoneNumber}</h3>
                     <a href={`tel:${contactDetails.phone}`} className="text-emerald-600 hover:text-emerald-700 transition-colors">
                       {contactDetails.phone}
@@ -196,7 +196,7 @@ export default function ContactPage({
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                     </svg>
                   </div>
-                  <div className="ml-4">
+                  <div className="mx-4">
                     <h3 className="font-medium">{contact.telegram}</h3>
                     <a href={`https://t.me/${contactDetails.telegram.substring(1)}`} target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:text-emerald-700 transition-colors">
                       {contactDetails.telegram}

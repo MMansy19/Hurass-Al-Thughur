@@ -18,7 +18,7 @@ const Footer = ({ locale, messages }: FooterProps) => {
         <div className="md:col-span-1">
                       <div className="md:col-span-1">
                           <Link href={`/${locale}`} className="flex items-center group">
-                              <div className="relative overflow-hidden rounded-full border-2 border-emerald-500 mr-3">
+                              <div className="relative overflow-hidden rounded-full border-2 border-emerald-500 mx-3">
                                   <Image
                                       src="/images/logo.jpg"
                                       alt="Hurass Al-Thughur Logo"
@@ -48,7 +48,7 @@ const Footer = ({ locale, messages }: FooterProps) => {
             <ul className="space-y-2">
               <li>
                 <Link href={`/${locale}`} className="text-emerald-100 hover:text-white transition-colors flex items-center">
-                  <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-4 h-4 mx-2" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
                   </svg>
                   {locale === "ar" ? "الرئيسية" : "Home"}
@@ -56,22 +56,29 @@ const Footer = ({ locale, messages }: FooterProps) => {
               </li>
               <li>
                 <Link href={`/${locale}/magazine`} className="text-emerald-100 hover:text-white transition-colors flex items-center">
-                  <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-4 h-4 mx-2" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"></path>
                   </svg>
                   {locale === "ar" ? "المجلة" : "Magazine"}
                 </Link>
               </li>
               <li>
-                <Link href={`/${locale}/dawah`} className="text-emerald-100 hover:text-white transition-colors flex items-center">                  <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 100-2 1 1 0 000 2zm7-1a1 1 0 11-2 0 1 1 0 012 0zm-7.536 5.879a1 1 0 001.415 0 3 3 0 014.242 0 1 1 0 001.415-1.415 5 5 0 00-7.072 0 1 1 0 000 1.415z" clipRule="evenodd"></path>
+                <Link
+                  href={`/${locale}/dawah`}
+                  className="px-3 py-2 text-gray-800 hover:text-white hover:bg-emerald-600 rounded-md transition-all flex items-center"
+                >
+                  <svg className="w-4 h-4 mx-1" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
                   </svg>
                   {locale === "ar" ? "الدعوة" : "Dawah"}
                 </Link>
-              </li>
+                </li>
               <li>
-                <Link href={`/${locale}/library`} className="text-emerald-100 hover:text-white transition-colors flex items-center">
-                  <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                <Link
+                  href={`/${locale}/library`}
+                  className="px-3 py-2 text-gray-800 hover:text-white hover:bg-emerald-600 rounded-md transition-all flex items-center"
+                >
+                  <svg className="w-4 h-4 mx-1" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path>
                   </svg>
                   {locale === "ar" ? "المكتبة" : "Library"}
@@ -86,19 +93,19 @@ const Footer = ({ locale, messages }: FooterProps) => {
             </h3>
             <div className="space-y-3">
               <div className="flex items-center">
-                <svg className="w-5 h-5 mr-3 text-emerald-300" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-5 h-5 mx-3 text-emerald-300" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
                   <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
                 </svg>
                 <span className="text-emerald-100">info@hurass.org</span>
               </div>
               <div className="flex items-center">
-                <svg className="w-5 h-5 mr-3 text-emerald-300" fill="currentColor" viewBox="0 0 20 20">
+                <svg className="w-5 h-5 mx-3 text-emerald-300" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
                 </svg>
                 <span className="text-emerald-100">+123456789</span>
               </div>
-              <div className="flex items-center">                <svg className="w-5 h-5 mr-3 text-emerald-300" fill="currentColor" viewBox="0 0 20 20">
+              <div className="flex items-center">                <svg className="w-5 h-5 mx-3 text-emerald-300" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd"></path>
                 </svg>
                 <span className="text-emerald-100">{locale === "ar" ? "المملكة العربية السعودية" : "Saudi Arabia"}</span>

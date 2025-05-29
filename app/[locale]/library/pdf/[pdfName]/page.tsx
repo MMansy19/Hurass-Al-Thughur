@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import fs from "fs";
 import path from "path";
 import SEO from "@/components/ui/SEO";
