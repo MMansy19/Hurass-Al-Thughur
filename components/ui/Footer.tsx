@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 interface FooterProps {
@@ -10,18 +11,29 @@ interface FooterProps {
 }
 
 const Footer = ({ locale, messages }: FooterProps) => {
-  return (    <footer className="bg-emerald-900 text-white mt-auto">
+  return (    
+  <footer className="bg-emerald-900 text-white mt-auto">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="md:col-span-1">
-            <div className="flex items-center mb-4">
-              <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mr-3">
-                <span className="font-bold text-xl text-emerald-800"س>H</span>
-              </div>
-              <h3 className="text-xl font-bold">
-                {locale === "ar" ? "حُراس الثغور" : "Hurass Al-Thughur"}
-              </h3>
-            </div>
+        <div className="md:col-span-1">
+                      <div className="md:col-span-1">
+                          <Link href={`/${locale}`} className="flex items-center group">
+                              <div className="relative overflow-hidden rounded-full border-2 border-emerald-500 mr-3">
+                                  <Image
+                                      src="/images/logo.jpg"
+                                      alt="Hurass Al-Thughur Logo"
+                                      width={50}
+                                      height={50}
+                                      className="transition-transform group-hover:scale-110 duration-300"
+                                  />
+                              </div>
+                              <span className="font-bold text-2xl text-emerald-700 group-hover:text-white transition-colors">
+                                  {locale === "ar" ? "حُراس الثغور" : "Hurass Al-Thughur"}
+                              </span>
+                          </Link>
+                      </div>
+
+
             <p className="text-emerald-100">
               {locale === "ar" 
                 ? "منصة دعوية تسعى لنشر المعرفة الصحيحة عن الإسلام" 
