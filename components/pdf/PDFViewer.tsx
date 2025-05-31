@@ -1,180 +1,122 @@
-  "use client";
+"use client";
 
-  import { useState, useEffect } from "react";
-  import { Document, Page, pdfjs } from "react-pdf";
-  import "react-pdf/dist/esm/Page/AnnotationLayer.css";
-  import "react-pdf/dist/esm/Page/TextLayer.css";
-  import { useWindowSize } from "@/utils/useWindowSize";
+import { Document, Page, pdfjs } from "react-pdf";
+import "react-pdf/dist/esm/Page/AnnotationLayer.css";
+import "react-pdf/dist/esm/Page/TextLayer.css";
 
-  // Import the PDF.js worker 
-  // We're not directly importing it, we'll set the worker source in useEffect
-  // import pdfjsWorker from "pdfjs-dist/build/pdf.worker.entry";
+// Import custom hooks
+import { usePDFViewer } from "./hooks/usePDFViewer";
 
-  interface PDFViewerProps {
-    pdfFile: string;
-    messages: {
-      previousPage: string;
-      nextPage: string;
-      zoomIn: string;
-      zoomOut: string;
-      loading: string;
-    };
-  }
+// Import components
+import { 
+  PDFControlsWrapper, 
+  NavigationButton, 
+  PageIndicator, 
+  ZoomControl 
+} from "./controls/Controls";
+import { 
+  PDFContainer, 
+  PDFDocumentWrapper, 
+  PDFLoading, 
+  PDFError 
+} from "./ui/PDFComponents";
 
-  const PDFViewer = ({ pdfFile, messages }: PDFViewerProps) => {
-    const [numPages, setNumPages] = useState<number>(0);
-    const [pageNumber, setPageNumber] = useState<number>(1);
-    const [scale, setScale] = useState<number>(1);
-    const { width } = useWindowSize();
+// Configure PDF.js worker
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
-    // Set up the worker for pdf.js
-    useEffect(() => {
-      // Only set the worker source in the browser environment
-      // Dynamically import the PDF.js worker
-      const loadPdfWorker = async () => {
-        if (typeof window !== 'undefined') {
-          try {
-            // Try to use the CDN worker
-            pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
-          } catch (error) {
-            console.error("Failed to load PDF worker:", error);
-            // Fallback to static file
-            pdfjs.GlobalWorkerOptions.workerSrc = `/pdf-worker/pdf.worker.min.js`;
-          }      }
-      };
+interface PDFViewerProps {
+  pdfFile: string;
+  messages: {
+    previousPage: string;
+    nextPage: string;
+    zoomIn: string;
+    zoomOut: string;
+    loading: string;
+    error: string;
+  };
+}
 
-      loadPdfWorker();
-    }, []);
+export default function PDFViewer({ pdfFile, messages }: PDFViewerProps) {
+  // Use custom hook for PDF viewer functionality
+  const {
+    numPages,
+    pageNumber,
+    scale,
+    error,
+    setError,
+    changePage,
+    zoomIn,
+    zoomOut,
+    onDocumentLoadSuccess
+  } = usePDFViewer();
 
-    // Adjust scale based on screen width
-    useEffect(() => {
-      if (width < 640) {
-        setScale(0.7);
-      } else if (width < 1024) {
-        setScale(0.9);
-      } else {
-        setScale(1.2);
-      }
-    }, [width]);
+  // Previous page button icon
+  const prevIcon = (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+    </svg>
+  );
 
-    function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
-      setNumPages(numPages);
-      setPageNumber(1);
-    }
+  // Next page button icon
+  const nextIcon = (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+    </svg>
+  );
 
-    function changePage(offset: number) {
-      setPageNumber((prevPageNumber: number) => {
-        const newPageNumber = prevPageNumber + offset;
-        return Math.min(Math.max(1, newPageNumber), numPages);
-      });
-    }
+  return (
+    <PDFContainer>
+      {/* Controls */}
+      <PDFControlsWrapper>
+        <NavigationButton 
+          onClick={() => changePage(-1)}
+          disabled={pageNumber <= 1}
+          label={messages.previousPage}
+          icon={prevIcon}
+        />
 
-    function previousPage() {
-      changePage(-1);
-    }
+        <PageIndicator 
+          currentPage={pageNumber} 
+          totalPages={numPages} 
+        />
 
-    function nextPage() {
-      changePage(1);
-    }
+        <NavigationButton 
+          onClick={() => changePage(1)}
+          disabled={pageNumber >= numPages}
+          label={messages.nextPage}
+          icon={nextIcon}
+          isNext={true}
+        />
 
-    function zoomIn() {
-      setScale((prevScale: number) => Math.min(prevScale + 0.2, 3));
-    }
+        <ZoomControl 
+          scale={scale}
+          onZoomIn={zoomIn}
+          onZoomOut={zoomOut}
+          zoomInLabel={messages.zoomIn}
+          zoomOutLabel={messages.zoomOut}
+        />
+      </PDFControlsWrapper>
 
-    function zoomOut() {
-      setScale((prevScale: number) => Math.max(prevScale - 0.2, 0.5));
-    }
-
-    const isRTL = typeof document !== 'undefined' ? document.dir === 'rtl' : false;
-
-    return (
-      <div className="flex flex-col items-center bg-gray-50 p-6 rounded-lg shadow-inner">
-        <div className="flex flex-wrap justify-center items-center w-full mb-6 gap-3">
-          <div className="flex rounded-md shadow-sm">
-            <button
-              onClick={previousPage}
-              disabled={pageNumber <= 1}
-              className="px-4 py-2 bg-emerald-600 text-white rounded-l-md disabled:bg-gray-400 disabled:cursor-not-allowed hover:bg-emerald-700 transition-colors flex items-center"
-              aria-label={messages.previousPage}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 me-1 rtl:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-              {messages.previousPage}
-            </button>
-            <span className="px-4 py-2 bg-white border-t border-b flex items-center justify-center min-w-[100px]">
-              {pageNumber} / {numPages}
-            </span>
-            <button
-              onClick={nextPage}
-              disabled={pageNumber >= numPages}
-              className="px-4 py-2 bg-emerald-600 text-white rounded-r-md disabled:bg-gray-400 disabled:cursor-not-allowed hover:bg-emerald-700 transition-colors flex items-center"
-              aria-label={messages.nextPage}
-            >
-              {messages.nextPage}
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ms-1 rtl:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-
-          <div className="flex rounded-md shadow-sm">
-            <button
-              onClick={zoomOut}
-              className="px-3 py-2 bg-blue-600 text-white rounded-l-md hover:bg-blue-700 transition-colors"
-              aria-label={messages.zoomOut}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-              </svg>
-            </button>
-            <button
-              onClick={zoomIn}
-              className="px-3 py-2 bg-blue-600 text-white rounded-r-md hover:bg-blue-700 transition-colors"
-              aria-label={messages.zoomIn}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        <div className="pdf-container border border-gray-300 rounded-lg shadow-lg overflow-auto bg-white max-w-full">
-          <Document
-            file={pdfFile}
-            onLoadSuccess={onDocumentLoadSuccess}
-            loading={
-              <div className="flex flex-col justify-center items-center h-[600px]">
-                <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-emerald-600 mb-4"></div>
-                <p className="text-gray-600 font-medium">{messages.loading}</p>
-              </div>
-            }
-            error={
-              <div className="flex justify-center items-center h-[600px]">
-                <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md">
-                  <div className="flex items-center text-red-600 mb-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mx-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <h3 className="text-lg font-bold rtl:text-right">{isRTL ? 'خطأ في تحميل ملف PDF' : 'Error loading PDF'}</h3>
-                  </div>
-                  <p className="text-gray-700 rtl:text-right">{isRTL ? 'تعذر تحميل ملف PDF. يرجى المحاولة مرة أخرى لاحقًا أو الاتصال بالدعم.' : 'The PDF file could not be loaded. Please try again later or contact support.'}</p>
-                </div>
-              </div>
-            }
-          >
+      {/* PDF Document */}
+      <PDFDocumentWrapper>
+        <Document
+          file={pdfFile}
+          onLoadSuccess={onDocumentLoadSuccess}
+          onLoadError={(error) => setError(error.message)}
+          loading={<PDFLoading loadingText={messages.loading} />}
+          error={<PDFError errorTitle={messages.error} errorMessage={error} />}
+        >
+          {!error && (
             <Page
               pageNumber={pageNumber}
               scale={scale}
               renderTextLayer={true}
               renderAnnotationLayer={true}
-              className="pdf-page"
+              className="border border-gray-100 shadow-sm"
             />
-          </Document>
-        </div>
-      </div>
-    );
-  };
-
-  export default PDFViewer;
+          )}
+        </Document>
+      </PDFDocumentWrapper>
+    </PDFContainer>
+  );
+}
