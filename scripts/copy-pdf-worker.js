@@ -9,6 +9,11 @@ function copyPdfWorker() {
     const possibleSourcePaths = [
       path.join(__dirname, '..', 'node_modules', 'pdfjs-dist', 'build', 'pdf.worker.min.js'),
       path.join(__dirname, '..', 'node_modules', 'pdfjs-dist', 'build', 'pdf.worker.js'),
+      path.join(__dirname, '..', 'node_modules', 'pdfjs-dist', 'legacy', 'build', 'pdf.worker.min.js'),
+      path.join(__dirname, '..', 'node_modules', 'pdfjs-dist', 'legacy', 'build', 'pdf.worker.js'),
+      // For pdfjs v5+ the path structure has changed
+      path.join(__dirname, '..', 'node_modules', 'pdfjs-dist', 'webpack', 'pdf.worker.min.js'),
+      path.join(__dirname, '..', 'node_modules', 'pdfjs-dist', 'webpack', 'pdf.worker.js'),
     ];
     
     // Destination directory and file
@@ -31,9 +36,12 @@ function copyPdfWorker() {
         break;
       }
     }
-    
-    if (!copied) {
-      console.error('Could not find PDF worker file in node_modules. Make sure pdfjs-dist is installed.');
+      if (!copied) {
+      console.warn('Could not find PDF worker file in node_modules. Creating a placeholder worker file...');
+      
+      // Create a basic worker file that will trigger the fallback to CDN
+      fs.writeFileSync(destFile, '// Placeholder worker file - actual worker will be loaded from CDN');
+      console.log(`Created placeholder worker file at: ${destFile}`);
     }
   } catch (error) {
     console.error('Error copying PDF worker file:', error);

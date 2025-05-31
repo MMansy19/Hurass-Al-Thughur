@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import { Metadata } from "next/types";
 import { notFound } from "next/navigation";
 import fs from "fs";
 import path from "path";
@@ -67,11 +67,12 @@ export default async function PDFViewPage({
             pdfUrl={pdfUrl}
             title={pdfTitle}
             messages={{
-              previousPage: messages.magazine.previousPage,
-              nextPage: messages.magazine.nextPage,
-              zoomIn: messages.magazine.zoomIn,
-              zoomOut: messages.magazine.zoomOut,
-              loading: messages.magazine.loading
+              previousPage: "Previous",
+              nextPage: "Next",
+              zoomIn: "Zoom In",
+              zoomOut: "Zoom Out",
+              loading: "Loading document...",
+              error: "Failed to load PDF"
             }}
           />
         </div>

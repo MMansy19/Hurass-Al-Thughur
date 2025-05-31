@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata } from "next/types";
 import { Cairo, Roboto } from "next/font/google";
 import "../globals.css";
 import Header from "@/components/ui/Header";
@@ -59,16 +59,16 @@ export default async function LocaleLayout({
     const fontClass = locale === "ar" ? cairoFont.variable : robotoFont.variable;
     
     const messages = (await import(`@/locales/${locale}.json`)).default;
-  return (    <html lang={locale} dir={dir} className={`${fontClass}`}>
-        <body className="antialiased min-h-screen flex flex-col bg-gray-50">
-            <Header locale={locale} messages={messages.common} />
-            <main className="container mx-auto px-4 py-8 flex-grow">
-                <div className="animate-fadeIn">
-                    {children}
-                </div>
-            </main>
-            <Footer locale={locale} messages={messages.footer} />
-        </body>
+  return (
+    <html lang={locale} dir={dir} className={`${fontClass}`}>
+      <body className="antialiased min-h-screen flex flex-col bg-gray-50">
+        <Header locale={locale} messages={messages.common} />
+        <main className="container mx-auto px-4 py-8 flex-grow">
+        <div className="h-16 md:h-20"></div>
+          <div className="animate-fadeIn">{children}</div>
+        </main>
+        <Footer locale={locale} messages={messages.footer} />
+      </body>
     </html>
   );
 }

@@ -5,7 +5,7 @@ declare module 'next' {
     params: {
       locale: string
     };
-    searchParams: {
+    searchParams?: {
       [key: string]: string | string[] | undefined
     };
   }

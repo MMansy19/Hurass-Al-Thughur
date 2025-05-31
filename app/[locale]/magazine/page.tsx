@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import { Metadata } from "next/types";
 import Link from "next/link";
 import SEO from "@/components/ui/SEO";
 import PDFViewerSection from "@/components/pdf/PDFViewerSection";
