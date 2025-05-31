@@ -7,9 +7,9 @@ import PDFViewerSection from "@/components/pdf/PDFViewerSection";
 export async function generateMetadata({ 
   params
 }: { 
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
-  const { locale } = params;
+  const { locale } = await params;
   const messages = (await import(`@/locales/${locale}.json`)).default;
   return SEO({
     title: messages.magazine.title,
@@ -22,9 +22,9 @@ export async function generateMetadata({
 export default async function MagazinePage({
   params,
 }: {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
-  const { locale } = params;
+  const { locale } = await params;
   // Import translations
   const messages = (await import(`@/locales/${locale}.json`)).default;
   const { magazine } = messages;

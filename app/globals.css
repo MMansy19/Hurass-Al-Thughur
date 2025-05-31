@@ -38,23 +38,196 @@ html[dir="rtl"] body {
   animation: fadeIn 0.5s ease-out forwards;
 }
 
-/* PDF viewer custom styles */
+/* Enhanced PDF viewer styles */
 .pdf-container {
   min-height: 600px;
   max-height: 800px;
 }
 
-.pdf-page {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.pdf-container.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  max-height: 100vh;
+  background: white;
 }
 
-/* Tailwind extensions */
-@layer utilities {
-  .text-shadow {
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.pdf-page {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.pdf-page:hover {
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+}
+
+.pdf-document {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.pdf-continuous {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 100%;
+}
+
+.pdf-facing {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+  width: 100%;
+}
+
+.with-sidebar {
+  margin-left: 0;
+}
+
+/* Thumbnail styles */
+.thumbnail-page {
+  transition: all 0.2s ease;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.thumbnail-page:hover {
+  transform: scale(1.05);
+}
+
+/* Custom scrollbar for sidebar */
+.pdf-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.pdf-sidebar::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+.pdf-sidebar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+.pdf-sidebar::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* React-PDF specific overrides */
+.react-pdf__Page {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
+.react-pdf__Page__canvas {
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.react-pdf__Page__textContent {
+  border-radius: 8px;
+}
+
+.react-pdf__Page__annotations {
+  border-radius: 8px;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+  .pdf-facing {
+    flex-direction: column;
+    align-items: center;
   }
   
-  .text-shadow-lg {
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  .pdf-container.fullscreen .pdf-controls {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .thumbnail-page {
+    transform: scale(0.8);
+  }
+}
+
+/* Print styles */
+@media print {
+  .pdf-controls,
+  .pdf-sidebar {
+    display: none !important;
+  }
+  
+  .pdf-document {
+    box-shadow: none;
+    border: none;
+  }
+  
+  .pdf-page {
+    box-shadow: none;
+    border: none;
+    page-break-after: always;
+  }
+}
+
+/* Loading animations */
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Search highlight styles */
+.pdf-search-highlight {
+  background-color: #fef08a;
+  border: 1px solid #eab308;
+  border-radius: 2px;
+}
+
+.pdf-search-highlight.current {
+  background-color: #fb923c;
+  border-color: #ea580c;
+}
+
+/* Accessibility improvements */
+.pdf-controls button:focus {
+  outline: 2px solid #059669;
+  outline-offset: 2px;
+}
+
+.pdf-controls input:focus {
+  outline: 2px solid #059669;
+  outline-offset: 2px;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .pdf-container {
+    background: #1f2937;
+    border-color: #374151;
+  }
+  
+  .pdf-page {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+  
+  .pdf-sidebar {
+    background: #1f2937;
+    border-color: #374151;
   }
 }

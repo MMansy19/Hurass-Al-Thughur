@@ -44,6 +44,13 @@ interface PDFViewerSectionProps {
     zoomOut: string;
     loading: string;
     error: string;
+    search: string;
+    thumbnails: string;
+    fullscreen: string;
+    fitWidth: string;
+    fitPage: string;
+    download: string;
+    print: string;
   };
 }
 

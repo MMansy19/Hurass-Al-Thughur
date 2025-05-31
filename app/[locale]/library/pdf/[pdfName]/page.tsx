@@ -65,20 +65,25 @@ export default async function PDFViewPage({
           <h1 className="text-3xl font-bold mb-2">{pdfTitle}</h1>
           <p className="text-lg">{library.preview}</p>
         </div>
-      </section>
-
-      <div className="container mx-auto px-4">
+      </section>      <div className="container mx-auto px-4">
         <div className="bg-white rounded-lg shadow-md p-4">
           <PDFViewerSection 
             pdfUrl={pdfUrl}
             title={pdfTitle}
             messages={{
-              previousPage: "Previous",
-              nextPage: "Next",
-              zoomIn: "Zoom In",
-              zoomOut: "Zoom Out",
-              loading: "Loading document...",
-              error: "Failed to load PDF"
+              previousPage: library.previousPage,
+              nextPage: library.nextPage,
+              zoomIn: library.zoomIn,
+              zoomOut: library.zoomOut,
+              loading: library.loading,
+              error: library.error,
+              search: library.searchInDocument,
+              thumbnails: library.thumbnails,
+              fullscreen: library.fullscreen,
+              fitWidth: library.fitWidth,
+              fitPage: library.fitPage,
+              download: library.download,
+              print: library.print
             }}
           />
         </div>
