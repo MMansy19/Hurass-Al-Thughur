@@ -5,16 +5,18 @@
   "scripts": {
     "dev": "next dev",
     "dev:turbo": "next dev --turbopack",
-    "build": "next build",
+    "build": "npm run copy-worker && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "copy-worker": "node scripts/copy-pdf-worker.js",
+    "postinstall": "npm run copy-worker"
   },
   "dependencies": {
     "@fontsource/cairo": "^5.2.5",
     "@fontsource/roboto": "^5.2.5",
     "next": "15.3.2",
     "next-intl": "^4.1.0",
-    "pdfjs-dist": "^4.8.69",
+    "pdfjs-dist": "4.8.69",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-pdf": "^9.2.1"

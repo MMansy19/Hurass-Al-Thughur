@@ -1,6 +1,7 @@
 "use client";
 
 import { Document, Page, pdfjs } from "react-pdf";
+import { useEffect } from "react";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 
@@ -17,13 +18,8 @@ import {
 import { 
   PDFContainer, 
   PDFDocumentWrapper, 
-  PDFLoading, 
-  PDFError 
+  PDFLoading,   PDFError 
 } from "./ui/PDFComponents";
-
-// Configure PDF.js worker
-// Use the CDN for reliability since we've resolved the version issues with webpack
-pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.8.69/pdf.worker.min.js`;
 
 interface PDFViewerProps {
   pdfFile: string;
@@ -38,6 +34,25 @@ interface PDFViewerProps {
 }
 
 export default function PDFViewer({ pdfFile, messages }: PDFViewerProps) {
+  // Configure PDF.js worker once on component mount
+  useEffect(() => {
+    const setupWorker = async () => {
+      try {
+        // First try to use the local API route
+        pdfjs.GlobalWorkerOptions.workerSrc = `/api/pdf-worker`;
+        
+        // Test if the worker loads properly
+        // If it fails, it will fall back to CDN in the catch block
+      } catch (error) {
+        console.warn("Failed to set local PDF worker, using CDN fallback:", error);
+        // Use CDN as fallback with the exact version from package
+        pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.8.69/pdf.worker.min.js`;
+      }
+    };
+    
+    setupWorker();
+  }, []);
+
   // Use custom hook for PDF viewer functionality
   const {
     numPages,

@@ -15,35 +15,34 @@ const nextConfig: NextConfig = {
     // Disable canvas for react-pdf (using type assertion to handle the complex type)
     (config.resolve.alias as Record<string, any>)['canvas'] = false;
     
-    // Fix for react-pdf's own pdfjs-dist import
-    (config.resolve.alias as Record<string, any>)['react-pdf/node_modules/pdfjs-dist/build/pdf.mjs'] = 
-      require.resolve('pdfjs-dist/build/pdf.mjs');
-    
     // Configure worker loaders properly
     config.module = config.module || {};
     config.module.rules = config.module.rules || [];
     
-    // Add specific rule to handle PDF worker
+    // Add specific rule to handle PDF worker files
     config.module.rules.push({
-      test: /pdf\.worker\.(min\.)?m?js/,
+      test: /pdf\.worker\.(min\.)?m?js$/,
       type: 'asset/resource',
+      generator: {
+        filename: 'static/worker/[hash][ext][query]'
+      }
     });
     
     return config;
   },
-  // Add proper Content Security Policy for PDF worker
+  // Add proper headers for PDF worker and general CORS
   async headers() {
     return [
       {
-        source: '/(.*)',
+        source: '/pdf-worker/:path*',
         headers: [
           {
-            key: 'Cross-Origin-Opener-Policy',
-            value: 'same-origin',
+            key: 'Content-Type',
+            value: 'application/javascript',
           },
           {
-            key: 'Cross-Origin-Embedder-Policy',
-            value: 'require-corp',
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
           },
           {
             key: 'Access-Control-Allow-Origin',

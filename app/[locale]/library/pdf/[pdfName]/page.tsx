@@ -7,10 +7,11 @@ import PDFViewerSection from "@/components/pdf/PDFViewerSection";
 
 // Generate metadata for the page
 export async function generateMetadata({ 
-  params: { locale, pdfName } 
+  params 
 }: { 
-  params: { locale: string, pdfName: string } 
+  params: Promise<{ locale: string, pdfName: string }> 
 }): Promise<Metadata> {
+  const { locale, pdfName } = await params;
   const messages = (await import(`@/locales/${locale}.json`)).default;
   return SEO({
     title: `${messages.library.title} - ${decodeURIComponent(pdfName).replace(".pdf", "")}`,
@@ -21,10 +22,11 @@ export async function generateMetadata({
 }
 
 export default async function PDFViewPage({
-  params: { locale, pdfName },
+  params,
 }: {
-  params: { locale: string; pdfName: string };
+  params: Promise<{ locale: string; pdfName: string }>;
 }) {
+  const { locale, pdfName } = await params;
   // Import translations
   const messages = (await import(`@/locales/${locale}.json`)).default;
   const { library } = messages;
