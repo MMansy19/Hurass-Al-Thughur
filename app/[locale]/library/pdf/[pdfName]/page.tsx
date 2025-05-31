@@ -4,6 +4,7 @@ import fs from "fs";
 import path from "path";
 import SEO from "@/components/ui/SEO";
 import PDFViewerSection from "@/components/pdf/PDFViewerSection";
+import { getPDFTitle, getPDFDescription } from "@/config/pdf-metadata";
 
 // Generate metadata for the page
 export async function generateMetadata({ 
@@ -13,9 +14,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale, pdfName } = await params;
   const messages = (await import(`@/locales/${locale}.json`)).default;
+  const decodedPdfName = decodeURIComponent(pdfName);
+  const pdfTitle = getPDFTitle(decodedPdfName, locale);
+  const pdfDescription = getPDFDescription(decodedPdfName, locale);
+  
   return SEO({
-    title: `${messages.library.title} - ${decodeURIComponent(pdfName).replace(".pdf", "")}`,
-    description: messages.library.description,
+    title: `${messages.library.title} - ${pdfTitle}`,
+    description: pdfDescription || messages.library.description,
     locale,
     pageName: "library",
   });
@@ -34,11 +39,10 @@ export default async function PDFViewPage({
   if (!pdfName) {
     notFound();
   }
-  
-  // Decode the PDF filename
+    // Decode the PDF filename
   const decodedPdfName = decodeURIComponent(pdfName);
   const pdfUrl = `/pdfs/${decodedPdfName}`;
-  const pdfTitle = decodedPdfName.replace(".pdf", "");
+  const pdfTitle = getPDFTitle(decodedPdfName, locale);
 
   // Verify if PDF exists by checking if file exists in the public/pdfs directory
   const pdfPath = path.join(process.cwd(), 'public', 'pdfs', decodedPdfName);

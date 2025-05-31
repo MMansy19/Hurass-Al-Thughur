@@ -18,7 +18,7 @@ export default function FooterSocial({ title, socialLinks }: FooterSocialProps) 
       <h3 className="text-lg font-bold mb-4 border-b border-emerald-700 pb-2">
         {title}
       </h3>
-      <div className="flex space-x-4">
+      <div className="flex gap-4">
         {socialLinks.map((social, index) => (
           <a 
             key={index}

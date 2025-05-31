@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import { useParams } from 'next/navigation';
+import { getPDFTitle, getPDFDescription, getPDFMetadata } from '@/config/pdf-metadata';
 
 interface PDFFile {
   name: string;
@@ -8,6 +10,9 @@ interface PDFFile {
 }
 
 export function usePDFBrowser() {
+  const params = useParams();
+  const locale = params.locale as string;
+  
   const [pdfFiles, setPdfFiles] = useState<PDFFile[]>([]);
   const [filteredPDFs, setFilteredPDFs] = useState<PDFFile[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -36,18 +41,49 @@ export function usePDFBrowser() {
 
     fetchPDFList();
   }, []);
-
-  // Filter PDFs based on search term
+  // Filter PDFs based on search term with metadata support
   useEffect(() => {
     if (searchTerm.trim() === "") {
       setFilteredPDFs(pdfFiles);
     } else {
-      const filtered = pdfFiles.filter((pdf) =>
-        pdf.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+      const searchLower = searchTerm.toLowerCase();
+      const filtered = pdfFiles.filter((pdf) => {
+        // Search in filename
+        if (pdf.name.toLowerCase().includes(searchLower)) {
+          return true;
+        }
+        
+        // Search in metadata title
+        const title = getPDFTitle(pdf.name, locale);
+        if (title.toLowerCase().includes(searchLower)) {
+          return true;
+        }
+        
+        // Search in metadata description
+        const description = getPDFDescription(pdf.name, locale);
+        if (description && description.toLowerCase().includes(searchLower)) {
+          return true;
+        }
+        
+        // Search in metadata tags and category
+        const metadata = getPDFMetadata(pdf.name);
+        if (metadata) {
+          if (metadata.category && metadata.category.toLowerCase().includes(searchLower)) {
+            return true;
+          }
+          if (metadata.author && metadata.author.toLowerCase().includes(searchLower)) {
+            return true;
+          }
+          if (metadata.tags && metadata.tags.some(tag => tag.toLowerCase().includes(searchLower))) {
+            return true;
+          }
+        }
+        
+        return false;
+      });
       setFilteredPDFs(filtered);
     }
-  }, [searchTerm, pdfFiles]);
+  }, [searchTerm, pdfFiles, locale]);
 
   return {
     pdfFiles,

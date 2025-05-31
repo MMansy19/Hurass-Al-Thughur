@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { getPDFTitle, getPDFDescription } from "@/config/pdf-metadata";
 
 interface PDFCardProps {
   name: string;
@@ -10,13 +11,13 @@ interface PDFCardProps {
 }
 
 export function PDFCard({ name, path, locale, viewText }: PDFCardProps) {
-  const displayName = name.replace(".pdf", "");
+  const displayName = getPDFTitle(name, locale);
+  const description = getPDFDescription(name, locale);
   const encodedPath = encodeURIComponent(path.replace("/pdfs/", ""));
   
   return (
     <div className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white">
-      <div className="p-4 flex flex-col h-full">
-        <div className="flex items-center mb-3">
+      <div className="p-4 flex flex-col h-full">        <div className="flex items-center mb-3">
           <svg
             className="w-8 h-8 text-red-500 mr-2"
             fill="currentColor"
@@ -32,6 +33,12 @@ export function PDFCard({ name, path, locale, viewText }: PDFCardProps) {
             {displayName}
           </h3>
         </div>
+        
+        {description && (
+          <p className="text-gray-600 text-sm mb-3 flex-grow" dir="auto">
+            {description}
+          </p>
+        )}
         
         <div className="mt-auto pt-4">
           <Link

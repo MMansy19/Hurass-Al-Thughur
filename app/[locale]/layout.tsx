@@ -21,10 +21,11 @@ const robotoFont = Roboto({
 
 // Define the metadata with dynamic locale
 export async function generateMetadata({
-  params: { locale },
+  params,
 }: {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
+  const { locale } = await params;
   // Import translations dynamically
   const messages = (await import(`@/locales/${locale}.json`)).default;
 
@@ -47,11 +48,12 @@ export async function generateMetadata({
 
 export default async function LocaleLayout({
   children,
-  params: { locale },
+  params,
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }) {
+  const { locale } = await params;
   // Set the direction based on locale
   const dir = locale === "ar" ? "rtl" : "ltr";
 

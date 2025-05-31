@@ -1,14 +1,15 @@
-import { Metadata } from "next";
+import { Metadata } from "next/types";
 import Image from "next/image";
 import Link from "next/link";
 import SEO from "../../components/ui/SEO";
 
 // Generate metadata for the page
 export async function generateMetadata({ 
-  params: { locale } 
+  params
 }: { 
-  params: { locale: string } 
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
+  const { locale } = await params;
   const messages = (await import(`../../locales/${locale}.json`)).default;
   return SEO({
     title: messages.home.title,
@@ -19,10 +20,11 @@ export async function generateMetadata({
 }
 
 export default async function Home({ 
-  params: { locale } 
+  params
 }: { 
-  params: { locale: string } 
+  params: Promise<{ locale: string }>;
 }) {
+  const { locale } = await params;
   // Import translations
   const messages = (await import(`../../locales/${locale}.json`)).default;
   const { home } = messages;

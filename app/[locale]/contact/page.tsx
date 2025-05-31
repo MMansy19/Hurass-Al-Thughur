@@ -1,9 +1,7 @@
 import ContactForm from './ContactForm';
 
-// Use any type to bypass type checking for now
-// @ts-ignore
-export default function ContactPage({ params }: any) {
-  const { locale } = params;
+export default async function ContactPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
     return (
     <div className="space-y-12">
       <section className="bg-emerald-700 text-white py-10 rounded-lg">
@@ -17,7 +15,7 @@ export default function ContactPage({ params }: any) {
 
       <section>
         <div className="container mx-auto px-4">
-          <ContactForm locale={locale} />
+          <ContactForm />
         </div>
       </section>
     </div>

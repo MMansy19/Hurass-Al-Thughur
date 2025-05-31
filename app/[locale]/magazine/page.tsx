@@ -5,10 +5,11 @@ import PDFViewerSection from "@/components/pdf/PDFViewerSection";
 
 // Generate metadata for the page
 export async function generateMetadata({ 
-  params: { locale } 
+  params
 }: { 
-  params: { locale: string } 
+  params: { locale: string };
 }): Promise<Metadata> {
+  const { locale } = params;
   const messages = (await import(`@/locales/${locale}.json`)).default;
   return SEO({
     title: messages.magazine.title,
@@ -19,10 +20,11 @@ export async function generateMetadata({
 }
 
 export default async function MagazinePage({
-  params: { locale },
+  params,
 }: {
   params: { locale: string };
 }) {
+  const { locale } = params;
   // Import translations
   const messages = (await import(`@/locales/${locale}.json`)).default;
   const { magazine } = messages;
@@ -124,7 +126,7 @@ export default async function MagazinePage({
       
       {/* PDF Viewer Section */}
       <PDFViewerSection 
-        pdfUrl="/pdfs/MahmoudMansy_Frontend_Engineer.pdf"
+        pdfUrl="/pdfs/1.pdf"
         title={selectedIssue.title}
         messages={magazine}
       />      {/* Categories Section */}
