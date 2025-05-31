@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, ChangeEvent } from "react";
+import { ChangeEvent } from "react";
 
 interface SearchBarProps {
   searchTerm: string;

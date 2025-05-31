@@ -9,12 +9,11 @@ interface NavLink {
 }
 
 interface FooterNavigationProps {
-  locale: string;
   title: string;
   links: NavLink[];
 }
 
-export default function FooterNavigation({ locale, title, links }: FooterNavigationProps) {
+export default function FooterNavigation({ title, links }: FooterNavigationProps) {
   return (
     <div>
       <h3 className="text-lg font-bold mb-4 border-b border-emerald-700 pb-2">

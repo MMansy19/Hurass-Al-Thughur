@@ -45,11 +45,10 @@ export default async function PDFViewPage({
   const pdfTitle = getPDFTitle(decodedPdfName, locale);
 
   // Verify if PDF exists by checking if file exists in the public/pdfs directory
-  const pdfPath = path.join(process.cwd(), 'public', 'pdfs', decodedPdfName);
-  const fileExists = (() => {
+  const pdfPath = path.join(process.cwd(), 'public', 'pdfs', decodedPdfName);  const fileExists = (() => {
     try {
       return fs.existsSync(pdfPath);
-    } catch (e) {
+    } catch {
       return false;
     }
   })();

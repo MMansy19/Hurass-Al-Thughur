@@ -181,7 +181,7 @@ export function ViewModeControl({ mode, onChange, fitWidth, fitPage, fitWidthLab
     <div className="flex items-center gap-1">
       <select
         value={mode}
-        onChange={(e) => onChange(e.target.value as any)}
+        onChange={(e) => onChange(e.target.value as 'single' | 'continuous' | 'facing')}
         className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
       >
         <option value="single">Single Page</option>

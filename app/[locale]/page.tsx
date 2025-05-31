@@ -23,12 +23,10 @@ export default async function Home({
   params
 }: { 
   params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
+}) {  const { locale } = await params;
   // Import translations
   const messages = (await import(`../../locales/${locale}.json`)).default;
   const { home } = messages;
-  const isRtl = locale === "ar";
 
   // Feature sections
   const sections = [

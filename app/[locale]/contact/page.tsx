@@ -1,7 +1,6 @@
 import ContactForm from './ContactForm';
 
-export default async function ContactPage({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
+export default async function ContactPage() {
     return (
     <div className="space-y-12">
       <section className="bg-emerald-700 text-white py-10 rounded-lg">

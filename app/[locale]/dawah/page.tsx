@@ -22,12 +22,10 @@ export default async function DawahPage({
   params,
 }: {
   params: Promise<{ locale: string }>;
-}) {
-  const { locale } = await params;
+}) {  const { locale } = await params;
   // Import translations
   const messages = (await import(`@/locales/${locale}.json`)).default;
   const { dawah } = messages;
-  const isRtl = locale === "ar";
 
   // Mock data for introductory articles
   const introArticles = [

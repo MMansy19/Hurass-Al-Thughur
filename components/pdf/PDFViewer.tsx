@@ -140,19 +140,17 @@ export default function PDFViewer({ pdfFile, messages }: PDFViewerProps) {
 
   // Enhanced zoom functions
   const fitWidth = useCallback(() => {
-    if (containerRef.current) {
-      const containerWidth = containerRef.current.offsetWidth - 40; // Account for padding
+    if (containerRef.current) {      const containerWidth = containerRef.current.offsetWidth - 40; // Account for padding
       const pageWidth = 595; // Standard A4 width in points
-      const newScale = containerWidth / pageWidth;
+      // const newScale = containerWidth / pageWidth;
       // setScale(newScale); // Will need to add this to the hook
     }
   }, []);
 
   const fitPage = useCallback(() => {
-    if (containerRef.current) {
-      const containerHeight = containerRef.current.offsetHeight - 100; // Account for controls
+    if (containerRef.current) {      const containerHeight = containerRef.current.offsetHeight - 100; // Account for controls
       const pageHeight = 842; // Standard A4 height in points
-      const newScale = containerHeight / pageHeight;
+      // const newScale = containerHeight / pageHeight;
       // setScale(newScale); // Will need to add this to the hook
     }
   }, []);
