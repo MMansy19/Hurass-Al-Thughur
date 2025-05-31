@@ -1,10 +1,15 @@
-import type { NextConfig } from "next";
+import type { Configuration as WebpackConfig } from "webpack";
+import type { NextConfig } from "next/dist/server/config-shared";
 
 const nextConfig: NextConfig = {
   // Support for PDF viewing with react-pdf
-  webpack: (config) => {
-    // Disable canvas for react-pdf
-    config.resolve.alias.canvas = false;
+  webpack: (config: WebpackConfig) => {
+    // Ensure resolve and alias exist
+    if (!config.resolve) config.resolve = {};
+    if (!config.resolve.alias) config.resolve.alias = {};
+    
+    // Disable canvas for react-pdf (using type assertion to handle the complex type)
+    (config.resolve.alias as Record<string, any>)['canvas'] = false;
     
     // Configure worker loaders properly
     config.module = config.module || {};

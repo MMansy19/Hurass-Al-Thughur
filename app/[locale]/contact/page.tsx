@@ -2,13 +2,11 @@
 
 import { useState } from "react";
 
-export default function ContactPage({
-  params: { locale },
-}: {
+interface ContactPageProps {
   params: { locale: string };
-}) {
-  // Import translations
-  // This is a client component, so we need to use a different approach for translations
+}
+
+export default function ContactPage({ params: { locale } }: ContactPageProps) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -18,40 +16,37 @@ export default function ContactPage({
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState("");
 
-  // Mock function to handle form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitError("");
-    
-    // Simulate API call
+
     try {
-      // Wait for 1 second to simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      
-      // Simulate successful submission
       setSubmitSuccess(true);
       setFormData({ name: "", email: "", message: "" });
-    } catch (error) {
+    } catch {
       setSubmitError("Failed to send message. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Mock contact details
+  // Mock contact info
   const contactDetails = {
     email: "info@hurass.org",
     phone: "+123456789",
     telegram: "@hurass_org",
   };
 
-  // Get translations based on locale
+  // Load locale JSON
   const messages = require(`@/locales/${locale}.json`);
   const { contact } = messages;
   const isRtl = locale === "ar";
@@ -73,24 +68,21 @@ export default function ContactPage({
               <h2 className="text-2xl font-bold mb-6">
                 {locale === "ar" ? "أرسل لنا رسالة" : "Send us a message"}
               </h2>
-              
+
               {submitSuccess ? (
-                <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4" role="alert">
-                  <span className="block sm:inline">
-                    {locale === "ar" 
-                      ? "تم إرسال رسالتك بنجاح. سنتواصل معك قريباً." 
-                      : "Your message has been sent successfully. We will contact you soon."
-                    }
-                  </span>
+                <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+                  {locale === "ar"
+                    ? "تم إرسال رسالتك بنجاح. سنتواصل معك قريباً."
+                    : "Your message has been sent successfully. We will contact you soon."}
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   {submitError && (
-                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                      <span className="block sm:inline">{submitError}</span>
+                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                      {submitError}
                     </div>
                   )}
-                  
+
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
                       {contact.name}
@@ -102,10 +94,10 @@ export default function ContactPage({
                       value={formData.name}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-emerald-500"
                     />
                   </div>
-                  
+
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                       {contact.email}
@@ -117,10 +109,10 @@ export default function ContactPage({
                       value={formData.email}
                       onChange={handleInputChange}
                       required
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-emerald-500"
                     />
                   </div>
-                  
+
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
                       {contact.message}
@@ -132,20 +124,20 @@ export default function ContactPage({
                       onChange={handleInputChange}
                       required
                       rows={5}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                    ></textarea>
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-emerald-500"
+                    />
                   </div>
-                  
+
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors disabled:bg-gray-400"
+                    className="w-full px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 disabled:bg-gray-400"
                   >
                     {isSubmitting ? (
-                      <span className="flex items-center justify-center">
-                        <svg className="animate-spin -mx-1 mx-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      <span className="flex items-center justify-center gap-2">
+                        <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
                         </svg>
                         {locale === "ar" ? "جاري الإرسال..." : "Sending..."}
                       </span>
@@ -156,71 +148,53 @@ export default function ContactPage({
                 </form>
               )}
             </div>
-            
-            {/* Direct Contact */}
+
+            {/* Contact Details */}
             <div>
               <h2 className="text-2xl font-bold mb-6">{contact.directContact}</h2>
-              
               <div className="space-y-6">
-                <div className="flex items-start">
+                <div className="flex items-start gap-4">
                   <div className="bg-emerald-100 p-3 rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    <svg className="h-6 w-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8" />
+                      <path d="M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                   </div>
-                  <div className="mx-4">
+                  <div>
                     <h3 className="font-medium">{contact.emailAddress}</h3>
-                    <a href={`mailto:${contactDetails.email}`} className="text-emerald-600 hover:text-emerald-700 transition-colors">
+                    <a href={`mailto:${contactDetails.email}`} className="text-emerald-600 hover:underline">
                       {contactDetails.email}
                     </a>
                   </div>
                 </div>
-                
-                <div className="flex items-start">
+
+                <div className="flex items-start gap-4">
                   <div className="bg-emerald-100 p-3 rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    <svg className="h-6 w-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path d="M3 5a2 2 0 012-2h3.28l1.5 4.5-2.25 1.13a11 11 0 005.5 5.5l1.13-2.25 4.5 1.5V19a2 2 0 01-2 2h-1C9.72 21 3 14.28 3 6z" />
                     </svg>
                   </div>
-                  <div className="mx-4">
+                  <div>
                     <h3 className="font-medium">{contact.phoneNumber}</h3>
-                    <a href={`tel:${contactDetails.phone}`} className="text-emerald-600 hover:text-emerald-700 transition-colors">
+                    <a href={`tel:${contactDetails.phone}`} className="text-emerald-600 hover:underline">
                       {contactDetails.phone}
                     </a>
                   </div>
                 </div>
-                
-                <div className="flex items-start">
+
+                <div className="flex items-start gap-4">
                   <div className="bg-emerald-100 p-3 rounded-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                    <svg className="h-6 w-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path d="M20 6H4a2 2 0 00-2 2v8a2 2 0 002 2h7v-4H8v-2h3v-1c0-2.8 1.66-4 4.2-4 1.2 0 2.4.1 2.8.14v3.1h-1.9c-1.2 0-1.5.6-1.5 1.4v1.36h3l-.4 2h-2.6V18h5a2 2 0 002-2V8a2 2 0 00-2-2z" />
                     </svg>
                   </div>
-                  <div className="mx-4">
-                    <h3 className="font-medium">{contact.telegram}</h3>
-                    <a href={`https://t.me/${contactDetails.telegram.substring(1)}`} target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:text-emerald-700 transition-colors">
+                  <div>
+                    <h3 className="font-medium">Telegram</h3>
+                    <a href={`https://t.me/${contactDetails.telegram}`} target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:underline">
                       {contactDetails.telegram}
                     </a>
                   </div>
                 </div>
-              </div>
-              
-              <div className="mt-8 p-6 bg-gray-50 rounded-lg">
-                <h3 className="font-bold text-lg mb-4">
-                  {locale === "ar" ? "ساعات العمل" : "Working Hours"}
-                </h3>
-                <p className="text-gray-700">
-                  {locale === "ar" 
-                    ? "الأحد - الخميس: 9:00 صباحًا - 5:00 مساءً" 
-                    : "Sunday - Thursday: 9:00 AM - 5:00 PM"
-                  }
-                </p>
-                <p className="text-gray-700">
-                  {locale === "ar" 
-                    ? "الجمعة - السبت: مغلق" 
-                    : "Friday - Saturday: Closed"
-                  }
-                </p>
               </div>
             </div>
           </div>
