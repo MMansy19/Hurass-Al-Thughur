@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>غير متصل - Hurass Al-Thughur</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #059669, #047857);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            color: white;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            opacity: 0.8;
+        }
+        
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .retry-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0.5rem;
+        }
+        
+        .retry-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .features {
+            margin-top: 2rem;
+            text-align: right;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .feature-icon {
+            width: 16px;
+            height: 16px;
+            margin-left: 0.5rem;
+        }
+        
+        [dir="ltr"] {
+            text-align: left;
+        }
+        
+        [dir="ltr"] .features {
+            text-align: left;
+        }
+        
+        [dir="ltr"] .feature-icon {
+            margin-right: 0.5rem;
+            margin-left: 0;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+        </div>
+        
+        <h1 id="title">غير متصل بالإنترنت</h1>
+        <p id="description">
+            لا يوجد اتصال بالإنترنت حالياً. يرجى التحقق من اتصالك والمحاولة مرة أخرى.
+        </p>
+        
+        <button class="retry-btn" onclick="location.reload()" id="retry-btn">
+            إعادة المحاولة
+        </button>
+        
+        <button class="retry-btn" onclick="goHome()" id="home-btn">
+            الصفحة الرئيسية
+        </button>
+        
+        <div class="features">
+            <div class="feature">
+                <svg class="feature-icon" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <span id="feature1">بعض المحتوى متاح دون اتصال</span>
+            </div>
+            <div class="feature">
+                <svg class="feature-icon" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z"/>
+                </svg>
+                <span id="feature2">المجلات المحفوظة</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Detect language and update content
+        function updateLanguage() {
+            const lang = navigator.language.startsWith('ar') ? 'ar' : 'en';
+            const html = document.documentElement;
+            
+            if (lang === 'en') {
+                html.lang = 'en';
+                html.dir = 'ltr';
+                document.getElementById('title').textContent = 'You\'re Offline';
+                document.getElementById('description').textContent = 'No internet connection. Please check your connection and try again.';
+                document.getElementById('retry-btn').textContent = 'Retry';
+                document.getElementById('home-btn').textContent = 'Home';
+                document.getElementById('feature1').textContent = 'Some content available offline';
+                document.getElementById('feature2').textContent = 'Cached magazines';
+            }
+        }
+        
+        // Go to home page
+        function goHome() {
+            window.location.href = '/';
+        }
+        
+        // Check for online status
+        function checkOnline() {
+            if (navigator.onLine) {
+                location.reload();
+            }
+        }
+        
+        // Listen for online event
+        window.addEventListener('online', checkOnline);
+        
+        // Periodically check connection
+        setInterval(checkOnline, 5000);
+        
+        // Initialize
+        updateLanguage();
+        
+        // Service worker registration for future caching
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js');
+        }
+    </script>
+</body>
+</html>

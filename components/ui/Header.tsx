@@ -50,7 +50,8 @@ const Header = ({ locale, messages }: HeaderProps) => {
       dir={isArabic ? "rtl" : "ltr"}
     >
       <div className="container mx-auto md:px-4 px-2">
-        <div className="flex items-center justify-between">          {/* Logo */}
+        <div className="flex items-center justify-between">          
+          {/* Logo */}
           <Logo 
             locale={locale} 
             isArabic={isArabic} 

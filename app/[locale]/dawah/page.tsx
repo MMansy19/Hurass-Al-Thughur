@@ -22,76 +22,62 @@ export default async function DawahPage({
   params,
 }: {
   params: Promise<{ locale: string }>;
-}) {  const { locale } = await params;
-  // Import translations
+}) {  const { locale } = await params;  // Import translations
   const messages = (await import(`@/locales/${locale}.json`)).default;
-  const { dawah } = messages;
+  const { dawah, common } = messages;
 
   // Mock data for introductory articles
-  const introArticles = [
-    {
+  const introArticles = [    {
       id: 1,
-      title: locale === "ar" ? "ما هو الإسلام؟" : "What is Islam?",
-      excerpt: locale === "ar" 
-        ? "تعرف على أساسيات الإسلام وأركانه الخمسة..." 
-        : "Learn about the basics of Islam and its five pillars...",
+      title: dawah.articles.whatIsIslam.title,
+      excerpt: dawah.articles.whatIsIslam.excerpt,
       image: "/images/what-is-islam.jpg", // Placeholder
-    },
-    {
+    },    {
       id: 2,
-      title: locale === "ar" ? "من هو محمد؟" : "Who is Muhammad?",
-      excerpt: locale === "ar" 
-        ? "تعرف على حياة النبي محمد صلى الله عليه وسلم..." 
-        : "Learn about the life of Prophet Muhammad (PBUH)...",
+      title: dawah.articles.whoIsMuhammad.title,
+      excerpt: dawah.articles.whoIsMuhammad.excerpt,
       image: "/images/prophet-muhammad.jpg", // Placeholder
-    },
-    {
+    },    {
       id: 3,
-      title: locale === "ar" ? "القرآن الكريم" : "The Holy Quran",
-      excerpt: locale === "ar" 
-        ? "معلومات عن القرآن الكريم، كتاب المسلمين المقدس..." 
-        : "Information about the Holy Quran, the sacred book of Muslims...",
+      title: dawah.articles.holyQuran.title,
+      excerpt: dawah.articles.holyQuran.excerpt,
       image: "/images/quran.jpg", // Placeholder
     },
   ];
 
   // Mock data for new Muslim materials
-  const newMuslimMaterials = [
-    {
+  const newMuslimMaterials = [    {
       id: 1,
-      title: locale === "ar" ? "خطواتك الأولى في الإسلام" : "Your First Steps in Islam",
-      type: locale === "ar" ? "دليل PDF" : "PDF Guide",
+      title: dawah.newMuslimMaterials.firstSteps.title,
+      type: dawah.newMuslimMaterials.firstSteps.type,
       image: "/images/first-steps.jpg", // Placeholder
-    },
-    {
+    },    {
       id: 2,
-      title: locale === "ar" ? "تعلم الصلاة" : "Learn How to Pray",
-      type: locale === "ar" ? "فيديو تعليمي" : "Tutorial Video",
+      title: dawah.newMuslimMaterials.learnPrayer.title,
+      type: dawah.newMuslimMaterials.learnPrayer.type,
       image: "/images/prayer-guide.jpg", // Placeholder
-    },
-    {
+    },    {
       id: 3,
-      title: locale === "ar" ? "الأذكار اليومية" : "Daily Remembrances",
-      type: locale === "ar" ? "كتيب PDF" : "PDF Booklet",
+      title: dawah.newMuslimMaterials.dailyRemembrances.title,
+      type: dawah.newMuslimMaterials.dailyRemembrances.type,
       image: "/images/daily-remembrance.jpg", // Placeholder
     },
   ];
-
   // Mock data for downloadable images
   const downloadableImages = [
     {
       id: 1,
-      title: locale === "ar" ? "أركان الإسلام" : "Pillars of Islam",
+      title: dawah.downloadableImages.pillarsOfIslam,
       image: "/images/pillars-of-islam.jpg", // Placeholder
     },
     {
       id: 2,
-      title: locale === "ar" ? "أركان الإيمان" : "Pillars of Faith",
+      title: dawah.downloadableImages.pillarsOfFaith,
       image: "/images/pillars-of-faith.jpg", // Placeholder
     },
     {
       id: 3,
-      title: locale === "ar" ? "خريطة المساجد" : "Mosque Map",
+      title: dawah.downloadableImages.mosqueMap,
       image: "/images/mosque-map.jpg", // Placeholder
     },
   ];
@@ -120,12 +106,11 @@ export default async function DawahPage({
                 </div>
                 <div className="p-4">
                   <h3 className="font-bold text-lg mb-2">{article.title}</h3>
-                  <p className="text-gray-700 mb-4">{article.excerpt}</p>
-                  <Link 
+                  <p className="text-gray-700 mb-4">{article.excerpt}</p>                  <Link 
                     href={`/${locale}/dawah/article/${article.id}`}
                     className="inline-block px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors"
                   >
-                    {locale === "ar" ? "اقرأ المزيد" : "Read More"}
+                    {common.readMore}
                   </Link>
                 </div>
               </div>
@@ -152,12 +137,11 @@ export default async function DawahPage({
                     <h3 className="font-bold text-lg">{material.title}</h3>
                     <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">{material.type}</span>
                   </div>
-                  <div className="mt-4 flex justify-between">
-                    <Link 
+                  <div className="mt-4 flex justify-between">                    <Link 
                       href={`/${locale}/dawah/material/${material.id}`}
                       className="inline-block px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors"
                     >
-                      {locale === "ar" ? "عرض" : "View"}
+                      {common.view}
                     </Link>
                     <button 
                       className="px-4 py-2 border border-emerald-600 text-emerald-600 rounded-md hover:bg-emerald-50 transition-colors"
