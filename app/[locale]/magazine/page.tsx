@@ -28,37 +28,40 @@ export default async function MagazinePage({
   // Import translations
   const messages = (await import(`@/locales/${locale}.json`)).default;
   const { magazine } = messages;
-
   // Mock data for magazine issues
   const magazineIssues = [
     {
       id: 1,
-      title: locale === "ar" ? "العدد الأول" : "Issue 1",
-      description: locale === "ar" 
-        ? "مقدمة في الدعوة الإسلامية" 
-        : "Introduction to Islamic Dawah",
-      coverImage: "/images/magazine-cover-1.jpg", // Placeholder
-      pdfUrl: "/pdfs/magazine-issue-1.pdf", // Placeholder
-      date: locale === "ar" ? "يناير 2025" : "January 2025",
+      title: magazine.issues.issue1.title,
+      description: magazine.issues.issue1.description,
+      coverImage: "/images/1.jpg", // Placeholder
+      pdfUrl: "/pdfs/1.pdf", // Placeholder
+      date: magazine.issues.issue1.date,
     },
     {
       id: 2,
-      title: locale === "ar" ? "العدد الثاني" : "Issue 2",
-      description: locale === "ar" 
-        ? "منهجية الدعوة النبوية" 
-        : "Methodology of Prophetic Dawah",
-      coverImage: "/images/magazine-cover-2.jpg", // Placeholder
-      pdfUrl: "/pdfs/magazine-issue-2.pdf", // Placeholder
-      date: locale === "ar" ? "أبريل 2025" : "April 2025",
+      title: magazine.issues.issue2.title,
+      description: magazine.issues.issue2.description,
+      coverImage: "/images/2.jpg", // Placeholder
+      pdfUrl: "/pdfs/2.pdf", // Placeholder
+      date: magazine.issues.issue2.date,
+    },
+    {
+      id: 3,
+      title: magazine.issues.issue3.title,
+      description: magazine.issues.issue3.description,
+      coverImage: "/images/3.jpg", // Placeholder
+      pdfUrl: "/pdfs/3.pdf", // Placeholder
+      date: magazine.issues.issue3.date,
     },
   ];
 
   // Mock data for magazine categories
   const categories = [
-    { id: 1, name: locale === "ar" ? "العقيدة" : "Aqeedah" },
-    { id: 2, name: locale === "ar" ? "الفقه" : "Fiqh" },
-    { id: 3, name: locale === "ar" ? "السيرة النبوية" : "Prophetic Biography" },
-    { id: 4, name: locale === "ar" ? "التاريخ الإسلامي" : "Islamic History" },
+    { id: 1, name: magazine.categoryNames.aqeedah },
+    { id: 2, name: magazine.categoryNames.fiqh },
+    { id: 3, name: magazine.categoryNames.prophetBiography },
+    { id: 4, name: magazine.categoryNames.islamicHistory },
   ];
 
   // Selected issue for demonstration

@@ -24,87 +24,83 @@ export default async function LibraryPage({
 }: {
   params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params;
-  // Import translations
+  const { locale } = await params;  // Import translations
   const messages = (await import(`@/locales/${locale}.json`)).default;
-  const { library } = messages;
-
+  const { library, common } = messages;
   // Categories for the library
   const categories = [
-    { id: 1, name: locale === "ar" ? "التوحيد" : "Tawheed", count: 12 },
-    { id: 2, name: locale === "ar" ? "العبادات" : "Worship", count: 15 },
-    { id: 3, name: locale === "ar" ? "الأخلاق" : "Ethics", count: 8 },
-    { id: 4, name: locale === "ar" ? "السيرة النبوية" : "Prophet's Biography", count: 10 },
-    { id: 5, name: locale === "ar" ? "العائلة" : "Family", count: 7 },
-    { id: 6, name: locale === "ar" ? "المجتمع" : "Society", count: 5 },
+    { id: 1, name: library.categoryNames.tawheed, count: 12 },
+    { id: 2, name: library.categoryNames.worship, count: 15 },
+    { id: 3, name: library.categoryNames.ethics, count: 8 },
+    { id: 4, name: library.categoryNames.prophetBiography, count: 10 },
+    { id: 5, name: library.categoryNames.family, count: 7 },
+    { id: 6, name: library.categoryNames.society, count: 5 },
   ];
-
   // Mock data for images
   const images = [
     {
       id: 1,
-      title: locale === "ar" ? "أركان الإسلام" : "Pillars of Islam",
-      category: locale === "ar" ? "العبادات" : "Worship",
+      title: library.imageTopics.pillarsOfIslam,
+      category: library.categoryNames.worship,
       thumbnail: "/images/pillars-of-islam-thumb.jpg", // Placeholder
       fullImage: "/images/pillars-of-islam.jpg", // Placeholder
     },
     {
       id: 2,
-      title: locale === "ar" ? "أسماء الله الحسنى" : "Names of Allah",
-      category: locale === "ar" ? "التوحيد" : "Tawheed",
+      title: library.imageTopics.namesOfAllah,
+      category: library.categoryNames.tawheed,
       thumbnail: "/images/names-of-allah-thumb.jpg", // Placeholder
       fullImage: "/images/names-of-allah.jpg", // Placeholder
     },
     {
       id: 3,
-      title: locale === "ar" ? "الصلاة" : "Prayer",
-      category: locale === "ar" ? "العبادات" : "Worship",
+      title: library.imageTopics.prayer,
+      category: library.categoryNames.worship,
       thumbnail: "/images/prayer-thumb.jpg", // Placeholder
       fullImage: "/images/prayer.jpg", // Placeholder
     },
     {
       id: 4,
-      title: locale === "ar" ? "الصوم" : "Fasting",
-      category: locale === "ar" ? "العبادات" : "Worship",
+      title: library.imageTopics.fasting,
+      category: library.categoryNames.worship,
       thumbnail: "/images/fasting-thumb.jpg", // Placeholder
       fullImage: "/images/fasting.jpg", // Placeholder
     },
     {
       id: 5,
-      title: locale === "ar" ? "الحج" : "Hajj",
-      category: locale === "ar" ? "العبادات" : "Worship",
+      title: library.imageTopics.hajj,
+      category: library.categoryNames.worship,
       thumbnail: "/images/hajj-thumb.jpg", // Placeholder
       fullImage: "/images/hajj.jpg", // Placeholder
     },
     {
       id: 6,
-      title: locale === "ar" ? "الزكاة" : "Zakah",
-      category: locale === "ar" ? "العبادات" : "Worship",
+      title: library.imageTopics.zakah,
+      category: library.categoryNames.worship,
       thumbnail: "/images/zakah-thumb.jpg", // Placeholder
       fullImage: "/images/zakah.jpg", // Placeholder
     },
   ];
-
   // Mock data for brochures
   const brochures = [
     {
       id: 1,
-      title: locale === "ar" ? "دليل المسلم الجديد" : "New Muslim Guide",
-      category: locale === "ar" ? "العبادات" : "Worship",
+      title: library.brochureTopics.newMuslimGuide,
+      category: library.categoryNames.worship,
       thumbnail: "/images/new-muslim-guide-thumb.jpg", // Placeholder
       pdfUrl: "/pdfs/new-muslim-guide.pdf", // Placeholder
     },
     {
       id: 2,
-      title: locale === "ar" ? "كيف تصلي" : "How to Pray",
-      category: locale === "ar" ? "العبادات" : "Worship",
+      title: library.brochureTopics.howToPray,
+      category: library.categoryNames.worship,
       thumbnail: "/images/how-to-pray-thumb.jpg", // Placeholder
       pdfUrl: "/pdfs/how-to-pray.pdf", // Placeholder
     },
     {
       id: 3,
-      title: locale === "ar" ? "أدعية من القرآن والسنة" : "Supplications from Quran and Sunnah",
-      category: locale === "ar" ? "العبادات" : "Worship",
+      title: library.brochureTopics.supplications,
+      category: library.categoryNames.worship,
       thumbnail: "/images/supplications-thumb.jpg", // Placeholder
       pdfUrl: "/pdfs/supplications.pdf", // Placeholder
     },
@@ -147,7 +143,7 @@ export default async function LibraryPage({
                 className="bg-gray-50 border border-gray-200 rounded-lg p-4 text-center hover:bg-emerald-50 hover:border-emerald-200 transition-colors"
               >
                 <h3 className="font-bold mb-2">{category.name}</h3>
-                <span className="text-sm text-gray-500">{category.count} {locale === "ar" ? "عنصر" : "items"}</span>
+                <span className="text-sm text-gray-500">{category.count} {common.items}</span>
               </Link>
             ))}
           </div>
@@ -158,12 +154,11 @@ export default async function LibraryPage({
       <section className="bg-gray-50 py-10">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold">{library.images}</h2>
-            <Link 
+            <h2 className="text-2xl font-bold">{library.images}</h2>            <Link 
               href={`/${locale}/library/images`}
               className="text-emerald-600 hover:text-emerald-700 transition-colors"
             >
-              {locale === "ar" ? "عرض الكل" : "View All"}
+              {common.viewAll}
             </Link>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
@@ -197,12 +192,11 @@ export default async function LibraryPage({
       <section>
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold">{library.brochures}</h2>
-            <Link 
+            <h2 className="text-2xl font-bold">{library.brochures}</h2>            <Link 
               href={`/${locale}/library/brochures`}
               className="text-emerald-600 hover:text-emerald-700 transition-colors"
             >
-              {locale === "ar" ? "عرض الكل" : "View All"}
+              {common.viewAll}
             </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">

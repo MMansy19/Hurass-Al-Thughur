@@ -3,10 +3,11 @@ interface SEOProps {
   description: string;
   locale: string;
   pageName: string;
+  siteName?: string;
 }
 
 // This is a server component that generates appropriate SEO metadata
-export default function SEO({ title, description, locale, pageName }: SEOProps) {
+export default function SEO({ title, description, locale, pageName, siteName }: SEOProps) {
   const alternateLocale = locale === "ar" ? "en" : "ar";
   const url = pageName === "" ? `/${locale}` : `/${locale}/${pageName}`;
   const alternateUrl = pageName === "" ? `/${alternateLocale}` : `/${alternateLocale}/${pageName}`;
@@ -18,8 +19,8 @@ export default function SEO({ title, description, locale, pageName }: SEOProps) 
       title,
       description,
       url,
-        siteName: locale === "ar" ? "حُراس الثغور" : "Hurass Al-Thughur",
-      locale: locale === "ar" ? "ar_SA" : "en_US",
+        siteName: siteName || (locale === "ar" ? "حُراس الثغور" : "Hurass Al-Thughur"),
+      locale: locale === "ar" ? "ar-SA" : "en-US",
       type: "website",
     },
     alternates: {

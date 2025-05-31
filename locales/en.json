@@ -1,5 +1,4 @@
-{
-  "common": {
+{  "common": {
     "language": "English",
     "switchLanguage": "العربية",
     "home": "Home",
@@ -17,7 +16,9 @@
     "loading": "Loading...",
     "sending": "Sending...",
     "madeWith": "Made with",
-    "by": "by"
+    "by": "by",
+    "goToLibrary": "Go to Library",
+    "siteName": "Hurass Al-Thughur"
   },
   "home": {
     "title": "Hurass Home",
@@ -30,8 +31,7 @@
     "magazineDescription": "Browse magazine issues and PDF files with high quality",
     "dawahDescription": "Introductory materials about Islam for non-Muslims",
     "libraryDescription": "Comprehensive library of images and brochures"
-  },
-  "magazine": {
+  },  "magazine": {
     "title": "Hurass Magazine",
     "description": "Browse magazine issues and PDF files with high quality",
     "latestIssues": "Latest Issues",
@@ -50,7 +50,30 @@
     "fullscreen": "Fullscreen",
     "fitWidth": "Fit Width",
     "fitPage": "Fit Page",
-    "print": "Print"
+    "print": "Print",
+    "issues": {
+      "issue1": {
+      "title": "Not Quranists: Instinct and Covenant",
+      "description": "An exploration of the concept of instinct, the covenant, and the restricted meaning of worship in Islamic thought.",
+      "date": "2025"
+      },
+      "issue2": {
+      "title": "Tawhid Al-Uluhiyyah and Linguistic Weakness", 
+      "description": "A study on the doctrine of Tawhid Al-Uluhiyyah and the impact of linguistic weakness on denying what is not rightfully denied.",
+      "date": "2025"
+      },
+      "issue3": {
+      "title": "Proofs of Prophethood and Orientalist Narratives",
+      "description": "An analysis of the proofs of prophethood, addressing orientalist narratives and doubts, including the Battle of Zallaqa.", 
+      "date": "2025"
+      }
+    },
+    "categoryNames": {
+      "aqeedah": "Aqeedah",
+      "fiqh": "Fiqh", 
+      "prophetBiography": "Prophetic Biography",
+      "islamicHistory": "Islamic History"
+    }
   },
   "dawah": {
     "title": "Dawah Outreach",
@@ -142,8 +165,7 @@
       "howToPray": "How to Pray",
       "supplications": "Supplications from Quran and Sunnah"
     }
-  },
-  "contact": {
+  },  "contact": {
     "title": "Contact Us",
     "description": "We'd love to hear from you. Send us a message or contact us directly.",
     "name": "Name",
@@ -162,21 +184,35 @@
     "callUs": "Call Us",
     "address": "123 Example Street, Cairo, Egypt",
     "email_contact": "contact@hurass-al-thughur.org",
-    "phone": "+20 12 3456 7890"
-  },
-  "footer": {
+    "phone": "+20 12 3456 7890",
+    "formTitle": "Contact Form",
+    "thankYou": "Thank you for your message! We will get back to you soon.",
+    "sendAnother": "Send another message"
+  },  "footer": {
     "rightsReserved": "© 2025 Hurass Al-Thughur. All rights reserved.",
     "terms": "Terms and Conditions",
     "privacy": "Privacy Policy",
     "quickLinks": "Quick Links",
     "contactUs": "Contact Us",
     "followUs": "Follow Us",
-    "aboutFooter": "Islamic outreach platform seeking to spread accurate knowledge about Islam"
-  },
-  "notFound": {
+    "aboutFooter": "Islamic outreach platform seeking to spread accurate knowledge about Islam",
+    "location": "Saudi Arabia",
+    "authorName": "Mahmoud Mansy",
+    "logoText": "Hurass Al-Thughur",
+    "logoDescription": "Islamic outreach platform seeking to spread accurate knowledge about Islam",
+    "madeWith": "Made with",
+    "by": "by"
+  },  "notFound": {
     "title": "PDF Not Found",
     "message": "The PDF file you're looking for doesn't exist or has been moved.",
-    "backToLibrary": "Back to Library"
+    "backToLibrary": "Back to Library",
+    "fileNotFound": "File Not Found",
+    "fileMessage": "Sorry, we couldn't find the requested PDF file.",
+    "returnToLibrary": "Return to Library",
+    "goToLibrary": "Go to Library",
+    "pageNotAvailable": "Page Not Available",
+    "selectPDF": "Please select a PDF file to view from the library page.",
+    "goToHome": "Go to Home Page"
   },
   "errors": {
     "pdfNotFound": "PDF file not found",

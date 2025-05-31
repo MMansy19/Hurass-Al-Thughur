@@ -5,9 +5,13 @@ import Link from "next/link";
 
 interface FooterLogoProps {
   locale: string;
+  messages: {
+    logoText: string;
+    logoDescription: string;
+  };
 }
 
-export default function FooterLogo({ locale }: FooterLogoProps) {
+export default function FooterLogo({ locale, messages }: FooterLogoProps) {
   return (
     <div className="md:col-span-1">
       <Link href={`/${locale}`} className="flex items-center group">
@@ -19,16 +23,13 @@ export default function FooterLogo({ locale }: FooterLogoProps) {
             height={50}
             className="transition-transform group-hover:scale-110 duration-300"
           />
-        </div>
-              <span className="font-bold text-2xl text-emerald-100 group-hover:text-white transition-colors">
-          {locale === "ar" ? "حُراس الثغور" : "Hurass Al-Thughur"}
+        </div>              <span className="font-bold text-2xl text-emerald-100 group-hover:text-white transition-colors">
+          {messages.logoText}
         </span>
       </Link>
       
       <p className="text-emerald-100 mt-3">
-        {locale === "ar" 
-          ? "منصة دعوية تسعى لنشر المعرفة الصحيحة عن الإسلام" 
-          : "Islamic outreach platform seeking to spread accurate knowledge about Islam"}
+        {messages.logoDescription}
       </p>
     </div>
   );

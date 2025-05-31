@@ -10,9 +10,24 @@ import FooterBottom from "./footer/FooterBottom";
 interface FooterProps {
   locale: string;
   messages: {
+    common: {
+      home: string;
+      magazine: string;
+      dawah: string;
+      library: string;
+    };
     rightsReserved: string;
     terms: string;
     privacy: string;
+    quickLinks: string;
+    contactUs: string;
+    followUs: string;
+    location: string;
+    authorName: string;
+    madeWith: string;
+    by: string;
+    logoText: string;
+    logoDescription: string;
   };
 }
 
@@ -84,28 +99,27 @@ const YoutubeIcon = () => (
   </svg>
 );
 
-const Footer = ({ locale, messages }: FooterProps) => {
-  // Quick Links configuration
+const Footer = ({ locale, messages }: FooterProps) => {  // Quick Links configuration
   const quickLinks = [
     {
       href: `/${locale}`,
       icon: <HomeIcon />,
-      label: locale === "ar" ? "الرئيسية" : "Home"
+      label: messages.common.home
     },
     {
       href: `/${locale}/magazine`,
       icon: <MagazineIcon />,
-      label: locale === "ar" ? "المجلة" : "Magazine"
+      label: messages.common.magazine
     },
     {
       href: `/${locale}/dawah`,
       icon: <DawahIcon />,
-      label: locale === "ar" ? "الدعوة" : "Dawah"
+      label: messages.common.dawah
     },
     {
       href: `/${locale}/library`,
       icon: <LibraryIcon />,
-      label: locale === "ar" ? "المكتبة" : "Library"
+      label: messages.common.library
     }
   ];
 
@@ -121,7 +135,7 @@ const Footer = ({ locale, messages }: FooterProps) => {
     },
     {
       icon: <LocationIcon />,
-      text: locale === "ar" ? "المملكة العربية السعودية" : "Saudi Arabia"
+      text: messages.location
     }
   ];
 
@@ -152,28 +166,36 @@ const Footer = ({ locale, messages }: FooterProps) => {
     <footer className="bg-emerald-900 text-white mt-auto">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <FooterLogo locale={locale} />
-          
-          <FooterNavigation
-            locale={locale}
-            title={locale === "ar" ? "روابط سريعة" : "Quick Links"}
+          <FooterLogo 
+            locale={locale} 
+            messages={{
+              logoText: messages.logoText,
+              logoDescription: messages.logoDescription
+            }} 
+          />
+            <FooterNavigation
+            title={messages.quickLinks}
             links={quickLinks}
           />
           
           <FooterContact
-            title={locale === "ar" ? "تواصل معنا" : "Contact Us"}
+            title={messages.contactUs}
             contactItems={contactInfo}
           />
           
           <FooterSocial
-            title={locale === "ar" ? "تابعنا" : "Follow Us"}
+            title={messages.followUs}
             socialLinks={socialLinks}
           />
-        </div>
-        
+        </div>        
         <FooterBottom
           locale={locale}
           copyright={messages.rightsReserved}
+          messages={{
+            madeWith: messages.madeWith,
+            by: messages.by,
+            authorName: messages.authorName
+          }}
         />
       </div>
     </footer>

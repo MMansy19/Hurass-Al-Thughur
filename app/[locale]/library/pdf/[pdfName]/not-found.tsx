@@ -3,9 +3,10 @@ import Link from "next/link";
 export default async function NotFound({
   params
 }: {
-  params?: { locale: string }
+  params?: Promise<{ locale: string }>
 }) {
-  const locale = params?.locale || "ar";
+  const { locale } = await params || { locale: "ar" };
+  const messages = (await import(`@/locales/${locale}.json`)).default;
   
   return (
     <div className="min-h-[60vh] flex flex-col items-center justify-center text-center">
@@ -15,13 +16,11 @@ export default async function NotFound({
         </svg>
         
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          {locale === "ar" ? "الملف غير موجود" : "File Not Found"}
+          {messages.notFound.fileNotFound}
         </h1>
         
         <p className="text-gray-600 mb-6">
-          {locale === "ar" 
-            ? "عذرًا، لم نتمكن من العثور على ملف PDF المطلوب." 
-            : "Sorry, we couldn't find the requested PDF file."}
+          {messages.notFound.fileMessage}
         </p>
         
         <div className="flex flex-col space-y-3">
@@ -29,14 +28,14 @@ export default async function NotFound({
             href={`/${locale}/library`}
             className="bg-emerald-600 text-white py-2 px-4 rounded-md hover:bg-emerald-700 transition-colors shadow-sm"
           >
-            {locale === "ar" ? "العودة إلى المكتبة" : "Return to Library"}
+            {messages.notFound.returnToLibrary}
           </Link>
           
           <Link 
             href={`/${locale}`}
             className="text-emerald-600 hover:text-emerald-700 transition-colors"
           >
-            {locale === "ar" ? "الذهاب إلى الصفحة الرئيسية" : "Go to Home Page"}
+            {messages.notFound.goToHome}
           </Link>
         </div>
       </div>

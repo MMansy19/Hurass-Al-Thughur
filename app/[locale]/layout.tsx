@@ -69,7 +69,7 @@ export default async function LocaleLayout({
         <div className="h-16 md:h-20"></div>
           <div className="animate-fadeIn">{children}</div>
         </main>
-        <Footer locale={locale} messages={messages.footer} />
+        <Footer locale={locale} messages={{...messages.footer, common: messages.common}} />
       </body>
     </html>
   );

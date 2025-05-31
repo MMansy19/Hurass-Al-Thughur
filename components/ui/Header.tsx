@@ -25,6 +25,7 @@ interface HeaderProps {
     dawah: string;
     library: string;
     contact: string;
+    siteName: string;
   };
 }
 
@@ -53,6 +54,7 @@ const Header = ({ locale, messages }: HeaderProps) => {
           <Logo 
             locale={locale} 
             isArabic={isArabic} 
+            messages={{ siteName: messages.siteName }}
           />
             {/* Desktop Navigation */}
           <DesktopNavigation 

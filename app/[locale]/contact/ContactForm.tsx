@@ -2,7 +2,12 @@
 
 import { useState } from "react";
 
-export default function ContactForm() {
+interface ContactFormProps {
+  locale: string;
+  messages: any;
+}
+
+export default function ContactForm({ locale, messages }: ContactFormProps) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -20,9 +25,8 @@ export default function ContactForm() {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       setSubmitSuccess(true);
-      setFormData({ name: "", email: "", message: "" });
-    } catch {
-      setSubmitError("Failed to send message. Please try again.");
+      setFormData({ name: "", email: "", message: "" });    } catch {
+      setSubmitError(messages.contact.error);
     } finally {
       setIsSubmitting(false);
     }
@@ -38,31 +42,29 @@ export default function ContactForm() {
     }));
   };
 
-  return (
-    <div className="w-full max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
+  return (    <div className="w-full max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-semibold mb-6 text-emerald-700">
-        Contact Form
+        {messages.contact.formTitle}
       </h2>
       {submitSuccess ? (
         <div className="bg-emerald-100 p-4 rounded-md mb-6">
           <p className="text-emerald-700">
-            Thank you for your message! We will get back to you soon.
+            {messages.contact.thankYou}
           </p>
           <button
             onClick={() => setSubmitSuccess(false)}
             className="mt-2 text-emerald-700 font-medium underline"
           >
-            Send another message
+            {messages.contact.sendAnother}
           </button>
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label
+          <div>            <label
               htmlFor="name"
               className="block text-sm font-medium text-gray-700"
             >
-              Name
+              {messages.contact.name}
             </label>
             <input
               type="text"
@@ -75,12 +77,11 @@ export default function ContactForm() {
             />
           </div>
 
-          <div>
-            <label
+          <div>            <label
               htmlFor="email"
               className="block text-sm font-medium text-gray-700"
             >
-              Email
+              {messages.contact.email}
             </label>
             <input
               type="email"
@@ -93,12 +94,11 @@ export default function ContactForm() {
             />
           </div>
 
-          <div>
-            <label
+          <div>            <label
               htmlFor="message"
               className="block text-sm font-medium text-gray-700"
             >
-              Message
+              {messages.contact.message}
             </label>
             <textarea
               id="message"
@@ -119,7 +119,7 @@ export default function ContactForm() {
                 isSubmitting ? "opacity-70 cursor-not-allowed" : ""
               }`}
             >
-              {isSubmitting ? "Sending..." : "Send Message"}
+              {isSubmitting ? messages.contact.sending : messages.contact.send}
             </button>
           </div>
 
@@ -131,29 +131,28 @@ export default function ContactForm() {
         </form>
       )}
 
-      <div className="mt-10 space-y-4">
-        <div>
-          <h3 className="text-lg font-medium text-gray-900">Visit Us</h3>
+      <div className="mt-10 space-y-4">        <div>
+          <h3 className="text-lg font-medium text-gray-900">{messages.contact.visitUs}</h3>
           <p className="mt-1 text-gray-600">
-            123 Example Street, Cairo, Egypt
+            {messages.contact.address}
           </p>
         </div>
 
         <div>
-          <h3 className="text-lg font-medium text-gray-900">Email Us</h3>
+          <h3 className="text-lg font-medium text-gray-900">{messages.contact.emailUs}</h3>
           <p className="mt-1 text-gray-600">
             <a
-              href="mailto:contact@hurass-al-thughur.org"
+              href={`mailto:${messages.contact.email_contact}`}
               className="text-emerald-600 hover:underline"
             >
-              contact@hurass-al-thughur.org
+              {messages.contact.email_contact}
             </a>
           </p>
         </div>
 
         <div>
-          <h3 className="text-lg font-medium text-gray-900">Call Us</h3>
-          <p className="mt-1 text-gray-600">+20 12 3456 7890</p>
+          <h3 className="text-lg font-medium text-gray-900">{messages.contact.callUs}</h3>
+          <p className="mt-1 text-gray-600">{messages.contact.phone}</p>
         </div>
       </div>
     </div>

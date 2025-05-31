@@ -7,9 +7,12 @@ import styles from '../Header.module.css';
 interface LogoProps {
   locale: string;
   isArabic: boolean;
+  messages: {
+    siteName: string;
+  };
 }
 
-const Logo = ({ locale, isArabic }: LogoProps) => {
+const Logo = ({ locale, isArabic, messages }: LogoProps) => {
   return (
     <Link href={`/${locale}`} className={`flex items-center group ${styles.logoAnimation}`}>
       <div className="relative overflow-hidden rounded-full border-2 border-emerald-500 md:mr-3 rtl:md:mr-0 rtl:md:ml-3 mr-2 rtl:mr-0 rtl:ml-2">
@@ -21,9 +24,8 @@ const Logo = ({ locale, isArabic }: LogoProps) => {
           className="transition-transform group-hover:scale-110 duration-300 sm:w-12 ltr:w-10"
           priority
         />
-      </div>
-      <span className={`font-bold ltr:text-lg text-2xl sm:text-2xl text-emerald-700 group-hover:text-emerald-800 transition-colors`}>
-        {isArabic ? "حُراس الثغور" : "Hurass Al-Thughur"}
+      </div>      <span className={`font-bold ltr:text-lg text-2xl sm:text-2xl text-emerald-700 group-hover:text-emerald-800 transition-colors`}>
+        {messages.siteName}
       </span>
     </Link>
   );
