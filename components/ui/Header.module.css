@@ -1,4 +1,19 @@
-/* Header styling and animations */
+/* =============================================================================
+   Header Main Container
+   ========================================================================== */
+.headerScrolled {
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Logo animations */
+.logoAnimation:hover img {
+  transform: scale(1.1);
+}
+
+/* =============================================================================
+   Navigation Items
+   ========================================================================== */
 .navItem {
   position: relative;
 }
@@ -26,11 +41,6 @@
   opacity: 1;
 }
 
-.headerScrolled {
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
-
 /* RTL Support */
 [dir="rtl"] .navItem::after {
   left: auto;
@@ -38,7 +48,10 @@
   transform: translateX(50%);
 }
 
-/* Mobile menu animations */
+/* =============================================================================
+   Mobile Menu
+   ========================================================================== */
 .mobileMenu {
   transition: transform 0.3s ease-in-out, top 0.3s ease-in-out, height 0.3s ease-in-out;
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
 }
