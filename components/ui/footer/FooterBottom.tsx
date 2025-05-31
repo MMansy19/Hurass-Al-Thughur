@@ -11,7 +11,7 @@ export default function FooterBottom({ locale, copyright }: FooterBottomProps) {
   return (
     <div className="border-t border-emerald-800 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center">
       <p className="mb-4 md:mb-0 text-emerald-200">{copyright}</p>
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center gap-2">
         <span className="text-emerald-200">
           {locale === "ar" ? "صُنع بكل حب" : "Made with"} 
           <span className="text-red-400 mx-1">❤</span> 

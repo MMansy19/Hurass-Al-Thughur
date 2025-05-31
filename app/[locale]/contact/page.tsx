@@ -1,7 +1,7 @@
 import ContactForm from './ContactForm';
 
-export default async function ContactPage() {
-    return (
+export default function ContactPage() {
+  return (
     <div className="space-y-12">
       <section className="bg-emerald-700 text-white py-10 rounded-lg">
         <div className="container mx-auto px-4 text-center">
@@ -10,8 +10,7 @@ export default async function ContactPage() {
             We&apos;d love to hear from you. Send us a message or contact us directly.
           </p>
         </div>
-      </section>
-
+      </section>      
       <section>
         <div className="container mx-auto px-4">
           <ContactForm />

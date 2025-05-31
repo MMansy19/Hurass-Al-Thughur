@@ -6,7 +6,18 @@
     "magazine": "Magazine",
     "dawah": "Dawah",
     "library": "Library",
-    "contact": "Contact"
+    "contact": "Contact",
+    "readMore": "Read More",
+    "view": "View",
+    "viewAll": "View All",
+    "preview": "Preview",
+    "download": "Download",
+    "share": "Share",
+    "items": "items",
+    "loading": "Loading...",
+    "sending": "Sending...",
+    "madeWith": "Made with",
+    "by": "by"
   },
   "home": {
     "title": "Hurass Home",
@@ -15,14 +26,18 @@
     "about": "About the Team",
     "aboutText": "Hurass Al-Thughur team is a group of Islamic preachers and specialists in the field of Islamic dawah, seeking to spread accurate knowledge about Islam and provide useful dawah materials.",
     "sections": "Website Sections",
-    "exploreMore": "Explore More"
+    "exploreMore": "Explore More",
+    "magazineDescription": "Browse magazine issues and PDF files with high quality",
+    "dawahDescription": "Introductory materials about Islam for non-Muslims",
+    "libraryDescription": "Comprehensive library of images and brochures"
   },
   "magazine": {
     "title": "Hurass Magazine",
     "description": "Browse magazine issues and PDF files with high quality",
     "latestIssues": "Latest Issues",
     "allIssues": "All Issues",
-    "categories": "Categories",    "readNow": "Read Now",
+    "categories": "Categories",
+    "readNow": "Read Now",
     "download": "Download",
     "previousPage": "Previous",
     "nextPage": "Next",
@@ -44,8 +59,42 @@
     "newMuslims": "New Muslims",
     "materials": "Dawah Materials",
     "download": "Download",
-    "share": "Share"
-  },  "library": {
+    "share": "Share",
+    "articles": {
+      "whatIsIslam": {
+        "title": "What is Islam?",
+        "excerpt": "Learn about the basics of Islam and its five pillars..."
+      },
+      "whoIsMuhammad": {
+        "title": "Who is Muhammad?",
+        "excerpt": "Learn about the life of Prophet Muhammad (PBUH)..."
+      },
+      "holyQuran": {
+        "title": "The Holy Quran",
+        "excerpt": "Information about the Holy Quran, the sacred book of Muslims..."
+      }
+    },
+    "newMuslimMaterials": {
+      "firstSteps": {
+        "title": "Your First Steps in Islam",
+        "type": "PDF Guide"
+      },
+      "learnPrayer": {
+        "title": "Learn How to Pray",
+        "type": "Tutorial Video"
+      },
+      "dailyRemembrances": {
+        "title": "Daily Remembrances",
+        "type": "PDF Booklet"
+      }
+    },
+    "downloadableImages": {
+      "pillarsOfIslam": "Pillars of Islam",
+      "pillarsOfFaith": "Pillars of Faith",
+      "mosqueMap": "Mosque Map"
+    }
+  },
+  "library": {
     "title": "Dawah Library",
     "description": "Comprehensive library of images, brochures and PDF files",
     "categories": "Categories",
@@ -54,7 +103,8 @@
     "pdfs": "PDF Files",
     "browsePDFs": "Browse PDF Files",
     "viewPDF": "View PDF",
-    "noPDFsFound": "No PDF files found",    "search": "Search",
+    "noPDFsFound": "No PDF files found",
+    "search": "Search",
     "searchPlaceholder": "Search PDF files...",
     "download": "Download",
     "preview": "Preview",
@@ -70,24 +120,68 @@
     "fullscreen": "Fullscreen",
     "fitWidth": "Fit Width",
     "fitPage": "Fit Page",
-    "print": "Print"
+    "print": "Print",
+    "categoryNames": {
+      "tawheed": "Tawheed",
+      "worship": "Worship",
+      "ethics": "Ethics",
+      "prophetBiography": "Prophet's Biography",
+      "family": "Family",
+      "society": "Society"
+    },
+    "imageTopics": {
+      "pillarsOfIslam": "Pillars of Islam",
+      "namesOfAllah": "Names of Allah",
+      "prayer": "Prayer",
+      "fasting": "Fasting",
+      "hajj": "Hajj",
+      "zakah": "Zakah"
+    },
+    "brochureTopics": {
+      "newMuslimGuide": "New Muslim Guide",
+      "howToPray": "How to Pray",
+      "supplications": "Supplications from Quran and Sunnah"
+    }
   },
   "contact": {
     "title": "Contact Us",
-    "description": "Contact us via email or Telegram",
+    "description": "We'd love to hear from you. Send us a message or contact us directly.",
     "name": "Name",
     "email": "Email",
     "message": "Message",
-    "send": "Send",
+    "send": "Send Message",
+    "sending": "Sending...",
+    "success": "Message sent successfully!",
+    "error": "Failed to send message. Please try again.",
     "directContact": "Direct Contact",
     "emailAddress": "Email Address",
     "phoneNumber": "Phone Number",
-    "telegram": "Telegram"
+    "telegram": "Telegram",
+    "visitUs": "Visit Us",
+    "emailUs": "Email Us",
+    "callUs": "Call Us",
+    "address": "123 Example Street, Cairo, Egypt",
+    "email_contact": "contact@hurass-al-thughur.org",
+    "phone": "+20 12 3456 7890"
   },
   "footer": {
     "rightsReserved": "© 2025 Hurass Al-Thughur. All rights reserved.",
     "terms": "Terms and Conditions",
-    "privacy": "Privacy Policy"
+    "privacy": "Privacy Policy",
+    "quickLinks": "Quick Links",
+    "contactUs": "Contact Us",
+    "followUs": "Follow Us",
+    "aboutFooter": "Islamic outreach platform seeking to spread accurate knowledge about Islam"
+  },
+  "notFound": {
+    "title": "PDF Not Found",
+    "message": "The PDF file you're looking for doesn't exist or has been moved.",
+    "backToLibrary": "Back to Library"
+  },
+  "errors": {
+    "pdfNotFound": "PDF file not found",
+    "loadingError": "Error loading content",
+    "networkError": "Network connection error"
   },
   "seo": {
     "keywords": "Hurass Al-Thughur, Islamic Outreach, Islamic Magazine, Dawah Library, Introduction to Islam"

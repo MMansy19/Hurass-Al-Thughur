@@ -126,7 +126,7 @@ export default async function MagazinePage({
       
       {/* PDF Viewer Section */}
       <PDFViewerSection 
-        pdfUrl="/pdfs/1.pdf"
+        pdfUrl="https://drive.google.com/file/d/1fYPJGRKRD7iZVe0yheliURNuSQQswgJw/view?usp=sharing"
         title={selectedIssue.title}
         messages={magazine}
       />      {/* Categories Section */}

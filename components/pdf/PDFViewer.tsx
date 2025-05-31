@@ -47,30 +47,17 @@ interface PDFViewerProps {
   };
 }
 
-export default function PDFViewer({ pdfFile, messages }: PDFViewerProps) {
-  // Enhanced state management
+export default function PDFViewer({ pdfFile, messages }: PDFViewerProps) {  // Enhanced state management
   const [viewMode, setViewMode] = useState<'single' | 'continuous' | 'facing'>('single');
   const [showSidebar, setShowSidebar] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [searchText, setSearchText] = useState('');
-  const [searchResults, setSearchResults] = useState<any[]>([]);
-  const [currentSearchResult, setCurrentSearchResult] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
-
   // Configure PDF.js worker once on component mount
   useEffect(() => {
-    const setupWorker = async () => {
-      try {
-        // First try to use the local API route
-        pdfjs.GlobalWorkerOptions.workerSrc = `/api/pdf-worker`;
-        
-        // Test if the worker loads properly
-        // If it fails, it will fall back to CDN in the catch block
-      } catch (error) {
-        console.warn("Failed to set local PDF worker, using CDN fallback:", error);
-        // Use CDN as fallback with the exact version from package
-        pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.8.69/pdf.worker.min.js`;
-      }
+    const setupWorker = () => {
+      // Use local worker file with correct version matching pdfjs-dist 4.8.69
+      pdfjs.GlobalWorkerOptions.workerSrc = `/pdf-worker/pdf.worker.min.mjs`;
     };
     
     setupWorker();
@@ -118,10 +105,9 @@ export default function PDFViewer({ pdfFile, messages }: PDFViewerProps) {
           toggleFullscreen();
           break;
       }
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
+    };    document.addEventListener('keydown', handleKeyDown);
     return () => document.removeEventListener('keydown', handleKeyDown);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Use custom hook for PDF viewer functionality
@@ -137,19 +123,19 @@ export default function PDFViewer({ pdfFile, messages }: PDFViewerProps) {
     onDocumentLoadSuccess,
     setPageNumber
   } = usePDFViewer();
-
   // Enhanced zoom functions
   const fitWidth = useCallback(() => {
-    if (containerRef.current) {      const containerWidth = containerRef.current.offsetWidth - 40; // Account for padding
-      const pageWidth = 595; // Standard A4 width in points
+    if (containerRef.current) {
+      // const containerWidth = containerRef.current.offsetWidth - 40; // Account for padding
+      // const pageWidth = 595; // Standard A4 width in points
       // const newScale = containerWidth / pageWidth;
       // setScale(newScale); // Will need to add this to the hook
     }
   }, []);
-
   const fitPage = useCallback(() => {
-    if (containerRef.current) {      const containerHeight = containerRef.current.offsetHeight - 100; // Account for controls
-      const pageHeight = 842; // Standard A4 height in points
+    if (containerRef.current) {
+      // const containerHeight = containerRef.current.offsetHeight - 100; // Account for controls
+      // const pageHeight = 842; // Standard A4 height in points
       // const newScale = containerHeight / pageHeight;
       // setScale(newScale); // Will need to add this to the hook
     }
@@ -224,14 +210,12 @@ export default function PDFViewer({ pdfFile, messages }: PDFViewerProps) {
             icon={nextIcon}
             isNext={true}
           />
-        </div>
-
-        {/* Search Control */}
+        </div>        {/* Search Control */}
         <SearchControl
           value={searchText}
           onChange={handleSearch}
-          results={searchResults.length}
-          currentResult={currentSearchResult}
+          results={0}
+          currentResult={0}
           placeholder={messages.search}
         />
 

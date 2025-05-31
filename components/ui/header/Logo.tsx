@@ -7,10 +7,9 @@ import styles from '../Header.module.css';
 interface LogoProps {
   locale: string;
   isArabic: boolean;
-  scrolled: boolean;
 }
 
-const Logo = ({ locale, isArabic, scrolled }: LogoProps) => {
+const Logo = ({ locale, isArabic }: LogoProps) => {
   return (
     <Link href={`/${locale}`} className={`flex items-center group ${styles.logoAnimation}`}>
       <div className="relative overflow-hidden rounded-full border-2 border-emerald-500 md:mr-3 rtl:md:mr-0 rtl:md:ml-3 mr-2 rtl:mr-0 rtl:ml-2">

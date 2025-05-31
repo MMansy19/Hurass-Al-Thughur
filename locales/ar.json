@@ -6,7 +6,18 @@
     "magazine": "المجلة",
     "dawah": "الدعوة",
     "library": "المكتبة",
-    "contact": "اتصل بنا"
+    "contact": "اتصل بنا",
+    "readMore": "اقرأ المزيد",
+    "view": "عرض",
+    "viewAll": "عرض الكل",
+    "preview": "معاينة",
+    "download": "تحميل",
+    "share": "مشاركة",
+    "items": "عنصر",
+    "loading": "جاري التحميل...",
+    "sending": "جاري الإرسال...",
+    "madeWith": "صُنع بكل حب",
+    "by": "بواسطة"
   },
   "home": {
     "title": "حُراس الثغور - الرئيسية",
@@ -15,14 +26,18 @@
     "about": "نبذة عن الفريق",
     "aboutText": "فريق حراس هو مجموعة من الدعاة والمتخصصين في مجال الدعوة الإسلامية، يسعون لنشر المعرفة الصحيحة عن الإسلام وتقديم المواد الدعوية المفيدة.",
     "sections": "أقسام الموقع",
-    "exploreMore": "استكشف المزيد"
+    "exploreMore": "استكشف المزيد",
+    "magazineDescription": "تصفح أعداد المجلة وملفات PDF بأعلى جودة",
+    "dawahDescription": "مواد تعريفية بالإسلام ودعوة لغير المسلمين",
+    "libraryDescription": "مكتبة شاملة من الصور والمطويات"
   },
   "magazine": {
     "title": "مجلة حُراس",
     "description": "تصفح أعداد المجلة وملفات PDF بأعلى جودة",
     "latestIssues": "آخر الإصدارات",
     "allIssues": "جميع الإصدارات",
-    "categories": "التصنيفات",    "readNow": "اقرأ الآن",
+    "categories": "التصنيفات",
+    "readNow": "اقرأ الآن",
     "download": "تحميل",
     "previousPage": "السابق",
     "nextPage": "التالي",
@@ -44,8 +59,42 @@
     "newMuslims": "المسلم الجديد",
     "materials": "المواد الدعوية",
     "download": "تحميل",
-    "share": "مشاركة"
-  },  "library": {
+    "share": "مشاركة",
+    "articles": {
+      "whatIsIslam": {
+        "title": "ما هو الإسلام؟",
+        "excerpt": "تعرف على أساسيات الإسلام وأركانه الخمسة..."
+      },
+      "whoIsMuhammad": {
+        "title": "من هو محمد؟",
+        "excerpt": "تعرف على حياة النبي محمد صلى الله عليه وسلم..."
+      },
+      "holyQuran": {
+        "title": "القرآن الكريم",
+        "excerpt": "معلومات عن القرآن الكريم، كتاب المسلمين المقدس..."
+      }
+    },
+    "newMuslimMaterials": {
+      "firstSteps": {
+        "title": "خطواتك الأولى في الإسلام",
+        "type": "دليل PDF"
+      },
+      "learnPrayer": {
+        "title": "تعلم الصلاة",
+        "type": "فيديو تعليمي"
+      },
+      "dailyRemembrances": {
+        "title": "الأذكار اليومية",
+        "type": "كتيب PDF"
+      }
+    },
+    "downloadableImages": {
+      "pillarsOfIslam": "أركان الإسلام",
+      "pillarsOfFaith": "أركان الإيمان",
+      "mosqueMap": "خريطة المساجد"
+    }
+  },
+  "library": {
     "title": "المكتبة الدعوية",
     "description": "مكتبة شاملة من الصور والمطويات وملفات PDF",
     "categories": "التصنيفات",
@@ -54,7 +103,8 @@
     "pdfs": "ملفات PDF",
     "browsePDFs": "تصفح ملفات PDF",
     "viewPDF": "عرض الملف",
-    "noPDFsFound": "لم يتم العثور على ملفات PDF",    "search": "بحث",
+    "noPDFsFound": "لم يتم العثور على ملفات PDF",
+    "search": "بحث",
     "searchPlaceholder": "ابحث عن ملفات PDF...",
     "download": "تحميل",
     "preview": "معاينة",
@@ -70,24 +120,68 @@
     "fullscreen": "ملء الشاشة",
     "fitWidth": "ملائمة العرض",
     "fitPage": "ملائمة الصفحة",
-    "print": "طباعة"
+    "print": "طباعة",
+    "categoryNames": {
+      "tawheed": "التوحيد",
+      "worship": "العبادات",
+      "ethics": "الأخلاق",
+      "prophetBiography": "السيرة النبوية",
+      "family": "العائلة",
+      "society": "المجتمع"
+    },
+    "imageTopics": {
+      "pillarsOfIslam": "أركان الإسلام",
+      "namesOfAllah": "أسماء الله الحسنى",
+      "prayer": "الصلاة",
+      "fasting": "الصوم",
+      "hajj": "الحج",
+      "zakah": "الزكاة"
+    },
+    "brochureTopics": {
+      "newMuslimGuide": "دليل المسلم الجديد",
+      "howToPray": "كيف تصلي",
+      "supplications": "أدعية من القرآن والسنة"
+    }
   },
   "contact": {
     "title": "اتصل بنا",
-    "description": "تواصل معنا عبر البريد الإلكتروني أو تليجرام",
+    "description": "نحن نحب أن نسمع منك. أرسل لنا رسالة أو تواصل معنا مباشرة.",
     "name": "الاسم",
     "email": "البريد الإلكتروني",
     "message": "الرسالة",
-    "send": "إرسال",
+    "send": "إرسال الرسالة",
+    "sending": "جاري الإرسال...",
+    "success": "تم إرسال الرسالة بنجاح!",
+    "error": "فشل في إرسال الرسالة. يرجى المحاولة مرة أخرى.",
     "directContact": "تواصل مباشر",
     "emailAddress": "البريد الإلكتروني",
     "phoneNumber": "رقم الهاتف",
-    "telegram": "تليجرام"
+    "telegram": "تليجرام",
+    "visitUs": "زورونا",
+    "emailUs": "راسلونا",
+    "callUs": "اتصلوا بنا",
+    "address": "123 شارع المثال، القاهرة، مصر",
+    "email_contact": "contact@hurass-al-thughur.org",
+    "phone": "+20 12 3456 7890"
   },
   "footer": {
     "rightsReserved": "© 2025 حُراس الثغور. جميع الحقوق محفوظة.",
     "terms": "الشروط والأحكام",
-    "privacy": "سياسة الخصوصية"
+    "privacy": "سياسة الخصوصية",
+    "quickLinks": "روابط سريعة",
+    "contactUs": "تواصل معنا",
+    "followUs": "تابعنا",
+    "aboutFooter": "منصة دعوية تسعى لنشر المعرفة الصحيحة عن الإسلام"
+  },
+  "notFound": {
+    "title": "لم يتم العثور على الملف",
+    "message": "ملف PDF الذي تبحث عنه غير موجود أو تم نقله.",
+    "backToLibrary": "العودة إلى المكتبة"
+  },
+  "errors": {
+    "pdfNotFound": "لم يتم العثور على ملف PDF",
+    "loadingError": "خطأ في تحميل المحتوى",
+    "networkError": "خطأ في الاتصال بالشبكة"
   },
   "seo": {
     "keywords": "حراس الثغور، دعوة إسلامية، مجلة إسلامية، المكتبة الدعوية، تعريف الإسلام"

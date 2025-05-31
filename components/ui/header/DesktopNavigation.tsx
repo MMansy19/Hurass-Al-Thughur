@@ -12,7 +12,6 @@ interface NavigationLink {
 
 interface DesktopNavigationProps {
   navLinks: NavigationLink[];
-  locale: string;
   oppositeLocale: string;
   pathname: string;
   isArabic: boolean;
@@ -23,7 +22,6 @@ interface DesktopNavigationProps {
 
 const DesktopNavigation = ({ 
   navLinks, 
-  locale, 
   oppositeLocale, 
   pathname,
   isArabic,
