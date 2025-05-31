@@ -63,7 +63,8 @@ export default async function MagazinePage({
   const selectedIssue = magazineIssues[0];
 
   return (
-    <div className="space-y-12">      <section className="bg-gradient-to-r from-emerald-700 to-emerald-900 text-white py-10 rounded-lg shadow-lg">
+    <div className="space-y-12">      
+    <section className="bg-gradient-to-r from-emerald-700 to-emerald-900 text-white py-10 rounded-lg shadow-lg">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-3xl md:text-4xl font-bold">{magazine.title}</h1>
           <p className="text-xl mt-2 max-w-2xl mx-auto">{magazine.description}</p>
@@ -123,7 +124,7 @@ export default async function MagazinePage({
       
       {/* PDF Viewer Section */}
       <PDFViewerSection 
-        pdfUrl="/pdfs/1.pdf"
+        pdfUrl="/pdfs/MahmoudMansy_Frontend_Engineer.pdf"
         title={selectedIssue.title}
         messages={magazine}
       />      {/* Categories Section */}

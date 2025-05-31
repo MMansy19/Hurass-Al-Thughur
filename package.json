@@ -3,10 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "predev": "node ./scripts/copy-pdf-worker.js",
     "dev": "next dev",
     "dev:turbo": "next dev --turbopack",
-    "prebuild": "node ./scripts/copy-pdf-worker.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -16,7 +14,7 @@
     "@fontsource/roboto": "^5.2.5",
     "next": "15.3.2",
     "next-intl": "^4.1.0",
-    "pdfjs-dist": "^5.2.133",
+    "pdfjs-dist": "^4.8.69",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-pdf": "^9.2.1"

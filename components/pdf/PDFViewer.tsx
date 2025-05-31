@@ -22,13 +22,8 @@ import {
 } from "./ui/PDFComponents";
 
 // Configure PDF.js worker
-// Use local worker file if available, fallback to CDN
-try {
-  pdfjs.GlobalWorkerOptions.workerSrc = `/pdf-worker/pdf.worker.min.js`;
-} catch (error) {
-  console.warn("Failed to load local PDF worker, using CDN fallback:", error);
-  pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
-}
+// Use the CDN for reliability since we've resolved the version issues with webpack
+pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.8.69/pdf.worker.min.js`;
 
 interface PDFViewerProps {
   pdfFile: string;
@@ -104,7 +99,7 @@ export default function PDFViewer({ pdfFile, messages }: PDFViewerProps) {
       </PDFControlsWrapper>
 
       {/* PDF Document */}
-      <PDFDocumentWrapper>
+      <PDFDocumentWrapper>        
         <Document
           file={pdfFile}
           onLoadSuccess={onDocumentLoadSuccess}

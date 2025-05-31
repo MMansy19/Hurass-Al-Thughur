@@ -15,13 +15,17 @@ const nextConfig: NextConfig = {
     // Disable canvas for react-pdf (using type assertion to handle the complex type)
     (config.resolve.alias as Record<string, any>)['canvas'] = false;
     
+    // Fix for react-pdf's own pdfjs-dist import
+    (config.resolve.alias as Record<string, any>)['react-pdf/node_modules/pdfjs-dist/build/pdf.mjs'] = 
+      require.resolve('pdfjs-dist/build/pdf.mjs');
+    
     // Configure worker loaders properly
     config.module = config.module || {};
     config.module.rules = config.module.rules || [];
     
     // Add specific rule to handle PDF worker
     config.module.rules.push({
-      test: /pdf\.worker\.(min\.)?js/,
+      test: /pdf\.worker\.(min\.)?m?js/,
       type: 'asset/resource',
     });
     
