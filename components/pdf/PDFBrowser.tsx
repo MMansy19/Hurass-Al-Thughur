@@ -1,6 +1,8 @@
 "use client";
 
 import { useParams } from "next/navigation";
+import { NetworkErrorBoundary } from "@/utils/error-handling";
+import { PDFGridSkeleton } from "@/components/ui/LoadingStates";
 
 // Import custom hook for PDF browser functionality
 import { usePDFBrowser } from "./hooks/usePDFBrowser";
@@ -30,49 +32,67 @@ export default function PDFBrowser({ translations }: PDFBrowserProps) {
     isLoading,
     searchTerm,
     setSearchTerm,
-    error
+    error,
+    retryFetch
   } = usePDFBrowser();
 
-  // Loading state
+  // Loading state with enhanced skeleton
   if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-emerald-600"></div>
-      </div>
-    );
+    return <PDFGridSkeleton />;
   }
 
-  // Error state
+  // Error state with retry functionality
   if (error) {
     return (
       <div className="p-6 bg-red-50 rounded-lg border border-red-200 text-red-700">
-        <h3 className="font-bold mb-2">Error loading PDFs</h3>
-        <p>{error}</p>
+        <div className="flex items-center mb-4">
+          <svg className="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+          </svg>
+          <h3 className="font-bold">Error Loading PDFs</h3>
+        </div>
+        <p className="mb-4">{error}</p>
+        <div className="space-x-2">
+          <button 
+            onClick={retryFetch}
+            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition-colors"
+          >
+            Retry
+          </button>
+          <button 
+            onClick={() => window.location.reload()}
+            className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded transition-colors"
+          >
+            Refresh Page
+          </button>
+        </div>
       </div>
     );
   }
 
   return (
-    <section className="bg-white rounded-lg shadow-md p-6">
-      <h2 className="text-2xl font-bold mb-6 text-emerald-800">
-        {translations.browseAllPDFs}
-      </h2>
+    <NetworkErrorBoundary>
+      <section className="bg-white rounded-lg shadow-md p-6">
+        <h2 className="text-2xl font-bold mb-6 text-emerald-800">
+          {translations.browseAllPDFs}
+        </h2>
 
-      {/* Search Bar Component */}
-      <SearchBar
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        placeholder={translations.searchPlaceholder}
-        searchLabel={translations.search}
-      />
-      
-      {/* PDF Grid Component */}
-      <PDFGrid
-        pdfs={filteredPDFs}
-        locale={locale}
-        viewText={translations.viewPDF}
-        emptyMessage={translations.noPDFsFound}
-      />
-    </section>
+        {/* Search Bar Component */}
+        <SearchBar
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          placeholder={translations.searchPlaceholder}
+          searchLabel={translations.search}
+        />
+        
+        {/* PDF Grid Component */}
+        <PDFGrid
+          pdfs={filteredPDFs}
+          locale={locale}
+          viewText={translations.viewPDF}
+          emptyMessage={translations.noPDFsFound}
+        />
+      </section>
+    </NetworkErrorBoundary>
   );
 }

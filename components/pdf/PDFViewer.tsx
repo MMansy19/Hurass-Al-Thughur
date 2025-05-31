@@ -45,9 +45,10 @@ interface PDFViewerProps {
     download: string;
     print: string;
   };
+  onError?: () => void;
 }
 
-export default function PDFViewer({ pdfFile, messages }: PDFViewerProps) {  // Enhanced state management
+export default function PDFViewer({ pdfFile, messages, onError }: PDFViewerProps) {  // Enhanced state management
   const [viewMode, setViewMode] = useState<'single' | 'continuous' | 'facing'>('single');
   const [showSidebar, setShowSidebar] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);

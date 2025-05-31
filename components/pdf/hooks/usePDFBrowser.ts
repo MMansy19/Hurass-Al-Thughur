@@ -16,29 +16,30 @@ export function usePDFBrowser() {
   const [pdfFiles, setPdfFiles] = useState<PDFFile[]>([]);
   const [filteredPDFs, setFilteredPDFs] = useState<PDFFile[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>('');  const [error, setError] = useState<string | null>(null);
 
   // Fetch PDF list from API
-  useEffect(() => {
-    async function fetchPDFList() {
-      try {
-        const response = await fetch(`/api/pdfs`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch PDF list");
-        }
-        const data = await response.json();
-        setPdfFiles(data);
-        setFilteredPDFs(data);
-        setIsLoading(false);
-      } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-        console.error("Error fetching PDFs:", errorMessage);
-        setError(errorMessage);
-        setIsLoading(false);
+  const fetchPDFList = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      const response = await fetch(`/api/pdfs`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch PDF list");
       }
+      const data = await response.json();
+      setPdfFiles(data);
+      setFilteredPDFs(data);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      console.error("Error fetching PDFs:", errorMessage);
+      setError(errorMessage);
+    } finally {
+      setIsLoading(false);
     }
+  };
 
+  useEffect(() => {
     fetchPDFList();
   }, []);
   // Filter PDFs based on search term with metadata support
@@ -84,13 +85,13 @@ export function usePDFBrowser() {
       setFilteredPDFs(filtered);
     }
   }, [searchTerm, pdfFiles, locale]);
-
   return {
     pdfFiles,
     filteredPDFs,
     isLoading,
     searchTerm,
     setSearchTerm,
-    error
+    error,
+    retryFetch: fetchPDFList
   };
 }

@@ -51,6 +51,269 @@ export const LoadingSpinner = memo<LoadingSpinnerProps>(({
 
 LoadingSpinner.displayName = 'LoadingSpinner';
 
+// Enhanced skeleton components for better UX
+interface SkeletonProps {
+  className?: string;
+  variant?: 'text' | 'circular' | 'rectangular' | 'rounded';
+  width?: string | number;
+  height?: string | number;
+  animation?: 'pulse' | 'wave' | 'none';
+}
+
+export const Skeleton = memo<SkeletonProps>(({
+  className = '',
+  variant = 'rectangular',
+  width,
+  height,
+  animation = 'pulse'
+}) => {
+  const baseClasses = 'bg-gray-200';
+  
+  const variantClasses = useMemo(() => {
+    switch (variant) {
+      case 'text': return 'h-4 rounded';
+      case 'circular': return 'rounded-full';
+      case 'rectangular': return '';
+      case 'rounded': return 'rounded-lg';
+      default: return '';
+    }
+  }, [variant]);
+
+  const animationClasses = useMemo(() => {
+    switch (animation) {
+      case 'pulse': return 'animate-pulse';
+      case 'wave': return 'animate-shimmer';
+      case 'none': return '';
+      default: return 'animate-pulse';
+    }
+  }, [animation]);
+
+  const style = useMemo(() => ({
+    width: typeof width === 'number' ? `${width}px` : width,
+    height: typeof height === 'number' ? `${height}px` : height,
+  }), [width, height]);
+
+  return (
+    <div 
+      className={`${baseClasses} ${variantClasses} ${animationClasses} ${className}`}
+      style={style}
+    />
+  );
+});
+
+Skeleton.displayName = 'Skeleton';
+
+// PDF Grid Skeleton
+export const PDFGridSkeleton = memo(() => (
+  <div className="space-y-6">
+    <Skeleton variant="rectangular" height={48} className="rounded-lg" />
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {Array.from({ length: 6 }).map((_, index) => (
+        <div key={index} className="space-y-3">
+          <Skeleton variant="rectangular" height={200} className="rounded-lg" />
+          <Skeleton variant="text" width="80%" />
+          <Skeleton variant="text" width="60%" />
+          <Skeleton variant="rectangular" height={40} className="rounded-md" />
+        </div>
+      ))}
+    </div>
+  </div>
+));
+
+PDFGridSkeleton.displayName = 'PDFGridSkeleton';
+
+// PDF Viewer Skeleton
+export const PDFViewerSkeleton = memo(() => (
+  <div className="w-full h-screen bg-gray-100 rounded-lg overflow-hidden">
+    {/* Controls Skeleton */}
+    <div className="bg-white border-b border-gray-200 p-4">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-4">
+          <Skeleton variant="rectangular" width={80} height={32} className="rounded" />
+          <Skeleton variant="rectangular" width={100} height={32} className="rounded" />
+          <Skeleton variant="rectangular" width={60} height={32} className="rounded" />
+        </div>
+        <div className="flex items-center space-x-2">
+          <Skeleton variant="rectangular" width={32} height={32} className="rounded" />
+          <Skeleton variant="rectangular" width={32} height={32} className="rounded" />
+          <Skeleton variant="rectangular" width={32} height={32} className="rounded" />
+        </div>
+      </div>
+    </div>
+    
+    {/* Main content skeleton */}
+    <div className="flex flex-1 h-full">
+      <div className="flex-1 p-8 flex items-center justify-center">
+        <Skeleton variant="rectangular" width="80%" height="90%" className="rounded-lg" />
+      </div>
+    </div>
+  </div>
+));
+
+PDFViewerSkeleton.displayName = 'PDFViewerSkeleton';
+
+// Card Skeleton
+export const CardSkeleton = memo(() => (
+  <div className="border rounded-lg p-6 space-y-4">
+    <Skeleton variant="text" width="70%" />
+    <div className="space-y-2">
+      <Skeleton variant="text" />
+      <Skeleton variant="text" width="80%" />
+    </div>
+    <Skeleton variant="rectangular" height={40} className="rounded" />
+  </div>
+));
+
+CardSkeleton.displayName = 'CardSkeleton';
+
+// List Skeleton
+export const ListSkeleton = memo<{ items?: number }>(({ items = 5 }) => (
+  <div className="space-y-3">
+    {Array.from({ length: items }).map((_, index) => (
+      <div key={index} className="flex items-center space-x-4 p-4 border rounded-lg">
+        <Skeleton variant="circular" width={40} height={40} />
+        <div className="flex-1 space-y-2">
+          <Skeleton variant="text" width="60%" />
+          <Skeleton variant="text" width="40%" />
+        </div>
+        <Skeleton variant="rectangular" width={80} height={32} className="rounded" />
+      </div>
+    ))}
+  </div>
+));
+
+ListSkeleton.displayName = 'ListSkeleton';
+
+// Page Loading
+interface PageLoadingProps {
+  title?: string;
+  description?: string;
+}
+
+export const PageLoading = memo<PageLoadingProps>(({ 
+  title = "Loading...", 
+  description = "Please wait while we load the content." 
+}) => (
+  <div className="flex flex-col items-center justify-center min-h-[400px] space-y-4">
+    <LoadingSpinner size="xl" />
+    <div className="text-center">
+      <h3 className="text-lg font-medium text-gray-900">{title}</h3>
+      <p className="text-gray-600 mt-1">{description}</p>
+    </div>
+  </div>
+));
+
+PageLoading.displayName = 'PageLoading';
+
+// Inline Loading
+interface InlineLoadingProps {
+  text?: string;
+  size?: 'sm' | 'md' | 'lg';
+}
+
+export const InlineLoading = memo<InlineLoadingProps>(({ 
+  text = "Loading...", 
+  size = 'sm' 
+}) => (
+  <div className="flex items-center space-x-2">
+    <LoadingSpinner size={size} />
+    <span className="text-gray-600">{text}</span>
+  </div>
+));
+
+InlineLoading.displayName = 'InlineLoading';
+
+// Button Loading State
+interface LoadingButtonProps {
+  loading: boolean;
+  children: React.ReactNode;
+  className?: string;
+  onClick?: () => void;
+  disabled?: boolean;
+}
+
+export const LoadingButton = memo<LoadingButtonProps>(({
+  loading,
+  children,
+  className = '',
+  onClick,
+  disabled = false
+}) => (
+  <button
+    onClick={onClick}
+    disabled={disabled || loading}
+    className={`relative inline-flex items-center justify-center ${className} ${
+      loading || disabled ? 'opacity-50 cursor-not-allowed' : ''
+    }`}
+  >
+    {loading && (
+      <LoadingSpinner 
+        size="sm" 
+        color="white" 
+        className="absolute left-3" 
+      />
+    )}
+    <span className={loading ? 'ml-6' : ''}>{children}</span>
+  </button>
+));
+
+LoadingButton.displayName = 'LoadingButton';
+
+// Progress Loading
+interface ProgressLoadingProps {
+  progress: number;
+  showPercentage?: boolean;
+  className?: string;
+  size?: 'sm' | 'md' | 'lg';
+}
+
+export const ProgressLoading = memo<ProgressLoadingProps>(({
+  progress,
+  showPercentage = true,
+  className = '',
+  size = 'md'
+}) => {
+  const sizeClasses = useMemo(() => {
+    switch (size) {
+      case 'sm': return 'h-2';
+      case 'md': return 'h-3';
+      case 'lg': return 'h-4';
+      default: return 'h-3';
+    }
+  }, [size]);
+
+  return (
+    <div className={`w-full ${className}`}>
+      <div className={`bg-gray-200 rounded-full ${sizeClasses} overflow-hidden`}>
+        <div 
+          className={`bg-emerald-600 ${sizeClasses} rounded-full transition-all duration-300 ease-out`}
+          style={{ width: `${Math.min(100, Math.max(0, progress))}%` }}
+        />
+      </div>
+      {showPercentage && (
+        <div className="text-center mt-2 text-sm text-gray-600">
+          {Math.round(progress)}%
+        </div>
+      )}
+    </div>
+  );
+});
+
+ProgressLoading.displayName = 'ProgressLoading';
+
+// Shimmer effect for advanced loading animations
+export const ShimmerWrapper = memo<{ children: React.ReactNode; className?: string }>(({
+  children,
+  className = ''
+}) => (
+  <div className={`relative overflow-hidden ${className}`}>
+    {children}
+    <div className="absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+  </div>
+));
+
+ShimmerWrapper.displayName = 'ShimmerWrapper';
+
 // Loading overlay
 interface LoadingOverlayProps {
   isLoading: boolean;
