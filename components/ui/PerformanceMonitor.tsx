@@ -1,6 +1,11 @@
 'use client';
 
-import { useEffect, useCallback } from 'react';
+import { useEffect } from 'react';
+
+// Declare gtag as a global variable for TypeScript
+declare global {
+  function gtag(...args: any[]): void;
+}
 
 // Web Vitals monitoring
 export function useWebVitals() {
@@ -26,15 +31,12 @@ export function useWebVitals() {
           });
         }
       }
-    };
-
-    // Import web-vitals dynamically to avoid SSR issues
-    import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
-      getCLS(reportWebVitals);
-      getFID(reportWebVitals);
-      getFCP(reportWebVitals);
-      getLCP(reportWebVitals);
-      getTTFB(reportWebVitals);
+    };    // Import web-vitals dynamically to avoid SSR issues
+    import('web-vitals').then(({ onCLS, onFCP, onLCP, onTTFB }) => {
+      onCLS(reportWebVitals);
+      onFCP(reportWebVitals);
+      onLCP(reportWebVitals);
+      onTTFB(reportWebVitals);
     }).catch(() => {
       // Silently fail if web-vitals is not available
     });
@@ -106,17 +108,16 @@ export function useMemoryMonitoring() {
 // Image loading performance
 export function useImagePerformance() {
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    const observer = new PerformanceObserver((list) => {
+    if (typeof window === 'undefined') return;    const observer = new PerformanceObserver((list) => {
       list.getEntries().forEach((entry) => {
         if (entry.name.includes('.jpg') || entry.name.includes('.png') || entry.name.includes('.webp')) {
-          const loadTime = entry.responseEnd - entry.requestStart;
+          const resourceEntry = entry as PerformanceResourceTiming;
+          const loadTime = resourceEntry.responseEnd - resourceEntry.requestStart;
           if (loadTime > 1000) { // Images taking longer than 1 second
             console.warn('Slow image loading:', {
               url: entry.name,
               loadTime: loadTime,
-              size: entry.transferSize
+              size: resourceEntry.transferSize
             });
           }
         }
@@ -138,18 +139,17 @@ export function useImagePerformance() {
 // Bundle size monitoring
 export function useBundleAnalysis() {
   useEffect(() => {
-    if (typeof window === 'undefined' || process.env.NODE_ENV !== 'development') return;
-
-    // Report the size of loaded JavaScript bundles
+    if (typeof window === 'undefined' || process.env.NODE_ENV !== 'development') return;    // Report the size of loaded JavaScript bundles
     const observer = new PerformanceObserver((list) => {
       list.getEntries().forEach((entry) => {
-        if (entry.name.includes('.js') && entry.transferSize) {
-          const sizeKB = Math.round(entry.transferSize / 1024);
+        const resourceEntry = entry as PerformanceResourceTiming;
+        if (entry.name.includes('.js') && resourceEntry.transferSize) {
+          const sizeKB = Math.round(resourceEntry.transferSize / 1024);
           if (sizeKB > 100) { // Bundles larger than 100KB
             console.warn('Large JavaScript bundle:', {
               url: entry.name,
               size: `${sizeKB}KB`,
-              loadTime: entry.responseEnd - entry.requestStart
+              loadTime: resourceEntry.responseEnd - resourceEntry.requestStart
             });
           }
         }

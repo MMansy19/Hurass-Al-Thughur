@@ -5,7 +5,6 @@ import { LoadingSpinner } from './AccessibilityComponents';
 
 // Lazy loaded components for code splitting
 const LazyPDFViewer = lazy(() => import('@/components/pdf/PDFViewerSection'));
-const LazyImageGallery = lazy(() => import('@/components/ui/ImageGallery').catch(() => ({ default: () => <div>Gallery not available</div> })));
 
 // Memoized Magazine Issue Card
 interface MagazineIssue {
@@ -27,8 +26,7 @@ interface MagazineCardProps {
 export const MagazineCard = memo<MagazineCardProps>(({ 
   issue, 
   readNowText, 
-  onReadClick,
-  locale 
+  onReadClick
 }) => {
   const handleClick = useCallback(() => {
     onReadClick?.(issue.id);
@@ -150,9 +148,8 @@ export const OptimizedPDFViewer = memo<OptimizedPDFViewerProps>(({
 }) => {
   return (
     <Suspense 
-      fallback={
-        <div className="flex justify-center items-center py-12">
-          <LoadingSpinner size="large" text="Loading PDF viewer..." />
+      fallback={        <div className="flex justify-center items-center py-12">
+          <LoadingSpinner size="lg" label="Loading PDF viewer..." />
         </div>
       }
     >

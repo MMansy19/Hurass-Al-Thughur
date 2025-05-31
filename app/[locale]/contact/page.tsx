@@ -17,10 +17,9 @@ export default async function ContactPage({
             {messages.contact.description}
           </p>
         </div>
-      </section>      
-      <section>
+      </section>        <section>
         <div className="container mx-auto px-4">
-          <ContactForm locale={locale} messages={messages} />
+          <ContactForm messages={messages} />
         </div>
       </section>
     </div>

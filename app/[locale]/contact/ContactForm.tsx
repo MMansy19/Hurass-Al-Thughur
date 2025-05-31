@@ -3,11 +3,10 @@
 import { useState } from "react";
 
 interface ContactFormProps {
-  locale: string;
   messages: any;
 }
 
-export default function ContactForm({ locale, messages }: ContactFormProps) {
+export default function ContactForm({ messages }: ContactFormProps) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",

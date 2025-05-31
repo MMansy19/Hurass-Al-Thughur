@@ -3,7 +3,6 @@
 import Link from "next/link";
 
 interface FooterBottomProps {
-  locale: string;
   copyright: string;
   messages: {
     madeWith: string;
@@ -12,7 +11,7 @@ interface FooterBottomProps {
   };
 }
 
-export default function FooterBottom({ locale, copyright, messages }: FooterBottomProps) {
+export default function FooterBottom({ copyright, messages }: FooterBottomProps) {
   return (
     <div className="border-t border-emerald-800 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center">
       <p className="mb-4 md:mb-0 text-emerald-200">{copyright}</p>      <div className="flex items-center gap-2">

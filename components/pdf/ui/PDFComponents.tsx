@@ -132,7 +132,7 @@ export function PDFThumbnails({ file, numPages, currentPage, onPageSelect, scale
 
   return (
     <div className="space-y-2">
-      {Array.from(new Array(numPages), (el, index) => {
+      {Array.from(new Array(numPages), (_, index) => {
         const pageNumber = index + 1;
         const isCurrentPage = pageNumber === currentPage;
         

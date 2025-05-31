@@ -41,20 +41,19 @@ const Header = ({ locale, messages }: HeaderProps) => {
     setIsMenuOpen(false);
   }, [pathname]);
     // Generate navigation links
-  const navLinks = buildNavLinks({ locale, pathname, messages });
-  return (
+  const navLinks = buildNavLinks({ locale, pathname, messages });  return (
     <header 
       className={`fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300 ${
         scrolled ? `bg-white/95 shadow-md py-2 ${styles.headerScrolled}` : "bg-white/90 py-3"
       }`}
       dir={isArabic ? "rtl" : "ltr"}
+      role="banner"
+      aria-label={`${messages.siteName} - ${isArabic ? "التنقل الرئيسي" : "Main Navigation"}`}
     >
       <div className="container mx-auto md:px-4 px-2">
         <div className="flex items-center justify-between">          
-          {/* Logo */}
-          <Logo 
+          {/* Logo */}          <Logo 
             locale={locale} 
-            isArabic={isArabic} 
             messages={{ siteName: messages.siteName }}
           />
             {/* Desktop Navigation */}

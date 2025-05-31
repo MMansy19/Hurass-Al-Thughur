@@ -296,7 +296,7 @@ export default function PDFViewer({ pdfFile, messages }: PDFViewerProps) {  // E
                 
                 {viewMode === 'continuous' && (
                   <div className="pdf-continuous">
-                    {Array.from(new Array(numPages), (el, index) => (
+                    {Array.from(new Array(numPages), (_, index) => (
                       <Page
                         key={`page_${index + 1}`}
                         pageNumber={index + 1}

@@ -115,7 +115,7 @@ interface AnnouncementProps {
   clear?: boolean;
 }
 
-export function Announcement({ message, priority = 'polite', clear = false }: AnnouncementProps) {
+export function Announcement({ message, priority = 'polite' }: AnnouncementProps) {
   const { announceToScreenReader } = useAccessibility();
 
   useEffect(() => {

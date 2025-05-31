@@ -2,7 +2,7 @@ import { Metadata } from "next/types";
 import Link from "next/link";
 import SEO from "@/components/ui/SEO";
 import PDFViewerSection from "@/components/pdf/PDFViewerSection";
-import { SkipLinks, LoadingSpinner, VisuallyHidden } from "@/components/ui/AccessibilityComponents";
+import { SkipLinks, VisuallyHidden } from "@/components/ui/AccessibilityComponents";
 
 // Generate metadata for the page
 export async function generateMetadata({ 
@@ -63,9 +63,8 @@ export default async function MagazinePage({
     { id: 2, name: magazine.categoryNames.fiqh },
     { id: 3, name: magazine.categoryNames.prophetBiography },
     { id: 4, name: magazine.categoryNames.islamicHistory },
-  ];
-  // Selected issue for demonstration
-  const selectedIssue = magazineIssues[0];
+  ];  // Selected issue for demonstration - with null check
+  const selectedIssue = magazineIssues[0] || null;
 
   // Skip links for accessibility
   const skipLinks = [
@@ -192,10 +191,9 @@ export default async function MagazinePage({
       <section id="pdf-viewer" aria-labelledby="pdf-viewer-heading">
         <h2 id="pdf-viewer-heading" className="sr-only">
           {locale === "ar" ? "عارض المجلة" : "Magazine Viewer"}
-        </h2>
-        <PDFViewerSection 
+        </h2>        <PDFViewerSection 
           pdfUrl="https://drive.google.com/file/d/1fYPJGRKRD7iZVe0yheliURNuSQQswgJw/view?usp=sharing"
-          title={selectedIssue.title}
+          title={selectedIssue?.title || magazine.title}
           messages={magazine}
         />
       </section>{/* Categories Section */}

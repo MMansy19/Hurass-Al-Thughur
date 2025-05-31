@@ -187,9 +187,7 @@ const Footer = ({ locale, messages }: FooterProps) => {  // Quick Links configur
             title={messages.followUs}
             socialLinks={socialLinks}
           />
-        </div>        
-        <FooterBottom
-          locale={locale}
+        </div>          <FooterBottom
           copyright={messages.rightsReserved}
           messages={{
             madeWith: messages.madeWith,
