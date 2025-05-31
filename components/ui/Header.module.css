@@ -1,0 +1,44 @@
+/* Header styling and animations */
+.navItem {
+  position: relative;
+}
+
+.navItem::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 50%;
+  background-color: currentColor;
+  transition: all 0.3s ease-in-out;
+  opacity: 0;
+  transform: translateX(-50%);
+}
+
+.navItem:hover::after {
+  width: 70%;
+  opacity: 1;
+}
+
+.activeNavItem::after {
+  width: 70%;
+  opacity: 1;
+}
+
+.headerScrolled {
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* RTL Support */
+[dir="rtl"] .navItem::after {
+  left: auto;
+  right: 50%;
+  transform: translateX(50%);
+}
+
+/* Mobile menu animations */
+.mobileMenu {
+  transition: transform 0.3s ease-in-out, top 0.3s ease-in-out, height 0.3s ease-in-out;
+}
