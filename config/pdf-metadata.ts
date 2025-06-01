@@ -15,6 +15,7 @@ export interface PDFMetadata {
   }
   
   export const pdfMetadata: PDFMetadata[] = [
+
     {
       filename: "1.pdf",
       title: {
@@ -59,9 +60,24 @@ export interface PDFMetadata {
       author: "Historical Studies Council",
       publishDate: "2025",
       tags: ["prophethood", "orientalism", "zallaqa", "history"]
+    },
+    {
+      filename: "4.pdf",
+      title: {
+        en: "Comprehensive Collection of the Prophet's Supplications and Seeking Refuge",
+        ar: "جوامع أدعية النبي وتعوذاته"
+      },
+      description: {
+        en: "A comprehensive collection of the Prophet Muhammad's supplications and invocations for seeking refuge from various harms.",
+        ar: "مجموعة شاملة من أدعية النبي محمد صلى الله عليه وسلم وتعوذاته من مختلف الأضرار."
+      },
+      category: "Islamic Supplications",
+      author: "Islamic Studies Department",
+      publishDate: "2025",
+      tags: ["supplications", "duas", "seeking refuge", "prophet", "sunnah"]
     }
   ];
-  
+
   // Helper function to get PDF metadata by filename
   export function getPDFMetadata(filename: string): PDFMetadata | undefined {
     return pdfMetadata.find(pdf => pdf.filename === filename);

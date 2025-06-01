@@ -2,7 +2,7 @@
 
 import React, { memo, useState, useCallback, useMemo } from 'react';
 import { Motion, Stagger, MorphingButton, LoadingAnimation } from './AnimationSystem';
-import { useCSSOptimization } from '../utils/css-optimization';
+import { useCSSOptimization } from '@/utils/css-optimization';
 
 // Enhanced Magazine Card with animations
 interface MagazineIssue {
@@ -52,7 +52,6 @@ export const AnimatedMagazineCard = memo<AnimatedMagazineCardProps>(({
       ${isHovered ? 'magazine-card-hovered' : ''}
     `;
   }, [isHovered, trackClass]);
-
   return (
     <Motion
       preset="slideInUp"
@@ -66,11 +65,14 @@ export const AnimatedMagazineCard = memo<AnimatedMagazineCardProps>(({
         }
       }}
       className={cardClasses}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       role="article"
-      aria-labelledby={`magazine-title-${issue.id}`}
+      aria-label={`${readNowText} - ${issue.title}`}
     >
+      <div
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className="h-full"
+      >
       {/* Cover Image Section */}
       <div className="relative aspect-[3/4] bg-gradient-to-br from-emerald-100 to-emerald-200 dark:from-emerald-800 dark:to-emerald-900">
         <Motion
@@ -147,9 +149,9 @@ export const AnimatedMagazineCard = memo<AnimatedMagazineCardProps>(({
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
               </svg>
               {readNowText}
-            </div>
-          </MorphingButton>
+            </div>          </MorphingButton>
         </Motion>
+      </div>
       </div>
     </Motion>
   );
@@ -348,7 +350,7 @@ export const AnimatedNavigation = memo<AnimatedNavigationProps>(({
   return (
     <Motion preset="slideInUp" className={navClasses}>
       <Stagger staggerDelay={0.05}>
-        {items.map((item, index) => (
+        {items.map((item) => (
           <Motion
             key={item.href}
             preset="slideInUp"
@@ -383,7 +385,9 @@ export const AnimatedNavigation = memo<AnimatedNavigationProps>(({
                 <Motion
                   preset="scaleIn"
                   className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-white rounded-full"
-                />
+                >
+                  <div></div>
+                </Motion>
               )}
             </a>
           </Motion>
@@ -454,7 +458,9 @@ export const AnimatedLoadingState = memo<AnimatedLoadingStateProps>(({
         preset="scaleIn"
         delay={i * 0.05}
         className={`${skeletonClasses} aspect-square`}
-      />
+      >
+        <div></div>
+      </Motion>
     ));
   };
 

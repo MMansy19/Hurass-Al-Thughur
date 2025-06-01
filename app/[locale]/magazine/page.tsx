@@ -1,26 +1,90 @@
+
 import { Metadata } from "next/types";
 import Link from "next/link";
+import { Suspense } from "react";
+import dynamic from "next/dynamic";
 import SEO from "@/components/ui/SEO";
-import PDFViewerSection from "@/components/pdf/PDFViewerSection";
-import { SkipLinks, VisuallyHidden } from "@/components/ui/AccessibilityComponents";
+import { SkipLinks } from "@/components/ui/AccessibilityComponents";
+import { Motion, StaggerContainer } from "@/components/ui/AnimationSystem";
+import { StructuredData } from "@/components/ui/StructuredData";
+import { MagazineSearchWrapper } from "@/components/ui/MagazineSearchWrapper";
+import { MagazineGridWrapper } from "@/components/ui/MagazineGridWrapper";
 
-// Generate metadata for the page
-export async function generateMetadata({ 
+// Dynamic imports for better code splitting
+const PDFViewerSection = dynamic(() => import("@/components/pdf/PDFViewerSection"), {
+  loading: () => <div className="animate-pulse bg-gray-200 h-96 rounded-lg" />
+});
+
+const EnhancedPerformanceMonitor = dynamic(() => import("@/components/ui/EnhancedPerformanceMonitor"));
+
+// Generate metadata for the page with enhanced SEO
+export async function generateMetadata({
   params
-}: { 
+}: {
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
   const messages = (await import(`@/locales/${locale}.json`)).default;
-  return SEO({
-    title: messages.magazine.title,
-    description: messages.magazine.description,
-    locale,
-    pageName: "magazine",
-  });
+
+  return {
+    ...SEO({
+      title: messages.magazine.title,
+      description: messages.magazine.description,
+      locale,
+      pageName: "magazine",
+    }),
+    // Enhanced SEO properties
+    keywords: [
+      locale === "ar" ? "مجلة إسلامية" : "Islamic magazine",
+      locale === "ar" ? "القرآن الكريم" : "Quran",
+      locale === "ar" ? "السنة النبوية" : "Hadith",
+      locale === "ar" ? "الفقه الإسلامي" : "Islamic jurisprudence",
+      locale === "ar" ? "العقيدة" : "Islamic belief",
+      locale === "ar" ? "التاريخ الإسلامي" : "Islamic history"
+    ].join(", "),
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
+    alternates: {
+      languages: {
+        'ar': `/ar/magazine`,
+        'en': `/en/magazine`,
+      },
+    },
+    verification: {
+      google: 'your-google-verification-code',
+    },
+  };
 }
 
-export default async function MagazinePage({
+interface MagazineIssue {
+  id: string;
+  title: string;
+  description: string;
+  coverImage: string;
+  pdfUrl: string;
+  date: string;
+  category: string;
+  author?: string;
+  tags?: string[];
+}
+
+interface Category {
+  id: string;
+  name: string;
+  description?: string;
+  icon?: string;
+}
+
+export default async function EnhancedMagazinePage({
   params,
 }: {
   params: Promise<{ locale: string }>;
@@ -29,200 +93,355 @@ export default async function MagazinePage({
   // Import translations
   const messages = (await import(`@/locales/${locale}.json`)).default;
   const { magazine } = messages;
-  // Mock data for magazine issues
-  const magazineIssues = [
+  // Enhanced mock data for magazine issues with more realistic content
+  const magazineIssues: MagazineIssue[] = [
     {
-      id: 1,
+      id: "1",
       title: magazine.issues.issue1.title,
       description: magazine.issues.issue1.description,
-      coverImage: "/images/1.jpg", // Placeholder
-      pdfUrl: "/pdfs/1.pdf", // Placeholder
+      coverImage: "/images/magazine-cover-1.jpg",
+      pdfUrl: "/pdfs/magazine-issue-1.pdf",
       date: magazine.issues.issue1.date,
+      author: locale === "ar" ? "فريق التحرير" : "Editorial Team",
+      category: magazine.categoryNames.aqeedah,
+      tags: [
+        locale === "ar" ? "العقيدة" : "Faith",
+        locale === "ar" ? "التوحيد" : "Monotheism"
+      ]
     },
     {
-      id: 2,
+      id: "2",
       title: magazine.issues.issue2.title,
       description: magazine.issues.issue2.description,
-      coverImage: "/images/2.jpg", // Placeholder
-      pdfUrl: "/pdfs/2.pdf", // Placeholder
+      coverImage: "/images/magazine-cover-2.jpg",
+      pdfUrl: "/pdfs/magazine-issue-2.pdf",
       date: magazine.issues.issue2.date,
+      author: locale === "ar" ? "فريق التحرير" : "Editorial Team",
+      category: magazine.categoryNames.fiqh,
+      tags: [
+        locale === "ar" ? "الفقه" : "Jurisprudence",
+        locale === "ar" ? "الأحكام" : "Rulings"
+      ]
     },
     {
-      id: 3,
+      id: "3",
       title: magazine.issues.issue3.title,
       description: magazine.issues.issue3.description,
-      coverImage: "/images/3.jpg", // Placeholder
-      pdfUrl: "/pdfs/3.pdf", // Placeholder
+      coverImage: "/images/magazine-cover-3.jpg",
+      pdfUrl: "/pdfs/magazine-issue-3.pdf",
       date: magazine.issues.issue3.date,
+      author: locale === "ar" ? "فريق التحرير" : "Editorial Team",
+      category: magazine.categoryNames.prophetBiography,
+      tags: [
+        locale === "ar" ? "السيرة النبوية" : "Prophet's Biography",
+        locale === "ar" ? "الأخلاق" : "Ethics"
+      ]
+    },
+  ];
+  // Enhanced categories with descriptions and icons
+  const categories: Category[] = [
+    {
+      id: "1",
+      name: magazine.categoryNames.aqeedah,
+      description: locale === "ar" ? "مقالات حول العقيدة الإسلامية والتوحيد" : "Articles about Islamic faith and monotheism",
+      icon: "🕌"
+    },
+    {
+      id: "2",
+      name: magazine.categoryNames.fiqh,
+      description: locale === "ar" ? "أحكام فقهية ومسائل شرعية" : "Islamic jurisprudence and religious rulings",
+      icon: "⚖️"
+    },
+    {
+      id: "3",
+      name: magazine.categoryNames.prophetBiography,
+      description: locale === "ar" ? "سيرة النبي محمد صلى الله عليه وسلم" : "Biography of Prophet Muhammad (PBUH)",
+      icon: "📖"
+    },
+    {
+      id: "4",
+      name: magazine.categoryNames.islamicHistory,
+      description: locale === "ar" ? "تاريخ الحضارة الإسلامية" : "History of Islamic civilization",
+      icon: "🏛️"
     },
   ];
 
-  // Mock data for magazine categories
-  const categories = [
-    { id: 1, name: magazine.categoryNames.aqeedah },
-    { id: 2, name: magazine.categoryNames.fiqh },
-    { id: 3, name: magazine.categoryNames.prophetBiography },
-    { id: 4, name: magazine.categoryNames.islamicHistory },
-  ];  // Selected issue for demonstration - with null check
   const selectedIssue = magazineIssues[0] || null;
 
-  // Skip links for accessibility
+  // Enhanced skip links
   const skipLinks = [
     { href: "#main-content", label: locale === "ar" ? "انتقل إلى المحتوى الرئيسي" : "Skip to main content" },
+    { href: "#search", label: locale === "ar" ? "انتقل إلى البحث" : "Skip to search" },
     { href: "#latest-issues", label: locale === "ar" ? "انتقل إلى آخر الإصدارات" : "Skip to latest issues" },
     { href: "#pdf-viewer", label: locale === "ar" ? "انتقل إلى عارض PDF" : "Skip to PDF viewer" },
     { href: "#categories", label: locale === "ar" ? "انتقل إلى التصنيفات" : "Skip to categories" },
-  ];  return (
+  ];
+
+  // Structured data for SEO
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": magazine.title,
+    "description": magazine.description,
+    "url": `https://your-domain.com/${locale}/magazine`,
+    "inLanguage": locale,
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": `https://your-domain.com/${locale}/magazine/search?q={search_term_string}`
+      },
+      "query-input": "required name=search_term_string"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Hurass Magazine",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://your-domain.com/logo.png"
+      }
+    }
+  };
+
+  return (
     <>
+      <StructuredData data={structuredData} />
       <SkipLinks links={skipLinks} />
-      <main id="main-content" className="space-y-12" role="main">      
-        <section 
-          className="bg-gradient-to-r from-emerald-700 to-emerald-900 text-white py-10 rounded-lg shadow-lg"
+
+      {/* Performance monitoring in development */}
+      {process.env.NODE_ENV === 'development' && (
+        <Suspense fallback={null}>
+          <EnhancedPerformanceMonitor />
+        </Suspense>
+      )}
+
+      <main id="main-content" className="space-y-12" role="main">
+        {/* Animated Hero Section */}        
+        <Motion
+          preset="fadeInUp"
+          duration={800}
+          className="bg-gradient-to-r from-emerald-700 via-emerald-800 to-emerald-900 text-white py-16 rounded-xl shadow-2xl overflow-hidden relative"
           aria-labelledby="page-heading"
-        >
-          <div className="container mx-auto px-4 text-center">
-            <h1 id="page-heading" className="text-3xl md:text-4xl font-bold">
-              {magazine.title}
-            </h1>
-            <p className="text-xl mt-2 max-w-2xl mx-auto">
-              {magazine.description}
-            </p>
+        >{/* Background pattern */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute inset-0 bg-pattern opacity-20"></div>
           </div>
-        </section>{/* Latest Issues Section */}
-        <section 
+
+          <div className="container mx-auto px-4 text-center relative z-10">
+            <Motion preset="slideInDown" delay={200}>
+              <h1 id="page-heading" className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-emerald-100">
+                {magazine.title}
+              </h1>
+            </Motion>
+
+            <Motion preset="fadeIn" delay={400}>
+              <p className="text-xl md:text-2xl mt-4 max-w-3xl mx-auto leading-relaxed text-emerald-50">
+                {magazine.description}
+              </p>
+            </Motion>
+
+            <Motion preset="bounceIn" delay={600}>
+              <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+                <Link
+                  href={`#latest-issues`}
+                  className="inline-flex items-center px-8 py-4 bg-white text-emerald-700 rounded-full font-semibold hover:bg-emerald-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                >
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  </svg>
+                  {magazine.latestIssues}
+                </Link>
+
+                <Link
+                  href={`#categories`}
+                  className="inline-flex items-center px-8 py-4 border-2 border-white text-white rounded-full font-semibold hover:bg-white hover:text-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                >
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                  </svg>
+                  {magazine.categories}
+                </Link>
+              </div>
+            </Motion>
+          </div>
+        </Motion>        {/* Animated Search Section */}
+        <Motion preset="fadeInUp" delay={200}>
+          <section id="search" className="py-8" aria-labelledby="search-heading">
+            <div className="container mx-auto px-4">
+              <h2 id="search-heading" className="sr-only">
+                {locale === "ar" ? "البحث في المجلة" : "Search Magazine"}
+              </h2>
+              <MagazineSearchWrapper
+                placeholder={locale === "ar" ? "ابحث في إصدارات المجلة..." : "Search magazine issues..."}
+                className="max-w-2xl mx-auto"
+                locale={locale}
+              />
+            </div>
+          </section>
+        </Motion>
+
+        {/* Latest Issues Section with Animations */}
+        <section
           id="latest-issues"
-          className="py-10"
+          className="py-12"
           aria-labelledby="latest-issues-heading"
         >
           <div className="container mx-auto px-4">
-            <div className="mb-8 flex justify-between items-center">
-              <h2 id="latest-issues-heading" className="text-2xl font-bold text-emerald-800">
-                {magazine.latestIssues}
-              </h2>
-              <Link 
-                href={`/${locale}/magazine/all`}
-                className="text-emerald-600 hover:text-emerald-800 transition-colors flex items-center focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 rounded-md px-2 py-1"
-                aria-label={`${magazine.allIssues} - ${locale === "ar" ? "يفتح في صفحة جديدة" : "Opens in new page"}`}
-              >
-                {magazine.allIssues}
-                <svg 
-                  className="w-5 h-5 mx-1" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
+            <Motion preset="fadeInLeft">
+              <div className="mb-12 flex justify-between items-center">
+                <h2 id="latest-issues-heading" className="text-3xl md:text-4xl font-bold text-emerald-800 relative">
+                  {magazine.latestIssues}
+                  <div className="absolute bottom-0 left-0 w-20 h-1 bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full"></div>
+                </h2>
+
+                <Link
+                  href={`/${locale}/magazine/all`}
+                  className="inline-flex items-center text-emerald-600 hover:text-emerald-800 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 rounded-lg px-4 py-2 font-semibold hover:bg-emerald-50"
+                  aria-label={`${magazine.allIssues} - ${locale === "ar" ? "يفتح في صفحة جديدة" : "Opens in new page"}`}
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
-                <VisuallyHidden>
-                  {locale === "ar" ? "يفتح في صفحة جديدة" : "Opens in new page"}
-                </VisuallyHidden>
-              </Link>
-            </div>
-            <div 
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-              role="list"
-              aria-label={magazine.latestIssues}
-            >            {magazineIssues.map((issue) => (
-              <article 
-                key={issue.id} 
-                className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all transform hover:-translate-y-1 duration-300 focus-within:ring-2 focus-within:ring-emerald-500 focus-within:ring-offset-2"
-                role="listitem"
-                aria-labelledby={`issue-title-${issue.id}`}
-                aria-describedby={`issue-desc-${issue.id} issue-date-${issue.id}`}
-              >
-                <div className="aspect-[3/4] relative bg-gray-50" role="img" aria-label={`${magazine.coverImage || "Cover image"} - ${issue.title}`}>
-                  {/* Placeholder for magazine cover - replace with actual images later */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <div className="w-24 h-24 mb-4">
-                      <svg 
-                        className="w-full h-full text-emerald-200" 
-                        viewBox="0 0 24 24" 
-                        fill="currentColor"
-                        aria-hidden="true"
-                      >
-                        <path d="M19 1l-5 5v11l5-4.5V1M1 4v14c0 1.1.9 2 2 2h14c.85 0 1.58-.54 1.87-1.3L7 9.38V4H5v9.38l-3 2.62V5c0-.55.45-1 1-1h15c.55 0 1 .45 1 1v13c0 1.11-.89 2-2 2H6c-2.21 0-4-1.79-4-4" />
-                      </svg>
-                    </div>
-                    <div className="text-xl font-bold text-emerald-800">{issue.title}</div>
-                  </div>
-                </div>
-                <div className="p-5">
-                  <h3 id={`issue-title-${issue.id}`} className="font-bold text-xl mb-2 text-emerald-900">
-                    {issue.title}
-                  </h3>
-                  <p id={`issue-date-${issue.id}`} className="text-emerald-700 text-sm mb-3 flex items-center">
-                    <svg 
-                      className="w-4 h-4 mx-1" 
-                      fill="currentColor" 
-                      viewBox="0 0 20 20"
-                      aria-hidden="true"
-                    >
-                      <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
-                    </svg>
-                    <time dateTime={issue.date}>{issue.date}</time>
-                  </p>
-                  <p id={`issue-desc-${issue.id}`} className="text-gray-700 mb-5">
-                    {issue.description}
-                  </p>
-                  <button 
-                    className="w-full px-4 py-3 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-colors shadow-sm flex items-center justify-center"
-                    aria-label={`${magazine.readNow} - ${issue.title}`}
-                    type="button"
+                  {magazine.allIssues}
+                  <svg
+                    className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
                   >
-                    <svg 
-                      className="w-5 h-5 mx-2" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                    </svg>
-                    {magazine.readNow}
-                  </button>
-                </div>
-              </article>
-            ))}
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </Link>
+              </div>
+            </Motion>              <MagazineGridWrapper
+              issues={magazineIssues}
+              locale={locale}
+              columns={3}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            />
           </div>
-        </div>
-      </section>
+        </section>
+
         {/* PDF Viewer Section */}
-      <section id="pdf-viewer" aria-labelledby="pdf-viewer-heading">
-        <h2 id="pdf-viewer-heading" className="sr-only">
-          {locale === "ar" ? "عارض المجلة" : "Magazine Viewer"}
-        </h2>        <PDFViewerSection 
-          pdfUrl="https://drive.google.com/file/d/1fYPJGRKRD7iZVe0yheliURNuSQQswgJw/view?usp=sharing"
-          title={selectedIssue?.title || magazine.title}
-          messages={magazine}
-        />
-      </section>{/* Categories Section */}
-      <section 
-        id="categories"
-        className="py-10 bg-gray-50 rounded-lg"
-        aria-labelledby="categories-heading"
-      >
-        <div className="container mx-auto px-4">
-          <h2 id="categories-heading" className="text-2xl font-bold mb-6 text-emerald-800">
-            {magazine.categories}
-          </h2>
-          <nav 
-            className="grid grid-cols-2 md:grid-cols-4 gap-4"
-            role="navigation"
-            aria-label={magazine.categories}
+        <Motion preset="fadeInUp" delay={300}>
+          <section id="pdf-viewer" aria-labelledby="pdf-viewer-heading">
+            <div className="container mx-auto px-4">
+              <h2 id="pdf-viewer-heading" className="text-3xl font-bold text-emerald-800 mb-8 text-center">
+                {locale === "ar" ? "عارض المجلة" : "Magazine Viewer"}
+              </h2>
+
+              <div className="bg-white rounded-xl shadow-2xl overflow-hidden border border-gray-200">
+                <Suspense fallback={
+                  <div className="h-96 bg-gradient-to-br from-gray-100 to-gray-200 animate-pulse flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto mb-4"></div>
+                      <p className="text-gray-600">
+                        {locale === "ar" ? "جاري تحميل عارض PDF..." : "Loading PDF viewer..."}
+                      </p>
+                    </div>
+                  </div>
+                }>
+                  <PDFViewerSection
+                    pdfUrl="/pdfs/4.pdf"
+                    title={selectedIssue?.title || magazine.title}
+                    messages={magazine}
+                  />
+                </Suspense>
+              </div>
+            </div>
+          </section>
+        </Motion>
+
+        {/* Categories Section with Enhanced Design */}
+        <Motion preset="fadeInUp" delay={400}>
+          <section
+            id="categories"
+            className="py-16 bg-gradient-to-br from-gray-50 to-emerald-50 rounded-2xl"
+            aria-labelledby="categories-heading"
           >
-            {categories.map((category) => (
-              <Link
-                key={category.id}
-                href={`/${locale}/magazine/category/${category.id}`}
-                className="bg-white border border-gray-200 p-5 rounded-lg text-center hover:bg-emerald-50 hover:border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-all shadow-sm hover:shadow-md flex items-center justify-center"
-                aria-label={`${magazine.browseCategory || "Browse category"}: ${category.name}`}
+            <div className="container mx-auto px-4">
+              <div className="text-center mb-12">
+                <h2 id="categories-heading" className="text-3xl md:text-4xl font-bold text-emerald-800 mb-4">
+                  {magazine.categories}
+                </h2>
+                <p className="text-gray-600 max-w-2xl mx-auto text-lg">
+                  {locale === "ar"
+                    ? "استكشف مختلف أقسام المجلة وتصفح المحتوى حسب اهتماماتك"
+                    : "Explore different sections of the magazine and browse content by your interests"
+                  }
+                </p>
+              </div>
+
+              <StaggerContainer
+                staggerDelay={100}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
               >
-                <span className="font-medium text-emerald-900">{category.name}</span>
-              </Link>
-            ))}
-          </nav>        </div>
-      </section>
+                {categories.map((category, index) => (
+                  <Motion
+                    key={category.id}
+                    preset="fadeInUp"
+                    delay={index * 100}
+                    className="group"
+                  >
+                    <Link
+                      href={`/${locale}/magazine/category/${category.id}`}
+                      className="block bg-white border border-gray-200 p-8 rounded-xl text-center hover:bg-emerald-50 hover:border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-all duration-300 shadow-md hover:shadow-xl transform hover:-translate-y-2"
+                      aria-label={`${magazine.browseCategory || "Browse category"}: ${category.name}`}
+                    >
+                      <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
+                        {category.icon}
+                      </div>
+                      <h3 className="font-bold text-xl text-emerald-900 mb-2 group-hover:text-emerald-700 transition-colors">
+                        {category.name}
+                      </h3>
+                      {category.description && (
+                        <p className="text-gray-600 text-sm leading-relaxed">
+                          {category.description}
+                        </p>
+                      )}
+                      <div className="mt-4 inline-flex items-center text-emerald-600 font-medium group-hover:text-emerald-700">
+                        {locale === "ar" ? "تصفح" : "Browse"}
+                        <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </div>
+                    </Link>
+                  </Motion>
+                ))}
+              </StaggerContainer>
+            </div>
+          </section>
+        </Motion>
+
+        {/* Newsletter Subscription Section */}
+        <Motion preset="fadeInUp" delay={500}>
+          <section className="py-16 bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-2xl text-white" aria-labelledby="newsletter-heading">
+            <div className="container mx-auto px-4 text-center">
+              <h2 id="newsletter-heading" className="text-3xl font-bold mb-4">
+                {locale === "ar" ? "اشترك في النشرة الإخبارية" : "Subscribe to Newsletter"}
+              </h2>
+              <p className="text-emerald-100 mb-8 max-w-2xl mx-auto text-lg">
+                {locale === "ar"
+                  ? "احصل على آخر الإصدارات والمقالات المميزة في بريدك الإلكتروني"
+                  : "Get the latest issues and featured articles delivered to your inbox"
+                }
+              </p>
+
+              <form className="max-w-md mx-auto flex gap-3">
+                <input
+                  type="email"
+                  placeholder={locale === "ar" ? "أدخل بريدك الإلكتروني" : "Enter your email"}
+                  className="flex-1 px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-300"
+                  required
+                />
+                <button
+                  type="submit"
+                  className="px-6 py-3 bg-white text-emerald-600 rounded-lg font-semibold hover:bg-emerald-50 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:ring-offset-2 focus:ring-offset-emerald-600"
+                >
+                  {locale === "ar" ? "اشترك" : "Subscribe"}
+                </button>
+              </form>
+            </div>
+          </section>
+        </Motion>
       </main>
     </>
   );
