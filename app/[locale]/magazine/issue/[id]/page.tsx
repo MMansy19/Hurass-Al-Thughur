@@ -5,14 +5,7 @@ import { notFound } from "next/navigation";
 import SEO from "@/components/ui/SEO";
 import { SkipLinks } from "@/components/ui/AccessibilityComponents";
 import { Motion } from "@/components/ui/AnimationSystem";
-import { PDFViewerSkeleton } from "@/components/ui/LoadingStates";
-import dynamic from "next/dynamic";
-
-// Dynamic import of PDF viewer
-const PDFViewerSection = dynamic(() => import("@/components/pdf/PDFViewerSection"), {
-  loading: () => <PDFViewerSkeleton />,
-  ssr: false
-});
+import MagazineIssueViewer from "@/components/magazine/MagazineIssueViewer";
 
 // Generate metadata for the page
 export async function generateMetadata({ 
@@ -276,54 +269,64 @@ export default async function MagazineIssuePage({
               </div>
             </div>
           </section>
-        </Motion>
-
-        {/* PDF Viewer Section */}
+        </Motion>        {/* PDF Viewer Section */}
         <Motion preset="fadeInUp" delay={200}>
           <section id="pdf-viewer" aria-labelledby="pdf-viewer-heading">
             <div className="container mx-auto sm:px-4 px-2">
-              <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
-                <Suspense fallback={<PDFViewerSkeleton />}>
-                  <PDFViewerSection 
-                    pdfUrl={issueData.pdfUrl}
-                    title={issueData.title}
-                    messages={{
-                      previousPage: magazine.previousPage,
-                      nextPage: magazine.nextPage,
-                      zoomIn: magazine.zoomIn,
-                      zoomOut: magazine.zoomOut,
-                      loading: magazine.loading,
-                      error: magazine.error,
-                      search: messages.hardcoded?.searchPDFViewer || "Search",
-                      searchResults: messages.hardcoded?.searchResults || "Search Results",
-                      thumbnails: messages.hardcoded?.thumbnails || "Thumbnails",
-                      fullscreen: messages.hardcoded?.fullscreen || "Fullscreen",
-                      fitWidth: messages.hardcoded?.fitWidth || "Fit Width",
-                      fitPage: messages.hardcoded?.fitPage || "Fit Page",
-                      download: magazine.download,
-                      print: messages.hardcoded?.print || "Print",
-                      bookmark: messages.hardcoded?.bookmark || "Bookmark",
-                      annotations: messages.hardcoded?.annotations || "Annotations",
-                      highlight: messages.hardcoded?.highlight || "Highlight",
-                      notes: messages.hardcoded?.notes || "Notes",
-                      actualSize: messages.hardcoded?.actualSize || "Actual Size",
-                      pageWidth: messages.hardcoded?.pageWidth || "Page Width",
-                      twoPages: messages.hardcoded?.twoPages || "Two Pages",
-                      continuous: messages.hardcoded?.continuous || "Continuous",
-                      single: messages.hardcoded?.single || "Single",
-                      facing: messages.hardcoded?.facing || "Facing",
-                      outline: messages.hardcoded?.outline || "Outline",
-                      noMatches: messages.hardcoded?.noMatches || "No matches",
-                      matches: messages.hardcoded?.matches || "matches",
-                      pdfViewer: {
-                        loadingViewer: messages.hardcoded?.loadingPDFViewer || "Loading PDF Viewer",
-                        loadingDocument: messages.hardcoded?.loadingDocument || "Please wait while we prepare your document...",
-                        errorLoadingPDFs: messages.hardcoded?.errorLoadingPDFs || "Error Loading PDF",
-                      }
-                    }}
+              <Suspense 
+                fallback={
+                  <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200 p-8">
+                    <div className="flex flex-col items-center justify-center min-h-[400px] space-y-4">
+                      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
+                      <p className="text-gray-600">
+                        {isArabic ? "جاري تحميل عارض PDF..." : "Loading PDF Viewer..."}
+                      </p>
+                    </div>
+                  </div>
+                }
+              >
+                <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+                  <MagazineIssueViewer
+                      pdfUrl={issueData.pdfUrl}
+                      title={issueData.title}
+                      locale={locale}
+                      messages={{
+                          previousPage: magazine.previousPage,
+                          nextPage: magazine.nextPage,
+                          zoomIn: magazine.zoomIn,
+                          zoomOut: magazine.zoomOut,
+                          loading: magazine.loading,
+                          error: magazine.error,
+                          search: messages.hardcoded?.searchPDFViewer || "Search",
+                          searchResults: messages.hardcoded?.searchResults || "Search Results",
+                          thumbnails: messages.hardcoded?.thumbnails || "Thumbnails",
+                          fullscreen: messages.hardcoded?.fullscreen || "Fullscreen",
+                          fitWidth: messages.hardcoded?.fitWidth || "Fit Width",
+                          fitPage: messages.hardcoded?.fitPage || "Fit Page",
+                          download: magazine.download,
+                          print: messages.hardcoded?.print || "Print",
+                          bookmark: messages.hardcoded?.bookmark || "Bookmark",
+                          annotations: messages.hardcoded?.annotations || "Annotations",
+                          highlight: messages.hardcoded?.highlight || "Highlight",
+                          notes: messages.hardcoded?.notes || "Notes",
+                          actualSize: messages.hardcoded?.actualSize || "Actual Size",
+                          pageWidth: messages.hardcoded?.pageWidth || "Page Width",
+                          twoPages: messages.hardcoded?.twoPages || "Two Pages",
+                          continuous: messages.hardcoded?.continuous || "Continuous",
+                          single: messages.hardcoded?.single || "Single",
+                          facing: messages.hardcoded?.facing || "Facing",
+                          outline: messages.hardcoded?.outline || "Outline",
+                          noMatches: messages.hardcoded?.noMatches || "No matches",
+                          matches: messages.hardcoded?.matches || "matches",
+                          pdfViewer: {
+                              loadingViewer: messages.hardcoded?.loadingPDFViewer || "Loading PDF Viewer",
+                              loadingDocument: messages.hardcoded?.loadingDocument || "Please wait while we prepare your document...",
+                              errorLoadingPDFs: messages.hardcoded?.errorLoadingPDFs || "Error Loading PDF",
+                          }
+                      }}
                   />
-                </Suspense>
-              </div>
+                </div>
+              </Suspense>
             </div>
           </section>
         </Motion>
