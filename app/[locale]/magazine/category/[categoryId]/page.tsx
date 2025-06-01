@@ -224,7 +224,7 @@ export default async function CategoryPage({
         {/* Category Header */}
         <Motion preset="fadeInUp">
           <section className={`bg-gradient-to-r from-${categoryInfo.color}-700 to-${categoryInfo.color}-600 text-white py-16 rounded-xl`}>
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto sm:px-4 px-2">
               <div className="max-w-4xl mx-auto text-center">
                 {/* Category Icon */}
                 <div className="text-6xl mb-6" role="img" aria-label={categoryInfo.name}>
@@ -288,7 +288,7 @@ export default async function CategoryPage({
         {categoryIssues.length > 0 ? (
           <Motion preset="fadeInUp" delay={200}>
             <section id="issues-grid" className="py-8">
-              <div className="container mx-auto px-4">
+              <div className="container mx-auto sm:px-4 px-2">
                 <div className="mb-8">
                   <h2 className="text-2xl font-bold text-gray-900 mb-4">
                     {isArabic ? `إصدارات ${categoryInfo.name}` : `${categoryInfo.name} Issues`}
@@ -340,7 +340,7 @@ export default async function CategoryPage({
           // Empty State
           <Motion preset="fadeInUp" delay={200}>
             <section className="py-16">
-              <div className="container mx-auto px-4 text-center">
+              <div className="container mx-auto sm:px-4 px-2 text-center">
                 <div className="max-w-md mx-auto">
                   <div className="text-6xl mb-6">📚</div>
                   <h3 className="text-2xl font-bold text-gray-900 mb-4">
@@ -367,7 +367,7 @@ export default async function CategoryPage({
         {/* Related Categories */}
         <Motion preset="slideInUp" delay={300}>
           <section className="py-12 bg-gray-50 rounded-xl">
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto sm:px-4 px-2">
               <h3 className="text-2xl font-bold text-center text-gray-900 mb-8">
                 {isArabic ? "تصنيفات أخرى" : "Other Categories"}
               </h3>

@@ -66,10 +66,3 @@ export const LazyPDFAnnotationTool = createDynamicComponent(
     displayName: 'LazyPDFAnnotationTool'
   }
 );
-
-export const LazyPDFSearchTool = createDynamicComponent(
-  () => Promise.resolve({ default: () => null }),
-  {
-    displayName: 'LazyPDFSearchTool'
-  }
-);

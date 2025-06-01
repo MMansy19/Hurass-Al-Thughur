@@ -485,7 +485,7 @@ SearchResultsSkeleton.displayName = 'SearchResultsSkeleton';
 
 // Navigation skeleton
 export const NavigationSkeleton = memo(() => (
-  <nav className="flex items-center justify-between h-16 px-4">
+  <nav className="flex items-center justify-between h-16 sm:px-4 px-2">
     <SkeletonText className="w-32 h-8" />
     <div className="hidden md:flex space-x-6">
       {Array.from({ length: 4 }, (_, index) => (
@@ -501,7 +501,7 @@ NavigationSkeleton.displayName = 'NavigationSkeleton';
 // Footer skeleton
 export const FooterSkeleton = memo(() => (
   <footer className="bg-gray-100  mt-12">
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="max-w-7xl mx-auto sm:px-4 px-2 py-8">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {Array.from({ length: 3 }, (_, index) => (
           <div key={index} className="space-y-4">
@@ -577,7 +577,7 @@ export const ProgressiveLoading = memo<ProgressiveLoadingProps>(({
             {retryAction && (
               <button
                 onClick={retryAction}
-                className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="inline-flex items-center sm:px-4 px-2 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
               >
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />

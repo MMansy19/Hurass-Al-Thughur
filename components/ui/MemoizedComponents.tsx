@@ -151,7 +151,7 @@ export const MemoizedCategoryFilter = memo<CategoryFilterProps>(({
     <div className={`flex flex-wrap gap-2 ${className}`} role="tablist" aria-label="فلترة حسب الفئة">
       <button
         onClick={createClickHandler('')}
-        className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
+        className={`sm:px-4 px-2 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
           selectedCategory === ''
             ? 'bg-blue-600 text-white'
             : 'bg-gray-200  text-gray-700  hover:bg-gray-300 :bg-gray-600'
@@ -165,7 +165,7 @@ export const MemoizedCategoryFilter = memo<CategoryFilterProps>(({
         <button
           key={category.id}
           onClick={createClickHandler(category.id)}
-          className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
+          className={`sm:px-4 px-2 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
             selectedCategory === category.id
               ? 'bg-blue-600 text-white'
               : 'bg-gray-200  text-gray-700  hover:bg-gray-300 :bg-gray-600'
@@ -232,7 +232,7 @@ export const MemoizedSearch = memo<SearchProps>(({
           value={query}
           onChange={handleInputChange}
           placeholder={placeholder}
-          className="w-full px-4 py-2 pr-10 pl-10 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white  text-gray-900  placeholder-gray-500 "
+          className="w-full sm:px-4 px-2 py-2 pr-10 pl-10 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white  text-gray-900  placeholder-gray-500 "
           dir="rtl"
           aria-label="البحث في المجلات"
         />

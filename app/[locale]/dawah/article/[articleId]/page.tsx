@@ -372,7 +372,7 @@ export default async function DawahArticlePage({
         <Motion preset="fadeInUp">
           <article className="bg-white">
             <header className="bg-gradient-to-r from-emerald-700 to-emerald-600 text-white py-16 rounded-xl">
-              <div className="container mx-auto px-4">
+              <div className="container mx-auto sm:px-4 px-2">
                 <div className="max-w-4xl mx-auto">
                   {/* Breadcrumb */}
                   <nav aria-label={isArabic ? "مسار التنقل" : "Breadcrumb"} className="mb-8">
@@ -451,7 +451,7 @@ export default async function DawahArticlePage({
             {/* Article Content */}
             <Motion preset="slideInUp" delay={200}>
               <section id="article-content" className="py-12">
-                <div className="container mx-auto px-4">
+                <div className="container mx-auto sm:px-4 px-2">
                   <div className="max-w-4xl mx-auto">
                     <div className="prose prose-lg max-w-none prose-emerald prose-headings:text-emerald-800 prose-a:text-emerald-600 prose-strong:text-emerald-800">
                       {article.content.split('\n').map((paragraph, index) => {
@@ -507,19 +507,19 @@ export default async function DawahArticlePage({
                         {isArabic ? "شارك هذا المقال" : "Share this article"}
                       </h3>
                       <div className="flex gap-4">
-                        <button className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                        <button className="flex items-center sm:px-4 px-2 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
                           <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M20 10c0-5.523-4.477-10-10-10S0 4.477 0 10c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V10h2.54V7.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V10h2.773l-.443 2.89h-2.33v6.988C16.343 19.128 20 14.991 20 10z" />
                           </svg>
                           Facebook
                         </button>
-                        <button className="flex items-center px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                        <button className="flex items-center sm:px-4 px-2 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
                           <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M.057 9.5a9.443 9.443 0 1 1 18.886 0A9.443 9.443 0 0 1 .057 9.5zM14.9 5.1a7.2 7.2 0 1 0-9.8 0l4.9 4.9z"/>
                           </svg>
                           WhatsApp
                         </button>
-                        <button className="flex items-center px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
+                        <button className="flex items-center sm:px-4 px-2 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
                           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
                           </svg>
@@ -538,7 +538,7 @@ export default async function DawahArticlePage({
         {relatedArticles.length > 0 && (
           <Motion preset="slideInUp" delay={300}>
             <section id="related-articles" className="py-12 bg-gray-50 rounded-xl">
-              <div className="container mx-auto px-4">
+              <div className="container mx-auto sm:px-4 px-2">
                 <h3 className="text-2xl font-bold text-center text-gray-900 mb-8">
                   {isArabic ? "مقالات ذات صلة" : "Related Articles"}
                 </h3>
@@ -580,7 +580,7 @@ export default async function DawahArticlePage({
         {/* Call to Action */}
         <Motion preset="slideInUp" delay={400}>
           <section className="py-12">
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto sm:px-4 px-2">
               <div className="bg-gradient-to-r from-emerald-100 to-emerald-50 rounded-xl p-8 text-center">
                 <h3 className="text-2xl font-bold text-emerald-900 mb-4">
                   {isArabic ? "تريد معرفة المزيد؟" : "Want to learn more?"}

@@ -8,6 +8,7 @@ interface UsePDFViewerResult {
   scale: number;
   error: string | null;
   width: number;
+  isMobile: boolean;
   setNumPages: (numPages: number) => void;
   setPageNumber: (pageNumber: number) => void;
   setScale: (scale: number) => void;
@@ -28,6 +29,8 @@ export function usePDFViewer(): UsePDFViewerResult {
   const [scale, setScale] = useState<number>(1.0);
   const [error, setError] = useState<string | null>(null);
   const [width, setWidth] = useState<number>(typeof window !== 'undefined' ? window.innerWidth : 1024);
+  
+  const isMobile = width < 768; // Mobile breakpoint
 
   useEffect(() => {
     const handleResize = () => setWidth(window.innerWidth);
@@ -35,20 +38,31 @@ export function usePDFViewer(): UsePDFViewerResult {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Auto-adjust scale for mobile devices
+  useEffect(() => {
+    if (isMobile) {
+      setScale(0.6); // Smaller scale for mobile
+    } else {
+      setScale(1.0); // Default scale for desktop
+    }
+  }, [isMobile]);
+
   function changePage(offset: number) {
     setPageNumber(prev => Math.min(Math.max(1, prev + offset), numPages));
   }
 
   function zoomIn() {
-    setScale(s => Math.min(s + 0.2, 3));
+    const increment = isMobile ? 0.1 : 0.2; // Smaller increments on mobile
+    setScale(s => Math.min(s + increment, isMobile ? 2 : 3));
   }
 
   function zoomOut() {
-    setScale(s => Math.max(s - 0.2, 0.5));
+    const decrement = isMobile ? 0.1 : 0.2; // Smaller decrements on mobile
+    setScale(s => Math.max(s - decrement, 0.3));
   }
 
   function resetZoom() {
-    setScale(1.0);
+    setScale(isMobile ? 0.6 : 1.0);
   }
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
@@ -61,6 +75,7 @@ export function usePDFViewer(): UsePDFViewerResult {
     scale,
     error,
     width,
+    isMobile,
     setNumPages,
     setPageNumber,
     setScale,

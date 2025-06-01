@@ -258,7 +258,7 @@ export const AnimatedSearchBar = memo<AnimatedSearchBarProps>(({
             onBlur={() => setIsFocused(false)}
             placeholder={placeholder}
             className={`
-              w-full px-4 py-3 pl-12 rtl:pr-12 rtl:pl-4 
+              w-full sm:px-4 px-2 py-3 pl-12 rtl:pr-12 rtl:pl-4 
               bg-white  
               border-2 border-gray-200 
               rounded-full text-gray-900 
@@ -366,7 +366,7 @@ export const AnimatedNavigation = memo<AnimatedNavigationProps>(({
             <a
               href={item.href}
               className={`
-                relative px-4 py-2 rounded-lg font-medium transition-all duration-300
+                relative sm:px-4 px-2 py-2 rounded-lg font-medium transition-all duration-300
                 flex items-center space-x-2 rtl:space-x-reverse group
                 ${item.isActive 
                   ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/25' 

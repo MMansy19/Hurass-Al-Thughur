@@ -78,7 +78,7 @@ export const MagazineCard = memo<MagazineCardProps>(({
           {issue.description}
         </p>
         <button 
-          className="w-full px-4 py-3 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-colors shadow-sm flex items-center justify-center"
+          className="w-full sm:px-4 px-2 py-3 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-colors shadow-sm flex items-center justify-center"
           aria-label={ariaLabel}
           type="button"
           onClick={handleClick}

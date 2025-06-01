@@ -85,7 +85,7 @@ export default async function DawahPage({
   return (
     <div className="space-y-12">
       <section className="bg-emerald-700 text-white py-10 rounded-lg">
-        <div className="container mx-auto px-4 text-center">
+        <div className="container mx-auto sm:px-4 px-2 text-center">
           <h1 className="text-3xl md:text-4xl font-bold">{dawah.title}</h1>
           <p className="text-xl mt-2 max-w-2xl mx-auto">{dawah.description}</p>
         </div>
@@ -93,7 +93,7 @@ export default async function DawahPage({
 
       {/* Introduction to Islam Section */}
       <section>
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto sm:px-4 px-2">
           <h2 className="text-2xl font-bold mb-6">{dawah.introToIslam}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {introArticles.map((article) => (
@@ -108,7 +108,7 @@ export default async function DawahPage({
                   <h3 className="font-bold text-lg mb-2">{article.title}</h3>
                   <p className="text-gray-700 mb-4">{article.excerpt}</p>                  <Link 
                     href={`/${locale}/dawah/article/${article.id}`}
-                    className="inline-block px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors"
+                    className="inline-block sm:px-4 px-2 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors"
                   >
                     {common.readMore}
                   </Link>
@@ -121,7 +121,7 @@ export default async function DawahPage({
 
       {/* New Muslims Section */}
       <section className="bg-gray-50 py-10">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto sm:px-4 px-2">
           <h2 className="text-2xl font-bold mb-6">{dawah.newMuslims}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {newMuslimMaterials.map((material) => (
@@ -139,12 +139,12 @@ export default async function DawahPage({
                   </div>
                   <div className="mt-4 flex justify-between">                    <Link 
                       href={`/${locale}/dawah/material/${material.id}`}
-                      className="inline-block px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors"
+                      className="inline-block sm:px-4 px-2 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors"
                     >
                       {common.view}
                     </Link>
                     <button 
-                      className="px-4 py-2 border border-emerald-600 text-emerald-600 rounded-md hover:bg-emerald-50 transition-colors"
+                      className="sm:px-4 px-2 py-2 border border-emerald-600 text-emerald-600 rounded-md hover:bg-emerald-50 transition-colors"
                     >
                       {dawah.download}
                     </button>
@@ -158,7 +158,7 @@ export default async function DawahPage({
 
       {/* Downloadable Images Section */}
       <section>
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto sm:px-4 px-2">
           <h2 className="text-2xl font-bold mb-6">{dawah.materials}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {downloadableImages.map((img) => (
@@ -170,10 +170,10 @@ export default async function DawahPage({
                 <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                   <div className="text-white text-center p-4">
                     <p className="font-bold text-lg mb-3">{img.title}</p>
-                    <button className="px-4 py-2 bg-white text-emerald-700 rounded-md hover:bg-gray-100 transition-colors">
+                    <button className="sm:px-4 px-2 py-2 bg-white text-emerald-700 rounded-md hover:bg-gray-100 transition-colors">
                       {dawah.download}
                     </button>
-                    <button className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors mx-2">
+                    <button className="sm:px-4 px-2 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors mx-2">
                       {dawah.share}
                     </button>
                   </div>

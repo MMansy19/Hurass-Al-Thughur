@@ -218,7 +218,7 @@ export const IntegratedPageHeader = memo<IntegratedPageHeaderProps>(({
       className={`${backgroundClasses} text-white py-16 rounded-lg shadow-lg mb-8`}
       aria-labelledby="page-heading"
     >
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto sm:px-4 px-2">
         <HeaderContent {...headerProps}>
           <div className="text-center max-w-4xl mx-auto">
             <Motion 
@@ -380,7 +380,7 @@ export const IntegratedCategoryNav = memo<IntegratedCategoryNavProps>(({
       className={`py-12 bg-gray-50  rounded-lg ${className}`}
       aria-labelledby="categories-heading"
     >
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto sm:px-4 px-2">
         <Motion 
           preset={enableAnimations ? 'slideInUp' : 'fadeIn'}
           delay={enableAnimations ? 0.2 : 0}

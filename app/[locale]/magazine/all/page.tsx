@@ -136,7 +136,7 @@ export default async function AllMagazinesPage({
         {/* Page Header */}
         <Motion preset="fadeInUp">
           <section className="bg-gradient-to-r from-emerald-700 to-emerald-600 text-white py-12 rounded-xl">
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto sm:px-4 px-2">
               <div className="max-w-4xl mx-auto text-center">
                 <h1 className="text-4xl md:text-5xl font-bold mb-4">
                   {magazine.allIssues}
@@ -182,7 +182,7 @@ export default async function AllMagazinesPage({
         {/* Search and Filters */}
         <Motion preset="slideInUp" delay={200}>
           <section id="search" className="py-8">
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto sm:px-4 px-2">
               <div className="max-w-4xl mx-auto space-y-6">
                 {/* Search */}
                 <div>
@@ -210,7 +210,7 @@ export default async function AllMagazinesPage({
                     {categories.map((category) => (
                       <button
                         key={category.id}
-                        className={`px-4 py-2 rounded-full text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 ${
+                        className={`sm:px-4 px-2 py-2 rounded-full text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 ${
                           category.id === "all"
                             ? "bg-emerald-600 text-white"
                             : "bg-gray-100 text-gray-700 hover:bg-emerald-100 hover:text-emerald-700"
@@ -230,7 +230,7 @@ export default async function AllMagazinesPage({
         {/* Issues Grid */}
         <Motion preset="fadeInUp" delay={300}>
           <section id="issues-grid" className="py-8">
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto sm:px-4 px-2">
               <div className="mb-8 flex justify-between items-center">
                 <h2 className="text-2xl font-bold text-gray-900">
                   {isArabic ? `${allIssues.length} إصدار` : `${allIssues.length} Issues`}
@@ -286,7 +286,7 @@ export default async function AllMagazinesPage({
         {/* Call to Action */}
         <Motion preset="slideInUp" delay={400}>
           <section className="py-12">
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto sm:px-4 px-2">
               <div className="bg-gradient-to-r from-emerald-100 to-emerald-50 rounded-xl p-8 text-center">
                 <h3 className="text-2xl font-bold text-emerald-900 mb-4">
                   {isArabic ? "لم تجد ما تبحث عنه؟" : "Didn't find what you're looking for?"}

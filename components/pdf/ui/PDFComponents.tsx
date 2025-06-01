@@ -46,7 +46,7 @@ export function PDFError({ errorTitle, errorMessage }: ErrorProps) {
         <p className="text-gray-700 mb-4">{errorMessage}</p>
         <button 
           onClick={() => window.location.reload()} 
-          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+          className="sm:px-4 px-2 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
         >
           Try Again
         </button>
@@ -68,7 +68,7 @@ export const PDFContainer = forwardRef<HTMLDivElement, PDFContainerProps>(
     return (
       <div 
         ref={ref}
-        className={`w-full h-screen flex flex-col bg-gray-100 border border-gray-200 rounded-lg overflow-hidden shadow-lg ${className}`}
+        className={`w-full h-screen flex flex-col bg-gray-100 border border-gray-200 rounded-lg overflow-hidden shadow-lg relative ${className}`}
       >
         {children}
       </div>
@@ -88,7 +88,7 @@ interface PDFDocumentWrapperProps {
  */
 export function PDFDocumentWrapper({ children, className = '' }: PDFDocumentWrapperProps) {
   return (
-    <div className={`flex-1 bg-gray-50 overflow-auto p-4 ${className}`}>
+    <div className={`flex-1 bg-gray-50 overflow-auto p-2 sm:p-4 ${className}`}>
       <div className="min-h-full flex flex-col items-center justify-center">
         {children}
       </div>
@@ -98,19 +98,53 @@ export function PDFDocumentWrapper({ children, className = '' }: PDFDocumentWrap
 
 interface PDFSidebarProps {
   children: ReactNode;
-  mode?: 'thumbnails' | 'outline' | 'bookmarks' | 'search';
-  onModeChange?: (mode: 'thumbnails' | 'outline' | 'bookmarks' | 'search') => void;
+  mode?: 'thumbnails' | 'outline' | 'bookmarks';
+  onModeChange?: (mode: 'thumbnails' | 'outline' | 'bookmarks') => void;
+  isMobile?: boolean;
+  onClose?: () => void;
 }
 
 /**
  * Sidebar for PDF thumbnails and navigation
  */
-export function PDFSidebar({ children }: PDFSidebarProps) {
+export function PDFSidebar({ children, isMobile = false, onClose }: PDFSidebarProps) {
+  if (isMobile) {
+    return (
+      <div className="fixed inset-0 z-50 flex">
+        {/* Backdrop */}
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50" 
+          onClick={onClose}
+        />
+        
+        {/* Sidebar */}
+        <div className="relative w-80 max-w-[80vw] bg-white shadow-xl overflow-y-auto">
+          <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between">
+            <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-wide">
+              Navigation
+            </h3>
+            <button
+              onClick={onClose}
+              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            >
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          <div className="p-4">
+            {children}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-64 bg-white border-r border-gray-200 overflow-y-auto flex-shrink-0">
       <div className="p-4">
         <h3 className="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">
-          Page Thumbnails
+          Navigation
         </h3>
         {children}
       </div>
@@ -173,70 +207,6 @@ export function PDFThumbnails({ file, numPages, currentPage, onPageSelect, scale
   );
 }
 
-interface PDFTextSearchProps {
-  searchText: string;
-  searchResults: any[];
-  currentIndex: number;
-  onSearch: (text: string) => void;
-  onSelectResult: (index: number) => void;
-  messages: {
-    search: string;
-    searchResults: string;
-    noMatches: string;
-    matches: string;
-  };
-}
-
-/**
- * Text search component for PDF
- */
-export function PDFTextSearch({ 
-  searchText, 
-  searchResults, 
-  currentIndex, 
-  onSearch, 
-  onSelectResult, 
-  messages 
-}: PDFTextSearchProps) {
-  return (
-    <div className="p-4">
-      <h3 className="font-semibold mb-4">{messages.search}</h3>
-      <div className="space-y-4">
-        <input
-          type="text"
-          value={searchText}
-          onChange={(e) => onSearch(e.target.value)}
-          placeholder={messages.search}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
-        />
-        
-        {searchResults.length > 0 && (
-          <div className="space-y-2">
-            <p className="text-sm text-gray-600">
-              {searchResults.length} {messages.matches}
-            </p>
-            {searchResults.map((result, index) => (
-              <button
-                key={index}
-                onClick={() => onSelectResult(index)}
-                className={`w-full text-left p-2 rounded hover:bg-gray-100 ${
-                  index === currentIndex ? 'bg-blue-100 text-blue-700' : ''
-                }`}
-              >
-                <div className="font-medium">Page {result.page}</div>
-                <div className="text-sm text-gray-500 truncate">{result.text}</div>
-              </button>
-            ))}
-          </div>
-        )}
-        
-        {searchText && searchResults.length === 0 && (
-          <p className="text-sm text-gray-500">{messages.noMatches}</p>
-        )}
-      </div>
-    </div>
-  );
-}
 
 interface PDFAnnotationsProps {
   annotations: any[];

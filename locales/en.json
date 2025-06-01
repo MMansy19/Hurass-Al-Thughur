@@ -31,7 +31,8 @@
     "magazineDescription": "Browse magazine issues and PDF files with high quality",
     "dawahDescription": "Introductory materials about Islam for non-Muslims",
     "libraryDescription": "Comprehensive library of images and brochures"
-  },  "magazine": {
+  },  
+  "magazine": {
     "title": "Hurass Magazine",
     "description": "Browse magazine issues and PDF files with high quality",
     "latestIssues": "Latest Issues",
@@ -51,6 +52,9 @@
     "fitWidth": "Fit Width",
     "fitPage": "Fit Page",
     "print": "Print",
+    "single": "Single Issue",
+    "continuous": "Continuous",
+    "facing": "Facing Pages",
     "issues": {
       "issue1": {
       "title": "Not Quranists: Instinct and Covenant",

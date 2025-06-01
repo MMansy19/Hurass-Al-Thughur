@@ -164,7 +164,7 @@ const Footer = ({ locale, messages }: FooterProps) => {  // Quick Links configur
   ];
   return (
     <footer className="bg-emerald-900 text-white mt-auto">
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto sm:px-4 px-2 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <FooterLogo 
             locale={locale} 

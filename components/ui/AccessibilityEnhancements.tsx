@@ -566,7 +566,7 @@ export const AccessibleSearch = memo<AccessibleSearchProps>(({
             onKeyDown={handleKeyDown}
             placeholder={placeholder}
             className={`
-              w-full px-4 py-2 pl-10 pr-4 text-gray-900 bg-white border border-gray-300 
+              w-full sm:px-4 px-2 py-2 pl-10 pr-4 text-gray-900 bg-white border border-gray-300 
               rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500
                 
               ${isArabic ? 'text-right' : 'text-left'}
@@ -618,7 +618,7 @@ export const AccessibleSearch = memo<AccessibleSearchProps>(({
                   role="option"
                   aria-selected={index === activeSuggestion}
                   className={`
-                    px-4 py-2 cursor-pointer text-gray-900 
+                    sm:px-4 px-2 py-2 cursor-pointer text-gray-900 
                     ${index === activeSuggestion 
                       ? 'bg-emerald-100 ' 
                       : 'hover:bg-gray-100 :bg-gray-700'

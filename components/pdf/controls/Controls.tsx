@@ -11,7 +11,7 @@ interface PDFControlsWrapperProps {
  */
 export function PDFControlsWrapper({ children }: PDFControlsWrapperProps) {
   return (
-    <div className="flex flex-wrap items-center justify-between gap-3 p-4 bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200 shadow-sm">
+    <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center justify-between gap-2 sm:gap-3 p-2 sm:p-4 bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200 shadow-sm">
       {children}
     </div>
   );
@@ -33,12 +33,12 @@ export function NavigationButton({ onClick, disabled, label, icon, isNext = fals
     <button
       onClick={onClick}
       disabled={disabled}
-      className="px-4 py-2 bg-emerald-600 text-white rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed hover:bg-emerald-700 active:bg-emerald-800 transition-all duration-200 flex items-center gap-2 shadow-sm hover:shadow-md"
+      className="px-2 sm:px-4 px-2 py-2 bg-emerald-600 text-white rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed hover:bg-emerald-700 active:bg-emerald-800 transition-all duration-200 flex items-center gap-1 sm:gap-2 shadow-sm hover:shadow-md text-sm"
       title={label}
     >
-      {!isNext && icon}
-      <span className="hidden sm:inline">{label}</span>
-      {isNext && icon}
+      {!isNext && <span className="rtl:order-2 ltr:order-1">{icon}</span>}
+      <span className="hidden sm:inline rtl:order-1 ltr:order-2">{label}</span>
+      {isNext && <span className="rtl:order-1 ltr:order-2">{icon}</span>}
     </button>
   );
 }
@@ -66,18 +66,18 @@ export function PageIndicator({ currentPage, totalPages, onPageChange }: PageInd
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex items-center gap-2">
-      <span className="text-sm text-gray-600">Page</span>
+    <form onSubmit={handleSubmit} className="flex items-center gap-1 sm:gap-2">
+      <span className="text-xs sm:text-sm text-gray-600 hidden sm:inline">Page</span>
       <input
         type="number"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         onBlur={() => setInputValue(currentPage.toString())}
-        className="w-16 px-2 py-1 text-center border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+        className="w-12 sm:w-16 px-1 sm:px-2 py-1 text-center border border-gray-300 rounded-md text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
         min={1}
         max={totalPages}
       />
-      <span className="text-sm text-gray-600">of {totalPages || 0}</span>
+      <span className="text-xs sm:text-sm text-gray-600">/ {totalPages || 0}</span>
     </form>
   );
 }
@@ -137,87 +137,6 @@ export function ZoomControl({ scale, onZoomIn, onZoomOut, zoomInLabel, zoomOutLa
   );
 }
 
-interface SearchControlProps {
-  value: string;
-  onChange: (value: string) => void;
-  results: number;
-  currentResult: number;
-  placeholder: string;
-  onNext?: () => void;
-  onPrevious?: () => void;
-  noMatchesText?: string;
-  matchesText?: string;
-}
-
-/**
- * Search control component
- */
-export function SearchControl({ 
-  value, 
-  onChange, 
-  results, 
-  currentResult, 
-  placeholder, 
-  onNext, 
-  onPrevious, 
-  noMatchesText
-}: SearchControlProps) {
-  return (
-    <div className="flex items-center gap-2">
-      <div className="relative">
-        <input
-          type="text"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          placeholder={placeholder}
-          className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 w-64"
-        />
-        <svg 
-          xmlns="http://www.w3.org/2000/svg" 
-          className="h-4 w-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-          fill="none" 
-          viewBox="0 0 24 24" 
-          stroke="currentColor"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-        </svg>
-      </div>      {results > 0 && (
-        <div className="flex items-center gap-2">
-          <span className="text-sm text-gray-600">
-            {currentResult + 1} of {results}
-          </span>
-          {onPrevious && (
-            <button
-              onClick={onPrevious}
-              className="p-1 hover:bg-gray-100 rounded"
-              disabled={currentResult === 0}
-            >
-              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-          )}
-          {onNext && (
-            <button
-              onClick={onNext}
-              className="p-1 hover:bg-gray-100 rounded"
-              disabled={currentResult === results - 1}
-            >
-              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          )}
-        </div>
-      )}
-      
-      {value && results === 0 && (
-        <span className="text-sm text-gray-500">{noMatchesText || 'No matches found'}</span>
-      )}
-    </div>
-  );
-}
-
 interface ViewModeControlProps {
   mode: 'single' | 'continuous' | 'facing';
   onChange: (mode: 'single' | 'continuous' | 'facing') => void;
@@ -225,30 +144,30 @@ interface ViewModeControlProps {
   fitPage: () => void;
   fitWidthLabel: string;
   fitPageLabel: string;
-  singleLabel?: string;
-  continuousLabel?: string;
-  facingLabel?: string;
+  singleLabel: string;
+  continuousLabel: string;
+  facingLabel: string;
 }
 
 /**
  * View mode control component
  */
-export function ViewModeControl({ mode, onChange, fitWidth, fitPage, fitWidthLabel, fitPageLabel }: ViewModeControlProps) {
+export function ViewModeControl({ mode, onChange, fitWidth, fitPage, fitWidthLabel, fitPageLabel, singleLabel, continuousLabel, facingLabel }: ViewModeControlProps) {
   return (
     <div className="flex items-center gap-1">
       <select
         value={mode}
         onChange={(e) => onChange(e.target.value as 'single' | 'continuous' | 'facing')}
-        className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
+        className="sm:px-3 sm:py-2 p-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
       >
-        <option value="single">Single Page</option>
-        <option value="continuous">Continuous</option>
-        <option value="facing">Facing Pages</option>
+        <option value="single">{singleLabel}</option>
+        <option value="continuous">{continuousLabel}</option>
+        <option value="facing">{facingLabel}</option>
       </select>
-      
+
       <button
         onClick={fitWidth}
-        className="px-3 py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+        className="sm:px-3 sm:py-2 p-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
         title={fitWidthLabel}
       >
         {fitWidthLabel}
@@ -256,7 +175,7 @@ export function ViewModeControl({ mode, onChange, fitWidth, fitPage, fitWidthLab
       
       <button
         onClick={fitPage}
-        className="px-3 py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+        className="sm:px-3 sm:py-2 p-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
         title={fitPageLabel}
       >
         {fitPageLabel}
@@ -422,65 +341,3 @@ export function BookmarkControl({
   );
 }
 
-interface AnnotationControlProps {
-  mode: 'highlight' | 'note' | null;
-  onModeChange: (mode: 'highlight' | 'note' | null) => void;
-  onToggleTools: () => void;
-  highlightLabel: string;
-  notesLabel: string;
-  annotationsLabel: string;
-  toolsOpen: boolean;
-}
-
-/**
- * Annotation control component
- */
-export function AnnotationControl({ 
-  mode, 
-  onModeChange, 
-  onToggleTools, 
-  highlightLabel, 
-  notesLabel, 
-  annotationsLabel, 
-  toolsOpen 
-}: AnnotationControlProps) {
-  return (
-    <div className="flex items-center gap-1">
-      <button
-        onClick={() => onModeChange(mode === 'highlight' ? null : 'highlight')}
-        className={`p-2 rounded-lg transition-colors ${
-          mode === 'highlight' ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 hover:bg-gray-200'
-        }`}
-        title={highlightLabel}
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m-9 6v6m2-6v6m2-6v6m2-6v6M7 4h10l-1 16H8L7 4z" />
-        </svg>
-      </button>
-      
-      <button
-        onClick={() => onModeChange(mode === 'note' ? null : 'note')}
-        className={`p-2 rounded-lg transition-colors ${
-          mode === 'note' ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 hover:bg-gray-200'
-        }`}
-        title={notesLabel}
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-        </svg>
-      </button>
-      
-      <button
-        onClick={onToggleTools}
-        className={`p-2 rounded-lg transition-colors ${
-          toolsOpen ? 'bg-purple-100 text-purple-700' : 'bg-gray-100 hover:bg-gray-200'
-        }`}
-        title={annotationsLabel}
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-        </svg>
-      </button>
-    </div>
-  );
-}

@@ -68,6 +68,8 @@ interface PDFViewerSectionProps {
     pageWidth: string;
     twoPages: string;
     continuous: string;
+    single: string;
+    facing: string;
     outline: string;
     noMatches: string;
     matches: string;
@@ -116,13 +118,13 @@ export default function PDFViewerSection({
           <div className="space-y-2">
             <button 
               onClick={retryLoading}
-              className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md transition-colors"
+              className="bg-red-600 hover:bg-red-700 text-white sm:px-4 px-2 py-2 rounded-md transition-colors"
             >
               Try Again
             </button>
             <button 
               onClick={() => window.location.reload()}
-              className="ml-2 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md transition-colors"
+              className="ml-2 bg-gray-600 hover:bg-gray-700 text-white sm:px-4 px-2 py-2 rounded-md transition-colors"
             >
               Refresh Page
             </button>

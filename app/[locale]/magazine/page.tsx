@@ -217,7 +217,7 @@ export default async function EnhancedMagazinePage({
       <main id="main-content" className="space-y-12" role="main">
         {/* Hero Section */}          
         <section className="bg-gradient-to-r from-emerald-700 to-emerald-500 text-white py-20 rounded-lg">
-          <div className="container mx-auto px-4 flex flex-col items-center text-center">
+          <div className="container mx-auto sm:px-4 px-2 flex flex-col items-center text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">{magazine.title}</h1>
             <p className="text-xl max-w-2xl mb-8">{magazine.description}</p>
             <div className="flex flex-wrap gap-4 justify-center">
@@ -238,7 +238,7 @@ export default async function EnhancedMagazinePage({
         </section>        
         {/* Search Section */}
         <section id="search" className="pt-4" aria-labelledby="search-heading">
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto sm:px-4 px-2">
             <h2 id="search-heading" className="sr-only">
               {locale === "ar" ? "البحث في المجلة" : "Search Magazine"}
             </h2>
@@ -255,7 +255,7 @@ export default async function EnhancedMagazinePage({
           className="pb-12"
           aria-labelledby="latest-issues-heading"
         >
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto sm:px-4 px-2">
             <div className="mb-12 flex justify-between items-center">
               <h2 id="latest-issues-heading" className="text-3xl font-bold text-emerald-800">
                 {magazine.latestIssues}
@@ -263,7 +263,7 @@ export default async function EnhancedMagazinePage({
 
               <Link
                 href={`/${locale}/magazine/all`}
-                className="inline-flex items-center text-emerald-600 hover:text-emerald-800 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 rounded-lg px-4 py-2 font-semibold hover:bg-emerald-50"
+                className="inline-flex items-center text-emerald-600 hover:text-emerald-800 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 rounded-lg sm:px-4 px-2 py-2 font-semibold hover:bg-emerald-50"
                 aria-label={`${magazine.allIssues} - ${locale === "ar" ? "يفتح في صفحة جديدة" : "Opens in new page"}`}
               >
                 {magazine.allIssues}
@@ -287,7 +287,7 @@ export default async function EnhancedMagazinePage({
         </section>        
         {/* PDF Viewer Section */}
         <section id="pdf-viewer" aria-labelledby="pdf-viewer-heading">
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto sm:px-4 px-2">
             <h2 id="pdf-viewer-heading" className="text-3xl font-bold text-emerald-800 mb-8 text-center">
               {locale === "ar" ? "عارض المجلة" : "Magazine Viewer"}
             </h2>
@@ -318,7 +318,7 @@ export default async function EnhancedMagazinePage({
           className="py-12 bg-gray-50 rounded-lg"
           aria-labelledby="categories-heading"
         >
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto sm:px-4 px-2">
             <div className="text-center mb-12">
               <h2 id="categories-heading" className="text-3xl font-bold text-emerald-800 mb-4">
                 {magazine.categories}
@@ -363,7 +363,7 @@ export default async function EnhancedMagazinePage({
         </section>        
         {/* Newsletter Subscription Section */}
         <section className="py-12 bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-lg text-white" aria-labelledby="newsletter-heading">
-          <div className="container mx-auto px-4 text-center">
+          <div className="container mx-auto sm:px-4 px-2 text-center">
             <h2 id="newsletter-heading" className="text-3xl font-bold mb-4">
               {locale === "ar" ? "اشترك في النشرة الإخبارية" : "Subscribe to Newsletter"}
             </h2>
@@ -378,7 +378,7 @@ export default async function EnhancedMagazinePage({
               <input
                 type="email"
                 placeholder={locale === "ar" ? "أدخل بريدك الإلكتروني" : "Enter your email"}
-                className="flex-1 px-4 py-3 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-300"
+                className="flex-1 sm:px-4 px-2 py-3 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-300"
                 required
               />
               <button

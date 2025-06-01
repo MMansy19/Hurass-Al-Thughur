@@ -306,7 +306,7 @@ export default async function DawahMaterialPage({
         <Suspense fallback={<PageHeaderSkeleton />}>
           <Motion preset="fadeInUp">
             <section className="bg-gradient-to-r from-blue-700 to-blue-600 text-white py-16 rounded-xl">
-              <div className="container mx-auto px-4">
+              <div className="container mx-auto sm:px-4 px-2">
                 <div className="max-w-4xl mx-auto">
                   {/* Breadcrumb */}
                   <nav aria-label={isArabic ? "مسار التنقل" : "Breadcrumb"} className="mb-8">
@@ -389,7 +389,7 @@ export default async function DawahMaterialPage({
         {/* Material Content */}
         <Motion preset="slideInUp" delay={200}>
           <section id="material-content" className="py-8">
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto sm:px-4 px-2">
               <div className="max-w-4xl mx-auto">
                 <article className="prose prose-lg max-w-none" dir={isArabic ? 'rtl' : 'ltr'}>
                   {/* Introduction */}
@@ -474,7 +474,7 @@ export default async function DawahMaterialPage({
         {/* Download Section */}
         <Motion preset="slideInUp" delay={300}>
           <section id="download-section" className="py-8">
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto sm:px-4 px-2">
               <div className="max-w-4xl mx-auto">
                 <div className="bg-gradient-to-r from-emerald-100 to-emerald-50 rounded-xl p-8 text-center">
                   <h3 className="text-2xl font-bold text-emerald-900 mb-4">
@@ -546,7 +546,7 @@ export default async function DawahMaterialPage({
         {/* Related Materials */}
         <Motion preset="fadeInUp" delay={400}>
           <section id="related-materials" className="py-8">
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto sm:px-4 px-2">
               <div className="max-w-4xl mx-auto">
                 <h3 className="text-2xl font-bold text-gray-900 mb-6">
                   {isArabic ? "مواد ذات صلة" : "Related Materials"}

@@ -80,7 +80,7 @@ export default async function LocaleLayout({
               locale={locale} 
               messages={messages.common}
             />
-            <main className="container mx-auto px-4 py-8 flex-grow">
+            <main className="container mx-auto sm:px-4 px-2 py-8 flex-grow">
               <div className="h-16 md:h-20"></div>
               <div className="animate-fadeIn">{children}</div>
             </main>

@@ -226,7 +226,7 @@ function ErrorFallbackUI({ error, onRetry, retryCount, maxRetries }: ErrorFallba
           {onRetry && (
             <button
               onClick={onRetry}
-              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
+              className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 sm:px-4 px-2 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
             >
               Try Again
             </button>
@@ -234,7 +234,7 @@ function ErrorFallbackUI({ error, onRetry, retryCount, maxRetries }: ErrorFallba
           
           <button
             onClick={() => window.location.reload()}
-            className="w-full bg-gray-600 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+            className="w-full bg-gray-600 hover:bg-gray-700 text-white font-medium py-2 sm:px-4 px-2 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
           >
             Refresh Page
           </button>
@@ -308,7 +308,7 @@ export function PDFErrorBoundary({ children }: { children: ReactNode }) {
           {retry && (
             <button 
               onClick={retry}
-              className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-md"
+              className="bg-emerald-600 hover:bg-emerald-700 text-white sm:px-4 px-2 py-2 rounded-md"
             >
               Retry
             </button>
@@ -344,7 +344,7 @@ export function NetworkErrorBoundary({ children }: { children: ReactNode }) {
           {retry && (
             <button 
               onClick={retry}
-              className="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-md"
+              className="bg-yellow-600 hover:bg-yellow-700 text-white sm:px-4 px-2 py-2 rounded-md"
             >
               Retry
             </button>

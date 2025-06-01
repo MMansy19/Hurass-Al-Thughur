@@ -15,11 +15,9 @@ import {
   PageIndicator,
   ZoomControl,
   AdvancedControls,
-  SearchControl,
   ViewModeControl,
   FullscreenControl,
   BookmarkControl,
-  AnnotationControl
 } from "./controls/Controls";
 import {
   PDFContainer,
@@ -28,7 +26,6 @@ import {
   PDFError,
   PDFSidebar,
   PDFThumbnails,
-  PDFTextSearch,
   PDFAnnotations
 } from "./ui/PDFComponents";
 
@@ -41,8 +38,6 @@ interface PDFViewerProps {
     zoomOut: string;
     loading: string;
     error: string;
-    search: string;
-    searchResults: string;
     thumbnails: string;
     fullscreen: string;
     fitWidth: string;
@@ -58,13 +53,14 @@ interface PDFViewerProps {
     twoPages: string;
     continuous: string;
     outline: string;
+    facing: string;
+    single: string;
     noMatches: string;
     matches: string;
   };
   onError?: () => void;
   enableAnnotations?: boolean;
   enableBookmarks?: boolean;
-  enableTextSearch?: boolean;
   className?: string;
 }
 
@@ -74,7 +70,6 @@ export default function PDFViewer({
   onError,
   enableAnnotations = true,
   enableBookmarks = true,
-  enableTextSearch = true,
   className = ""
 }: PDFViewerProps) {  // Use custom hook for PDF viewer functionality FIRST
   const {
@@ -95,16 +90,11 @@ export default function PDFViewer({
   // Enhanced state management
   const [viewMode, setViewMode] = useState<'single' | 'continuous' | 'facing'>('single');
   const [showSidebar, setShowSidebar] = useState(false);
-  const [sidebarMode, setSidebarMode] = useState<'thumbnails' | 'outline' | 'bookmarks' | 'search'>('thumbnails');
+  const [sidebarMode, setSidebarMode] = useState<'thumbnails' | 'outline' | 'bookmarks'>('thumbnails');
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [searchText, setSearchText] = useState('');
-  const [searchResults, setSearchResults] = useState<any[]>([]);
-  const [currentSearchIndex, setCurrentSearchIndex] = useState(-1);
   const [annotations, setAnnotations] = useState<any[]>([]);
   const [bookmarks, setBookmarks] = useState<any[]>([]);
-  const [showAnnotationTools, setShowAnnotationTools] = useState(false);
-  const [annotationMode, setAnnotationMode] = useState<'highlight' | 'note' | null>(null);  const [pageWidth, setPageWidth] = useState(0);
-
+  const [pageWidth, setPageWidth] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Configure PDF.js worker once on component mount
@@ -160,42 +150,6 @@ export default function PDFViewer({
       setIsFullscreen(false);
     }
   }, []);
-
-  // Search functionality
-  const performSearch = useCallback(async (text: string) => {
-    if (!text.trim()) {
-      setSearchResults([]);
-      setCurrentSearchIndex(-1);
-      return;
-    }
-
-    setSearchText(text);
-    // In a real implementation, this would search through the PDF text content
-    // For now, we'll simulate search results
-    const mockResults = [
-      { page: 1, text: text, position: { x: 100, y: 200 } },
-      { page: 3, text: text, position: { x: 150, y: 300 } },
-    ];
-    setSearchResults(mockResults);
-    setCurrentSearchIndex(0);    if (mockResults.length > 0 && mockResults[0]) {
-      setPageNumber(mockResults[0].page);
-    }
-  }, [setPageNumber]);
-
-  const nextSearchResult = useCallback(() => {
-    if (searchResults.length > 0 && currentSearchIndex < searchResults.length - 1) {
-      const newIndex = currentSearchIndex + 1;
-      setCurrentSearchIndex(newIndex);
-      setPageNumber(searchResults[newIndex].page);
-    }
-  }, [searchResults, currentSearchIndex, setPageNumber]);
-
-  const previousSearchResult = useCallback(() => {
-    if (searchResults.length > 0 && currentSearchIndex > 0) {
-      const newIndex = currentSearchIndex - 1;
-      setCurrentSearchIndex(newIndex);
-      setPageNumber(searchResults[newIndex].page);
-    }  }, [searchResults, currentSearchIndex, setPageNumber]);
 
   const removeAnnotation = useCallback((id: string) => {
     setAnnotations(prev => prev.filter(annotation => annotation.id !== id));
@@ -264,13 +218,6 @@ export default function PDFViewer({
             resetZoom();
           }
           break;
-        case 'f':
-          if (e.ctrlKey) {
-            e.preventDefault();
-            setSidebarMode('search');
-            setShowSidebar(true);
-          }
-          break;
         case 'F11':
           e.preventDefault();
           toggleFullscreen();
@@ -335,7 +282,7 @@ export default function PDFViewer({
   }, []);
 
   // Sidebar mode handler
-  const toggleSidebar = useCallback((mode?: 'thumbnails' | 'outline' | 'bookmarks' | 'search') => {
+  const toggleSidebar = useCallback((mode?: 'thumbnails' | 'outline' | 'bookmarks') => {
     if (showSidebar && sidebarMode === mode) {
       setShowSidebar(false);
     } else {
@@ -353,7 +300,7 @@ export default function PDFViewer({
       {/* Enhanced Controls */}
       <PDFControlsWrapper>
         {/* Primary Navigation */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center sm:gap-2 gap-1">
           <NavigationButton
             onClick={() => changePage(-1)}
             disabled={pageNumber <= 1}
@@ -384,23 +331,8 @@ export default function PDFViewer({
           />
         </div>
 
-        {/* Search Control - Only show if enabled */}
-        {enableTextSearch && (
-          <SearchControl
-            value={searchText}
-            onChange={performSearch}
-            results={searchResults.length}
-            currentResult={currentSearchIndex + 1}
-            onNext={nextSearchResult}
-            onPrevious={previousSearchResult}
-            placeholder={messages.search}
-            noMatchesText={messages.noMatches}
-            matchesText={messages.matches}
-          />
-        )}
-
         {/* View Controls */}
-        <div className="flex items-center gap-2">          
+        <div className="flex items-center gap-2 md:flex-row flex-col">          
           <ViewModeControl
             mode={viewMode}
             onChange={setViewMode}
@@ -408,9 +340,9 @@ export default function PDFViewer({
             fitPage={fitPage}
             fitWidthLabel={messages.fitWidth}
             fitPageLabel={messages.fitPage}
-            singleLabel={messages.pageWidth}
+            singleLabel={messages.single}
             continuousLabel={messages.continuous}
-            facingLabel={messages.twoPages}
+            facingLabel={messages.facing}
           />
 
           <ZoomControl
@@ -424,6 +356,7 @@ export default function PDFViewer({
           />
         </div>
 
+        <div className="flex items-center gap-1 md:gap-2 flex-row">
         {/* Advanced Controls */}        
         <AdvancedControls
           onToggleSidebar={() => toggleSidebar('thumbnails')}
@@ -450,25 +383,13 @@ export default function PDFViewer({
           />
         )}
 
-        {/* Annotation Control - Only show if enabled */}
-        {enableAnnotations && (
-          <AnnotationControl
-            mode={annotationMode}
-            onModeChange={setAnnotationMode}
-            onToggleTools={() => setShowAnnotationTools(!showAnnotationTools)}
-            highlightLabel={messages.highlight}
-            notesLabel={messages.notes}
-            annotationsLabel={messages.annotations}
-            toolsOpen={showAnnotationTools}
-          />
-        )}
-
         {/* Fullscreen Control */}
         <FullscreenControl
           isFullscreen={isFullscreen}
           onToggle={toggleFullscreen}
           label={messages.fullscreen}
         />
+        </div>
       </PDFControlsWrapper>
 
       <div className="flex flex-1 overflow-hidden">
@@ -484,25 +405,6 @@ export default function PDFViewer({
                 scale={0.15}
                 annotations={annotations}
                 bookmarks={bookmarks}
-              />
-            )}
-
-            {sidebarMode === 'search' && enableTextSearch && (
-              <PDFTextSearch
-                searchText={searchText}
-                searchResults={searchResults}
-                currentIndex={currentSearchIndex}
-                onSearch={performSearch}
-                onSelectResult={(index) => {
-                  setCurrentSearchIndex(index);
-                  setPageNumber(searchResults[index].page);
-                }}
-                messages={{
-                  search: messages.search,
-                  searchResults: messages.searchResults,
-                  noMatches: messages.noMatches,
-                  matches: messages.matches
-                }}
               />
             )}
 
