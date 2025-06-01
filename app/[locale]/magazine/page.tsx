@@ -14,7 +14,7 @@ const PDFViewerSection = dynamic(() => import("@/components/pdf/PDFViewerSection
 });
 
 const EnhancedPerformanceMonitor = dynamic(() => import("@/components/ui/EnhancedPerformanceMonitor"));
-ء
+
 // Generate metadata for the page with enhanced SEO
 export async function generateMetadata({
   params
@@ -99,12 +99,11 @@ export default async function EnhancedMagazinePage({
       description: magazine.issues.issue1.description,
       coverImage: "/images/magazine-cover-1.jpg",
       pdfUrl: "/pdfs/magazine-issue-1.pdf",
-      date: magazine.issues.issue1.date,
-      author: locale === "ar" ? "فريق التحرير" : "Editorial Team",
+      date: magazine.issues.issue1.date,      author: messages.hardcoded.editorialTeam,
       category: magazine.categoryNames.aqeedah,
       tags: [
-        locale === "ar" ? "العقيدة" : "Faith",
-        locale === "ar" ? "التوحيد" : "Monotheism"
+        messages.hardcoded.faith,
+        messages.hardcoded.monotheism
       ]
     },
     {
@@ -113,12 +112,11 @@ export default async function EnhancedMagazinePage({
       description: magazine.issues.issue2.description,
       coverImage: "/images/magazine-cover-2.jpg",
       pdfUrl: "/pdfs/magazine-issue-2.pdf",
-      date: magazine.issues.issue2.date,
-      author: locale === "ar" ? "فريق التحرير" : "Editorial Team",
+      date: magazine.issues.issue2.date,      author: messages.hardcoded.editorialTeam,
       category: magazine.categoryNames.fiqh,
       tags: [
-        locale === "ar" ? "الفقه" : "Jurisprudence",
-        locale === "ar" ? "الأحكام" : "Rulings"
+        messages.hardcoded.jurisprudence,
+        messages.hardcoded.rulings
       ]
     },
     {
@@ -127,52 +125,46 @@ export default async function EnhancedMagazinePage({
       description: magazine.issues.issue3.description,
       coverImage: "/images/magazine-cover-3.jpg",
       pdfUrl: "/pdfs/magazine-issue-3.pdf",
-      date: magazine.issues.issue3.date,
-      author: locale === "ar" ? "فريق التحرير" : "Editorial Team",
+      date: magazine.issues.issue3.date,      author: messages.hardcoded.editorialTeam,
       category: magazine.categoryNames.prophetBiography,
       tags: [
-        locale === "ar" ? "السيرة النبوية" : "Prophet's Biography",
-        locale === "ar" ? "الأخلاق" : "Ethics"
+        messages.hardcoded.prophetsBiography,
+        messages.hardcoded.ethics
       ]
     },
   ];
   // Enhanced categories with descriptions and icons
   const categories: Category[] = [
     {
-      id: "1",
-      name: magazine.categoryNames.aqeedah,
-      description: locale === "ar" ? "مقالات حول العقيدة الإسلامية والتوحيد" : "Articles about Islamic faith and monotheism",
+      id: "1",      name: magazine.categoryNames.aqeedah,
+      description: messages.hardcoded.articlesAboutIslamic,
       icon: "🕌"
     },
     {
-      id: "2",
-      name: magazine.categoryNames.fiqh,
-      description: locale === "ar" ? "أحكام فقهية ومسائل شرعية" : "Islamic jurisprudence and religious rulings",
+      id: "2",      name: magazine.categoryNames.fiqh,
+      description: messages.hardcoded.islamicJurisprudenceRulings,
       icon: "⚖️"
     },
     {
-      id: "3",
-      name: magazine.categoryNames.prophetBiography,
-      description: locale === "ar" ? "سيرة النبي محمد صلى الله عليه وسلم" : "Biography of Prophet Muhammad (PBUH)",
+      id: "3",      name: magazine.categoryNames.prophetBiography,
+      description: messages.hardcoded.biographyOfProphet,
       icon: "📖"
     },
     {
-      id: "4",
-      name: magazine.categoryNames.islamicHistory,
-      description: locale === "ar" ? "تاريخ الحضارة الإسلامية" : "History of Islamic civilization",
+      id: "4",      name: magazine.categoryNames.islamicHistory,
+      description: messages.hardcoded.historyOfIslamic,
       icon: "🏛️"
     },
   ];
 
   const selectedIssue = magazineIssues[0] || null;
-
   // Enhanced skip links
   const skipLinks = [
-    { href: "#main-content", label: locale === "ar" ? "انتقل إلى المحتوى الرئيسي" : "Skip to main content" },
-    { href: "#search", label: locale === "ar" ? "انتقل إلى البحث" : "Skip to search" },
-    { href: "#latest-issues", label: locale === "ar" ? "انتقل إلى آخر الإصدارات" : "Skip to latest issues" },
-    { href: "#pdf-viewer", label: locale === "ar" ? "انتقل إلى عارض PDF" : "Skip to PDF viewer" },
-    { href: "#categories", label: locale === "ar" ? "انتقل إلى التصنيفات" : "Skip to categories" },
+    { href: "#main-content", label: messages.hardcoded.skipToMainContent },
+    { href: "#search", label: messages.hardcoded.skipToSearch },
+    { href: "#latest-issues", label: messages.hardcoded.skipToLatestIssues },
+    { href: "#pdf-viewer", label: messages.hardcoded.skipToPDFViewer },
+    { href: "#categories", label: messages.hardcoded.skipToCategories },
   ];
 
   // Structured data for SEO
@@ -274,18 +266,16 @@ export default async function EnhancedMagazinePage({
         </section>        
         {/* PDF Viewer Section */}
         <section id="pdf-viewer" aria-labelledby="pdf-viewer-heading">
-          <div className="container mx-auto sm:px-4 px-2">
-            <h2 id="pdf-viewer-heading" className="text-3xl font-bold text-emerald-800 mb-8 text-center">
-              {locale === "ar" ? "عارض المجلة" : "Magazine Viewer"}
+          <div className="container mx-auto sm:px-4 px-2">            <h2 id="pdf-viewer-heading" className="text-3xl font-bold text-emerald-800 mb-8 text-center">
+              {messages.hardcoded.searchPDFViewer}
             </h2>
 
             <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200">
               <Suspense fallback={
                 <div className="h-96 bg-gray-100 animate-pulse flex items-center justify-center">
                   <div className="text-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto mb-4"></div>
-                    <p className="text-gray-600">
-                      {locale === "ar" ? "جاري تحميل عارض PDF..." : "Loading PDF viewer..."}
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto mb-4"></div>                    <p className="text-gray-600">
+                      {messages.hardcoded.loadingPDFViewer}
                     </p>
                   </div>
                 </div>
@@ -309,12 +299,8 @@ export default async function EnhancedMagazinePage({
             <div className="text-center mb-12">
               <h2 id="categories-heading" className="text-3xl font-bold text-emerald-800 mb-4">
                 {magazine.categories}
-              </h2>
-              <p className="text-gray-600 max-w-2xl mx-auto">
-                {locale === "ar"
-                  ? "استكشف مختلف أقسام المجلة وتصفح المحتوى حسب اهتماماتك"
-                  : "Explore different sections of the magazine and browse content by your interests"
-                }
+              </h2>              <p className="text-gray-600 max-w-2xl mx-auto">
+                {messages.hardcoded.exploreSections}
               </p>
             </div>
 
@@ -324,7 +310,7 @@ export default async function EnhancedMagazinePage({
                   key={category.id}
                   href={`/${locale}/magazine/category/${category.id}`}
                   className="block bg-white border border-gray-200 p-6 rounded-lg text-center hover:bg-emerald-50 hover:border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-colors shadow-md hover:shadow-lg"
-                  aria-label={`${magazine.browseCategory || "Browse category"}: ${category.name}`}
+                  aria-label={`${messages.hardcoded.browseCategoryText}: ${category.name}`}
                 >
                   <div className="text-3xl mb-4">
                     {category.icon}
@@ -336,9 +322,8 @@ export default async function EnhancedMagazinePage({
                     <p className="text-gray-600 text-sm mb-4">
                       {category.description}
                     </p>
-                  )}
-                  <div className="inline-flex items-center text-emerald-600 font-medium">
-                    {locale === "ar" ? "تصفح" : "Browse"}
+                  )}                  <div className="inline-flex items-center text-emerald-600 font-medium">
+                    {messages.hardcoded.browse}
                     <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
@@ -350,21 +335,16 @@ export default async function EnhancedMagazinePage({
         </section>        
         {/* Newsletter Subscription Section */}
         <section className="py-12 bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-lg text-white" aria-labelledby="newsletter-heading">
-          <div className="container mx-auto sm:px-4 px-2 text-center">
-            <h2 id="newsletter-heading" className="text-3xl font-bold mb-4">
-              {locale === "ar" ? "اشترك في النشرة الإخبارية" : "Subscribe to Newsletter"}
-            </h2>
-            <p className="text-emerald-100 mb-8 max-w-2xl mx-auto">
-              {locale === "ar"
-                ? "احصل على آخر الإصدارات والمقالات المميزة في بريدك الإلكتروني"
-                : "Get the latest issues and featured articles delivered to your inbox"
-              }
+          <div className="container mx-auto sm:px-4 px-2 text-center">            <h2 id="newsletter-heading" className="text-3xl font-bold mb-4">
+              {messages.newsletter.subscribeTitle}
+            </h2>            <p className="text-emerald-100 mb-8 max-w-2xl mx-auto">
+              {messages.newsletter.subscribeDescription}
             </p>
 
             <form className="max-w-md mx-auto flex gap-3">
               <input
                 type="email"
-                placeholder={locale === "ar" ? "أدخل بريدك الإلكتروني" : "Enter your email"}
+                placeholder={messages.newsletter.enterEmail}
                 className="flex-1 sm:px-4 px-2 py-3 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-300"
                 required
               />
