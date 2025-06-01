@@ -56,7 +56,7 @@ export const MemoizedMagazineCard = memo<MagazineCardProps>(({
 
   return (
     <article 
-      className={`bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden cursor-pointer ${className}`}
+      className={`bg-white  rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden cursor-pointer ${className}`}
       onClick={handleView}
       onKeyDown={handleKeyDown}
       tabIndex={0}
@@ -78,21 +78,21 @@ export const MemoizedMagazineCard = memo<MagazineCardProps>(({
       </div>
       
       <div className="p-4">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2">
+        <h3 className="text-lg font-semibold text-gray-900  mb-2 line-clamp-2">
           {magazine.title}
         </h3>
         
-        <p className="text-gray-600 dark:text-gray-300 text-sm mb-3 line-clamp-3">
+        <p className="text-gray-600  text-sm mb-3 line-clamp-3">
           {magazine.description}
         </p>
         
-        <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-3">
+        <div className="flex items-center justify-between text-xs text-gray-500  mb-3">
           <span>{formattedDate}</span>
           {displayFileSize && <span>{displayFileSize}</span>}
         </div>
         
         <div className="flex items-center justify-between">
-          <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded-full text-xs">
+          <span className="bg-blue-100  text-blue-800  px-2 py-1 rounded-full text-xs">
             {magazine.category}
           </span>
           
@@ -154,7 +154,7 @@ export const MemoizedCategoryFilter = memo<CategoryFilterProps>(({
         className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
           selectedCategory === ''
             ? 'bg-blue-600 text-white'
-            : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
+            : 'bg-gray-200  text-gray-700  hover:bg-gray-300 :bg-gray-600'
         }`}
         role="tab"
         aria-selected={selectedCategory === ''}
@@ -168,7 +168,7 @@ export const MemoizedCategoryFilter = memo<CategoryFilterProps>(({
           className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
             selectedCategory === category.id
               ? 'bg-blue-600 text-white'
-              : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
+              : 'bg-gray-200  text-gray-700  hover:bg-gray-300 :bg-gray-600'
           }`}
           role="tab"
           aria-selected={selectedCategory === category.id}
@@ -232,7 +232,7 @@ export const MemoizedSearch = memo<SearchProps>(({
           value={query}
           onChange={handleInputChange}
           placeholder={placeholder}
-          className="w-full px-4 py-2 pr-10 pl-10 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+          className="w-full px-4 py-2 pr-10 pl-10 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white  text-gray-900  placeholder-gray-500 "
           dir="rtl"
           aria-label="البحث في المجلات"
         />
@@ -246,7 +246,7 @@ export const MemoizedSearch = memo<SearchProps>(({
         {query && (
           <button
             onClick={handleClear}
-            className="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+            className="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400 hover:text-gray-600 :text-gray-300"
             aria-label="مسح البحث"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -311,7 +311,7 @@ export const MemoizedPagination = memo<PaginationProps>(({
       {showFirstLast && currentPage > 1 && (
         <button
           onClick={handleFirst}
-          className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-gray-700    :bg-gray-700 :text-white"
           aria-label="الصفحة الأولى"
         >
           الأولى
@@ -321,7 +321,7 @@ export const MemoizedPagination = memo<PaginationProps>(({
       {showPrevNext && currentPage > 1 && (
         <button
           onClick={handlePrev}
-          className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-gray-700    :bg-gray-700 :text-white"
           aria-label="الصفحة السابقة"
         >
           السابقة
@@ -334,8 +334,8 @@ export const MemoizedPagination = memo<PaginationProps>(({
           onClick={createPageHandler(page)}
           className={`px-3 py-2 text-sm font-medium rounded-lg ${
             page === currentPage
-              ? 'text-blue-600 bg-blue-50 border border-blue-300 dark:bg-blue-900 dark:text-blue-200 dark:border-blue-700'
-              : 'text-gray-500 bg-white border border-gray-300 hover:bg-gray-50 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white'
+              ? 'text-blue-600 bg-blue-50 border border-blue-300   '
+              : 'text-gray-500 bg-white border border-gray-300 hover:bg-gray-50 hover:text-gray-700    :bg-gray-700 :text-white'
           }`}
           aria-label={`الصفحة ${page}`}
           aria-current={page === currentPage ? 'page' : undefined}
@@ -347,7 +347,7 @@ export const MemoizedPagination = memo<PaginationProps>(({
       {showPrevNext && currentPage < totalPages && (
         <button
           onClick={handleNext}
-          className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-gray-700    :bg-gray-700 :text-white"
           aria-label="الصفحة التالية"
         >
           التالية
@@ -357,7 +357,7 @@ export const MemoizedPagination = memo<PaginationProps>(({
       {showFirstLast && currentPage < totalPages && (
         <button
           onClick={handleLast}
-          className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          className="px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 hover:text-gray-700    :bg-gray-700 :text-white"
           aria-label="الصفحة الأخيرة"
         >
           الأخيرة
@@ -389,7 +389,7 @@ export const MemoizedSkeleton = memo<SkeletonProps>(({
     return Array.from({ length: count }, (_, index) => (
       <div
         key={index}
-        className={`animate-pulse bg-gray-200 dark:bg-gray-700 ${rounded ? 'rounded-full' : 'rounded'} ${className}`}
+        className={`animate-pulse bg-gray-200  ${rounded ? 'rounded-full' : 'rounded'} ${className}`}
         style={{ height: `${height}px`, width }}
         aria-hidden="true"
       />

@@ -74,10 +74,10 @@ export const IntegratedMagazineGrid = memo<IntegratedMagazineGridProps>(({
             <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
           </svg>
         </div>
-        <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+        <h3 className="text-lg font-medium text-gray-900  mb-2">
           {isArabic ? 'لا توجد مجلات متاحة' : 'No magazines available'}
         </h3>
-        <p className="text-gray-500 dark:text-gray-400">
+        <p className="text-gray-500 ">
           {isArabic ? 'تحقق مرة أخرى لاحقاً للحصول على محتوى جديد' : 'Check back later for new content'}
         </p>
       </Motion>
@@ -95,7 +95,8 @@ export const IntegratedMagazineGrid = memo<IntegratedMagazineGridProps>(({
       navigationLabel={isArabic ? 'شبكة المجلات' : 'Magazine grid'}
       locale={locale}
     >
-      {issues.map((issue, index) => (        <MagazineCard
+      {issues.map((issue, index) => (        
+        <MagazineCard
           key={issue.id}
           issue={issue}
           onView={handleIssueView}
@@ -376,7 +377,7 @@ export const IntegratedCategoryNav = memo<IntegratedCategoryNavProps>(({
   return (
     <section 
       id="categories"
-      className={`py-12 bg-gray-50 dark:bg-gray-900 rounded-lg ${className}`}
+      className={`py-12 bg-gray-50  rounded-lg ${className}`}
       aria-labelledby="categories-heading"
     >
       <div className="container mx-auto px-4">
@@ -386,7 +387,7 @@ export const IntegratedCategoryNav = memo<IntegratedCategoryNavProps>(({
         >
           <h2 
             id="categories-heading" 
-            className="text-3xl font-bold mb-8 text-center text-emerald-800 dark:text-emerald-400"
+            className="text-3xl font-bold mb-8 text-center text-emerald-800 "
             dir={isArabic ? 'rtl' : 'ltr'}
           >
             {defaultTitle}
@@ -414,7 +415,7 @@ export const IntegratedCategoryNav = memo<IntegratedCategoryNavProps>(({
               <a
                 href={`/${locale}/magazine/category/${category.id}`}
                 className={`
-                  block bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 
+                  block bg-white  border border-gray-200  
                   p-6 rounded-lg text-center shadow-sm hover:shadow-md transition-all
                   focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2
                   group
@@ -422,16 +423,16 @@ export const IntegratedCategoryNav = memo<IntegratedCategoryNavProps>(({
                 aria-label={`${defaultBrowseText}: ${category.name}${category.count ? ` (${category.count} ${isArabic ? 'عنصر' : 'items'})` : ''}`}
                 dir={isArabic ? 'rtl' : 'ltr'}
               >
-                <h3 className="font-medium text-emerald-900 dark:text-emerald-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-300 transition-colors">
+                <h3 className="font-medium text-emerald-900  group-hover:text-emerald-600 :text-emerald-300 transition-colors">
                   {category.name}
                   {category.count && (
-                    <span className="block text-sm text-gray-500 dark:text-gray-400 mt-1">
+                    <span className="block text-sm text-gray-500  mt-1">
                       {category.count} {isArabic ? 'عنصر' : 'items'}
                     </span>
                   )}
                 </h3>
                 {category.description && (
-                  <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">
+                  <p className="text-sm text-gray-600  mt-2">
                     {category.description}
                   </p>
                 )}

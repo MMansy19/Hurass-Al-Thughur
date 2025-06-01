@@ -128,7 +128,7 @@ export function OptimizedImage({
   if (hasError && !fallbackSrc) {
     return (
       <div 
-        className={`flex items-center justify-center bg-gray-200 dark:bg-gray-700 ${className}`}
+        className={`flex items-center justify-center bg-gray-200  ${className}`}
         style={{ width, height, ...containerStyle }}
         aria-label={`Image failed to load: ${alt}`}
       >
@@ -154,7 +154,7 @@ export function OptimizedImage({
     <div ref={imgRef} style={containerStyle} className="relative">
       {showSkeleton && isLoading && placeholder === 'skeleton' && (
         <div 
-          className="absolute inset-0 bg-gray-200 dark:bg-gray-700 animate-pulse rounded"
+          className="absolute inset-0 bg-gray-200  animate-pulse rounded"
           style={{ width, height }}
           aria-hidden="true"
         />
@@ -347,7 +347,7 @@ export function CaptionedImage({
     <figure className={`space-y-2 ${className}`}>
       <OptimizedImage {...props} />
       {(caption || credit) && (
-        <figcaption className="text-sm text-gray-600 dark:text-gray-400">
+        <figcaption className="text-sm text-gray-600 ">
           {caption && <p>{caption}</p>}
           {credit && <p className="text-xs opacity-75">{credit}</p>}
         </figcaption>

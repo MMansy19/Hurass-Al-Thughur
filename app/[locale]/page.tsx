@@ -32,25 +32,19 @@ export default async function Home({
   const sections = [
     {
       title: messages.common.magazine,
-      description: locale === "ar" 
-        ? "تصفح أعداد المجلة وملفات PDF بأعلى جودة" 
-        : "Browse magazine issues and PDF files with high quality",
+      description: home.magazineDescription,
       image: "/file.svg",
       link: `/${locale}/magazine`,
     },
     {
       title: messages.common.dawah,
-      description: locale === "ar" 
-        ? "مواد تعريفية بالإسلام ودعوة لغير المسلمين" 
-        : "Introductory materials about Islam for non-Muslims",
+      description: home.dawahDescription,
       image: "/window.svg",
       link: `/${locale}/dawah`,
     },
     {
       title: messages.common.library,
-      description: locale === "ar" 
-        ? "مكتبة شاملة من الصور والمطويات" 
-        : "Comprehensive library of images and brochures",
+      description: home.libraryDescription,
       image: "/window.svg",
       link: `/${locale}/library`,
     },

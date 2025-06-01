@@ -14,6 +14,7 @@ interface UsePDFViewerResult {
   width: number;
   setNumPages: (numPages: number) => void;
   setPageNumber: (pageNumber: number) => void;
+  setScale: (scale: number) => void;
   setError: (error: string | null) => void;
   changePage: (offset: number) => void;
   zoomIn: () => void;
@@ -61,7 +62,6 @@ export function usePDFViewer({ initialScale = 1 }: UsePDFViewerOptions = {}): Us
     setPageNumber(1);
     setError(null);
   }
-
   return {
     numPages,
     pageNumber,
@@ -70,6 +70,7 @@ export function usePDFViewer({ initialScale = 1 }: UsePDFViewerOptions = {}): Us
     width,
     setNumPages,
     setPageNumber,
+    setScale,
     setError,
     changePage,
     zoomIn,

@@ -256,8 +256,8 @@ export const AccessibleMagazineCard = memo<AccessibleMagazineCardProps>(({
           }
         }}
         className={`
-          bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg 
-          border border-gray-100 dark:border-gray-700 cursor-pointer
+          bg-white  rounded-xl overflow-hidden shadow-lg 
+          border border-gray-100  cursor-pointer
           focus-within:ring-2 focus-within:ring-emerald-500 focus-within:ring-offset-2
           ${isPressed ? 'transform scale-95' : ''}
         `}
@@ -273,19 +273,21 @@ export const AccessibleMagazineCard = memo<AccessibleMagazineCardProps>(({
           className="w-full h-full focus:outline-none"
         >
         {/* Cover Image Section */}
-        <div className="relative aspect-[3/4] bg-gradient-to-br from-emerald-100 to-emerald-200 dark:from-emerald-800 dark:to-emerald-900">          <Motion
+          <div className="relative aspect-[3/4] w-full max-h-[400px] bg-gradient-to-br from-emerald-100 to-emerald-200">          
+          <Motion
             preset="scaleIn"
             delay={delay + 0.2}
             className="absolute inset-0 flex items-center justify-center"
           >
-            <div className="w-20 h-20 text-emerald-600 dark:text-emerald-400" aria-hidden="true">
+            <div className="w-20 h-20 text-emerald-600 " aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
                 <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
               </svg>
             </div>
           </Motion>
           
-          {/* Category Badge */}          <Motion
+          {/* Category Badge */}          
+          <Motion
             preset="slideInRight"
             delay={delay + 0.3}
             className="absolute top-3 right-3"
@@ -303,7 +305,7 @@ export const AccessibleMagazineCard = memo<AccessibleMagazineCardProps>(({
         <div className="p-6">
           <Motion preset="slideInUp" delay={delay + 0.4}>
             <h3 
-              className="font-bold text-xl mb-3 text-gray-900 dark:text-white"
+                className="font-bold text-xl mb-3 text-gray-900 line-clamp-1"
               id={`issue-title-${issue.id}`}
             >
               {issue.title}
@@ -312,7 +314,7 @@ export const AccessibleMagazineCard = memo<AccessibleMagazineCardProps>(({
           
           <Motion preset="slideInUp" delay={delay + 0.5}>
             <p 
-              className="text-gray-600 dark:text-gray-300 text-sm mb-3 flex items-center"
+              className="text-gray-600  text-sm mb-3 flex items-center"
               id={`issue-details-${issue.id}`}
             >
               <svg className="w-4 h-4 mr-2 rtl:ml-2 rtl:mr-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
@@ -323,7 +325,7 @@ export const AccessibleMagazineCard = memo<AccessibleMagazineCardProps>(({
           </Motion>
           
           <Motion preset="slideInUp" delay={delay + 0.6}>
-            <p className="text-gray-700 dark:text-gray-300 text-sm mb-4 line-clamp-3">
+            <p className="text-gray-700  text-sm mb-4 line-clamp-2">
               {issue.description}
             </p>
           </Motion>
@@ -334,13 +336,14 @@ export const AccessibleMagazineCard = memo<AccessibleMagazineCardProps>(({
               <MorphingButton
                 loading={false}
                 onClick={handleView}
-                className="flex-1"
                 aria-label={`${isArabic ? 'اقرأ العدد' : 'Read issue'}: ${issue.title}`}
               >
-                <svg className="w-4 h-4 mr-2 rtl:ml-2 rtl:mr-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <span className="flex items-center flex-row">
+                <svg className="w-4 h-4 mr-1 rtl:ml-1 rtl:mr-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C20.168 18.477 18.582 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                 </svg>
                 {isArabic ? 'اقرأ' : 'Read'}
+                </span>
               </MorphingButton>
               
               {onDownload && (
@@ -349,7 +352,7 @@ export const AccessibleMagazineCard = memo<AccessibleMagazineCardProps>(({
                   onClick={handleDownload}
                   aria-label={`${isArabic ? 'تحميل العدد' : 'Download issue'}: ${issue.title}`}
                 >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
                   <span className="sr-only">{isArabic ? 'تحميل' : 'Download'}</span>
@@ -565,7 +568,7 @@ export const AccessibleSearch = memo<AccessibleSearchProps>(({
             className={`
               w-full px-4 py-2 pl-10 pr-4 text-gray-900 bg-white border border-gray-300 
               rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500
-              dark:bg-gray-800 dark:border-gray-600 dark:text-white
+                
               ${isArabic ? 'text-right' : 'text-left'}
             `}
             aria-label={placeholder}
@@ -600,7 +603,7 @@ export const AccessibleSearch = memo<AccessibleSearchProps>(({
         {/* Search Suggestions */}
         {isExpanded && suggestions.length > 0 && (          <Motion
             preset="slideInDown"
-            className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-600"
+            className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg  "
           >
             <ul
               ref={listRef}
@@ -615,10 +618,10 @@ export const AccessibleSearch = memo<AccessibleSearchProps>(({
                   role="option"
                   aria-selected={index === activeSuggestion}
                   className={`
-                    px-4 py-2 cursor-pointer text-gray-900 dark:text-white
+                    px-4 py-2 cursor-pointer text-gray-900 
                     ${index === activeSuggestion 
-                      ? 'bg-emerald-100 dark:bg-emerald-800' 
-                      : 'hover:bg-gray-100 dark:hover:bg-gray-700'
+                      ? 'bg-emerald-100 ' 
+                      : 'hover:bg-gray-100 :bg-gray-700'
                     }
                     ${index === 0 ? 'rounded-t-lg' : ''}
                     ${index === suggestions.length - 1 ? 'rounded-b-lg' : ''}

@@ -98,12 +98,14 @@ export function PDFDocumentWrapper({ children, className = '' }: PDFDocumentWrap
 
 interface PDFSidebarProps {
   children: ReactNode;
+  mode?: 'thumbnails' | 'outline' | 'bookmarks' | 'search';
+  onModeChange?: (mode: 'thumbnails' | 'outline' | 'bookmarks' | 'search') => void;
 }
 
 /**
  * Sidebar for PDF thumbnails and navigation
  */
-export function PDFSidebar({ children }: PDFSidebarProps) {
+export function PDFSidebar({ children, mode, onModeChange }: PDFSidebarProps) {
   return (
     <div className="w-64 bg-white border-r border-gray-200 overflow-y-auto flex-shrink-0">
       <div className="p-4">
@@ -122,12 +124,14 @@ interface PDFThumbnailsProps {
   currentPage: number;
   onPageSelect: (page: number) => void;
   scale: number;
+  annotations?: any[];
+  bookmarks?: any[];
 }
 
 /**
  * Thumbnails component for PDF pages
  */
-export function PDFThumbnails({ file, numPages, currentPage, onPageSelect, scale }: PDFThumbnailsProps) {
+export function PDFThumbnails({ file, numPages, currentPage, onPageSelect, scale, annotations, bookmarks }: PDFThumbnailsProps) {
   if (!numPages) return null;
 
   return (
@@ -165,6 +169,129 @@ export function PDFThumbnails({ file, numPages, currentPage, onPageSelect, scale
           </div>
         );
       })}
+    </div>
+  );
+}
+
+interface PDFTextSearchProps {
+  searchText: string;
+  searchResults: any[];
+  currentIndex: number;
+  onSearch: (text: string) => void;
+  onSelectResult: (index: number) => void;
+  messages: {
+    search: string;
+    searchResults: string;
+    noMatches: string;
+    matches: string;
+  };
+}
+
+/**
+ * Text search component for PDF
+ */
+export function PDFTextSearch({ 
+  searchText, 
+  searchResults, 
+  currentIndex, 
+  onSearch, 
+  onSelectResult, 
+  messages 
+}: PDFTextSearchProps) {
+  return (
+    <div className="p-4">
+      <h3 className="font-semibold mb-4">{messages.search}</h3>
+      <div className="space-y-4">
+        <input
+          type="text"
+          value={searchText}
+          onChange={(e) => onSearch(e.target.value)}
+          placeholder={messages.search}
+          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+        />
+        
+        {searchResults.length > 0 && (
+          <div className="space-y-2">
+            <p className="text-sm text-gray-600">
+              {searchResults.length} {messages.matches}
+            </p>
+            {searchResults.map((result, index) => (
+              <button
+                key={index}
+                onClick={() => onSelectResult(index)}
+                className={`w-full text-left p-2 rounded hover:bg-gray-100 ${
+                  index === currentIndex ? 'bg-blue-100 text-blue-700' : ''
+                }`}
+              >
+                <div className="font-medium">Page {result.page}</div>
+                <div className="text-sm text-gray-500 truncate">{result.text}</div>
+              </button>
+            ))}
+          </div>
+        )}
+        
+        {searchText && searchResults.length === 0 && (
+          <p className="text-sm text-gray-500">{messages.noMatches}</p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+interface PDFAnnotationsProps {
+  annotations: any[];
+  onRemove: (id: string) => void;
+  onEdit: (id: string, content: string) => void;
+}
+
+/**
+ * Annotations overlay component
+ */
+export function PDFAnnotations({ annotations, onRemove, onEdit }: PDFAnnotationsProps) {
+  if (annotations.length === 0) return null;
+
+  return (
+    <div className="absolute inset-0 pointer-events-none">
+      {annotations.map((annotation) => (
+        <div
+          key={annotation.id}
+          className="absolute pointer-events-auto"
+          style={{
+            left: annotation.position.x,
+            top: annotation.position.y,
+          }}
+        >
+          {annotation.type === 'highlight' && (
+            <div
+              className="bg-yellow-300 bg-opacity-50 border border-yellow-400 rounded"
+              style={{
+                width: 100,
+                height: 20,
+              }}
+            />
+          )}
+          
+          {annotation.type === 'note' && (
+            <div className="bg-blue-500 text-white p-1 rounded shadow-lg min-w-[200px]">
+              <div className="text-xs">{annotation.content}</div>
+              <div className="flex gap-1 mt-1">
+                <button
+                  onClick={() => onEdit(annotation.id, prompt('Edit note:', annotation.content) || annotation.content)}
+                  className="text-xs bg-blue-600 hover:bg-blue-700 px-1 py-0.5 rounded"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => onRemove(annotation.id)}
+                  className="text-xs bg-red-500 hover:bg-red-600 px-1 py-0.5 rounded"
+                >
+                  ×
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      ))}
     </div>
   );
 }

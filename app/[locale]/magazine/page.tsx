@@ -5,7 +5,6 @@ import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import SEO from "@/components/ui/SEO";
 import { SkipLinks } from "@/components/ui/AccessibilityComponents";
-import { Motion, StaggerContainer } from "@/components/ui/AnimationSystem";
 import { StructuredData } from "@/components/ui/StructuredData";
 import { MagazineSearchWrapper } from "@/components/ui/MagazineSearchWrapper";
 import { MagazineGridWrapper } from "@/components/ui/MagazineGridWrapper";
@@ -216,232 +215,177 @@ export default async function EnhancedMagazinePage({
       )}
 
       <main id="main-content" className="space-y-12" role="main">
-        {/* Animated Hero Section */}        
-        <Motion
-          preset="fadeInUp"
-          duration={800}
-          className="bg-gradient-to-r from-emerald-700 via-emerald-800 to-emerald-900 text-white py-16 rounded-xl shadow-2xl overflow-hidden relative"
-          aria-labelledby="page-heading"
-        >{/* Background pattern */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute inset-0 bg-pattern opacity-20"></div>
-          </div>
-
-          <div className="container mx-auto px-4 text-center relative z-10">
-            <Motion preset="slideInDown" delay={200}>
-              <h1 id="page-heading" className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-emerald-100">
-                {magazine.title}
-              </h1>
-            </Motion>
-
-            <Motion preset="fadeIn" delay={400}>
-              <p className="text-xl md:text-2xl mt-4 max-w-3xl mx-auto leading-relaxed text-emerald-50">
-                {magazine.description}
-              </p>
-            </Motion>
-
-            <Motion preset="bounceIn" delay={600}>
-              <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-                <Link
-                  href={`#latest-issues`}
-                  className="inline-flex items-center px-8 py-4 bg-white text-emerald-700 rounded-full font-semibold hover:bg-emerald-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-                >
-                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                  {magazine.latestIssues}
-                </Link>
-
-                <Link
-                  href={`#categories`}
-                  className="inline-flex items-center px-8 py-4 border-2 border-white text-white rounded-full font-semibold hover:bg-white hover:text-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-                >
-                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                  </svg>
-                  {magazine.categories}
-                </Link>
-              </div>
-            </Motion>
-          </div>
-        </Motion>        {/* Animated Search Section */}
-        <Motion preset="fadeInUp" delay={200}>
-          <section id="search" className="py-8" aria-labelledby="search-heading">
-            <div className="container mx-auto px-4">
-              <h2 id="search-heading" className="sr-only">
-                {locale === "ar" ? "البحث في المجلة" : "Search Magazine"}
-              </h2>
-              <MagazineSearchWrapper
-                placeholder={locale === "ar" ? "ابحث في إصدارات المجلة..." : "Search magazine issues..."}
-                className="max-w-2xl mx-auto"
-                locale={locale}
-              />
+        {/* Hero Section */}          <section className="bg-gradient-to-r from-emerald-700 to-emerald-500 text-white py-20 rounded-lg">
+          <div className="container mx-auto px-4 flex flex-col items-center text-center">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">{magazine.title}</h1>
+            <p className="text-xl max-w-2xl mb-8">{magazine.description}</p>
+            <div className="flex flex-wrap gap-4 justify-center">
+              <Link
+                href={`#latest-issues`}
+                className="px-8 py-3 bg-white text-emerald-700 rounded-md font-bold hover:bg-gray-100 transition-colors"
+              >
+                {magazine.latestIssues}
+              </Link>
+              <Link
+                href={`#categories`}
+                className="px-8 py-3 bg-transparent border-2 border-white text-white rounded-md font-bold hover:bg-white hover:text-emerald-700 transition-colors"
+              >
+                {magazine.categories}
+              </Link>
             </div>
-          </section>
-        </Motion>
-
-        {/* Latest Issues Section with Animations */}
+          </div>
+        </section>        {/* Search Section */}
+        <section id="search" className="py-8" aria-labelledby="search-heading">
+          <div className="container mx-auto px-4">
+            <h2 id="search-heading" className="sr-only">
+              {locale === "ar" ? "البحث في المجلة" : "Search Magazine"}
+            </h2>
+            <MagazineSearchWrapper
+              placeholder={locale === "ar" ? "ابحث في إصدارات المجلة..." : "Search magazine issues..."}
+              className="max-w-2xl mx-auto"
+              locale={locale}
+            />
+          </div>
+        </section>        
+        {/* Latest Issues Section */}
         <section
           id="latest-issues"
           className="py-12"
           aria-labelledby="latest-issues-heading"
         >
           <div className="container mx-auto px-4">
-            <Motion preset="fadeInLeft">
-              <div className="mb-12 flex justify-between items-center">
-                <h2 id="latest-issues-heading" className="text-3xl md:text-4xl font-bold text-emerald-800 relative">
-                  {magazine.latestIssues}
-                  <div className="absolute bottom-0 left-0 w-20 h-1 bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full"></div>
-                </h2>
+            <div className="mb-12 flex justify-between items-center">
+              <h2 id="latest-issues-heading" className="text-3xl font-bold text-emerald-800">
+                {magazine.latestIssues}
+              </h2>
 
-                <Link
-                  href={`/${locale}/magazine/all`}
-                  className="inline-flex items-center text-emerald-600 hover:text-emerald-800 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 rounded-lg px-4 py-2 font-semibold hover:bg-emerald-50"
-                  aria-label={`${magazine.allIssues} - ${locale === "ar" ? "يفتح في صفحة جديدة" : "Opens in new page"}`}
+              <Link
+                href={`/${locale}/magazine/all`}
+                className="inline-flex items-center text-emerald-600 hover:text-emerald-800 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 rounded-lg px-4 py-2 font-semibold hover:bg-emerald-50"
+                aria-label={`${magazine.allIssues} - ${locale === "ar" ? "يفتح في صفحة جديدة" : "Opens in new page"}`}
+              >
+                {magazine.allIssues}
+                <svg
+                  className="w-5 h-5 ml-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
-                  {magazine.allIssues}
-                  <svg
-                    className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </Link>
-              </div>
-            </Motion>              <MagazineGridWrapper
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+              </Link>
+            </div>
+            <MagazineGridWrapper
               issues={magazineIssues}
               locale={locale}
               columns={3}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
             />
           </div>
-        </section>
-
+        </section>        
         {/* PDF Viewer Section */}
-        <Motion preset="fadeInUp" delay={300}>
-          <section id="pdf-viewer" aria-labelledby="pdf-viewer-heading">
-            <div className="container mx-auto px-4">
-              <h2 id="pdf-viewer-heading" className="text-3xl font-bold text-emerald-800 mb-8 text-center">
-                {locale === "ar" ? "عارض المجلة" : "Magazine Viewer"}
-              </h2>
+        <section id="pdf-viewer" aria-labelledby="pdf-viewer-heading">
+          <div className="container mx-auto px-4">
+            <h2 id="pdf-viewer-heading" className="text-3xl font-bold text-emerald-800 mb-8 text-center">
+              {locale === "ar" ? "عارض المجلة" : "Magazine Viewer"}
+            </h2>
 
-              <div className="bg-white rounded-xl shadow-2xl overflow-hidden border border-gray-200">
-                <Suspense fallback={
-                  <div className="h-96 bg-gradient-to-br from-gray-100 to-gray-200 animate-pulse flex items-center justify-center">
-                    <div className="text-center">
-                      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto mb-4"></div>
-                      <p className="text-gray-600">
-                        {locale === "ar" ? "جاري تحميل عارض PDF..." : "Loading PDF viewer..."}
-                      </p>
-                    </div>
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200">
+              <Suspense fallback={
+                <div className="h-96 bg-gray-100 animate-pulse flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto mb-4"></div>
+                    <p className="text-gray-600">
+                      {locale === "ar" ? "جاري تحميل عارض PDF..." : "Loading PDF viewer..."}
+                    </p>
                   </div>
-                }>
-                  <PDFViewerSection
-                    pdfUrl="/pdfs/4.pdf"
-                    title={selectedIssue?.title || magazine.title}
-                    messages={magazine}
-                  />
-                </Suspense>
-              </div>
+                </div>
+              }>
+                <PDFViewerSection
+                  pdfUrl="/pdfs/4.pdf"
+                  title={selectedIssue?.title || magazine.title}
+                  messages={magazine}
+                />
+              </Suspense>
             </div>
-          </section>
-        </Motion>
-
-        {/* Categories Section with Enhanced Design */}
-        <Motion preset="fadeInUp" delay={400}>
-          <section
-            id="categories"
-            className="py-16 bg-gradient-to-br from-gray-50 to-emerald-50 rounded-2xl"
-            aria-labelledby="categories-heading"
-          >
-            <div className="container mx-auto px-4">
-              <div className="text-center mb-12">
-                <h2 id="categories-heading" className="text-3xl md:text-4xl font-bold text-emerald-800 mb-4">
-                  {magazine.categories}
-                </h2>
-                <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-                  {locale === "ar"
-                    ? "استكشف مختلف أقسام المجلة وتصفح المحتوى حسب اهتماماتك"
-                    : "Explore different sections of the magazine and browse content by your interests"
-                  }
-                </p>
-              </div>
-
-              <StaggerContainer
-                staggerDelay={100}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-              >
-                {categories.map((category, index) => (
-                  <Motion
-                    key={category.id}
-                    preset="fadeInUp"
-                    delay={index * 100}
-                    className="group"
-                  >
-                    <Link
-                      href={`/${locale}/magazine/category/${category.id}`}
-                      className="block bg-white border border-gray-200 p-8 rounded-xl text-center hover:bg-emerald-50 hover:border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-all duration-300 shadow-md hover:shadow-xl transform hover:-translate-y-2"
-                      aria-label={`${magazine.browseCategory || "Browse category"}: ${category.name}`}
-                    >
-                      <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                        {category.icon}
-                      </div>
-                      <h3 className="font-bold text-xl text-emerald-900 mb-2 group-hover:text-emerald-700 transition-colors">
-                        {category.name}
-                      </h3>
-                      {category.description && (
-                        <p className="text-gray-600 text-sm leading-relaxed">
-                          {category.description}
-                        </p>
-                      )}
-                      <div className="mt-4 inline-flex items-center text-emerald-600 font-medium group-hover:text-emerald-700">
-                        {locale === "ar" ? "تصفح" : "Browse"}
-                        <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
-                      </div>
-                    </Link>
-                  </Motion>
-                ))}
-              </StaggerContainer>
-            </div>
-          </section>
-        </Motion>
-
-        {/* Newsletter Subscription Section */}
-        <Motion preset="fadeInUp" delay={500}>
-          <section className="py-16 bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-2xl text-white" aria-labelledby="newsletter-heading">
-            <div className="container mx-auto px-4 text-center">
-              <h2 id="newsletter-heading" className="text-3xl font-bold mb-4">
-                {locale === "ar" ? "اشترك في النشرة الإخبارية" : "Subscribe to Newsletter"}
+          </div>
+        </section>        {/* Categories Section */}
+        <section
+          id="categories"
+          className="py-12 bg-gray-50 rounded-lg"
+          aria-labelledby="categories-heading"
+        >
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 id="categories-heading" className="text-3xl font-bold text-emerald-800 mb-4">
+                {magazine.categories}
               </h2>
-              <p className="text-emerald-100 mb-8 max-w-2xl mx-auto text-lg">
+              <p className="text-gray-600 max-w-2xl mx-auto">
                 {locale === "ar"
-                  ? "احصل على آخر الإصدارات والمقالات المميزة في بريدك الإلكتروني"
-                  : "Get the latest issues and featured articles delivered to your inbox"
+                  ? "استكشف مختلف أقسام المجلة وتصفح المحتوى حسب اهتماماتك"
+                  : "Explore different sections of the magazine and browse content by your interests"
                 }
               </p>
-
-              <form className="max-w-md mx-auto flex gap-3">
-                <input
-                  type="email"
-                  placeholder={locale === "ar" ? "أدخل بريدك الإلكتروني" : "Enter your email"}
-                  className="flex-1 px-4 py-3 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-300"
-                  required
-                />
-                <button
-                  type="submit"
-                  className="px-6 py-3 bg-white text-emerald-600 rounded-lg font-semibold hover:bg-emerald-50 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:ring-offset-2 focus:ring-offset-emerald-600"
-                >
-                  {locale === "ar" ? "اشترك" : "Subscribe"}
-                </button>
-              </form>
             </div>
-          </section>
-        </Motion>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {categories.map((category) => (
+                <Link
+                  key={category.id}
+                  href={`/${locale}/magazine/category/${category.id}`}
+                  className="block bg-white border border-gray-200 p-6 rounded-lg text-center hover:bg-emerald-50 hover:border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-colors shadow-md hover:shadow-lg"
+                  aria-label={`${magazine.browseCategory || "Browse category"}: ${category.name}`}
+                >
+                  <div className="text-3xl mb-4">
+                    {category.icon}
+                  </div>
+                  <h3 className="font-bold text-lg text-emerald-900 mb-2">
+                    {category.name}
+                  </h3>
+                  {category.description && (
+                    <p className="text-gray-600 text-sm mb-4">
+                      {category.description}
+                    </p>
+                  )}
+                  <div className="inline-flex items-center text-emerald-600 font-medium">
+                    {locale === "ar" ? "تصفح" : "Browse"}
+                    <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>        {/* Newsletter Subscription Section */}
+        <section className="py-12 bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-lg text-white" aria-labelledby="newsletter-heading">
+          <div className="container mx-auto px-4 text-center">
+            <h2 id="newsletter-heading" className="text-3xl font-bold mb-4">
+              {locale === "ar" ? "اشترك في النشرة الإخبارية" : "Subscribe to Newsletter"}
+            </h2>
+            <p className="text-emerald-100 mb-8 max-w-2xl mx-auto">
+              {locale === "ar"
+                ? "احصل على آخر الإصدارات والمقالات المميزة في بريدك الإلكتروني"
+                : "Get the latest issues and featured articles delivered to your inbox"
+              }
+            </p>
+
+            <form className="max-w-md mx-auto flex gap-3">
+              <input
+                type="email"
+                placeholder={locale === "ar" ? "أدخل بريدك الإلكتروني" : "Enter your email"}
+                className="flex-1 px-4 py-3 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-300"
+                required
+              />
+              <button
+                type="submit"
+                className="px-6 py-3 bg-white text-emerald-600 rounded-md font-semibold hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:ring-offset-2 focus:ring-offset-emerald-600"
+              >
+                {locale === "ar" ? "اشترك" : "Subscribe"}
+              </button>
+            </form>
+          </div>
+        </section>
       </main>
     </>
   );
