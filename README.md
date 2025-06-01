@@ -362,7 +362,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 **"And whoever saves a life, it is as if he has saved all of mankind"** - *Quran 5:32*
 
 [![Website](https://img.shields.io/badge/🌐_Visit_Website-hurass--althughur.vercel.app-brightgreen?style=for-the-badge)](https://hurass-althughur.vercel.app)
-[![GitHub](https://img.shields.io/badge/⭐_Star_on_GitHub-MMansy19/hurass-yellow?style=for-the-badge)](https://github.com/MMansy19/hurass)
+[![GitHub](https://img.shields.io/badge/⭐_Star_on_GitHub-MMansy19/hurass-yellow?style=for-the-badge)](https://github.com/MMansy19/Hurass-Al-Thughur)
 
 *Preserving and sharing Islamic knowledge through modern technology*
 
