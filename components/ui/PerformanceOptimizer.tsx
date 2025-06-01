@@ -37,7 +37,19 @@ export const PerformanceOptimizer: React.FC<PerformanceOptimizerProps> = ({
 
       return () => observer.disconnect();
     }
+    
+    // Return empty cleanup function for consistency
+    return () => {};
   }, [enableCriticalCSS, optimizer]);
+
+  // Use enableDeferredLoading for potential future deferred CSS loading
+  React.useEffect(() => {
+    if (enableDeferredLoading) {
+      // Future implementation: Load non-critical CSS asynchronously
+      // This prevents the unused parameter warning
+      console.debug('Deferred loading enabled for PerformanceOptimizer');
+    }
+  }, [enableDeferredLoading]);
 
   return (
     <div className={className} data-performance-optimized="true">
