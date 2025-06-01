@@ -85,7 +85,7 @@ interface LiveRegionProps {
   message: string;
   politeness?: 'polite' | 'assertive' | 'off';
   atomic?: boolean;
-  relevant?: string;
+  relevant?: 'text' | 'all' | 'additions text' | 'additions' | 'additions removals' | 'removals' | 'removals additions' | 'removals text' | 'text additions' | 'text removals';
   busy?: boolean;
 }
 
@@ -208,9 +208,7 @@ export const AccessibleMagazineCard = memo<AccessibleMagazineCardProps>(({
         : `Opening issue: ${issue.title}`
     );
   }, [issue.id, issue.title, onView, isArabic]);
-
-  const handleDownload = useCallback((e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleDownload = useCallback(() => {
     onDownload?.(issue.id);
     setAnnouncement(
       isArabic 
@@ -255,10 +253,6 @@ export const AccessibleMagazineCard = memo<AccessibleMagazineCardProps>(({
             y: -8,
             scale: 1.02,
             transition: { duration: 0.3, ease: 'easeOut' }
-          },
-          tap: {
-            scale: 0.98,
-            transition: { duration: 0.1 }
           }
         }}
         className={`
@@ -267,17 +261,19 @@ export const AccessibleMagazineCard = memo<AccessibleMagazineCardProps>(({
           focus-within:ring-2 focus-within:ring-emerald-500 focus-within:ring-offset-2
           ${isPressed ? 'transform scale-95' : ''}
         `}
-        onClick={handleView}
-        onKeyDown={handleKeyDown}
-        onKeyUp={handleKeyUp}
-        tabIndex={0}
-        role="button"
-        aria-label={ariaLabel}
-        aria-describedby={`issue-details-${issue.id}`}
       >
+        <div
+          onClick={handleView}
+          onKeyDown={handleKeyDown}
+          onKeyUp={handleKeyUp}
+          tabIndex={0}
+          role="button"
+          aria-label={ariaLabel}
+          aria-describedby={`issue-details-${issue.id}`}
+          className="w-full h-full focus:outline-none"
+        >
         {/* Cover Image Section */}
-        <div className="relative aspect-[3/4] bg-gradient-to-br from-emerald-100 to-emerald-200 dark:from-emerald-800 dark:to-emerald-900">
-          <Motion
+        <div className="relative aspect-[3/4] bg-gradient-to-br from-emerald-100 to-emerald-200 dark:from-emerald-800 dark:to-emerald-900">          <Motion
             preset="scaleIn"
             delay={delay + 0.2}
             className="absolute inset-0 flex items-center justify-center"
@@ -289,8 +285,7 @@ export const AccessibleMagazineCard = memo<AccessibleMagazineCardProps>(({
             </div>
           </Motion>
           
-          {/* Category Badge */}
-          <Motion
+          {/* Category Badge */}          <Motion
             preset="slideInRight"
             delay={delay + 0.3}
             className="absolute top-3 right-3"
@@ -314,7 +309,7 @@ export const AccessibleMagazineCard = memo<AccessibleMagazineCardProps>(({
               {issue.title}
             </h3>
           </Motion>
-
+          
           <Motion preset="slideInUp" delay={delay + 0.5}>
             <p 
               className="text-gray-600 dark:text-gray-300 text-sm mb-3 flex items-center"
@@ -326,7 +321,7 @@ export const AccessibleMagazineCard = memo<AccessibleMagazineCardProps>(({
               <time dateTime={issue.date}>{issue.date}</time>
             </p>
           </Motion>
-
+          
           <Motion preset="slideInUp" delay={delay + 0.6}>
             <p className="text-gray-700 dark:text-gray-300 text-sm mb-4 line-clamp-3">
               {issue.description}
@@ -337,8 +332,7 @@ export const AccessibleMagazineCard = memo<AccessibleMagazineCardProps>(({
           <Motion preset="slideInUp" delay={delay + 0.7}>
             <div className="flex gap-2 justify-between">
               <MorphingButton
-                variant="primary"
-                size="sm"
+                loading={false}
                 onClick={handleView}
                 className="flex-1"
                 aria-label={`${isArabic ? 'اقرأ العدد' : 'Read issue'}: ${issue.title}`}
@@ -348,11 +342,10 @@ export const AccessibleMagazineCard = memo<AccessibleMagazineCardProps>(({
                 </svg>
                 {isArabic ? 'اقرأ' : 'Read'}
               </MorphingButton>
-
+              
               {onDownload && (
                 <MorphingButton
-                  variant="secondary"
-                  size="sm"
+                  loading={false}
                   onClick={handleDownload}
                   aria-label={`${isArabic ? 'تحميل العدد' : 'Download issue'}: ${issue.title}`}
                 >
@@ -364,6 +357,7 @@ export const AccessibleMagazineCard = memo<AccessibleMagazineCardProps>(({
               )}
             </div>
           </Motion>
+        </div>
         </div>
       </Motion>
 
@@ -486,8 +480,7 @@ export const AccessibleSearch = memo<AccessibleSearchProps>(({
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const isArabic = locale === 'ar';
-
-  const searchId = useMemo(() => `search-${Math.random().toString(36).substr(2, 9)}`, []);
+  const searchId = useMemo(() => `search-${Math.random().toString(36).substring(2, 9)}`, []);
   const listId = useMemo(() => `${searchId}-suggestions`, [searchId]);
 
   const handleSubmit = useCallback((e: React.FormEvent) => {
@@ -527,7 +520,7 @@ export const AccessibleSearch = memo<AccessibleSearchProps>(({
         );
         break;
       case 'Enter':
-        if (activeSuggestion >= 0) {
+        if (activeSuggestion >= 0 && suggestions[activeSuggestion]) {
           e.preventDefault();
           onChange(suggestions[activeSuggestion]);
           setIsExpanded(false);
@@ -605,8 +598,7 @@ export const AccessibleSearch = memo<AccessibleSearchProps>(({
         </div>
 
         {/* Search Suggestions */}
-        {isExpanded && suggestions.length > 0 && (
-          <Motion
+        {isExpanded && suggestions.length > 0 && (          <Motion
             preset="slideInDown"
             className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-600"
           >
@@ -650,12 +642,3 @@ export const AccessibleSearch = memo<AccessibleSearchProps>(({
 });
 
 AccessibleSearch.displayName = 'AccessibleSearch';
-
-export {
-  FocusManager,
-  LiveRegion,
-  useKeyboardNavigation,
-  AccessibleMagazineCard,
-  AccessibleGrid,
-  AccessibleSearch
-};

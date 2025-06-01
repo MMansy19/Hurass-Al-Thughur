@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import { ComponentType } from 'react';
 
 // Dynamic loading wrapper with enhanced error handling
-function createDynamicComponent<T = any>(
+function createDynamicComponent<T extends Record<string, any>>(
   importFn: () => Promise<{ default: ComponentType<T> }>,
   options: {
     displayName?: string;
@@ -35,6 +35,13 @@ export const LazyPDFBrowser = createDynamicComponent(
   }
 );
 
+export const LazyPDFViewerSection = createDynamicComponent(
+  () => import('@/components/pdf/PDFViewerSection'),
+  {
+    displayName: 'LazyPDFViewerSection'
+  }
+);
+
 // Contact Form (Should be lazy loaded as it's not always needed)
 export const LazyContactForm = createDynamicComponent(
   () => import('@/app/[locale]/contact/ContactForm'),
@@ -45,31 +52,8 @@ export const LazyContactForm = createDynamicComponent(
 
 // Performance Monitor (Development only)
 export const LazyPerformanceMonitor = createDynamicComponent(
-  () => import('@/components/ui/EnhancedPerformanceMonitor'),
+  () => import('@/components/ui/PerformanceMonitor').then(module => ({ default: module.PerformanceMonitor })),
   {
     displayName: 'LazyPerformanceMonitor'
-  }
-);
-
-// Chart components (if you add analytics)
-export const LazyChart = createDynamicComponent(
-  () => Promise.resolve({ default: () => null }),
-  {
-    displayName: 'LazyChart'
-  }
-);
-
-// Advanced PDF tools
-export const LazyPDFAnnotationTool = createDynamicComponent(
-  () => Promise.resolve({ default: () => null }),
-  {
-    displayName: 'LazyPDFAnnotationTool'
-  }
-);
-
-export const LazyPDFSearchTool = createDynamicComponent(
-  () => Promise.resolve({ default: () => null }),
-  {
-    displayName: 'LazyPDFSearchTool'
   }
 );

@@ -3,12 +3,10 @@ import Link from "next/link";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import SEO from "@/components/ui/SEO";
-import { SkipLinks, VisuallyHidden } from "@/components/ui/AccessibilityComponents";
+import { SkipLinks } from "@/components/ui/AccessibilityComponents";
 import { Motion, StaggerContainer } from "@/components/ui/AnimationSystem";
-import { AnimatedMagazineCard, AnimatedSearchBar } from "@/components/ui/AnimatedComponents";
 import { IntegratedMagazineGrid, IntegratedSearchInterface } from "@/components/ui/IntegratedComponents";
 import { StructuredData } from "@/components/ui/StructuredData";
-import { PerformanceOptimizer } from "@/utils/css-optimization";
 
 // Dynamic imports for better code splitting
 const PDFViewerSection = dynamic(() => import("@/components/pdf/PDFViewerSection"), {
@@ -18,11 +16,6 @@ const PDFViewerSection = dynamic(() => import("@/components/pdf/PDFViewerSection
 
 const EnhancedPerformanceMonitor = dynamic(() => import("@/components/ui/EnhancedPerformanceMonitor"), {
   ssr: false
-});
-
-// Optimized image component
-const OptimizedImage = dynamic(() => import("next/image"), {
-  loading: () => <div className="animate-pulse bg-gray-200 w-full h-full" />
 });
 
 // Generate metadata for the page with enhanced SEO
@@ -74,19 +67,19 @@ export async function generateMetadata({
 }
 
 interface MagazineIssue {
-  id: number;
+  id: string;
   title: string;
   description: string;
   coverImage: string;
   pdfUrl: string;
   date: string;
+  category: string;
   author?: string;
-  category?: string;
   tags?: string[];
 }
 
 interface Category {
-  id: number;
+  id: string;
   name: string;
   description?: string;
   icon?: string;
@@ -101,11 +94,10 @@ export default async function EnhancedMagazinePage({
   // Import translations
   const messages = (await import(`@/locales/${locale}.json`)).default;
   const { magazine } = messages;
-
   // Enhanced mock data for magazine issues with more realistic content
   const magazineIssues: MagazineIssue[] = [
     {
-      id: 1,
+      id: "1",
       title: magazine.issues.issue1.title,
       description: magazine.issues.issue1.description,
       coverImage: "/images/magazine-cover-1.jpg",
@@ -119,7 +111,7 @@ export default async function EnhancedMagazinePage({
       ]
     },
     {
-      id: 2,
+      id: "2",
       title: magazine.issues.issue2.title,
       description: magazine.issues.issue2.description,
       coverImage: "/images/magazine-cover-2.jpg",
@@ -133,7 +125,7 @@ export default async function EnhancedMagazinePage({
       ]
     },
     {
-      id: 3,
+      id: "3",
       title: magazine.issues.issue3.title,
       description: magazine.issues.issue3.description,
       coverImage: "/images/magazine-cover-3.jpg",
@@ -147,29 +139,28 @@ export default async function EnhancedMagazinePage({
       ]
     },
   ];
-
   // Enhanced categories with descriptions and icons
   const categories: Category[] = [
     { 
-      id: 1, 
+      id: "1", 
       name: magazine.categoryNames.aqeedah,
       description: locale === "ar" ? "مقالات حول العقيدة الإسلامية والتوحيد" : "Articles about Islamic faith and monotheism",
       icon: "🕌"
     },
     { 
-      id: 2, 
+      id: "2", 
       name: magazine.categoryNames.fiqh,
       description: locale === "ar" ? "أحكام فقهية ومسائل شرعية" : "Islamic jurisprudence and religious rulings",
       icon: "⚖️"
     },
     { 
-      id: 3, 
+      id: "3", 
       name: magazine.categoryNames.prophetBiography,
       description: locale === "ar" ? "سيرة النبي محمد صلى الله عليه وسلم" : "Biography of Prophet Muhammad (PBUH)",
       icon: "📖"
     },
     { 
-      id: 4, 
+      id: "4", 
       name: magazine.categoryNames.islamicHistory,
       description: locale === "ar" ? "تاريخ الحضارة الإسلامية" : "History of Islamic civilization",
       icon: "🏛️"
@@ -226,32 +217,30 @@ export default async function EnhancedMagazinePage({
       )}
 
       <main id="main-content" className="space-y-12" role="main">
-        {/* Animated Hero Section */}
-        <Motion
-          animation="fadeInUp"
+        {/* Animated Hero Section */}        <Motion
+          preset="fadeInUp"
           duration={800}
           className="bg-gradient-to-r from-emerald-700 via-emerald-800 to-emerald-900 text-white py-16 rounded-xl shadow-2xl overflow-hidden relative"
           aria-labelledby="page-heading"
-        >
-          {/* Background pattern */}
+        >{/* Background pattern */}
           <div className="absolute inset-0 opacity-10">
-            <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.1"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+            <div className="absolute inset-0 bg-pattern opacity-20"></div>
           </div>
           
           <div className="container mx-auto px-4 text-center relative z-10">
-            <Motion animation="slideInDown" delay={200}>
+            <Motion preset="slideInDown" delay={200}>
               <h1 id="page-heading" className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-emerald-100">
                 {magazine.title}
               </h1>
             </Motion>
             
-            <Motion animation="fadeIn" delay={400}>
+            <Motion preset="fadeIn" delay={400}>
               <p className="text-xl md:text-2xl mt-4 max-w-3xl mx-auto leading-relaxed text-emerald-50">
                 {magazine.description}
               </p>
             </Motion>
 
-            <Motion animation="bounceIn" delay={600}>
+            <Motion preset="bounceIn" delay={600}>
               <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
                   href={`#latest-issues`}
@@ -278,7 +267,7 @@ export default async function EnhancedMagazinePage({
         </Motion>
 
         {/* Animated Search Section */}
-        <Motion animation="fadeInUp" delay={200}>
+        <Motion preset="fadeInUp" delay={200}>
           <section id="search" className="py-8" aria-labelledby="search-heading">
             <div className="container mx-auto px-4">
               <h2 id="search-heading" className="sr-only">
@@ -303,7 +292,7 @@ export default async function EnhancedMagazinePage({
           aria-labelledby="latest-issues-heading"
         >
           <div className="container mx-auto px-4">
-            <Motion animation="fadeInLeft">
+            <Motion preset="fadeInLeft">
               <div className="mb-12 flex justify-between items-center">
                 <h2 id="latest-issues-heading" className="text-3xl md:text-4xl font-bold text-emerald-800 relative">
                   {magazine.latestIssues}
@@ -327,19 +316,23 @@ export default async function EnhancedMagazinePage({
                   </svg>
                 </Link>
               </div>
-            </Motion>
-
-            <IntegratedMagazineGrid
+            </Motion>            <IntegratedMagazineGrid
               issues={magazineIssues}
+              onIssueView={(id) => {
+                console.log('View issue:', id);
+                // Implement issue view functionality
+              }}
+              onIssueDownload={(id) => {
+                console.log('Download issue:', id);
+                // Implement issue download functionality
+              }}
               locale={locale}
-              magazine={magazine}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
             />
           </div>
         </section>
 
         {/* PDF Viewer Section */}
-        <Motion animation="fadeInUp" delay={300}>
+        <Motion preset="fadeInUp" delay={300}>
           <section id="pdf-viewer" aria-labelledby="pdf-viewer-heading">
             <div className="container mx-auto px-4">
               <h2 id="pdf-viewer-heading" className="text-3xl font-bold text-emerald-800 mb-8 text-center">
@@ -369,7 +362,7 @@ export default async function EnhancedMagazinePage({
         </Motion>
 
         {/* Categories Section with Enhanced Design */}
-        <Motion animation="fadeInUp" delay={400}>
+        <Motion preset="fadeInUp" delay={400}>
           <section 
             id="categories"
             className="py-16 bg-gradient-to-br from-gray-50 to-emerald-50 rounded-2xl"
@@ -395,7 +388,7 @@ export default async function EnhancedMagazinePage({
                 {categories.map((category, index) => (
                   <Motion
                     key={category.id}
-                    animation="fadeInUp"
+                    preset="fadeInUp"
                     delay={index * 100}
                     className="group"
                   >
@@ -430,7 +423,7 @@ export default async function EnhancedMagazinePage({
         </Motion>
 
         {/* Newsletter Subscription Section */}
-        <Motion animation="fadeInUp" delay={500}>
+        <Motion preset="fadeInUp" delay={500}>
           <section className="py-16 bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-2xl text-white" aria-labelledby="newsletter-heading">
             <div className="container mx-auto px-4 text-center">
               <h2 id="newsletter-heading" className="text-3xl font-bold mb-4">

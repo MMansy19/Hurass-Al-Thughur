@@ -274,11 +274,13 @@ export default function PDFViewer({ pdfFile, messages, onError }: PDFViewerProps
         )}
 
         {/* Main PDF Document */}
-        <PDFDocumentWrapper className={`${showSidebar ? 'with-sidebar' : ''} ${viewMode}`}>        
-          <Document
+        <PDFDocumentWrapper className={`${showSidebar ? 'with-sidebar' : ''} ${viewMode}`}>          <Document
             file={pdfFile}
             onLoadSuccess={onDocumentLoadSuccess}
-            onLoadError={(error) => setError(error.message)}
+            onLoadError={(error) => {
+              setError(error.message);
+              onError?.();
+            }}
             loading={<PDFLoading loadingText={messages.loading} />}
             error={<PDFError errorTitle={messages.error} errorMessage={error} />}
             className="pdf-document"

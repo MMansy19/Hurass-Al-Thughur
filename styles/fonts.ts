@@ -1,5 +1,4 @@
-import { Inter } from 'next/font/google';
-import localFont from 'next/font/local';
+import { Inter, Cairo } from 'next/font/google';
 
 // Google Fonts with optimized loading
 export const inter = Inter({
@@ -10,20 +9,10 @@ export const inter = Inter({
   fallback: ['system-ui', 'arial'],
 });
 
-// Arabic font with optimized loading
-export const arabicFont = localFont({
-  src: [
-    {
-      path: '../public/fonts/arabic-regular.woff2',
-      weight: '400',
-      style: 'normal',
-    },
-    {
-      path: '../public/fonts/arabic-bold.woff2',
-      weight: '700',
-      style: 'normal',
-    },
-  ],
+// Arabic font using Google Fonts
+export const arabicFont = Cairo({
+  subsets: ['arabic', 'latin'],
+  weight: ['400', '700'],
   variable: '--font-arabic',
   display: 'swap',
   preload: true,

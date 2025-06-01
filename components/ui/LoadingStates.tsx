@@ -2,7 +2,6 @@
 'use client';
 
 import React, { memo, useMemo } from 'react';
-import { useTranslations } from 'next-intl';
 
 // Base loading spinner
 interface LoadingSpinnerProps {
@@ -523,26 +522,6 @@ export const FooterSkeleton = memo(() => (
 ));
 
 FooterSkeleton.displayName = 'FooterSkeleton';
-
-// PDF viewer skeleton
-export const PDFViewerSkeleton = memo(() => (
-  <div className="space-y-4">
-    <div className="flex items-center justify-between">
-      <SkeletonButton className="w-24" />
-      <div className="flex items-center space-x-2">
-        <SkeletonButton className="w-8 h-8" />
-        <SkeletonText className="w-16 h-6" />
-        <SkeletonButton className="w-8 h-8" />
-      </div>
-      <SkeletonButton className="w-20" />
-    </div>
-    <div className="bg-gray-200 dark:bg-gray-700 rounded-lg h-96 flex items-center justify-center">
-      <LoadingSpinner size="xl" />
-    </div>
-  </div>
-));
-
-PDFViewerSkeleton.displayName = 'PDFViewerSkeleton';
 
 // Category filter skeleton
 export const CategoryFilterSkeleton = memo(() => (

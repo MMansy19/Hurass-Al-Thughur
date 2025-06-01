@@ -34,8 +34,12 @@ export function createAppError(
 ): AppError {
   const error = new Error(message) as AppError;
   error.type = type;
-  error.code = options.code;
-  error.context = options.context;
+  if (options.code !== undefined) {
+    error.code = options.code;
+  }
+  if (options.context !== undefined) {
+    error.context = options.context;
+  }
   error.recoverable = options.recoverable ?? true;
   error.cause = options.cause;
   
@@ -78,8 +82,7 @@ class ErrorLogger {
       this.sendToErrorService(errorInfo);
     }
   }
-
-  private async sendToErrorService(errorInfo: any) {
+  private async sendToErrorService(_errorInfo: any) {
     try {
       // Example: Send to Sentry, LogRocket, or custom error service
       // await fetch('/api/errors', {
@@ -96,7 +99,7 @@ class ErrorLogger {
 // Enhanced Error Boundary with recovery strategies
 interface ErrorBoundaryState {
   hasError: boolean;
-  error?: AppError | Error;
+  error: AppError | Error | null;
   errorId?: string;
   retryCount: number;
 }
@@ -112,11 +115,11 @@ interface EnhancedErrorBoundaryProps {
 export class EnhancedErrorBoundary extends Component<EnhancedErrorBoundaryProps, ErrorBoundaryState> {
   private logger = ErrorLogger.getInstance();
   private retryTimeouts: NodeJS.Timeout[] = [];
-
   constructor(props: EnhancedErrorBoundaryProps) {
     super(props);
     this.state = { 
       hasError: false, 
+      error: null,
       retryCount: 0 
     };
   }
@@ -147,14 +150,13 @@ export class EnhancedErrorBoundary extends Component<EnhancedErrorBoundaryProps,
   componentWillUnmount() {
     this.retryTimeouts.forEach(timeout => clearTimeout(timeout));
   }
-
   retry = () => {
     const { maxRetries = 3 } = this.props;
     
     if (this.state.retryCount < maxRetries) {
       this.setState(prevState => ({
         hasError: false,
-        error: undefined,
+        error: null,
         retryCount: prevState.retryCount + 1
       }));
     }
@@ -167,9 +169,7 @@ export class EnhancedErrorBoundary extends Component<EnhancedErrorBoundaryProps,
       
       if (this.props.fallback) {
         return this.props.fallback(this.state.error, this.retry);
-      }
-
-      return (
+      }      return (
         <ErrorFallbackUI 
           error={this.state.error}
           onRetry={canRetry ? this.retry : undefined}
@@ -294,7 +294,7 @@ function getErrorMessage(error: AppError): string {
 export function PDFErrorBoundary({ children }: { children: ReactNode }) {
   return (
     <EnhancedErrorBoundary
-      fallback={(error, retry) => (
+      fallback={(_error, retry) => (
         <div className="bg-gray-100 border border-gray-300 rounded-lg p-6 text-center">
           <div className="w-12 h-12 mx-auto mb-3 text-gray-400">
             <svg fill="currentColor" viewBox="0 0 24 24">
@@ -325,7 +325,7 @@ export function PDFErrorBoundary({ children }: { children: ReactNode }) {
 export function NetworkErrorBoundary({ children }: { children: ReactNode }) {
   return (
     <EnhancedErrorBoundary
-      fallback={(error, retry) => (
+      fallback={(_error, retry) => (
         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-6 text-center">
           <div className="w-12 h-12 mx-auto mb-3 text-yellow-500">
             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">

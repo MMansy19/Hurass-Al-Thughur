@@ -1,11 +1,11 @@
 'use client';
 
-import React, { memo, Suspense, lazy, useCallback, useMemo } from 'react';
+import React, { memo, Suspense, lazy, useCallback, useMemo, useState } from 'react';
 import { AnimatedMagazineCard, AnimatedGrid, AnimatedSearchBar, AnimatedNavigation } from './AnimatedComponents';
 import { AccessibleMagazineCard, AccessibleGrid, AccessibleSearch, FocusManager } from './AccessibilityEnhancements';
-import { Motion, Stagger } from './AnimationSystem';
+import { Motion } from './AnimationSystem';
 import { LoadingSpinner } from './AccessibilityComponents';
-import { MagazineCardSkeleton, MagazineGridSkeleton } from './LoadingStates';
+import { MagazineGridSkeleton } from './LoadingStates';
 
 // Lazy load heavy components
 const LazyPDFViewer = lazy(() => import('@/components/pdf/PDFViewerSection'));
@@ -60,7 +60,7 @@ export const IntegratedMagazineGrid = memo<IntegratedMagazineGridProps>(({
     return (
       <MagazineGridSkeleton 
         count={6} 
-        columns={columns}
+        columns={columns as 1 | 2 | 3 | 4}
       />
     );
   }
@@ -95,12 +95,11 @@ export const IntegratedMagazineGrid = memo<IntegratedMagazineGridProps>(({
       navigationLabel={isArabic ? 'شبكة المجلات' : 'Magazine grid'}
       locale={locale}
     >
-      {issues.map((issue, index) => (
-        <MagazineCard
+      {issues.map((issue, index) => (        <MagazineCard
           key={issue.id}
           issue={issue}
           onView={handleIssueView}
-          onDownload={onIssueDownload ? handleIssueDownload : undefined}
+          {...(onIssueDownload && { onDownload: handleIssueDownload })}
           locale={locale}
           delay={enableAnimations ? index * 0.1 : 0}
           readNowText={readNowText}
@@ -144,13 +143,16 @@ export const IntegratedSearch = memo<IntegratedSearchProps>(({
     placeholder || (isArabic ? 'البحث في المجلات...' : 'Search magazines...'),
     [placeholder, isArabic]
   );
+  // Handle onSubmit prop to avoid exactOptionalPropertyTypes issues
+  const handleSubmit = onSubmit ? onSubmit : undefined;
 
-  if (enableAccessibilityFeatures) {
+  // Choose between animated or accessible components based on preferences
+  if (enableAccessibilityFeatures || !enableAnimations) {
     return (
       <AccessibleSearch
         value={value}
         onChange={onChange}
-        onSubmit={onSubmit}
+        {...(handleSubmit && { onSubmit: handleSubmit })}
         suggestions={suggestions}
         isLoading={isLoading}
         locale={locale}
@@ -164,7 +166,7 @@ export const IntegratedSearch = memo<IntegratedSearchProps>(({
     <AnimatedSearchBar
       value={value}
       onChange={onChange}
-      onSubmit={onSubmit}
+      {...(handleSubmit && { onSubmit: handleSubmit })}
       placeholder={defaultPlaceholder}
       isLoading={isLoading}
       className={className}
@@ -459,7 +461,6 @@ interface IntegratedHeaderNavProps {
 
 export const IntegratedHeaderNav = memo<IntegratedHeaderNavProps>(({
   navItems,
-  locale,
   enableAnimations = true,
   className = ''
 }) => {
@@ -467,8 +468,6 @@ export const IntegratedHeaderNav = memo<IntegratedHeaderNavProps>(({
     return (
       <AnimatedNavigation
         items={navItems}
-        locale={locale}
-        variant="header"
         className={className}
       />
     );
@@ -476,7 +475,7 @@ export const IntegratedHeaderNav = memo<IntegratedHeaderNavProps>(({
 
   return (
     <nav className={`flex space-x-6 rtl:space-x-reverse ${className}`} role="navigation">
-      {navItems.map((item, index) => (
+      {navItems.map((item) => (
         <a
           key={item.href}
           href={item.href}
@@ -504,11 +503,45 @@ export const IntegratedHeaderNav = memo<IntegratedHeaderNavProps>(({
 
 IntegratedHeaderNav.displayName = 'IntegratedHeaderNav';
 
-export {
-  IntegratedMagazineGrid,
-  IntegratedSearch,
-  IntegratedPageHeader,
-  IntegratedPDFViewer,
-  IntegratedCategoryNav,
-  IntegratedHeaderNav
-};
+// Integrated Search Interface with enhanced features
+interface IntegratedSearchInterfaceProps {
+  placeholder?: string;
+  onSearch: (query: string) => void;
+  className?: string;
+  suggestions?: string[];
+  locale?: string;
+}
+
+export const IntegratedSearchInterface = memo<IntegratedSearchInterfaceProps>(({
+  placeholder = "Search...",
+  onSearch,
+  className = "",
+  suggestions = [],
+  locale = "en"
+}) => {
+  const [value, setValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = useCallback((searchValue: string) => {
+    setIsLoading(true);
+    onSearch(searchValue);
+    setTimeout(() => setIsLoading(false), 500);
+  }, [onSearch]);
+
+  return (
+    <IntegratedSearch
+      value={value}
+      onChange={setValue}
+      onSubmit={handleSubmit}
+      suggestions={suggestions}
+      isLoading={isLoading}
+      locale={locale}
+      placeholder={placeholder}
+      className={className}
+      enableAnimations={true}
+      enableAccessibilityFeatures={true}
+    />
+  );
+});
+
+IntegratedSearchInterface.displayName = 'IntegratedSearchInterface';

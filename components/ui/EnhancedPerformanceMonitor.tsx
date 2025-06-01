@@ -65,10 +65,8 @@ const EnhancedPerformanceMonitor = memo(() => {
                       localStorage.getItem('showPerformanceMonitor') === 'true';
     setIsVisible(shouldShow);
 
-    if (!shouldShow) return;
-
-    // Import web-vitals dynamically to avoid SSR issues
-    import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
+    if (!shouldShow) return;    // Import web-vitals dynamically to avoid SSR issues
+    import('web-vitals').then(({ onCLS, onINP, onFCP, onLCP, onTTFB }) => {
       const handleMetric = (metric: any) => {
         setPerformanceData(prev => ({
           ...prev,
@@ -77,14 +75,12 @@ const EnhancedPerformanceMonitor = memo(() => {
 
         // Log to console for debugging
         console.log(`${metric.name}: ${metric.value}`, metric);
-      };
-
-      // Register Web Vitals observers
-      getCLS(handleMetric);
-      getFID(handleMetric);
-      getFCP(handleMetric);
-      getLCP(handleMetric);
-      getTTFB(handleMetric);
+      };      // Register Web Vitals observers
+      onCLS(handleMetric);
+      onINP(handleMetric);
+      onFCP(handleMetric);
+      onLCP(handleMetric);
+      onTTFB(handleMetric);
     }).catch(() => {
       console.warn('Web Vitals not available');
     });

@@ -1,4 +1,3 @@
-// Advanced CSS optimization utilities for performance and maintainability
 'use client';
 
 import { useMemo, useEffect, useState } from 'react';
@@ -328,8 +327,7 @@ export const cssPerformanceUtils = {
     if (process.env.NODE_ENV === 'development') {
       stylesheets.forEach(stylesheet => {
         try {
-          const rules = Array.from(stylesheet.cssRules || []);
-          rules.forEach((rule, index) => {
+          const rules = Array.from(stylesheet.cssRules || []);          rules.forEach((rule) => {
             if (rule instanceof CSSStyleRule) {
               const selector = rule.selectorText;
               if (selector.startsWith('.') && !usedRules.has(selector)) {
@@ -382,7 +380,6 @@ export class CSSVariablesManager {
 export const useCSSOptimization = () => {
   const [isOptimized, setIsOptimized] = useState(false);
   const optimizer = useMemo(() => CSSOptimizer.getInstance(), []);
-
   useEffect(() => {
     // Initialize critical CSS
     const criticalCSS = Object.values(criticalCSSPatterns).join('\n');
@@ -399,6 +396,9 @@ export const useCSSOptimization = () => {
       }, 2000);
       return () => clearTimeout(timer);
     }
+    
+    // Return empty cleanup function for consistency
+    return () => {};
   }, [optimizer]);
 
   return {
@@ -461,7 +461,6 @@ export const generateResponsiveCSS = (
   let css = Object.entries(baseStyles)
     .map(([prop, value]) => `${prop}: ${value};`)
     .join(' ');
-
   Object.entries(responsiveStyles).forEach(([breakpoint, styles]) => {
     if (styles && mediaQueries[breakpoint as keyof typeof mediaQueries]) {
       const responsiveCSS = Object.entries(styles)
@@ -470,7 +469,6 @@ export const generateResponsiveCSS = (
       css += ` ${mediaQueries[breakpoint as keyof typeof mediaQueries]} { ${responsiveCSS} }`;
     }
   });
-
   return css;
 };
 
