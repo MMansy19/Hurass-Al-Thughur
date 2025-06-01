@@ -52,7 +52,6 @@ interface CategoryInfo {
   name: string;
   description: string;
   icon: string;
-  color: string;
 }
 
 function getCategoryInfo(categoryId: string, magazine: any, locale: string): CategoryInfo | null {
@@ -64,28 +63,24 @@ function getCategoryInfo(categoryId: string, magazine: any, locale: string): Cat
       name: magazine.categoryNames.aqeedah,
       description: isArabic ? "مقالات حول العقيدة الإسلامية والتوحيد" : "Articles about Islamic faith and monotheism",
       icon: "🕌",
-      color: "emerald"
     },
     "2": {
       id: "2", 
       name: magazine.categoryNames.fiqh,
       description: isArabic ? "أحكام فقهية ومسائل شرعية" : "Islamic jurisprudence and religious rulings",
       icon: "⚖️",
-      color: "blue"
     },
     "3": {
       id: "3",
       name: magazine.categoryNames.prophetBiography,
       description: isArabic ? "سيرة النبي محمد صلى الله عليه وسلم" : "Biography of Prophet Muhammad (PBUH)",
       icon: "📖",
-      color: "purple"
     },
     "4": {
       id: "4",
       name: magazine.categoryNames.islamicHistory,
       description: isArabic ? "تاريخ الحضارة الإسلامية" : "History of Islamic civilization",
       icon: "🏛️",
-      color: "amber"
     }
   };
 
@@ -219,11 +214,10 @@ export default async function CategoryPage({
   return (
     <>
       <SkipLinks links={skipLinks} />
-      
       <main id="main-content" className="space-y-8" role="main">
         {/* Category Header */}
         <Motion preset="fadeInUp">
-          <section className={`bg-gradient-to-r from-${categoryInfo.color}-700 to-${categoryInfo.color}-600 text-white py-16 rounded-xl`}>
+          <section className="bg-gradient-to-r from-emerald-700 to-emerald-600 text-white py-16 rounded-xl">
             <div className="container mx-auto sm:px-4 px-2">
               <div className="max-w-4xl mx-auto text-center">
                 {/* Category Icon */}

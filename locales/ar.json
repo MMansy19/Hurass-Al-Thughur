@@ -225,11 +225,58 @@
     "pageNotAvailable": "الصفحة غير متاحة",
     "selectPDF": "يرجى تحديد ملف PDF لعرضه من صفحة المكتبة.",
     "goToHome": "الذهاب إلى الصفحة الرئيسية"
-  },
-  "errors": {
+  },  "errors": {
     "pdfNotFound": "لم يتم العثور على ملف PDF",
     "loadingError": "خطأ في تحميل المحتوى",
     "networkError": "خطأ في الاتصال بالشبكة"
+  },
+  "pdfViewer": {
+    "loadingViewer": "تحميل عارض PDF",
+    "loadingDocument": "يُرجى الانتظار بينما نحضر المستند...",
+    "errorLoadingPDFs": "خطأ في تحميل ملفات PDF",
+    "noMagazinesAvailable": "لا توجد مجلات متاحة",
+    "checkBackLater": "يُرجى المراجعة لاحقاً للمحتوى الجديد.",
+    "materialNotFound": "المادة غير موجودة",
+    "requestedMaterialNotFound": "المادة الدعوية المطلوبة غير موجودة.",
+    "introduction": "مقدمة",
+    "conclusion": "خاتمة",
+    "relatedMaterials": "مواد ذات صلة",
+    "downloadMaterial": "حمل هذه المادة",
+    "downloadDescription": "احصل على نسخة PDF للقراءة دون اتصال أو للطباعة والتوزيع",
+    "topics": "المواضيع:",
+    "readMore": "اقرأ المزيد →",
+    "difficulty": {
+      "beginner": "مبتدئ",
+      "intermediate": "متوسط",
+      "advanced": "متقدم"
+    },
+    "difficultyArabic": {
+      "beginner": "مبتدئ",
+      "intermediate": "متوسط", 
+      "advanced": "متقدم"
+    },
+    "breadcrumb": "مسار التنقل",
+    "searchResults": "نتائج البحث",
+    "noMatches": "لا توجد نتائج",
+    "matches": "نتيجة موجودة",
+    "actualSize": "الحجم الفعلي",
+    "pageWidth": "عرض الصفحة",
+    "twoPages": "صفحتان",
+    "outline": "المخطط",
+    "bookmark": "علامة مرجعية",
+    "annotations": "التعليقات التوضيحية",
+    "highlight": "تمييز",
+    "notes": "ملاحظات"
+  },
+  "navigation": {
+    "breadcrumbHome": "الرئيسية",
+    "breadcrumbDawah": "الدعوة",
+    "breadcrumbLibrary": "المكتبة",
+    "breadcrumbMagazine": "المجلة"
+  },
+  "newsletter": {
+    "subscribeTitle": "اشترك في النشرة الإخبارية",
+    "subscribeDescription": "احصل على آخر الإصدارات والمقالات المميزة في بريدك الإلكتروني"
   },
   "seo": {
     "keywords": "حراس الثغور، دعوة إسلامية، مجلة إسلامية، المكتبة الدعوية، تعريف الإسلام"

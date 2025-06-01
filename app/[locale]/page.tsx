@@ -32,19 +32,19 @@ export default async function Home({
     {
       title: messages.common.magazine,
       description: home.magazineDescription,
-      image: "/magazine.svg",
+      image: "/images/magazine.svg",
       link: `/${locale}/magazine`,
     },
     {
       title: messages.common.dawah,
       description: home.dawahDescription,
-      image: "/dawah.svg",
+      image: "/images/dawah.svg",
       link: `/${locale}/dawah`,
     },
     {
       title: messages.common.library,
       description: home.libraryDescription,
-      image: "/library.svg",
+      image: "/images/library.svg",
       link: `/${locale}/library`,
     },
   ];

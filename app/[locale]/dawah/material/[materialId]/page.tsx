@@ -254,11 +254,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale, materialId } = await params;
   const material = await getMaterialInfo(materialId, locale);
+  const messages = (await import(`@/locales/${locale}.json`)).default;
   
   if (!material) {
     return {
-      title: "Material Not Found",
-      description: "The requested dawah material was not found."
+      title: messages.pdfViewer?.materialNotFound || "Material Not Found",
+      description: messages.pdfViewer?.requestedMaterialNotFound || "The requested dawah material was not found."
     };
   }
 

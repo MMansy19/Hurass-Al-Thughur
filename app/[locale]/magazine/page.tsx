@@ -6,7 +6,6 @@ import dynamic from "next/dynamic";
 import SEO from "@/components/ui/SEO";
 import { SkipLinks } from "@/components/ui/AccessibilityComponents";
 import { StructuredData } from "@/components/ui/StructuredData";
-import { MagazineSearchWrapper } from "@/components/ui/MagazineSearchWrapper";
 import { MagazineGridWrapper } from "@/components/ui/MagazineGridWrapper";
 
 // Dynamic imports for better code splitting
@@ -15,7 +14,7 @@ const PDFViewerSection = dynamic(() => import("@/components/pdf/PDFViewerSection
 });
 
 const EnhancedPerformanceMonitor = dynamic(() => import("@/components/ui/EnhancedPerformanceMonitor"));
-
+ء
 // Generate metadata for the page with enhanced SEO
 export async function generateMetadata({
   params
@@ -236,20 +235,8 @@ export default async function EnhancedMagazinePage({
             </div>
           </div>
         </section>        
-        {/* Search Section */}
-        <section id="search" className="pt-4" aria-labelledby="search-heading">
-          <div className="container mx-auto sm:px-4 px-2">
-            <h2 id="search-heading" className="sr-only">
-              {locale === "ar" ? "البحث في المجلة" : "Search Magazine"}
-            </h2>
-            <MagazineSearchWrapper
-              placeholder={locale === "ar" ? "ابحث في إصدارات المجلة..." : "Search magazine issues..."}
-              className="max-w-2xl mx-auto"
-              locale={locale}
-            />
-          </div>
-        </section>        
-        {/* Latest Issues Section */}
+ 
+         {/* Latest Issues Section */}
         <section
           id="latest-issues"
           className="pb-12"
@@ -304,7 +291,7 @@ export default async function EnhancedMagazinePage({
                 </div>
               }>
                 <PDFViewerSection
-                  pdfUrl="/pdfs/4.pdf"
+                  pdfUrl={`/pdfs/${selectedIssue?.id}.pdf`}
                   title={selectedIssue?.title || magazine.title}
                   messages={magazine}
                 />

@@ -32,8 +32,8 @@ interface IntegratedMagazineGridProps {
   readNowText?: string;
   enableAnimations?: boolean;
   enableAccessibilityFeatures?: boolean;
+  messages?: any;
 }
-
 export const IntegratedMagazineGrid = memo<IntegratedMagazineGridProps>(({
   issues,
   onIssueView,
@@ -43,7 +43,8 @@ export const IntegratedMagazineGrid = memo<IntegratedMagazineGridProps>(({
   columns = 3,
   readNowText = locale === 'ar' ? 'اقرأ الآن' : 'Read Now',
   enableAnimations = true,
-  enableAccessibilityFeatures = true
+  enableAccessibilityFeatures = true,
+  messages
 }) => {
   const isArabic = locale === 'ar';
 
@@ -73,12 +74,12 @@ export const IntegratedMagazineGrid = memo<IntegratedMagazineGridProps>(({
           <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
             <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
           </svg>
-        </div>
+        </div>        
         <h3 className="text-lg font-medium text-gray-900  mb-2">
-          {isArabic ? 'لا توجد مجلات متاحة' : 'No magazines available'}
+          {messages?.pdfViewer?.noMagazinesAvailable || (isArabic ? 'لا توجد مجلات متاحة' : 'No magazines available')}
         </h3>
         <p className="text-gray-500 ">
-          {isArabic ? 'تحقق مرة أخرى لاحقاً للحصول على محتوى جديد' : 'Check back later for new content'}
+          {messages?.pdfViewer?.checkBackLater || (isArabic ? 'تحقق مرة أخرى لاحقاً للحصول على محتوى جديد' : 'Check back later for new content')}
         </p>
       </Motion>
     );
@@ -302,12 +303,11 @@ export const IntegratedPDFViewer = memo<IntegratedPDFViewerProps>(({
             <div className="flex justify-center items-center h-96 bg-gray-50 rounded-lg">
               <div className="text-center space-y-4">
                 <LoadingSpinner size="lg" />
-                <div className="space-y-2">
-                  <p className="text-lg font-medium text-gray-700">
-                    {isArabic ? 'تحميل عارض PDF' : 'Loading PDF Viewer'}
+                <div className="space-y-2">                  <p className="text-lg font-medium text-gray-700">
+                    {messages?.pdfViewer?.loadingViewer || (isArabic ? 'تحميل عارض PDF' : 'Loading PDF Viewer')}
                   </p>
                   <p className="text-sm text-gray-500">
-                    {isArabic ? 'يرجى الانتظار أثناء إعداد المستند...' : 'Please wait while we prepare your document...'}
+                    {messages?.pdfViewer?.loadingDocument || (isArabic ? 'يرجى الانتظار أثناء إعداد المستند...' : 'Please wait while we prepare your document...')}
                   </p>
                 </div>
               </div>
