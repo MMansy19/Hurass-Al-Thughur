@@ -105,7 +105,7 @@ interface PDFSidebarProps {
 /**
  * Sidebar for PDF thumbnails and navigation
  */
-export function PDFSidebar({ children, mode, onModeChange }: PDFSidebarProps) {
+export function PDFSidebar({ children }: PDFSidebarProps) {
   return (
     <div className="w-64 bg-white border-r border-gray-200 overflow-y-auto flex-shrink-0">
       <div className="p-4">
@@ -131,7 +131,7 @@ interface PDFThumbnailsProps {
 /**
  * Thumbnails component for PDF pages
  */
-export function PDFThumbnails({ file, numPages, currentPage, onPageSelect, scale, annotations, bookmarks }: PDFThumbnailsProps) {
+export function PDFThumbnails({ file, numPages, currentPage, onPageSelect, scale }: PDFThumbnailsProps) {
   if (!numPages) return null;
 
   return (

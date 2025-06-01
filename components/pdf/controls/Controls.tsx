@@ -160,8 +160,7 @@ export function SearchControl({
   placeholder, 
   onNext, 
   onPrevious, 
-  noMatchesText,
-  matchesText 
+  noMatchesText
 }: SearchControlProps) {
   return (
     <div className="flex items-center gap-2">
