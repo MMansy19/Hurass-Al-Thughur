@@ -47,7 +47,7 @@ export const Button = memo(forwardRef<HTMLButtonElement, ButtonProps>(({
 
   const sizeClasses = {
     sm: 'px-3 py-1.5 text-sm',
-    md: 'px-4 py-2 text-sm',
+    md: 'sm:px-4 px-2 py-2 text-sm',
     lg: 'px-6 py-3 text-base',
     xl: 'px-8 py-4 text-lg'
   };
@@ -111,7 +111,7 @@ export const Input = memo(forwardRef<HTMLInputElement, InputProps>(({
     filled: `${error ? 'bg-red-50 focus:ring-red-500' : 'bg-gray-50 focus:ring-emerald-500'} border-0`
   };
 
-  const sizeClasses = leftIcon || rightIcon ? 'px-10 py-3' : 'px-4 py-3';
+  const sizeClasses = leftIcon || rightIcon ? 'px-10 py-3' : 'sm:px-4 px-2 py-3';
 
   return (
     <div className="space-y-1">

@@ -1,11 +1,11 @@
 'use client';
 
-import React, { memo, Suspense, lazy, useCallback, useMemo } from 'react';
+import React, { memo, Suspense, lazy, useCallback, useMemo, useState } from 'react';
 import { AnimatedMagazineCard, AnimatedGrid, AnimatedSearchBar, AnimatedNavigation } from './AnimatedComponents';
 import { AccessibleMagazineCard, AccessibleGrid, AccessibleSearch, FocusManager } from './AccessibilityEnhancements';
-import { Motion, Stagger } from './AnimationSystem';
+import { Motion } from './AnimationSystem';
 import { LoadingSpinner } from './AccessibilityComponents';
-import { MagazineCardSkeleton, MagazineGridSkeleton } from './LoadingStates';
+import { MagazineGridSkeleton } from './LoadingStates';
 
 // Lazy load heavy components
 const LazyPDFViewer = lazy(() => import('@/components/pdf/PDFViewerSection'));
@@ -32,8 +32,8 @@ interface IntegratedMagazineGridProps {
   readNowText?: string;
   enableAnimations?: boolean;
   enableAccessibilityFeatures?: boolean;
+  messages?: any;
 }
-
 export const IntegratedMagazineGrid = memo<IntegratedMagazineGridProps>(({
   issues,
   onIssueView,
@@ -43,7 +43,8 @@ export const IntegratedMagazineGrid = memo<IntegratedMagazineGridProps>(({
   columns = 3,
   readNowText = locale === 'ar' ? 'اقرأ الآن' : 'Read Now',
   enableAnimations = true,
-  enableAccessibilityFeatures = true
+  enableAccessibilityFeatures = true,
+  messages
 }) => {
   const isArabic = locale === 'ar';
 
@@ -60,7 +61,7 @@ export const IntegratedMagazineGrid = memo<IntegratedMagazineGridProps>(({
     return (
       <MagazineGridSkeleton 
         count={6} 
-        columns={columns}
+        columns={columns as 1 | 2 | 3 | 4}
       />
     );
   }
@@ -73,12 +74,12 @@ export const IntegratedMagazineGrid = memo<IntegratedMagazineGridProps>(({
           <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
             <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
           </svg>
-        </div>
-        <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-          {isArabic ? 'لا توجد مجلات متاحة' : 'No magazines available'}
+        </div>        
+        <h3 className="text-lg font-medium text-gray-900  mb-2">
+          {messages?.pdfViewer?.noMagazinesAvailable || (isArabic ? 'لا توجد مجلات متاحة' : 'No magazines available')}
         </h3>
-        <p className="text-gray-500 dark:text-gray-400">
-          {isArabic ? 'تحقق مرة أخرى لاحقاً للحصول على محتوى جديد' : 'Check back later for new content'}
+        <p className="text-gray-500 ">
+          {messages?.pdfViewer?.checkBackLater || (isArabic ? 'تحقق مرة أخرى لاحقاً للحصول على محتوى جديد' : 'Check back later for new content')}
         </p>
       </Motion>
     );
@@ -95,12 +96,12 @@ export const IntegratedMagazineGrid = memo<IntegratedMagazineGridProps>(({
       navigationLabel={isArabic ? 'شبكة المجلات' : 'Magazine grid'}
       locale={locale}
     >
-      {issues.map((issue, index) => (
+      {issues.map((issue, index) => (        
         <MagazineCard
           key={issue.id}
           issue={issue}
           onView={handleIssueView}
-          onDownload={onIssueDownload ? handleIssueDownload : undefined}
+          {...(onIssueDownload && { onDownload: handleIssueDownload })}
           locale={locale}
           delay={enableAnimations ? index * 0.1 : 0}
           readNowText={readNowText}
@@ -144,13 +145,16 @@ export const IntegratedSearch = memo<IntegratedSearchProps>(({
     placeholder || (isArabic ? 'البحث في المجلات...' : 'Search magazines...'),
     [placeholder, isArabic]
   );
+  // Handle onSubmit prop to avoid exactOptionalPropertyTypes issues
+  const handleSubmit = onSubmit ? onSubmit : undefined;
 
-  if (enableAccessibilityFeatures) {
+  // Choose between animated or accessible components based on preferences
+  if (enableAccessibilityFeatures || !enableAnimations) {
     return (
       <AccessibleSearch
         value={value}
         onChange={onChange}
-        onSubmit={onSubmit}
+        {...(handleSubmit && { onSubmit: handleSubmit })}
         suggestions={suggestions}
         isLoading={isLoading}
         locale={locale}
@@ -164,7 +168,7 @@ export const IntegratedSearch = memo<IntegratedSearchProps>(({
     <AnimatedSearchBar
       value={value}
       onChange={onChange}
-      onSubmit={onSubmit}
+      {...(handleSubmit && { onSubmit: handleSubmit })}
       placeholder={defaultPlaceholder}
       isLoading={isLoading}
       className={className}
@@ -215,7 +219,7 @@ export const IntegratedPageHeader = memo<IntegratedPageHeaderProps>(({
       className={`${backgroundClasses} text-white py-16 rounded-lg shadow-lg mb-8`}
       aria-labelledby="page-heading"
     >
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto sm:px-4 px-2">
         <HeaderContent {...headerProps}>
           <div className="text-center max-w-4xl mx-auto">
             <Motion 
@@ -299,12 +303,11 @@ export const IntegratedPDFViewer = memo<IntegratedPDFViewerProps>(({
             <div className="flex justify-center items-center h-96 bg-gray-50 rounded-lg">
               <div className="text-center space-y-4">
                 <LoadingSpinner size="lg" />
-                <div className="space-y-2">
-                  <p className="text-lg font-medium text-gray-700">
-                    {isArabic ? 'تحميل عارض PDF' : 'Loading PDF Viewer'}
+                <div className="space-y-2">                  <p className="text-lg font-medium text-gray-700">
+                    {messages?.pdfViewer?.loadingViewer || (isArabic ? 'تحميل عارض PDF' : 'Loading PDF Viewer')}
                   </p>
                   <p className="text-sm text-gray-500">
-                    {isArabic ? 'يرجى الانتظار أثناء إعداد المستند...' : 'Please wait while we prepare your document...'}
+                    {messages?.pdfViewer?.loadingDocument || (isArabic ? 'يرجى الانتظار أثناء إعداد المستند...' : 'Please wait while we prepare your document...')}
                   </p>
                 </div>
               </div>
@@ -374,17 +377,17 @@ export const IntegratedCategoryNav = memo<IntegratedCategoryNavProps>(({
   return (
     <section 
       id="categories"
-      className={`py-12 bg-gray-50 dark:bg-gray-900 rounded-lg ${className}`}
+      className={`py-12 bg-gray-50  rounded-lg ${className}`}
       aria-labelledby="categories-heading"
     >
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto sm:px-4 px-2">
         <Motion 
           preset={enableAnimations ? 'slideInUp' : 'fadeIn'}
           delay={enableAnimations ? 0.2 : 0}
         >
           <h2 
             id="categories-heading" 
-            className="text-3xl font-bold mb-8 text-center text-emerald-800 dark:text-emerald-400"
+            className="text-3xl font-bold mb-8 text-center text-emerald-800 "
             dir={isArabic ? 'rtl' : 'ltr'}
           >
             {defaultTitle}
@@ -412,7 +415,7 @@ export const IntegratedCategoryNav = memo<IntegratedCategoryNavProps>(({
               <a
                 href={`/${locale}/magazine/category/${category.id}`}
                 className={`
-                  block bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 
+                  block bg-white  border border-gray-200  
                   p-6 rounded-lg text-center shadow-sm hover:shadow-md transition-all
                   focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2
                   group
@@ -420,16 +423,16 @@ export const IntegratedCategoryNav = memo<IntegratedCategoryNavProps>(({
                 aria-label={`${defaultBrowseText}: ${category.name}${category.count ? ` (${category.count} ${isArabic ? 'عنصر' : 'items'})` : ''}`}
                 dir={isArabic ? 'rtl' : 'ltr'}
               >
-                <h3 className="font-medium text-emerald-900 dark:text-emerald-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-300 transition-colors">
+                <h3 className="font-medium text-emerald-900  group-hover:text-emerald-600 :text-emerald-300 transition-colors">
                   {category.name}
                   {category.count && (
-                    <span className="block text-sm text-gray-500 dark:text-gray-400 mt-1">
+                    <span className="block text-sm text-gray-500  mt-1">
                       {category.count} {isArabic ? 'عنصر' : 'items'}
                     </span>
                   )}
                 </h3>
                 {category.description && (
-                  <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">
+                  <p className="text-sm text-gray-600  mt-2">
                     {category.description}
                   </p>
                 )}
@@ -459,7 +462,6 @@ interface IntegratedHeaderNavProps {
 
 export const IntegratedHeaderNav = memo<IntegratedHeaderNavProps>(({
   navItems,
-  locale,
   enableAnimations = true,
   className = ''
 }) => {
@@ -467,8 +469,6 @@ export const IntegratedHeaderNav = memo<IntegratedHeaderNavProps>(({
     return (
       <AnimatedNavigation
         items={navItems}
-        locale={locale}
-        variant="header"
         className={className}
       />
     );
@@ -476,7 +476,7 @@ export const IntegratedHeaderNav = memo<IntegratedHeaderNavProps>(({
 
   return (
     <nav className={`flex space-x-6 rtl:space-x-reverse ${className}`} role="navigation">
-      {navItems.map((item, index) => (
+      {navItems.map((item) => (
         <a
           key={item.href}
           href={item.href}
@@ -504,11 +504,45 @@ export const IntegratedHeaderNav = memo<IntegratedHeaderNavProps>(({
 
 IntegratedHeaderNav.displayName = 'IntegratedHeaderNav';
 
-export {
-  IntegratedMagazineGrid,
-  IntegratedSearch,
-  IntegratedPageHeader,
-  IntegratedPDFViewer,
-  IntegratedCategoryNav,
-  IntegratedHeaderNav
-};
+// Integrated Search Interface with enhanced features
+interface IntegratedSearchInterfaceProps {
+  placeholder?: string;
+  onSearch: (query: string) => void;
+  className?: string;
+  suggestions?: string[];
+  locale?: string;
+}
+
+export const IntegratedSearchInterface = memo<IntegratedSearchInterfaceProps>(({
+  placeholder = "Search...",
+  onSearch,
+  className = "",
+  suggestions = [],
+  locale = "en"
+}) => {
+  const [value, setValue] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = useCallback((searchValue: string) => {
+    setIsLoading(true);
+    onSearch(searchValue);
+    setTimeout(() => setIsLoading(false), 500);
+  }, [onSearch]);
+
+  return (
+    <IntegratedSearch
+      value={value}
+      onChange={setValue}
+      onSubmit={handleSubmit}
+      suggestions={suggestions}
+      isLoading={isLoading}
+      locale={locale}
+      placeholder={placeholder}
+      className={className}
+      enableAnimations={true}
+      enableAccessibilityFeatures={true}
+    />
+  );
+});
+
+IntegratedSearchInterface.displayName = 'IntegratedSearchInterface';

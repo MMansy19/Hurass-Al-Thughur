@@ -71,7 +71,7 @@ export class ErrorBoundary extends Component<Props, State> {
             </p>
             <button
               onClick={() => window.location.reload()}
-              className="bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
+              className="bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 sm:px-4 px-2 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
             >
               Refresh Page
             </button>
@@ -154,7 +154,7 @@ export function NetworkErrorBoundary({ children }: { children: ReactNode }) {
           </p>
           <button
             onClick={() => window.location.reload()}
-            className="bg-yellow-600 hover:bg-yellow-700 text-white font-medium py-2 px-4 rounded-md transition-colors"
+            className="bg-yellow-600 hover:bg-yellow-700 text-white font-medium py-2 sm:px-4 px-2 rounded-md transition-colors"
           >
             Retry
           </button>

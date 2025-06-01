@@ -2,7 +2,6 @@
 'use client';
 
 import React, { memo, useMemo } from 'react';
-import { useTranslations } from 'next-intl';
 
 // Base loading spinner
 interface LoadingSpinnerProps {
@@ -338,12 +337,12 @@ export const LoadingOverlay = memo<LoadingOverlayProps>(({
     <div className={`relative ${className}`}>
       {children}
       <div className={`absolute inset-0 flex items-center justify-center z-50 ${
-        backdrop ? 'bg-white bg-opacity-75 dark:bg-gray-900 dark:bg-opacity-75' : ''
+        backdrop ? 'bg-white bg-opacity-75  ' : ''
       }`}>
         <div className="flex flex-col items-center space-y-3">
           <LoadingSpinner size="lg" />
           {message && (
-            <p className="text-sm text-gray-600 dark:text-gray-400 font-medium">
+            <p className="text-sm text-gray-600  font-medium">
               {message}
             </p>
           )}
@@ -361,38 +360,38 @@ interface SkeletonProps {
 }
 
 export const SkeletonText = memo<SkeletonProps>(({ className = '' }) => (
-  <div className={`animate-pulse bg-gray-200 dark:bg-gray-700 rounded h-4 ${className}`} />
+  <div className={`animate-pulse bg-gray-200  rounded h-4 ${className}`} />
 ));
 
 SkeletonText.displayName = 'SkeletonText';
 
 export const SkeletonTitle = memo<SkeletonProps>(({ className = '' }) => (
-  <div className={`animate-pulse bg-gray-200 dark:bg-gray-700 rounded h-6 w-3/4 ${className}`} />
+  <div className={`animate-pulse bg-gray-200  rounded h-6 w-3/4 ${className}`} />
 ));
 
 SkeletonTitle.displayName = 'SkeletonTitle';
 
 export const SkeletonAvatar = memo<SkeletonProps>(({ className = '' }) => (
-  <div className={`animate-pulse bg-gray-200 dark:bg-gray-700 rounded-full w-10 h-10 ${className}`} />
+  <div className={`animate-pulse bg-gray-200  rounded-full w-10 h-10 ${className}`} />
 ));
 
 SkeletonAvatar.displayName = 'SkeletonAvatar';
 
 export const SkeletonImage = memo<SkeletonProps>(({ className = '' }) => (
-  <div className={`animate-pulse bg-gray-200 dark:bg-gray-700 rounded-lg w-full h-48 ${className}`} />
+  <div className={`animate-pulse bg-gray-200  rounded-lg w-full h-48 ${className}`} />
 ));
 
 SkeletonImage.displayName = 'SkeletonImage';
 
 export const SkeletonButton = memo<SkeletonProps>(({ className = '' }) => (
-  <div className={`animate-pulse bg-gray-200 dark:bg-gray-700 rounded-md h-10 w-24 ${className}`} />
+  <div className={`animate-pulse bg-gray-200  rounded-md h-10 w-24 ${className}`} />
 ));
 
 SkeletonButton.displayName = 'SkeletonButton';
 
 // Magazine card skeleton
 export const MagazineCardSkeleton = memo(() => (
-  <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+  <div className="bg-white  rounded-lg shadow-md overflow-hidden">
     <SkeletonImage className="w-full h-64" />
     <div className="p-4 space-y-3">
       <SkeletonTitle />
@@ -467,7 +466,7 @@ PageHeaderSkeleton.displayName = 'PageHeaderSkeleton';
 export const SearchResultsSkeleton = memo(() => (
   <div className="space-y-4">
     {Array.from({ length: 5 }, (_, index) => (
-      <div key={index} className="border-b border-gray-200 dark:border-gray-700 pb-4">
+      <div key={index} className="border-b border-gray-200  pb-4">
         <SkeletonTitle className="mb-2" />
         <div className="space-y-2">
           <SkeletonText />
@@ -486,7 +485,7 @@ SearchResultsSkeleton.displayName = 'SearchResultsSkeleton';
 
 // Navigation skeleton
 export const NavigationSkeleton = memo(() => (
-  <nav className="flex items-center justify-between h-16 px-4">
+  <nav className="flex items-center justify-between h-16 sm:px-4 px-2">
     <SkeletonText className="w-32 h-8" />
     <div className="hidden md:flex space-x-6">
       {Array.from({ length: 4 }, (_, index) => (
@@ -501,8 +500,8 @@ NavigationSkeleton.displayName = 'NavigationSkeleton';
 
 // Footer skeleton
 export const FooterSkeleton = memo(() => (
-  <footer className="bg-gray-100 dark:bg-gray-800 mt-12">
-    <div className="max-w-7xl mx-auto px-4 py-8">
+  <footer className="bg-gray-100  mt-12">
+    <div className="max-w-7xl mx-auto sm:px-4 px-2 py-8">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {Array.from({ length: 3 }, (_, index) => (
           <div key={index} className="space-y-4">
@@ -515,7 +514,7 @@ export const FooterSkeleton = memo(() => (
           </div>
         ))}
       </div>
-      <div className="border-t border-gray-200 dark:border-gray-700 mt-8 pt-6">
+      <div className="border-t border-gray-200  mt-8 pt-6">
         <SkeletonText className="w-64 h-3 mx-auto" />
       </div>
     </div>
@@ -523,26 +522,6 @@ export const FooterSkeleton = memo(() => (
 ));
 
 FooterSkeleton.displayName = 'FooterSkeleton';
-
-// PDF viewer skeleton
-export const PDFViewerSkeleton = memo(() => (
-  <div className="space-y-4">
-    <div className="flex items-center justify-between">
-      <SkeletonButton className="w-24" />
-      <div className="flex items-center space-x-2">
-        <SkeletonButton className="w-8 h-8" />
-        <SkeletonText className="w-16 h-6" />
-        <SkeletonButton className="w-8 h-8" />
-      </div>
-      <SkeletonButton className="w-20" />
-    </div>
-    <div className="bg-gray-200 dark:bg-gray-700 rounded-lg h-96 flex items-center justify-center">
-      <LoadingSpinner size="xl" />
-    </div>
-  </div>
-));
-
-PDFViewerSkeleton.displayName = 'PDFViewerSkeleton';
 
 // Category filter skeleton
 export const CategoryFilterSkeleton = memo(() => (
@@ -589,16 +568,16 @@ export const ProgressiveLoading = memo<ProgressiveLoadingProps>(({
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.464 0L3.34 16.5c-.77.833.192 2.5 1.732 2.5z" />
               </svg>
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            <h3 className="text-lg font-semibold text-gray-900  mb-2">
               حدث خطأ في التحميل
             </h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
+            <p className="text-gray-600  mb-4">
               {error.message || 'حدث خطأ غير متوقع'}
             </p>
             {retryAction && (
               <button
                 onClick={retryAction}
-                className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="inline-flex items-center sm:px-4 px-2 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
               >
                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -626,10 +605,10 @@ export const ProgressiveLoading = memo<ProgressiveLoadingProps>(({
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
               </svg>
             </div>
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+            <h3 className="text-lg font-semibold text-gray-900  mb-2">
               لا توجد بيانات
             </h3>
-            <p className="text-gray-600 dark:text-gray-400">
+            <p className="text-gray-600 ">
               لم يتم العثور على أي محتوى للعرض
             </p>
           </div>

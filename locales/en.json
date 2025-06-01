@@ -31,7 +31,8 @@
     "magazineDescription": "Browse magazine issues and PDF files with high quality",
     "dawahDescription": "Introductory materials about Islam for non-Muslims",
     "libraryDescription": "Comprehensive library of images and brochures"
-  },  "magazine": {
+  },  
+  "magazine": {
     "title": "Hurass Magazine",
     "description": "Browse magazine issues and PDF files with high quality",
     "latestIssues": "Latest Issues",
@@ -51,6 +52,9 @@
     "fitWidth": "Fit Width",
     "fitPage": "Fit Page",
     "print": "Print",
+    "single": "Single Issue",
+    "continuous": "Continuous",
+    "facing": "Facing Pages",
     "issues": {
       "issue1": {
       "title": "Not Quranists: Instinct and Covenant",
@@ -213,13 +217,144 @@
     "pageNotAvailable": "Page Not Available",
     "selectPDF": "Please select a PDF file to view from the library page.",
     "goToHome": "Go to Home Page"
-  },
-  "errors": {
+  },  "errors": {
     "pdfNotFound": "PDF file not found",
     "loadingError": "Error loading content",
     "networkError": "Network connection error"
   },
+  "pdfViewer": {
+    "loadingViewer": "Loading PDF Viewer",
+    "loadingDocument": "Please wait while we prepare your document...",
+    "errorLoadingPDFs": "Error Loading PDFs",
+    "noMagazinesAvailable": "No magazines available",
+    "checkBackLater": "Please check back later for new content.",
+    "materialNotFound": "Material Not Found",
+    "requestedMaterialNotFound": "The requested dawah material was not found.",
+    "introduction": "Introduction",
+    "conclusion": "Conclusion",
+    "relatedMaterials": "Related Materials",
+    "downloadMaterial": "Download This Material",
+    "downloadDescription": "Get a PDF copy for offline reading or printing and distribution",
+    "topics": "Topics:",
+    "readMore": "Read more →",
+    "difficulty": {
+      "beginner": "Beginner",
+      "intermediate": "Intermediate", 
+      "advanced": "Advanced"
+    },
+    "difficultyArabic": {
+      "beginner": "مبتدئ",
+      "intermediate": "متوسط",
+      "advanced": "متقدم"
+    },
+    "breadcrumb": "Breadcrumb",
+    "searchResults": "Search Results",
+    "noMatches": "No matches found",
+    "matches": "matches found",
+    "actualSize": "Actual Size",
+    "pageWidth": "Page Width",
+    "twoPages": "Two Pages",
+    "outline": "Outline",
+    "bookmark": "Bookmark",
+    "annotations": "Annotations",
+    "highlight": "Highlight",
+    "notes": "Notes"
+  },
+  "navigation": {
+    "breadcrumbHome": "Home",
+    "breadcrumbDawah": "Dawah",
+    "breadcrumbLibrary": "Library",
+    "breadcrumbMagazine": "Magazine"
+  },  "newsletter": {
+    "subscribeTitle": "Subscribe to Newsletter",
+    "subscribeDescription": "Get the latest issues and featured articles in your email",
+    "subscribe": "Subscribe",
+    "enterEmail": "Enter your email"
+  },
   "seo": {
     "keywords": "Hurass Al-Thughur, Islamic Outreach, Islamic Magazine, Dawah Library, Introduction to Islam"
+  },
+  "hardcoded": {
+    "editorialTeam": "Editorial Team",
+    "faith": "Faith",
+    "monotheism": "Monotheism",
+    "jurisprudence": "Jurisprudence",
+    "rulings": "Rulings",
+    "prophetsBiography": "Prophet's Biography",
+    "ethics": "Ethics",
+    "articlesAboutIslamic": "Articles about Islamic faith and monotheism",
+    "islamicJurisprudenceRulings": "Islamic jurisprudence and religious rulings",
+    "biographyOfProphet": "Biography of Prophet Muhammad (PBUH)",
+    "historyOfIslamic": "History of Islamic civilization",
+    "skipToMainContent": "Skip to main content",
+    "skipToSearch": "Skip to search",
+    "skipToFilters": "Skip to filters",
+    "skipToIssuesGrid": "Skip to issues grid",
+    "skipToLatestIssues": "Skip to latest issues",
+    "skipToPDFViewer": "Skip to PDF viewer",
+    "skipToCategories": "Skip to categories",
+    "breadcrumb": "Breadcrumb",
+    "searchIssues": "Search Issues",
+    "searchIssuesPlaceholder": "Search issues...",
+    "searchMagazinePlaceholder": "Search magazine issues...",
+    "searchPDFViewer": "Search Magazine",
+    "loadingPDFViewer": "Loading PDF viewer...",
+    "allCategories": "All Categories",
+    "newestFirst": "Newest First",
+    "oldestFirst": "Oldest First",
+    "title": "Title",
+    "sortBy": "Sort by:",
+    "filterByCategory": "Filter by Category",
+    "browseCategoryText": "Browse category",
+    "exploreSections": "Explore different sections of the magazine and browse content by your interests",
+    "browse": "Browse",
+    "issuesInCategory": "issues in this category",
+    "issueWord": "Issues",    "pageWord": "Pages",
+    "issues": "Issues", 
+    "pages": "Pages",
+    "issuesOf": "Issues of",
+    "issueInThisCategory": "issue in this category",
+    "issuesInThisCategory": "issues in this category",
+    "noIssuesYetDescription": "No issues have been published in this category yet. Check back later.",
+    "noIssuesYet": "No Issues Yet",
+    "noIssuesPublished": "No issues have been published in this category yet. Check back later.",
+    "browseAllIssues": "Browse All Issues",
+    "otherCategories": "Other Categories",
+    "issuesGrid": "Magazine issues grid",
+    "didntFindLooking": "Didn't find what you're looking for?",
+    "browseAdditionalMaterials": "Browse our additional materials library or contact us for special requests",
+    "browseLibrary": "Browse Library",
+    "contactUs": "Contact Us",
+    "ethicsInIslam": "Ethics in Islam",
+    "ethicsInIslamDesc": "A comprehensive guide to Islamic ethics and their application in daily life",
+    "zakatRulings": "Zakat and its Rulings",
+    "zakatRulingsDesc": "A detailed guide to Zakat rulings and amounts",
+    "prayerInIslam": "Prayer in Islam",
+    "prayerInIslamDesc": "Etiquette of prayer and blessed times for supplication",
+    "monthsEnglish": {
+      "october2023": "October 2023",
+      "september2023": "September 2023",
+      "august2023": "August 2023"
+    },
+    "islamicMonthsToGregorian": {
+      "rabiAlAwwal1445": "October 2023",
+      "safar1445": "September 2023",
+      "muharram1445": "August 2023"
+    },
+    "opensInNewPage": "Opens in new page",
+    "monotheismPolytheism": "Monotheism and Polytheism",
+    "monotheismPolytheismDesc": "Understanding the concept of monotheism and types of polytheism",
+    "fastingRulings": "Fasting Rulings",
+    "fastingRulingsDesc": "Jurisprudential rulings related to fasting and seclusion",
+    "monthJuly2023": "July 2023",
+    "monthMarch2023": "March 2023",
+    "rightlyGuidedCaliphate": "The Rightly-Guided Caliphate",
+    "rightlyGuidedCaliphateDesc": "History of the Rightly-Guided Caliphs and their achievements",
+    "monthJanuary2023": "January 2023",
+    "hijriMonths": {
+      "dhuAlHijjah1444": "July 2023",
+      "shaban1444": "March 2023",
+      "jumadaAlAkhirah1444": "January 2023"
+    }
   }
 }

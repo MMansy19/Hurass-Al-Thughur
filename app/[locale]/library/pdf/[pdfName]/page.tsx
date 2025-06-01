@@ -60,12 +60,12 @@ export default async function PDFViewPage({
   return (
     <div className="space-y-8">
       <section className="bg-emerald-700 text-white py-10 rounded-lg">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto sm:px-4 px-2 px-2">
           <h1 className="text-3xl font-bold mb-2">{pdfTitle}</h1>
           <p className="text-lg">{library.preview}</p>
         </div>
-      </section>      <div className="container mx-auto px-4">
-        <div className="bg-white rounded-lg shadow-md p-4">
+      </section>      
+      <div className="container mx-auto sm:px-4 px-2 px-2">
           <PDFViewerSection 
             pdfUrl={pdfUrl}
             title={pdfTitle}
@@ -77,15 +77,28 @@ export default async function PDFViewPage({
               loading: library.loading,
               error: library.error,
               search: library.searchInDocument,
+              searchResults: library.searchResults,
               thumbnails: library.thumbnails,
               fullscreen: library.fullscreen,
               fitWidth: library.fitWidth,
               fitPage: library.fitPage,
               download: library.download,
-              print: library.print
+              print: library.print,
+              bookmark: library.bookmark,
+              annotations: library.annotations,
+              highlight: library.highlight,
+              notes: library.notes,
+              actualSize: library.actualSize,
+              pageWidth: library.pageWidth,
+              twoPages: library.twoPages,
+              continuous: library.continuous,
+              single: library.single,
+              facing: library.facing,
+              outline: library.outline,
+              noMatches: library.noMatches,
+              matches: library.matches,
             }}
           />
-        </div>
       </div>
     </div>
   );

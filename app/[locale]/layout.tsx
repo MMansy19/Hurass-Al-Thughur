@@ -71,6 +71,8 @@ export default async function LocaleLayout({
         <style dangerouslySetInnerHTML={{ __html: criticalCSS }} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="icon" href="/images/logo.jpg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body className="antialiased min-h-screen flex flex-col bg-gray-50">
         <PerformanceMonitor />
@@ -80,7 +82,7 @@ export default async function LocaleLayout({
               locale={locale} 
               messages={messages.common}
             />
-            <main className="container mx-auto px-4 py-8 flex-grow">
+            <main className="container mx-auto sm:px-4 px-2 py-8 flex-grow">
               <div className="h-16 md:h-20"></div>
               <div className="animate-fadeIn">{children}</div>
             </main>

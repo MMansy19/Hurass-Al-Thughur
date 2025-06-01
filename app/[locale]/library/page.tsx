@@ -109,7 +109,7 @@ export default async function LibraryPage({
   return (
     <div className="space-y-12">
       <section className="bg-gradient-to-r from-emerald-700 to-emerald-900 text-white py-10 rounded-lg shadow-lg">
-        <div className="container mx-auto px-4 text-center">
+        <div className="container mx-auto sm:px-4 px-2 text-center">
           <h1 className="text-3xl md:text-4xl font-bold">{library.title}</h1>
           <p className="text-xl mt-2 max-w-2xl mx-auto">{library.description}</p>
         </div>
@@ -117,7 +117,7 @@ export default async function LibraryPage({
 
       {/* PDF Browser Section */}
       <section className="py-8">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto sm:px-4 px-2">
           <h2 className="text-2xl font-bold mb-6">{library.pdfs}</h2>
           <PDFBrowser
             translations={{
@@ -133,7 +133,7 @@ export default async function LibraryPage({
       
       {/* Categories Section */}
       <section>
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto sm:px-4 px-2">
           <h2 className="text-2xl font-bold mb-6">{library.categories}</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {categories.map((category) => (
@@ -152,7 +152,7 @@ export default async function LibraryPage({
 
       {/* Images Section */}
       <section className="bg-gray-50 py-10">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto sm:px-4 px-2">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold">{library.images}</h2>            <Link 
               href={`/${locale}/library/images`}
@@ -190,7 +190,7 @@ export default async function LibraryPage({
 
       {/* Brochures Section */}
       <section>
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto sm:px-4 px-2">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold">{library.brochures}</h2>            <Link 
               href={`/${locale}/library/brochures`}
@@ -212,12 +212,12 @@ export default async function LibraryPage({
                   <div className="flex space-x-2">
                     <Link 
                       href={`/${locale}/library/brochure/${brochure.id}`}
-                      className="flex-1 px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors text-center"
+                      className="flex-1 sm:px-4 px-2 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors text-center"
                     >
                       {library.preview}
                     </Link>
                     <button 
-                      className="px-4 py-2 border border-emerald-600 text-emerald-600 rounded-md hover:bg-emerald-50 transition-colors"
+                      className="sm:px-4 px-2 py-2 border border-emerald-600 text-emerald-600 rounded-md hover:bg-emerald-50 transition-colors"
                     >
                       {library.download}
                     </button>

@@ -26,7 +26,7 @@ export default async function NotFound({
         <div className="flex flex-col space-y-3">
           <Link 
             href={`/${locale}/library`}
-            className="bg-emerald-600 text-white py-2 px-4 rounded-md hover:bg-emerald-700 transition-colors shadow-sm"
+            className="bg-emerald-600 text-white py-2 sm:px-4 px-2 rounded-md hover:bg-emerald-700 transition-colors shadow-sm"
           >
             {messages.notFound.returnToLibrary}
           </Link>

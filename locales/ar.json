@@ -46,10 +46,14 @@
     "loading": "جاري التحميل...",
     "error": "خطأ في تحميل الملف",
     "search": "البحث في المستند",
-    "thumbnails": "الصور المصغرة",    "fullscreen": "ملء الشاشة",
+    "thumbnails": "الصور المصغرة",    
+    "fullscreen": "ملء الشاشة",
     "fitWidth": "ملائمة العرض",
     "fitPage": "ملائمة الصفحة",
     "print": "طباعة",
+    "single": "عدد مفرد",
+    "continuous": "صفحات متصلة",
+    "facing": "صفحات متقابلة",
     "issues": {
       "issue1": {
       "title": "ليسوا قرآنيين: الفطرة والميثاق",
@@ -68,6 +72,12 @@
       "description": "تحليل دلائل النبوة، مع الرد على الروايات المستشرقين والشبهات، بما في ذلك معركة الزلاقة",
       "date": "2025",
       "author": "مجلس الدراسات التاريخية"
+      },
+      "issue4": {
+        "title": "جوامع أدعية النبي وتعوذاته",
+        "description": "مجموعة شاملة من أدعية النبي محمد صلى الله عليه وسلم وتعوذاته من مختلف الأضرار",
+        "date": "2025",
+        "author": "قسم الدراسات الإسلامية"
       }
     },
     "categoryNames": {
@@ -215,13 +225,144 @@
     "pageNotAvailable": "الصفحة غير متاحة",
     "selectPDF": "يرجى تحديد ملف PDF لعرضه من صفحة المكتبة.",
     "goToHome": "الذهاب إلى الصفحة الرئيسية"
-  },
-  "errors": {
+  },  "errors": {
     "pdfNotFound": "لم يتم العثور على ملف PDF",
     "loadingError": "خطأ في تحميل المحتوى",
     "networkError": "خطأ في الاتصال بالشبكة"
   },
+  "pdfViewer": {
+    "loadingViewer": "تحميل عارض PDF",
+    "loadingDocument": "يُرجى الانتظار بينما نحضر المستند...",
+    "errorLoadingPDFs": "خطأ في تحميل ملفات PDF",
+    "noMagazinesAvailable": "لا توجد مجلات متاحة",
+    "checkBackLater": "يُرجى المراجعة لاحقاً للمحتوى الجديد.",
+    "materialNotFound": "المادة غير موجودة",
+    "requestedMaterialNotFound": "المادة الدعوية المطلوبة غير موجودة.",
+    "introduction": "مقدمة",
+    "conclusion": "خاتمة",
+    "relatedMaterials": "مواد ذات صلة",
+    "downloadMaterial": "حمل هذه المادة",
+    "downloadDescription": "احصل على نسخة PDF للقراءة دون اتصال أو للطباعة والتوزيع",
+    "topics": "المواضيع:",
+    "readMore": "اقرأ المزيد →",
+    "difficulty": {
+      "beginner": "مبتدئ",
+      "intermediate": "متوسط",
+      "advanced": "متقدم"
+    },
+    "difficultyArabic": {
+      "beginner": "مبتدئ",
+      "intermediate": "متوسط", 
+      "advanced": "متقدم"
+    },
+    "breadcrumb": "مسار التنقل",
+    "searchResults": "نتائج البحث",
+    "noMatches": "لا توجد نتائج",
+    "matches": "نتيجة موجودة",
+    "actualSize": "الحجم الفعلي",
+    "pageWidth": "عرض الصفحة",
+    "twoPages": "صفحتان",
+    "outline": "المخطط",
+    "bookmark": "علامة مرجعية",
+    "annotations": "التعليقات التوضيحية",
+    "highlight": "تمييز",
+    "notes": "ملاحظات"
+  },
+  "navigation": {
+    "breadcrumbHome": "الرئيسية",
+    "breadcrumbDawah": "الدعوة",
+    "breadcrumbLibrary": "المكتبة",
+    "breadcrumbMagazine": "المجلة"
+  },  "newsletter": {
+    "subscribeTitle": "اشترك في النشرة الإخبارية",
+    "subscribeDescription": "احصل على آخر الإصدارات والمقالات المميزة في بريدك الإلكتروني",
+    "subscribe": "اشترك",
+    "enterEmail": "أدخل بريدك الإلكتروني"
+  },
   "seo": {
     "keywords": "حراس الثغور، دعوة إسلامية، مجلة إسلامية، المكتبة الدعوية، تعريف الإسلام"
+  },
+  "hardcoded": {
+    "editorialTeam": "فريق التحرير",
+    "faith": "الإيمان",
+    "monotheism": "التوحيد",
+    "jurisprudence": "الفقه",
+    "rulings": "الأحكام",
+    "prophetsBiography": "السيرة النبوية",
+    "ethics": "الأخلاق",
+    "articlesAboutIslamic": "مقالات حول العقيدة والتوحيد الإسلامي",
+    "islamicJurisprudenceRulings": "الفقه الإسلامي والأحكام الشرعية",
+    "biographyOfProphet": "سيرة النبي محمد صلى الله عليه وسلم",
+    "historyOfIslamic": "تاريخ الحضارة الإسلامية",
+    "skipToMainContent": "انتقل إلى المحتوى الرئيسي",
+    "skipToSearch": "انتقل إلى البحث",
+    "skipToFilters": "انتقل إلى المرشحات",
+    "skipToIssuesGrid": "انتقل إلى شبكة الإصدارات",
+    "skipToLatestIssues": "انتقل إلى آخر الإصدارات",
+    "skipToPDFViewer": "انتقل إلى عارض PDF",
+    "skipToCategories": "انتقل إلى التصنيفات",
+    "breadcrumb": "مسار التنقل",
+    "searchIssues": "البحث في الإصدارات",
+    "searchIssuesPlaceholder": "البحث في الإصدارات...",
+    "searchMagazinePlaceholder": "البحث في إصدارات المجلة...",
+    "searchPDFViewer": "البحث في المجلة",
+    "loadingPDFViewer": "جاري تحميل عارض PDF...",
+    "allCategories": "جميع التصنيفات",
+    "newestFirst": "الأحدث أولاً",
+    "oldestFirst": "الأقدم أولاً",
+    "title": "العنوان",
+    "sortBy": "ترتيب حسب:",
+    "filterByCategory": "تصفية حسب التصنيف",
+    "browseCategoryText": "تصفح التصنيف",
+    "exploreSections": "استكشف أقسام مختلفة من المجلة وتصفح المحتوى حسب اهتماماتك",
+    "browse": "تصفح",
+    "issuesInCategory": "إصدارات في هذا التصنيف",
+    "issueWord": "الإصدارات",    "pageWord": "الصفحات",
+    "issues": "إصدارات",
+    "pages": "صفحات", 
+    "issuesOf": "إصدارات",
+    "issueInThisCategory": "إصدار في هذا التصنيف",
+    "issuesInThisCategory": "إصدارات في هذا التصنيف",
+    "noIssuesYetDescription": "لم يتم نشر أي إصدارات في هذا التصنيف حتى الآن. تحقق مرة أخرى لاحقاً.",
+    "noIssuesYet": "لا توجد إصدارات بعد",
+    "noIssuesPublished": "لم يتم نشر أي إصدارات في هذا التصنيف بعد. تحقق مرة أخرى لاحقاً.",
+    "browseAllIssues": "تصفح جميع الإصدارات",
+    "otherCategories": "تصنيفات أخرى",
+    "issuesGrid": "شبكة إصدارات المجلة",
+    "didntFindLooking": "لم تجد ما تبحث عنه؟",
+    "browseAdditionalMaterials": "تصفح مكتبة المواد الإضافية الخاصة بنا أو اتصل بنا للطلبات الخاصة",
+    "browseLibrary": "تصفح المكتبة",
+    "contactUs": "اتصل بنا",
+    "ethicsInIslam": "الأخلاق في الإسلام",
+    "ethicsInIslamDesc": "دليل شامل للأخلاق الإسلامية وتطبيقها في الحياة اليومية",
+    "zakatRulings": "الزكاة وأحكامها",
+    "zakatRulingsDesc": "دليل مفصل لأحكام الزكاة ومقاديرها",
+    "prayerInIslam": "الدعاء في الإسلام",
+    "prayerInIslamDesc": "آداب الدعاء والأوقات المباركة للدعاء",
+    "monthsEnglish": {
+      "october2023": "أكتوبر 2023",
+      "september2023": "سبتمبر 2023",
+      "august2023": "أغسطس 2023"
+    },
+    "islamicMonthsToGregorian": {
+      "rabiAlAwwal1445": "أكتوبر 2023",
+      "safar1445": "سبتمبر 2023",
+      "muharram1445": "أغسطس 2023"
+    },
+    "opensInNewPage": "يفتح في صفحة جديدة",
+    "monotheismPolytheism": "التوحيد والشرك",
+    "monotheismPolytheismDesc": "فهم مفهوم التوحيد وأنواع الشرك",
+    "fastingRulings": "أحكام الصيام",
+    "fastingRulingsDesc": "الأحكام الفقهية المتعلقة بالصيام والاعتكاف",
+    "monthJuly2023": "يوليو 2023",
+    "monthMarch2023": "مارس 2023",
+    "rightlyGuidedCaliphate": "الخلافة الراشدة",
+    "rightlyGuidedCaliphateDesc": "تاريخ الخلفاء الراشدين وإنجازاتهم",
+    "monthJanuary2023": "يناير 2023",
+    "hijriMonths": {
+      "dhuAlHijjah1444": "يوليو 2023",
+      "shaban1444": "مارس 2023",
+      "jumadaAlAkhirah1444": "يناير 2023"
+    }
   }
 }

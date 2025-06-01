@@ -2,7 +2,7 @@
 
 import React, { memo, useState, useCallback, useMemo } from 'react';
 import { Motion, Stagger, MorphingButton, LoadingAnimation } from './AnimationSystem';
-import { useCSSOptimization } from '../utils/css-optimization';
+import { useCSSOptimization } from '@/utils/css-optimization';
 
 // Enhanced Magazine Card with animations
 interface MagazineIssue {
@@ -47,12 +47,11 @@ export const AnimatedMagazineCard = memo<AnimatedMagazineCardProps>(({
     trackClass('magazine-card-animated');
     trackClass('magazine-card-hovered');
     return `
-      bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg border border-gray-100 dark:border-gray-700
+      bg-white  rounded-xl overflow-hidden shadow-lg border border-gray-100 
       transition-all duration-300 cursor-pointer group
       ${isHovered ? 'magazine-card-hovered' : ''}
     `;
   }, [isHovered, trackClass]);
-
   return (
     <Motion
       preset="slideInUp"
@@ -66,19 +65,22 @@ export const AnimatedMagazineCard = memo<AnimatedMagazineCardProps>(({
         }
       }}
       className={cardClasses}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       role="article"
-      aria-labelledby={`magazine-title-${issue.id}`}
+      aria-label={`${readNowText} - ${issue.title}`}
     >
+      <div
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        className="h-full"
+      >
       {/* Cover Image Section */}
-      <div className="relative aspect-[3/4] bg-gradient-to-br from-emerald-100 to-emerald-200 dark:from-emerald-800 dark:to-emerald-900">
+      <div className="relative aspect-[3/4] bg-gradient-to-br from-emerald-100 to-emerald-200  ">
         <Motion
           preset="scaleIn"
           delay={delay + 0.2}
           className="absolute inset-0 flex items-center justify-center"
         >
-          <div className="w-20 h-20 text-emerald-600 dark:text-emerald-400">
+          <div className="w-20 h-20 text-emerald-600 ">
             <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
               <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
             </svg>
@@ -105,7 +107,7 @@ export const AnimatedMagazineCard = memo<AnimatedMagazineCardProps>(({
         >
           <h3 
             id={`magazine-title-${issue.id}`}
-            className="font-bold text-xl mb-3 text-gray-900 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors"
+            className="font-bold text-xl mb-3 text-gray-900  group-hover:text-emerald-600 :text-emerald-400 transition-colors"
           >
             {issue.title}
           </h3>
@@ -115,7 +117,7 @@ export const AnimatedMagazineCard = memo<AnimatedMagazineCardProps>(({
           preset="slideInUp"
           delay={delay + 0.5}
         >
-          <p className="text-gray-600 dark:text-gray-300 text-sm mb-3 flex items-center">
+          <p className="text-gray-600  text-sm mb-3 flex items-center">
             <svg className="w-4 h-4 mr-2 rtl:ml-2 rtl:mr-0" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
             </svg>
@@ -127,7 +129,7 @@ export const AnimatedMagazineCard = memo<AnimatedMagazineCardProps>(({
           preset="slideInUp"
           delay={delay + 0.6}
         >
-          <p className="text-gray-700 dark:text-gray-300 mb-5 line-clamp-3">
+          <p className="text-gray-700  mb-5 line-clamp-3">
             {issue.description}
           </p>
         </Motion>
@@ -147,9 +149,10 @@ export const AnimatedMagazineCard = memo<AnimatedMagazineCardProps>(({
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
               </svg>
               {readNowText}
-            </div>
+            </div>          
           </MorphingButton>
         </Motion>
+      </div>
       </div>
     </Motion>
   );
@@ -255,11 +258,11 @@ export const AnimatedSearchBar = memo<AnimatedSearchBarProps>(({
             onBlur={() => setIsFocused(false)}
             placeholder={placeholder}
             className={`
-              w-full px-4 py-3 pl-12 rtl:pr-12 rtl:pl-4 
-              bg-white dark:bg-gray-800 
-              border-2 border-gray-200 dark:border-gray-600
-              rounded-full text-gray-900 dark:text-white
-              placeholder-gray-500 dark:placeholder-gray-400
+              w-full sm:px-4 px-2 py-3 pl-12 rtl:pr-12 rtl:pl-4 
+              bg-white  
+              border-2 border-gray-200 
+              rounded-full text-gray-900 
+              placeholder-gray-500 
               transition-all duration-300 ease-out
               focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20
               focus:outline-none
@@ -292,7 +295,7 @@ export const AnimatedSearchBar = memo<AnimatedSearchBarProps>(({
               <button
                 type="button"
                 onClick={() => onChange('')}
-                className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+                className="p-1 text-gray-400 hover:text-gray-600 :text-gray-300 transition-colors"
                 aria-label="Clear search"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -348,7 +351,7 @@ export const AnimatedNavigation = memo<AnimatedNavigationProps>(({
   return (
     <Motion preset="slideInUp" className={navClasses}>
       <Stagger staggerDelay={0.05}>
-        {items.map((item, index) => (
+        {items.map((item) => (
           <Motion
             key={item.href}
             preset="slideInUp"
@@ -363,11 +366,11 @@ export const AnimatedNavigation = memo<AnimatedNavigationProps>(({
             <a
               href={item.href}
               className={`
-                relative px-4 py-2 rounded-lg font-medium transition-all duration-300
+                relative sm:px-4 px-2 py-2 rounded-lg font-medium transition-all duration-300
                 flex items-center space-x-2 rtl:space-x-reverse group
                 ${item.isActive 
                   ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/25' 
-                  : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-emerald-600 dark:hover:text-emerald-400'
+                  : 'text-gray-700  hover:bg-gray-100 :bg-gray-700 hover:text-emerald-600 :text-emerald-400'
                 }
               `}
             >
@@ -383,7 +386,9 @@ export const AnimatedNavigation = memo<AnimatedNavigationProps>(({
                 <Motion
                   preset="scaleIn"
                   className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-white rounded-full"
-                />
+                >
+                  <div></div>
+                </Motion>
               )}
             </a>
           </Motion>
@@ -411,7 +416,7 @@ export const AnimatedLoadingState = memo<AnimatedLoadingStateProps>(({
 
   const skeletonClasses = useMemo(() => {
     trackClass('animated-skeleton');
-    return 'animated-skeleton animate-pulse bg-gray-200 dark:bg-gray-700 rounded-lg';
+    return 'animated-skeleton animate-pulse bg-gray-200  rounded-lg';
   }, [trackClass]);
 
   const renderSkeleton = () => {
@@ -454,7 +459,9 @@ export const AnimatedLoadingState = memo<AnimatedLoadingStateProps>(({
         preset="scaleIn"
         delay={i * 0.05}
         className={`${skeletonClasses} aspect-square`}
-      />
+      >
+        <div></div>
+      </Motion>
     ));
   };
 

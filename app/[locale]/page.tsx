@@ -27,31 +27,24 @@ export default async function Home({
   // Import translations
   const messages = (await import(`../../locales/${locale}.json`)).default;
   const { home } = messages;
-
   // Feature sections
   const sections = [
     {
       title: messages.common.magazine,
-      description: locale === "ar" 
-        ? "تصفح أعداد المجلة وملفات PDF بأعلى جودة" 
-        : "Browse magazine issues and PDF files with high quality",
-      image: "/file.svg",
+      description: home.magazineDescription,
+      image: "/images/magazine.svg",
       link: `/${locale}/magazine`,
     },
     {
       title: messages.common.dawah,
-      description: locale === "ar" 
-        ? "مواد تعريفية بالإسلام ودعوة لغير المسلمين" 
-        : "Introductory materials about Islam for non-Muslims",
-      image: "/window.svg",
+      description: home.dawahDescription,
+      image: "/images/dawah.svg",
       link: `/${locale}/dawah`,
     },
     {
       title: messages.common.library,
-      description: locale === "ar" 
-        ? "مكتبة شاملة من الصور والمطويات" 
-        : "Comprehensive library of images and brochures",
-      image: "/window.svg",
+      description: home.libraryDescription,
+      image: "/images/library.svg",
       link: `/${locale}/library`,
     },
   ];
@@ -60,7 +53,7 @@ export default async function Home({
     <div className="space-y-12">
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-emerald-700 to-emerald-500 text-white py-20 rounded-lg">
-        <div className="container mx-auto px-4 flex flex-col items-center text-center">
+        <div className="container mx-auto sm:px-4 px-2 flex flex-col items-center text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">{home.welcome}</h1>
           <p className="text-xl max-w-2xl mb-8">{home.description}</p>
           <div className="flex flex-wrap gap-4 justify-center">
@@ -82,7 +75,7 @@ export default async function Home({
 
       {/* About Section */}
       <section className="py-12">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto sm:px-4 px-2">
           <h2 className="text-3xl font-bold mb-6 text-center">{home.about}</h2>
           <div className="max-w-3xl mx-auto">
             <p className="text-lg text-gray-700 mb-6 text-center">
@@ -94,7 +87,7 @@ export default async function Home({
 
       {/* Sections Grid */}
       <section className="py-12 bg-gray-50">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto sm:px-4 px-2">
           <h2 className="text-3xl font-bold mb-10 text-center">{home.sections}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {sections.map((section, index) => (
@@ -110,7 +103,7 @@ export default async function Home({
                   <p className="text-gray-600 flex-grow mb-4 text-center">{section.description}</p>
                   <Link 
                     href={section.link}
-                    className="text-center block w-full px-4 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors mt-auto"
+                    className="text-center block w-full sm:px-4 px-2 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors mt-auto"
                   >
                     {home.exploreMore}
                   </Link>
@@ -123,3 +116,4 @@ export default async function Home({
     </div>
   );
 }
+

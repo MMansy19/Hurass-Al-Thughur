@@ -3,8 +3,23 @@
 import React, { memo, useEffect, useRef, useState, useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
 
+// Animation configuration types
+interface AnimationConfig {
+  initial?: Record<string, any>;
+  animate?: Record<string, any>;
+  hover?: Record<string, any>;
+  transition?: Record<string, any>;
+  scale?: number | number[];
+  y?: number | number[];
+  x?: number | number[];
+  opacity?: number | number[];
+  rotate?: number | number[];
+  rotateY?: number | number[];
+  boxShadow?: string | string[];
+}
+
 // Enhanced animation configurations
-export const animationPresets = {
+export const animationPresets: Record<string, AnimationConfig> = {
   // Entrance animations
   fadeIn: {
     initial: { opacity: 0 },
@@ -54,24 +69,38 @@ export const animationPresets = {
     initial: { opacity: 0, rotateY: -90 },
     animate: { opacity: 1, rotateY: 0 },
     transition: { duration: 0.8, ease: 'easeOut' }
-  },
-  // Hover animations
+  },  // Hover animations  
   hover: {
-    scale: 1.05,
-    transition: { duration: 0.2, ease: 'easeOut' }
+    initial: {},
+    animate: {},
+    hover: {
+      scale: 1.05,
+      transition: { duration: 0.2, ease: 'easeOut' }
+    }
   },
   hoverLift: {
-    y: -8,
-    scale: 1.03,
-    transition: { duration: 0.2, ease: 'easeOut' }
+    initial: {},
+    animate: {},
+    hover: {
+      y: -8,
+      scale: 1.03,
+      transition: { duration: 0.2, ease: 'easeOut' }
+    }
   },
   hoverGlow: {
-    boxShadow: '0 0 25px rgba(5, 150, 105, 0.4)',
-    transition: { duration: 0.3, ease: 'easeOut' }
+    initial: {},
+    animate: {},
+    hover: {
+      boxShadow: '0 0 25px rgba(5, 150, 105, 0.4)',
+      transition: { duration: 0.3, ease: 'easeOut' }
+    }
   },
   // Loading animations
   pulse: {
-    scale: [1, 1.05, 1],
+    initial: {},
+    animate: {
+      scale: [1, 1.05, 1]
+    },
     transition: {
       duration: 2,
       repeat: Infinity,
@@ -79,8 +108,11 @@ export const animationPresets = {
     }
   },
   breathe: {
-    scale: [1, 1.02, 1],
-    opacity: [0.8, 1, 0.8],
+    initial: {},
+    animate: {
+      scale: [1, 1.02, 1],
+      opacity: [0.8, 1, 0.8]
+    },
     transition: {
       duration: 3,
       repeat: Infinity,
@@ -155,9 +187,16 @@ export const Motion = memo<MotionProps>(({
       setTimeout(() => setIsVisible(true), delay * 1000);
     }
   }, [inView, delay, isVisible]);
-
   const animation = useMemo(() => {
     const baseAnimation = custom || animationPresets[preset];
+    if (!baseAnimation) {
+      return {
+        initial: { opacity: 0 },
+        animate: { opacity: 1 },
+        transition: { duration: 0.6, ease: 'easeOut', delay }
+      };
+    }
+    
     const modifiedAnimation = {
       ...baseAnimation,
       transition: {
@@ -259,6 +298,35 @@ export const Stagger = memo<StaggerProps>(({
 });
 
 Stagger.displayName = 'Stagger';
+
+// StaggerContainer component for staggered animations
+interface StaggerContainerProps {
+  children: React.ReactNode;
+  staggerDelay?: number;
+  className?: string;
+}
+
+export const StaggerContainer = memo<StaggerContainerProps>(({ 
+  children, 
+  staggerDelay = 100, 
+  className = '' 
+}) => {
+  return (
+    <div className={className}>
+      {React.Children.map(children, (child, index) => (
+        <Motion
+          key={index}
+          preset="slideInUp"
+          delay={index * staggerDelay}
+        >
+          {child}
+        </Motion>
+      ))}
+    </div>
+  );
+});
+
+StaggerContainer.displayName = 'StaggerContainer';
 
 // Page transition wrapper
 interface PageTransitionProps {
@@ -540,6 +608,7 @@ export const useReducedMotion = () => {
 export default {
   Motion,
   Stagger,
+  StaggerContainer,
   PageTransition,
   LoadingAnimation,
   Parallax,

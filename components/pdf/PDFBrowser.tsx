@@ -55,13 +55,13 @@ export default function PDFBrowser({ translations }: PDFBrowserProps) {
         <div className="space-x-2">
           <button 
             onClick={retryFetch}
-            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition-colors"
+            className="bg-red-600 hover:bg-red-700 text-white sm:px-4 px-2 py-2 rounded transition-colors"
           >
             Retry
           </button>
           <button 
             onClick={() => window.location.reload()}
-            className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded transition-colors"
+            className="bg-gray-600 hover:bg-gray-700 text-white sm:px-4 px-2 py-2 rounded transition-colors"
           >
             Refresh Page
           </button>

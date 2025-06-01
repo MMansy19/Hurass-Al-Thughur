@@ -11,7 +11,7 @@ interface PDFControlsWrapperProps {
  */
 export function PDFControlsWrapper({ children }: PDFControlsWrapperProps) {
   return (
-    <div className="flex flex-wrap items-center justify-between gap-3 p-4 bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200 shadow-sm">
+    <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center justify-between gap-2 sm:gap-3 p-2 sm:p-4 bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200 shadow-sm">
       {children}
     </div>
   );
@@ -33,12 +33,12 @@ export function NavigationButton({ onClick, disabled, label, icon, isNext = fals
     <button
       onClick={onClick}
       disabled={disabled}
-      className="px-4 py-2 bg-emerald-600 text-white rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed hover:bg-emerald-700 active:bg-emerald-800 transition-all duration-200 flex items-center gap-2 shadow-sm hover:shadow-md"
+      className="px-2 sm:px-4 px-2 py-2 bg-emerald-600 text-white rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed hover:bg-emerald-700 active:bg-emerald-800 transition-all duration-200 flex items-center gap-1 sm:gap-2 shadow-sm hover:shadow-md text-sm"
       title={label}
     >
-      {!isNext && icon}
-      <span className="hidden sm:inline">{label}</span>
-      {isNext && icon}
+      {!isNext && <span className="rtl:order-2 ltr:order-1">{icon}</span>}
+      <span className="hidden sm:inline rtl:order-1 ltr:order-2">{label}</span>
+      {isNext && <span className="rtl:order-1 ltr:order-2">{icon}</span>}
     </button>
   );
 }
@@ -66,18 +66,18 @@ export function PageIndicator({ currentPage, totalPages, onPageChange }: PageInd
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex items-center gap-2">
-      <span className="text-sm text-gray-600">Page</span>
+    <form onSubmit={handleSubmit} className="flex items-center gap-1 sm:gap-2">
+      <span className="text-xs sm:text-sm text-gray-600 hidden sm:inline">Page</span>
       <input
         type="number"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         onBlur={() => setInputValue(currentPage.toString())}
-        className="w-16 px-2 py-1 text-center border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
+        className="w-12 sm:w-16 px-1 sm:px-2 py-1 text-center border border-gray-300 rounded-md text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
         min={1}
         max={totalPages}
       />
-      <span className="text-sm text-gray-600">of {totalPages || 0}</span>
+      <span className="text-xs sm:text-sm text-gray-600">/ {totalPages || 0}</span>
     </form>
   );
 }
@@ -88,12 +88,14 @@ interface ZoomControlProps {
   onZoomOut: () => void;
   zoomInLabel: string;
   zoomOutLabel: string;
+  onReset?: () => void;
+  actualSizeLabel?: string;
 }
 
 /**
  * Enhanced zoom control component
  */
-export function ZoomControl({ scale, onZoomIn, onZoomOut, zoomInLabel, zoomOutLabel }: ZoomControlProps) {
+export function ZoomControl({ scale, onZoomIn, onZoomOut, zoomInLabel, zoomOutLabel, onReset, actualSizeLabel }: ZoomControlProps) {
   return (
     <div className="flex items-center gap-1 bg-white rounded-lg border border-gray-300 shadow-sm">
       <button
@@ -111,7 +113,7 @@ export function ZoomControl({ scale, onZoomIn, onZoomOut, zoomInLabel, zoomOutLa
       </div>
       <button
         onClick={onZoomIn}
-        className="p-2 text-blue-600 hover:bg-blue-50 rounded-r-lg transition-colors"
+        className="p-2 text-blue-600 hover:bg-blue-50 transition-colors"
         aria-label={zoomInLabel}
         title={zoomInLabel}
       >
@@ -119,46 +121,17 @@ export function ZoomControl({ scale, onZoomIn, onZoomOut, zoomInLabel, zoomOutLa
           <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
         </svg>
       </button>
-    </div>
-  );
-}
-
-interface SearchControlProps {
-  value: string;
-  onChange: (value: string) => void;
-  results: number;
-  currentResult: number;
-  placeholder: string;
-}
-
-/**
- * Search control component
- */
-export function SearchControl({ value, onChange, results, currentResult, placeholder }: SearchControlProps) {
-  return (
-    <div className="flex items-center gap-2">
-      <div className="relative">
-        <input
-          type="text"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          placeholder={placeholder}
-          className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 w-64"
-        />
-        <svg 
-          xmlns="http://www.w3.org/2000/svg" 
-          className="h-4 w-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-          fill="none" 
-          viewBox="0 0 24 24" 
-          stroke="currentColor"
+      {onReset && (
+        <button
+          onClick={onReset}
+          className="p-2 text-blue-600 hover:bg-blue-50 rounded-r-lg transition-colors border-l border-gray-300"
+          aria-label={actualSizeLabel || "Reset zoom"}
+          title={actualSizeLabel || "Reset zoom"}
         >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-        </svg>
-      </div>
-      {results > 0 && (
-        <span className="text-sm text-gray-600">
-          {currentResult + 1} of {results}
-        </span>
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+            <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
+          </svg>
+        </button>
       )}
     </div>
   );
@@ -171,38 +144,41 @@ interface ViewModeControlProps {
   fitPage: () => void;
   fitWidthLabel: string;
   fitPageLabel: string;
+  singleLabel: string;
+  continuousLabel: string;
+  facingLabel: string;
 }
 
 /**
  * View mode control component
  */
-export function ViewModeControl({ mode, onChange, fitWidth, fitPage, fitWidthLabel, fitPageLabel }: ViewModeControlProps) {
+export function ViewModeControl({ mode, onChange, fitWidth, fitPage, fitWidthLabel, fitPageLabel, singleLabel, continuousLabel, facingLabel }: ViewModeControlProps) {
   return (
     <div className="flex items-center gap-1">
       <select
         value={mode}
         onChange={(e) => onChange(e.target.value as 'single' | 'continuous' | 'facing')}
-        className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
+        className="sm:px-3 sm:py-2 p-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
       >
-        <option value="single">Single Page</option>
-        <option value="continuous">Continuous</option>
-        <option value="facing">Facing Pages</option>
+        <option value="single">{singleLabel}</option>
+        <option value="continuous">{continuousLabel}</option>
+        <option value="facing">{facingLabel}</option>
       </select>
-      
+
       <button
         onClick={fitWidth}
-        className="px-3 py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+        className="sm:px-3 sm:py-2 p-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
         title={fitWidthLabel}
       >
-        Fit Width
+        {fitWidthLabel}
       </button>
       
       <button
         onClick={fitPage}
-        className="px-3 py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+        className="sm:px-3 sm:py-2 p-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
         title={fitPageLabel}
       >
-        Fit Page
+        {fitPageLabel}
       </button>
     </div>
   );
@@ -216,6 +192,10 @@ interface AdvancedControlsProps {
   thumbnailsLabel: string;
   downloadLabel: string;
   printLabel: string;
+  onToggleThumbnails?: () => void;
+  onToggleOutline?: () => void;
+  outlineOpen?: boolean;
+  outlineLabel?: string;
 }
 
 /**
@@ -228,12 +208,16 @@ export function AdvancedControls({
   sidebarOpen, 
   thumbnailsLabel, 
   downloadLabel, 
-  printLabel 
+  printLabel,
+  onToggleThumbnails,
+  onToggleOutline,
+  outlineOpen,
+  outlineLabel
 }: AdvancedControlsProps) {
   return (
     <div className="flex items-center gap-2">
       <button
-        onClick={onToggleSidebar}
+        onClick={onToggleThumbnails || onToggleSidebar}
         className={`p-2 rounded-lg transition-colors ${
           sidebarOpen ? 'bg-emerald-100 text-emerald-700' : 'bg-gray-100 hover:bg-gray-200'
         }`}
@@ -243,6 +227,20 @@ export function AdvancedControls({
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
         </svg>
       </button>
+      
+      {onToggleOutline && (
+        <button
+          onClick={onToggleOutline}
+          className={`p-2 rounded-lg transition-colors ${
+            outlineOpen ? 'bg-emerald-100 text-emerald-700' : 'bg-gray-100 hover:bg-gray-200'
+          }`}
+          title={outlineLabel || "Outline"}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+          </svg>
+        </button>
+      )}
       
       <button
         onClick={onDownload}
@@ -295,3 +293,51 @@ export function FullscreenControl({ isFullscreen, onToggle, label }: FullscreenC
     </button>
   );
 }
+
+interface BookmarkControlProps {
+  isBookmarked: boolean;
+  onToggle: () => void;
+  onShowBookmarks: () => void;
+  bookmarkLabel: string;
+  bookmarksOpen: boolean;
+}
+
+/**
+ * Bookmark control component
+ */
+export function BookmarkControl({ 
+  isBookmarked, 
+  onToggle, 
+  onShowBookmarks, 
+  bookmarkLabel, 
+  bookmarksOpen 
+}: BookmarkControlProps) {
+  return (
+    <div className="flex items-center gap-1">
+      <button
+        onClick={onToggle}
+        className={`p-2 rounded-lg transition-colors ${
+          isBookmarked ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 hover:bg-gray-200'
+        }`}
+        title={bookmarkLabel}
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill={isBookmarked ? "currentColor" : "none"} viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+        </svg>
+      </button>
+      
+      <button
+        onClick={onShowBookmarks}
+        className={`p-2 rounded-lg transition-colors ${
+          bookmarksOpen ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 hover:bg-gray-200'
+        }`}
+        title="Show Bookmarks"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+        </svg>
+      </button>
+    </div>
+  );
+}
+

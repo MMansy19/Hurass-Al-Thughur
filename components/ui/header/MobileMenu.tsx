@@ -80,12 +80,12 @@ const MobileMenu = ({
         }`}
         style={{ top: `${headerHeight}px`, height: `calc(100vh - ${headerHeight}px)` }}
       >
-        <div className="px-4 py-6 space-y-1 h-full overflow-y-auto">
+        <div className="sm:px-4 px-2 py-6 space-y-1 h-full overflow-y-auto">
           {navLinks.map((link, index) => (
             <Link
               key={index}
               href={link.href}
-              className={`flex items-center py-4 px-4 rounded-lg ${
+              className={`flex items-center py-4 sm:px-4 px-2 rounded-lg ${
                 link.isActive
                   ? "bg-emerald-600 text-white"
                   : "text-gray-700 hover:bg-gray-50"

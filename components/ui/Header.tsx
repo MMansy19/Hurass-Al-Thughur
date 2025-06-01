@@ -50,7 +50,7 @@ const Header = ({ locale, messages }: HeaderProps) => {
       role="banner"
       aria-label={`${messages.siteName} - ${isArabic ? "التنقل الرئيسي" : "Main Navigation"}`}
     >
-      <div className="container mx-auto md:px-4 px-2">
+      <div className="container mx-auto md:sm:px-4 px-2 px-2">
         <div className="flex items-center justify-between">          
           {/* Logo */}          <Logo 
             locale={locale} 

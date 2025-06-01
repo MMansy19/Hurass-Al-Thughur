@@ -46,7 +46,7 @@ export function PDFError({ errorTitle, errorMessage }: ErrorProps) {
         <p className="text-gray-700 mb-4">{errorMessage}</p>
         <button 
           onClick={() => window.location.reload()} 
-          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+          className="sm:px-4 px-2 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
         >
           Try Again
         </button>
@@ -68,7 +68,7 @@ export const PDFContainer = forwardRef<HTMLDivElement, PDFContainerProps>(
     return (
       <div 
         ref={ref}
-        className={`w-full h-screen flex flex-col bg-gray-100 border border-gray-200 rounded-lg overflow-hidden shadow-lg ${className}`}
+        className={`w-full h-screen flex flex-col bg-gray-100 border border-gray-200 rounded-lg overflow-hidden shadow-lg relative ${className}`}
       >
         {children}
       </div>
@@ -88,7 +88,7 @@ interface PDFDocumentWrapperProps {
  */
 export function PDFDocumentWrapper({ children, className = '' }: PDFDocumentWrapperProps) {
   return (
-    <div className={`flex-1 bg-gray-50 overflow-auto p-4 ${className}`}>
+    <div className={`flex-1 bg-gray-50 overflow-auto p-2 sm:p-4 ${className}`}>
       <div className="min-h-full flex flex-col items-center justify-center">
         {children}
       </div>
@@ -98,17 +98,53 @@ export function PDFDocumentWrapper({ children, className = '' }: PDFDocumentWrap
 
 interface PDFSidebarProps {
   children: ReactNode;
+  mode?: 'thumbnails' | 'outline' | 'bookmarks';
+  onModeChange?: (mode: 'thumbnails' | 'outline' | 'bookmarks') => void;
+  isMobile?: boolean;
+  onClose?: () => void;
 }
 
 /**
  * Sidebar for PDF thumbnails and navigation
  */
-export function PDFSidebar({ children }: PDFSidebarProps) {
+export function PDFSidebar({ children, isMobile = false, onClose }: PDFSidebarProps) {
+  if (isMobile) {
+    return (
+      <div className="fixed inset-0 z-50 flex">
+        {/* Backdrop */}
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50" 
+          onClick={onClose}
+        />
+        
+        {/* Sidebar */}
+        <div className="relative w-80 max-w-[80vw] bg-white shadow-xl overflow-y-auto">
+          <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between">
+            <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-wide">
+              Navigation
+            </h3>
+            <button
+              onClick={onClose}
+              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            >
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          <div className="p-4">
+            {children}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-64 bg-white border-r border-gray-200 overflow-y-auto flex-shrink-0">
       <div className="p-4">
         <h3 className="text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wide">
-          Page Thumbnails
+          Navigation
         </h3>
         {children}
       </div>
@@ -122,6 +158,8 @@ interface PDFThumbnailsProps {
   currentPage: number;
   onPageSelect: (page: number) => void;
   scale: number;
+  annotations?: any[];
+  bookmarks?: any[];
 }
 
 /**
@@ -165,6 +203,65 @@ export function PDFThumbnails({ file, numPages, currentPage, onPageSelect, scale
           </div>
         );
       })}
+    </div>
+  );
+}
+
+
+interface PDFAnnotationsProps {
+  annotations: any[];
+  onRemove: (id: string) => void;
+  onEdit: (id: string, content: string) => void;
+}
+
+/**
+ * Annotations overlay component
+ */
+export function PDFAnnotations({ annotations, onRemove, onEdit }: PDFAnnotationsProps) {
+  if (annotations.length === 0) return null;
+
+  return (
+    <div className="absolute inset-0 pointer-events-none">
+      {annotations.map((annotation) => (
+        <div
+          key={annotation.id}
+          className="absolute pointer-events-auto"
+          style={{
+            left: annotation.position.x,
+            top: annotation.position.y,
+          }}
+        >
+          {annotation.type === 'highlight' && (
+            <div
+              className="bg-yellow-300 bg-opacity-50 border border-yellow-400 rounded"
+              style={{
+                width: 100,
+                height: 20,
+              }}
+            />
+          )}
+          
+          {annotation.type === 'note' && (
+            <div className="bg-blue-500 text-white p-1 rounded shadow-lg min-w-[200px]">
+              <div className="text-xs">{annotation.content}</div>
+              <div className="flex gap-1 mt-1">
+                <button
+                  onClick={() => onEdit(annotation.id, prompt('Edit note:', annotation.content) || annotation.content)}
+                  className="text-xs bg-blue-600 hover:bg-blue-700 px-1 py-0.5 rounded"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => onRemove(annotation.id)}
+                  className="text-xs bg-red-500 hover:bg-red-600 px-1 py-0.5 rounded"
+                >
+                  ×
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      ))}
     </div>
   );
 }

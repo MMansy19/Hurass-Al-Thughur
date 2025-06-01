@@ -105,7 +105,7 @@ export function BundleAnalysisDashboard({
         <p className="text-red-600">{error}</p>
         <button
           onClick={runAnalysis}
-          className="mt-3 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+          className="mt-3 sm:px-4 px-2 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
         >
           Retry Analysis
         </button>
@@ -119,7 +119,7 @@ export function BundleAnalysisDashboard({
         <p className="text-gray-600">No analysis data available</p>
         <button
           onClick={runAnalysis}
-          className="mt-3 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+          className="mt-3 sm:px-4 px-2 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
         >
           Run Analysis
         </button>
@@ -258,7 +258,7 @@ export function AdvancedBundleAnalysis({ className = '', budgets }: AdvancedBund
         <p className="text-red-600">{error}</p>
         <button
           onClick={runAdvancedAnalysis}
-          className="mt-3 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+          className="mt-3 sm:px-4 px-2 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
         >
           Retry Advanced Analysis
         </button>
@@ -272,7 +272,7 @@ export function AdvancedBundleAnalysis({ className = '', budgets }: AdvancedBund
         <p className="text-gray-600">No advanced analysis data available</p>
         <button
           onClick={runAdvancedAnalysis}
-          className="mt-3 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+          className="mt-3 sm:px-4 px-2 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
         >
           Run Advanced Analysis
         </button>
