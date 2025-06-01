@@ -215,7 +215,8 @@ export default async function EnhancedMagazinePage({
       )}
 
       <main id="main-content" className="space-y-12" role="main">
-        {/* Hero Section */}          <section className="bg-gradient-to-r from-emerald-700 to-emerald-500 text-white py-20 rounded-lg">
+        {/* Hero Section */}          
+        <section className="bg-gradient-to-r from-emerald-700 to-emerald-500 text-white py-20 rounded-lg">
           <div className="container mx-auto px-4 flex flex-col items-center text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">{magazine.title}</h1>
             <p className="text-xl max-w-2xl mb-8">{magazine.description}</p>
@@ -234,8 +235,9 @@ export default async function EnhancedMagazinePage({
               </Link>
             </div>
           </div>
-        </section>        {/* Search Section */}
-        <section id="search" className="py-8" aria-labelledby="search-heading">
+        </section>        
+        {/* Search Section */}
+        <section id="search" className="pt-4" aria-labelledby="search-heading">
           <div className="container mx-auto px-4">
             <h2 id="search-heading" className="sr-only">
               {locale === "ar" ? "البحث في المجلة" : "Search Magazine"}
@@ -250,7 +252,7 @@ export default async function EnhancedMagazinePage({
         {/* Latest Issues Section */}
         <section
           id="latest-issues"
-          className="py-12"
+          className="pb-12"
           aria-labelledby="latest-issues-heading"
         >
           <div className="container mx-auto px-4">
@@ -309,7 +311,8 @@ export default async function EnhancedMagazinePage({
               </Suspense>
             </div>
           </div>
-        </section>        {/* Categories Section */}
+        </section>        
+        {/* Categories Section */}
         <section
           id="categories"
           className="py-12 bg-gray-50 rounded-lg"
@@ -357,7 +360,8 @@ export default async function EnhancedMagazinePage({
               ))}
             </div>
           </div>
-        </section>        {/* Newsletter Subscription Section */}
+        </section>        
+        {/* Newsletter Subscription Section */}
         <section className="py-12 bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-lg text-white" aria-labelledby="newsletter-heading">
           <div className="container mx-auto px-4 text-center">
             <h2 id="newsletter-heading" className="text-3xl font-bold mb-4">

@@ -29,7 +29,7 @@ function PDFLoadingPlaceholder() {
 // Section header with PDF icon
 function SectionHeader({ title }: { title: string }) {
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-3 p-2 md:p-4">
       <svg
         className="w-8 h-8 text-emerald-600"
         viewBox="0 0 24 24"
@@ -53,12 +53,24 @@ interface PDFViewerSectionProps {
     loading: string;
     error: string;
     search: string;
+    searchResults: string;
     thumbnails: string;
     fullscreen: string;
     fitWidth: string;
     fitPage: string;
     download: string;
     print: string;
+    bookmark: string;
+    annotations: string;
+    highlight: string;
+    notes: string;
+    actualSize: string;
+    pageWidth: string;
+    twoPages: string;
+    continuous: string;
+    outline: string;
+    noMatches: string;
+    matches: string;
   };
 }
 

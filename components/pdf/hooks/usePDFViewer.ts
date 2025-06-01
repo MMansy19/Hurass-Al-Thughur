@@ -2,10 +2,6 @@
 
 import { useState, useEffect } from 'react';
 
-interface UsePDFViewerOptions {
-  initialScale?: number;
-}
-
 interface UsePDFViewerResult {
   numPages: number;
   pageNumber: number;
@@ -19,16 +15,17 @@ interface UsePDFViewerResult {
   changePage: (offset: number) => void;
   zoomIn: () => void;
   zoomOut: () => void;
+  resetZoom: () => void;
   onDocumentLoadSuccess: ({ numPages }: { numPages: number }) => void;
 }
 
 /**
  * Custom hook to manage PDF viewer state and functionality
  */
-export function usePDFViewer({ initialScale = 1 }: UsePDFViewerOptions = {}): UsePDFViewerResult {
+export function usePDFViewer(): UsePDFViewerResult {
   const [numPages, setNumPages] = useState<number>(0);
   const [pageNumber, setPageNumber] = useState<number>(1);
-  const [scale, setScale] = useState<number>(initialScale);
+  const [scale, setScale] = useState<number>(1.0);
   const [error, setError] = useState<string | null>(null);
   const [width, setWidth] = useState<number>(typeof window !== 'undefined' ? window.innerWidth : 1024);
 
@@ -37,13 +34,6 @@ export function usePDFViewer({ initialScale = 1 }: UsePDFViewerOptions = {}): Us
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-
-  useEffect(() => {
-    // Adjust scale based on screen width
-    if (width < 640) setScale(0.7);
-    else if (width < 1024) setScale(0.9);
-    else setScale(1.2);
-  }, [width]);
 
   function changePage(offset: number) {
     setPageNumber(prev => Math.min(Math.max(1, prev + offset), numPages));
@@ -57,12 +47,15 @@ export function usePDFViewer({ initialScale = 1 }: UsePDFViewerOptions = {}): Us
     setScale(s => Math.max(s - 0.2, 0.5));
   }
 
+  function resetZoom() {
+    setScale(1.0);
+  }
+
   function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
     setNumPages(numPages);
     setPageNumber(1);
     setError(null);
-  }
-  return {
+  }  return {
     numPages,
     pageNumber,
     scale,
@@ -75,6 +68,7 @@ export function usePDFViewer({ initialScale = 1 }: UsePDFViewerOptions = {}): Us
     changePage,
     zoomIn,
     zoomOut,
+    resetZoom,
     onDocumentLoadSuccess,
   };
 }

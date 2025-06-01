@@ -4,10 +4,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import SEO from "@/components/ui/SEO";
 import { SkipLinks } from "@/components/ui/AccessibilityComponents";
-import { AccessibleMagazineCard, AccessibleGrid } from "@/components/ui/AccessibilityEnhancements";
+import { AccessibleGrid } from "@/components/ui/AccessibilityEnhancements";
 import { Motion, StaggerContainer } from "@/components/ui/AnimationSystem";
 import { MagazineGridSkeleton } from "@/components/ui/LoadingStates";
 import { MemoizedPagination } from "@/components/ui/MemoizedComponents";
+import MagazineCardWrapper from "@/components/ui/MagazineCardWrapper";
 
 // Generate metadata for the page
 export async function generateMetadata({ 
@@ -307,18 +308,10 @@ export default async function CategoryPage({
                       gap={24}
                       navigationLabel={`${categoryInfo.name} ${isArabic ? "إصدارات" : "issues"}`}
                       locale={locale}
-                    >
-                      {categoryIssues.map((issue, index) => (
+                    >                      {categoryIssues.map((issue, index) => (
                         <Motion key={issue.id} preset="slideInUp" delay={index * 100}>
-                          <AccessibleMagazineCard
+                          <MagazineCardWrapper
                             issue={issue}
-                            onView={(id) => {
-                              window.location.href = `/${locale}/magazine/issue/${id}`;
-                            }}
-                            onDownload={(id) => {
-                              console.log('Download issue:', id);
-                              // Implement download functionality
-                            }}
                             locale={locale}
                           />
                         </Motion>

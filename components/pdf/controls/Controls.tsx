@@ -251,7 +251,7 @@ export function ViewModeControl({ mode, onChange, fitWidth, fitPage, fitWidthLab
         className="px-3 py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
         title={fitWidthLabel}
       >
-        Fit Width
+        {fitWidthLabel}
       </button>
       
       <button
@@ -259,7 +259,7 @@ export function ViewModeControl({ mode, onChange, fitWidth, fitPage, fitWidthLab
         className="px-3 py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
         title={fitPageLabel}
       >
-        Fit Page
+        {fitPageLabel}
       </button>
     </div>
   );

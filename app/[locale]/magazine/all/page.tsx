@@ -3,10 +3,11 @@ import { Suspense } from "react";
 import Link from "next/link";
 import SEO from "@/components/ui/SEO";
 import { SkipLinks } from "@/components/ui/AccessibilityComponents";
-import { AccessibleMagazineCard, AccessibleGrid, AccessibleSearch } from "@/components/ui/AccessibilityEnhancements";
+import { AccessibleGrid, AccessibleSearch } from "@/components/ui/AccessibilityEnhancements";
 import { Motion } from "@/components/ui/AnimationSystem";
 import { MagazineGridSkeleton } from "@/components/ui/LoadingStates";
 import { MemoizedPagination } from "@/components/ui/MemoizedComponents";
+import MagazineCardWrapper from "@/components/ui/MagazineCardWrapper";
 
 // Generate metadata for the page
 export async function generateMetadata({ 
@@ -257,20 +258,11 @@ export default async function AllMagazinesPage({
                   gap={24}
                   navigationLabel={isArabic ? "شبكة إصدارات المجلة" : "Magazine issues grid"}
                   locale={locale}
-                >
-                  {allIssues.map((issue, index) => (
-                    <AccessibleMagazineCard
+                >                  {allIssues.map((issue) => (
+                    <MagazineCardWrapper
                       key={issue.id}
                       issue={issue}
-                      onView={(id) => {
-                        window.location.href = `/${locale}/magazine/issue/${id}`;
-                      }}
-                      onDownload={(id) => {
-                        console.log('Download issue:', id);
-                        // Implement download functionality
-                      }}
                       locale={locale}
-                      delay={index * 100}
                     />
                   ))}
                 </AccessibleGrid>

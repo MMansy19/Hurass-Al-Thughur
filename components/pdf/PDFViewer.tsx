@@ -65,7 +65,6 @@ interface PDFViewerProps {
   enableAnnotations?: boolean;
   enableBookmarks?: boolean;
   enableTextSearch?: boolean;
-  initialZoom?: number;
   className?: string;
 }
 
@@ -76,23 +75,22 @@ export default function PDFViewer({
   enableAnnotations = true,
   enableBookmarks = true,
   enableTextSearch = true,
-  initialZoom = 1.0,
   className = ""
-}: PDFViewerProps) {
-  // Use custom hook for PDF viewer functionality FIRST
+}: PDFViewerProps) {  // Use custom hook for PDF viewer functionality FIRST
   const {
     numPages,
     pageNumber,
-    scale,
+    scale = 1.0,
     error,
     setError,
     changePage,
     zoomIn,
     zoomOut,
+    resetZoom,
     onDocumentLoadSuccess: baseOnDocumentLoadSuccess,
     setPageNumber,
     setScale
-  } = usePDFViewer({ initialScale: initialZoom });
+  } = usePDFViewer();
 
   // Enhanced state management
   const [viewMode, setViewMode] = useState<'single' | 'continuous' | 'facing'>('single');
@@ -138,7 +136,6 @@ export default function PDFViewer({
       setScale(newScale);
     }
   }, [pageWidth, showSidebar, setScale]);
-
   const fitPage = useCallback(() => {
     if (containerRef.current) {
       const containerHeight = containerRef.current.offsetHeight - 100;
@@ -152,10 +149,6 @@ export default function PDFViewer({
       setScale(newScale);
     }
   }, [showSidebar, setScale]);
-
-  const resetZoom = useCallback(() => {
-    setScale(1.0);
-  }, [setScale]);
 
   // Fullscreen functionality
   const toggleFullscreen = useCallback(() => {
@@ -313,18 +306,18 @@ export default function PDFViewer({
 
   // Auto-fit width on container resize
   useEffect(() => {
-    if (!containerRef.current || !fitWidth) return;
+    if (!containerRef.current || !fitPage) return;
 
     const resizeObserver = new ResizeObserver(() => {
       if (viewMode === 'single') {
         // Auto-adjust scale based on container size
-        fitWidth();
+        fitPage();
       }
     });
 
     resizeObserver.observe(containerRef.current);
     return () => resizeObserver.disconnect();
-  }, [fitWidth, viewMode]);
+  }, [fitPage, viewMode]);
 
   // Download functionality
   const handleDownload = useCallback(() => {
@@ -431,7 +424,8 @@ export default function PDFViewer({
           />
         </div>
 
-        {/* Advanced Controls */}        <AdvancedControls
+        {/* Advanced Controls */}        
+        <AdvancedControls
           onToggleSidebar={() => toggleSidebar('thumbnails')}
           onToggleThumbnails={() => toggleSidebar('thumbnails')}
           onToggleOutline={() => toggleSidebar('outline')}
