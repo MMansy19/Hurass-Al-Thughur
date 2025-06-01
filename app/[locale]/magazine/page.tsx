@@ -264,20 +264,17 @@ export default async function EnhancedMagazinePage({
         </section>        
         {/* PDF Viewer Section */}
         <section id="pdf-viewer" aria-labelledby="pdf-viewer-heading">
-          <div className="container mx-auto sm:px-4 px-2">            <h2 id="pdf-viewer-heading" className="text-3xl font-bold text-emerald-800 mb-8 text-center">
-              {messages.hardcoded.searchPDFViewer}
-            </h2>
-
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200">
-              <Suspense fallback={
-                <div className="h-96 bg-gray-100 animate-pulse flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto mb-4"></div>                    <p className="text-gray-600">
-                      {messages.hardcoded.loadingPDFViewer}
-                    </p>
+          <div className="container mx-auto sm:px-4 px-2">            
+              <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200">
+                <Suspense fallback={
+                  <div className="h-96 bg-gray-100 animate-pulse flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto mb-4"></div>                    <p className="text-gray-600">
+                        {messages.hardcoded.loadingPDFViewer}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              }>
+                }>
                 <PDFViewerSection
                   pdfUrl={`/pdfs/${selectedIssue?.id}.pdf`}
                   title={selectedIssue?.title || magazine.title}

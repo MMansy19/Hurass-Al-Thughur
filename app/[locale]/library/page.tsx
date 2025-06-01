@@ -137,14 +137,14 @@ export default async function LibraryPage({
           <h2 className="text-2xl font-bold mb-6">{library.categories}</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {categories.map((category) => (
-              <Link
+              <button
                 key={category.id}
-                href={`/${locale}/library/category/${category.id}`}
+                // href={`/${locale}/library/category/${category.id}`}
                 className="bg-gray-50 border border-gray-200 rounded-lg p-4 text-center hover:bg-emerald-50 hover:border-emerald-200 transition-colors"
               >
                 <h3 className="font-bold mb-2">{category.name}</h3>
                 <span className="text-sm text-gray-500">{category.count} {common.items}</span>
-              </Link>
+              </button>
             ))}
           </div>
         </div>
@@ -154,12 +154,13 @@ export default async function LibraryPage({
       <section className="bg-gray-50 py-10">
         <div className="container mx-auto sm:px-4 px-2">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold">{library.images}</h2>            <Link 
-              href={`/${locale}/library/images`}
+            <h2 className="text-2xl font-bold">{library.images}</h2>            
+            <button 
+              // href={`/${locale}/library/images`}
               className="text-emerald-600 hover:text-emerald-700 transition-colors"
             >
               {common.viewAll}
-            </Link>
+            </button>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {images.map((image) => (
@@ -192,12 +193,13 @@ export default async function LibraryPage({
       <section>
         <div className="container mx-auto sm:px-4 px-2">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold">{library.brochures}</h2>            <Link 
-              href={`/${locale}/library/brochures`}
+            <h2 className="text-2xl font-bold">{library.brochures}</h2>            
+            <button 
+              // href={`/${locale}/library/brochures`}
               className="text-emerald-600 hover:text-emerald-700 transition-colors"
             >
               {common.viewAll}
-            </Link>
+            </button>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {brochures.map((brochure) => (
@@ -210,12 +212,12 @@ export default async function LibraryPage({
                   <h3 className="font-bold text-lg mb-1">{brochure.title}</h3>
                   <p className="text-sm text-gray-500 mb-4">{brochure.category}</p>
                   <div className="flex space-x-2">
-                    <Link 
-                      href={`/${locale}/library/brochure/${brochure.id}`}
+                    <button 
+                      // href={`/${locale}/library/brochure/${brochure.id}`}
                       className="flex-1 sm:px-4 px-2 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors text-center"
                     >
                       {library.preview}
-                    </Link>
+                    </button>
                     <button 
                       className="sm:px-4 px-2 py-2 border border-emerald-600 text-emerald-600 rounded-md hover:bg-emerald-50 transition-colors"
                     >

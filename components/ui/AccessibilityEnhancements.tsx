@@ -201,7 +201,7 @@ export const AccessibleMagazineCard = memo<AccessibleMagazineCardProps>(({
   const isArabic = locale === 'ar';
 
   const handleView = useCallback(() => {
-    onView(issue.id);
+    // onView(issue.id);
     setAnnouncement(
       isArabic 
         ? `فتح العدد: ${issue.title}` 
@@ -209,7 +209,7 @@ export const AccessibleMagazineCard = memo<AccessibleMagazineCardProps>(({
     );
   }, [issue.id, issue.title, onView, isArabic]);
   const handleDownload = useCallback(() => {
-    onDownload?.(issue.id);
+    // onDownload?.(issue.id);
     setAnnouncement(
       isArabic 
         ? `تم بدء تحميل: ${issue.title}` 

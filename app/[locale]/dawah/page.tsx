@@ -137,12 +137,14 @@ export default async function DawahPage({
                     <h3 className="font-bold text-lg">{material.title}</h3>
                     <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">{material.type}</span>
                   </div>
-                  <div className="mt-4 flex justify-between">                    <Link 
-                      href={`/${locale}/dawah/material/${material.id}`}
+                  <div className="mt-4 flex justify-between">                    
+                    <button 
+                    // Link Component must be used for navigation
+                      // href={`/${locale}/dawah/material/${material.id}`}
                       className="inline-block sm:px-4 px-2 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors"
                     >
                       {common.view}
-                    </Link>
+                    </button>
                     <button 
                       className="sm:px-4 px-2 py-2 border border-emerald-600 text-emerald-600 rounded-md hover:bg-emerald-50 transition-colors"
                     >

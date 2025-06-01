@@ -297,7 +297,6 @@ export default async function MagazineIssuePage({
                           zoomOut: magazine.zoomOut,
                           loading: magazine.loading,
                           error: magazine.error,
-                          search: messages.hardcoded?.searchPDFViewer || "Search",
                           searchResults: messages.hardcoded?.searchResults || "Search Results",
                           thumbnails: messages.hardcoded?.thumbnails || "Thumbnails",
                           fullscreen: messages.hardcoded?.fullscreen || "Fullscreen",
