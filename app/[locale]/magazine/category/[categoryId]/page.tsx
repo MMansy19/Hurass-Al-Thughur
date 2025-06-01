@@ -55,31 +55,31 @@ interface CategoryInfo {
 }
 
 function getCategoryInfo(categoryId: string, magazine: any, locale: string): CategoryInfo | null {
-  const isArabic = locale === 'ar';
+  const messages = require(`@/locales/${locale}.json`);
   
   const categories: Record<string, CategoryInfo> = {
     "1": {
       id: "1",
       name: magazine.categoryNames.aqeedah,
-      description: isArabic ? "مقالات حول العقيدة الإسلامية والتوحيد" : "Articles about Islamic faith and monotheism",
+      description: messages.hardcoded.articlesAboutIslamic,
       icon: "🕌",
     },
     "2": {
       id: "2", 
       name: magazine.categoryNames.fiqh,
-      description: isArabic ? "أحكام فقهية ومسائل شرعية" : "Islamic jurisprudence and religious rulings",
+      description: messages.hardcoded.islamicJurisprudenceRulings,
       icon: "⚖️",
     },
     "3": {
       id: "3",
       name: magazine.categoryNames.prophetBiography,
-      description: isArabic ? "سيرة النبي محمد صلى الله عليه وسلم" : "Biography of Prophet Muhammad (PBUH)",
+      description: messages.hardcoded.biographyOfProphet,
       icon: "📖",
     },
     "4": {
       id: "4",
       name: magazine.categoryNames.islamicHistory,
-      description: isArabic ? "تاريخ الحضارة الإسلامية" : "History of Islamic civilization",
+      description: messages.hardcoded.historyOfIslamic,
       icon: "🏛️",
     }
   };
@@ -88,7 +88,7 @@ function getCategoryInfo(categoryId: string, magazine: any, locale: string): Cat
 }
 
 function getIssuesByCategory(categoryId: string, magazine: any, locale: string): MagazineIssue[] {
-  const isArabic = locale === 'ar';
+  const messages = require(`@/locales/${locale}.json`);
   
   // Mock data filtered by category
   const allIssues: Record<string, MagazineIssue[]> = {
@@ -104,18 +104,18 @@ function getIssuesByCategory(categoryId: string, magazine: any, locale: string):
       },
       {
         id: "4",
-        title: isArabic ? "الأخلاق في الإسلام" : "Ethics in Islam",
-        description: isArabic ? "دليل شامل للأخلاق الإسلامية وتطبيقها في الحياة اليومية" : "A comprehensive guide to Islamic ethics and their application in daily life",
-        date: isArabic ? "ربيع الأول 1445" : "October 2023",
+        title: messages.hardcoded.ethicsInIslam,
+        description: messages.hardcoded.ethicsInIslamDesc,
+        date: messages.hardcoded.islamicMonthsToGregorian.rabiAlAwwal1445,
         category: magazine.categoryNames.aqeedah,
         fileSize: "2.2 MB",
         pageCount: 28
       },
       {
         id: "7",
-        title: isArabic ? "التوحيد والشرك" : "Monotheism and Polytheism",
-        description: isArabic ? "فهم مفهوم التوحيد وأنواع الشرك" : "Understanding the concept of monotheism and types of polytheism",
-        date: isArabic ? "ذو الحجة 1444" : "July 2023",
+        title: messages.hardcoded.monotheismPolytheism,
+        description: messages.hardcoded.monotheismPolytheismDesc,
+        date: messages.hardcoded.hijriMonths.dhuAlHijjah1444,
         category: magazine.categoryNames.aqeedah,
         fileSize: "2.8 MB",
         pageCount: 35
@@ -133,18 +133,18 @@ function getIssuesByCategory(categoryId: string, magazine: any, locale: string):
       },
       {
         id: "5",
-        title: isArabic ? "الزكاة وأحكامها" : "Zakat and its Rulings",
-        description: isArabic ? "دليل مفصل لأحكام الزكاة ومقاديرها" : "A detailed guide to Zakat rulings and amounts",
-        date: isArabic ? "صفر 1445" : "September 2023",
+        title: messages.hardcoded.zakatRulings,
+        description: messages.hardcoded.zakatRulingsDesc,
+        date: messages.hardcoded.islamicMonthsToGregorian.safar1445,
         category: magazine.categoryNames.fiqh,
         fileSize: "1.9 MB",
         pageCount: 24
       },
       {
         id: "8",
-        title: isArabic ? "أحكام الصيام" : "Fasting Rulings",
-        description: isArabic ? "الأحكام الفقهية المتعلقة بالصيام والاعتكاف" : "Jurisprudential rulings related to fasting and seclusion",
-        date: isArabic ? "شعبان 1444" : "March 2023",
+        title: messages.hardcoded.fastingRulings,
+        description: messages.hardcoded.fastingRulingsDesc,
+        date: messages.hardcoded.hijriMonths.shaban1444,
         category: magazine.categoryNames.fiqh,
         fileSize: "2.1 MB",
         pageCount: 30
@@ -162,9 +162,9 @@ function getIssuesByCategory(categoryId: string, magazine: any, locale: string):
       },
       {
         id: "6",
-        title: isArabic ? "الدعاء في الإسلام" : "Prayer in Islam",
-        description: isArabic ? "آداب الدعاء وأوقاته المستجابة" : "Etiquette of prayer and blessed times for supplication",
-        date: isArabic ? "محرم 1445" : "August 2023",
+        title: messages.hardcoded.prayerInIslam,
+        description: messages.hardcoded.prayerInIslamDesc,
+        date: messages.hardcoded.islamicMonthsToGregorian.muharram1445,
         category: magazine.categoryNames.prophetBiography,
         fileSize: "2.7 MB",
         pageCount: 34
@@ -173,9 +173,9 @@ function getIssuesByCategory(categoryId: string, magazine: any, locale: string):
     "4": [ // Islamic History
       {
         id: "9",
-        title: isArabic ? "الخلافة الراشدة" : "The Rightly-Guided Caliphate",
-        description: isArabic ? "تاريخ الخلفاء الراشدين وإنجازاتهم" : "History of the Rightly-Guided Caliphs and their achievements",
-        date: isArabic ? "جمادى الآخرة 1444" : "January 2023",
+        title: messages.hardcoded.rightlyGuidedCaliphate,
+        description: messages.hardcoded.rightlyGuidedCaliphateDesc,
+        date: messages.hardcoded.hijriMonths.jumadaAlAkhirah1444,
         category: magazine.categoryNames.islamicHistory,
         fileSize: "3.5 MB",
         pageCount: 45
@@ -204,11 +204,10 @@ export default async function CategoryPage({
 
   // Get issues for this category
   const categoryIssues = getIssuesByCategory(categoryId, magazine, locale);
-
   // Skip links for accessibility
   const skipLinks = [
-    { href: "#main-content", label: isArabic ? "انتقل إلى المحتوى الرئيسي" : "Skip to main content" },
-    { href: "#issues-grid", label: isArabic ? "انتقل إلى قائمة الإصدارات" : "Skip to issues grid" },
+    { href: "#main-content", label: messages.hardcoded.skipToMainContent },
+    { href: "#issues-grid", label: messages.hardcoded.skipToIssuesGrid },
   ];
 
   return (
@@ -233,29 +232,27 @@ export default async function CategoryPage({
                   {categoryInfo.description}
                 </p>
                 
-                {/* Stats */}
-                <div className="flex justify-center items-center gap-8 text-sm">
+                {/* Stats */}                <div className="flex justify-center items-center gap-8 text-sm">
                   <div className="text-center">
                     <div className="text-2xl font-bold">{categoryIssues.length}</div>
-                    <div className="text-emerald-200">{isArabic ? "إصدار" : "Issues"}</div>
+                    <div className="text-emerald-200">{messages.hardcoded.issues}</div>
                   </div>
                   <div className="text-center">
                     <div className="text-2xl font-bold">
                       {categoryIssues.reduce((total, issue) => total + (issue.pageCount || 0), 0)}
                     </div>
-                    <div className="text-emerald-200">{isArabic ? "صفحة" : "Pages"}</div>
+                    <div className="text-emerald-200">{messages.hardcoded.pages}</div>
                   </div>
                 </div>
                 
-                {/* Breadcrumb */}
-                <nav aria-label={isArabic ? "مسار التنقل" : "Breadcrumb"} className="mt-8 flex justify-center">
+                {/* Breadcrumb */}                <nav aria-label={messages.hardcoded.breadcrumb} className="mt-8 flex justify-center">
                   <ol className="flex items-center space-x-2 rtl:space-x-reverse text-emerald-100">
                     <li>
                       <Link 
                         href={`/${locale}`}
                         className="hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-emerald-600 rounded px-2 py-1"
                       >
-                        {isArabic ? "الرئيسية" : "Home"}
+                        {messages.hardcoded.home}
                       </Link>
                     </li>
                     <li aria-hidden="true">/</li>
@@ -282,15 +279,14 @@ export default async function CategoryPage({
         {categoryIssues.length > 0 ? (
           <Motion preset="fadeInUp" delay={200}>
             <section id="issues-grid" className="py-8">
-              <div className="container mx-auto sm:px-4 px-2">
-                <div className="mb-8">
+              <div className="container mx-auto sm:px-4 px-2">                <div className="mb-8">
                   <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                    {isArabic ? `إصدارات ${categoryInfo.name}` : `${categoryInfo.name} Issues`}
+                    {isArabic ? `${messages.hardcoded.issuesOf} ${categoryInfo.name}` : `${categoryInfo.name} ${messages.hardcoded.issues}`}
                   </h2>
                   <p className="text-gray-600">
                     {isArabic 
-                      ? `${categoryIssues.length} إصدار في هذا التصنيف` 
-                      : `${categoryIssues.length} issues in this category`
+                      ? `${categoryIssues.length} ${messages.hardcoded.issueInThisCategory}` 
+                      : `${categoryIssues.length} ${messages.hardcoded.issuesInThisCategory}`
                     }
                   </p>
                 </div>
@@ -300,7 +296,7 @@ export default async function CategoryPage({
                     <AccessibleGrid
                       columns={3}
                       gap={24}
-                      navigationLabel={`${categoryInfo.name} ${isArabic ? "إصدارات" : "issues"}`}
+                      navigationLabel={`${categoryInfo.name} ${messages.hardcoded.issues}`}
                       locale={locale}
                     >                      {categoryIssues.map((issue, index) => (
                         <Motion key={issue.id} preset="slideInUp" delay={index * 100}>
@@ -336,21 +332,17 @@ export default async function CategoryPage({
             <section className="py-16">
               <div className="container mx-auto sm:px-4 px-2 text-center">
                 <div className="max-w-md mx-auto">
-                  <div className="text-6xl mb-6">📚</div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                    {isArabic ? "لا توجد إصدارات بعد" : "No Issues Yet"}
+                  <div className="text-6xl mb-6">📚</div>                  <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                    {messages.hardcoded.noIssuesYet}
                   </h3>
                   <p className="text-gray-600 mb-8">
-                    {isArabic 
-                      ? "لم يتم نشر أي إصدارات في هذا التصنيف حتى الآن. تحقق مرة أخرى لاحقاً." 
-                      : "No issues have been published in this category yet. Check back later."
-                    }
+                    {messages.hardcoded.noIssuesYetDescription}
                   </p>
                   <Link
                     href={`/${locale}/magazine`}
                     className="inline-flex items-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-700 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
                   >
-                    {isArabic ? "تصفح جميع الإصدارات" : "Browse All Issues"}
+                    {messages.hardcoded.browseAllIssues}
                   </Link>
                 </div>
               </div>
@@ -361,9 +353,8 @@ export default async function CategoryPage({
         {/* Related Categories */}
         <Motion preset="slideInUp" delay={300}>
           <section className="py-12 bg-gray-50 rounded-xl">
-            <div className="container mx-auto sm:px-4 px-2">
-              <h3 className="text-2xl font-bold text-center text-gray-900 mb-8">
-                {isArabic ? "تصنيفات أخرى" : "Other Categories"}
+            <div className="container mx-auto sm:px-4 px-2">              <h3 className="text-2xl font-bold text-center text-gray-900 mb-8">
+                {messages.hardcoded.otherCategories}
               </h3>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">

@@ -238,12 +238,10 @@ export default async function EnhancedMagazinePage({
             <div className="mb-12 flex justify-between items-center">
               <h2 id="latest-issues-heading" className="text-3xl font-bold text-emerald-800">
                 {magazine.latestIssues}
-              </h2>
-
-              <Link
+              </h2>              <Link
                 href={`/${locale}/magazine/all`}
                 className="inline-flex items-center text-emerald-600 hover:text-emerald-800 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 rounded-lg sm:px-4 px-2 py-2 font-semibold hover:bg-emerald-50"
-                aria-label={`${magazine.allIssues} - ${locale === "ar" ? "يفتح في صفحة جديدة" : "Opens in new page"}`}
+                aria-label={`${magazine.allIssues} - ${messages.hardcoded.opensInNewPage}`}
               >
                 {magazine.allIssues}
                 <svg
@@ -347,12 +345,11 @@ export default async function EnhancedMagazinePage({
                 placeholder={messages.newsletter.enterEmail}
                 className="flex-1 sm:px-4 px-2 py-3 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-300"
                 required
-              />
-              <button
+              />              <button
                 type="submit"
                 className="px-6 py-3 bg-white text-emerald-600 rounded-md font-semibold hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:ring-offset-2 focus:ring-offset-emerald-600"
               >
-                {locale === "ar" ? "اشترك" : "Subscribe"}
+                {messages.newsletter.subscribe}
               </button>
             </form>
           </div>
