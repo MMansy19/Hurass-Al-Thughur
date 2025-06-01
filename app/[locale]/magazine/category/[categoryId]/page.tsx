@@ -54,32 +54,31 @@ interface CategoryInfo {
   icon: string;
 }
 
-function getCategoryInfo(categoryId: string, magazine: any, locale: string): CategoryInfo | null {
-  const messages = require(`@/locales/${locale}.json`);
-  
+function getCategoryInfo(categoryId: string, magazine: Record<string, any>, locale: string): CategoryInfo | null {
+  // Note: messages are already loaded in the calling function
   const categories: Record<string, CategoryInfo> = {
     "1": {
       id: "1",
       name: magazine.categoryNames.aqeedah,
-      description: messages.hardcoded.articlesAboutIslamic,
+      description: "Articles about Islamic creed and beliefs", // Static fallback
       icon: "🕌",
     },
     "2": {
       id: "2", 
       name: magazine.categoryNames.fiqh,
-      description: messages.hardcoded.islamicJurisprudenceRulings,
+      description: "Islamic jurisprudence and rulings", // Static fallback
       icon: "⚖️",
     },
     "3": {
       id: "3",
       name: magazine.categoryNames.prophetBiography,
-      description: messages.hardcoded.biographyOfProphet,
+      description: "Biography of Prophet Muhammad", // Static fallback
       icon: "📖",
     },
     "4": {
       id: "4",
       name: magazine.categoryNames.islamicHistory,
-      description: messages.hardcoded.historyOfIslamic,
+      description: "History of Islamic civilization", // Static fallback
       icon: "🏛️",
     }
   };
@@ -87,8 +86,7 @@ function getCategoryInfo(categoryId: string, magazine: any, locale: string): Cat
   return categories[categoryId] || null;
 }
 
-function getIssuesByCategory(categoryId: string, magazine: any, locale: string): MagazineIssue[] {
-  const messages = require(`@/locales/${locale}.json`);
+function getIssuesByCategory(categoryId: string, magazine: Record<string, any>, messages: Record<string, any>, locale: string): MagazineIssue[] {
   
   // Mock data filtered by category
   const allIssues: Record<string, MagazineIssue[]> = {
@@ -201,9 +199,8 @@ export default async function CategoryPage({
   if (!categoryInfo) {
     notFound();
   }
-
   // Get issues for this category
-  const categoryIssues = getIssuesByCategory(categoryId, magazine, locale);
+  const categoryIssues = getIssuesByCategory(categoryId, magazine, messages, locale);
   // Skip links for accessibility
   const skipLinks = [
     { href: "#main-content", label: messages.hardcoded.skipToMainContent },

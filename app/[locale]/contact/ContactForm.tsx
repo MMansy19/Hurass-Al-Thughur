@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 interface ContactFormProps {
-  messages: any;
+  messages: Record<string, any>;
 }
 
 export default function ContactForm({ messages }: ContactFormProps) {

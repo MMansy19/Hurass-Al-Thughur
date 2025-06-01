@@ -43,7 +43,7 @@ interface Article {
   tags: string[];
 }
 
-function getArticleInfo(articleId: string, dawah: any, locale: string): Article | null {
+function getArticleInfo(articleId: string, dawah: Record<string, any>, locale: string): Article | null {
   const isArabic = locale === 'ar';
   
   const articles: Record<string, Article> = {

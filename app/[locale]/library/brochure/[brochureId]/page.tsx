@@ -33,7 +33,7 @@ export async function generateMetadata({
   };
 }
 
-function getBrochureTitle(brochureId: string, messages: any): string {
+function getBrochureTitle(brochureId: string, messages: Record<string, any>): string {
   const isArabic = messages.common.language === 'العربية';
   
   // Mock brochure data (in real app, this would be from database/API)

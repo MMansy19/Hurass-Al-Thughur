@@ -53,7 +53,7 @@ interface MagazineIssue {
   tags?: string[];
 }
 
-function getMagazineIssue(id: string, magazine: any, locale: string): MagazineIssue | null {
+function getMagazineIssue(id: string, magazine: Record<string, any>, locale: string): MagazineIssue | null {
   const isArabic = locale === 'ar';
   
   // Mock data - in a real app, this would come from a database
