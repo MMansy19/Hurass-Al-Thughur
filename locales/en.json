@@ -199,6 +199,7 @@
   "articles": {
     "articles": "Articles",
     "articlesSectionDescription": "Various articles on important topics.",
+    "articleLang": "Article Language",
     "viewArticle": "View Article",
     "addArticle": "Add an Article",
     "author": "Author",

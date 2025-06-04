@@ -208,6 +208,7 @@
   "articles": {
     "articles": "المقالات",
     "articlesSectionDescription": "مقالات متنوعة حول موضوعات هامة.",
+    "articleLang": "لغة المقال",
     "viewArticle": "عرض المقال",
     "addArticle": "إضافة مقال",
     "author": "المؤلف",
