@@ -1,4 +1,4 @@
-import AddArticleForm from './AddArticleForm';
+import ArticleForm from '../(action)/ArticleForm';
 
 async function AddArticle({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -14,7 +14,7 @@ async function AddArticle({ params }: { params: Promise<{ locale: string }> }) {
 
       <section>
         <div className="container mx-auto sm:px-4 px-2">
-          <AddArticleForm messages={messages} />
+          <ArticleForm method="add" messages={messages} />
         </div>
       </section>
     </div>
