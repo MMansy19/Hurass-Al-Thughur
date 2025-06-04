@@ -40,8 +40,8 @@ async function Article({ params }: { params: Promise<ArticlePageParamsInterface>
             </div>
 
             {/* Title and Excerpt */}
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">{article.title[locale]}</h1>
-            <p className="text-xl text-emerald-100 leading-relaxed">{article.excerpt[locale]}</p>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">{article.title}</h1>
+            <p className="text-xl text-emerald-100 leading-relaxed">{article.excerpt}</p>
           </div>
         </div>
       </section>
@@ -49,7 +49,7 @@ async function Article({ params }: { params: Promise<ArticlePageParamsInterface>
       {/* Article Content */}
       <section id="article" className="py-12">
         <div className="container mx-auto sm:px-4 px-2">
-          <div className="max-w-4xl mx-auto" dangerouslySetInnerHTML={{ __html: article.content[locale] }}></div>
+          <div className="max-w-4xl mx-auto" dangerouslySetInnerHTML={{ __html: article.content }}></div>
         </div>
       </section>
     </>
