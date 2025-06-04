@@ -1,131 +1,23 @@
-'use client';
+import AddArticleForm from './AddArticleForm';
 
-import { supabase } from '@/supabase/initializing';
-import { useParams } from 'next/navigation';
-import { useState } from 'react';
-import Editor from 'react-simple-wysiwyg';
-
-function AddArticle() {
-  const params = useParams();
-  const { locale }: { locale?: string } = params;
-
-  if (locale !== 'ar' && locale !== 'en') {
-    return <h1>Error Page.</h1>;
-  }
-
-  const [formData, setFormData] = useState({
-    author: '',
-    title: {
-      ar: '',
-      en: '',
-    },
-    excerpt: {
-      ar: '',
-      en: '',
-    },
-    content: {
-      ar: '',
-      en: '',
-    },
-  });
-
-  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    const { name, value } = e.target;
-
-    if (name === 'author') {
-      setFormData((prev) => ({
-        ...prev,
-        author: value,
-      }));
-    } else if (name === 'title' || name === 'excerpt') {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: {
-          ...prev[name],
-          ar: value,
-        },
-      }));
-    }
-  }
-
-  function handleEditorChange(e: { target: { value: string } }) {
-    const { value } = e.target;
-
-    setFormData((prev) => ({
-      ...prev,
-      content: {
-        ...prev.content,
-        ar: value,
-      },
-    }));
-  }
-
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
-    const { data, error } = await supabase.from('articles').insert([formData]).select();
-    if (error) {
-      console.error('Error inserting article:', error);
-      alert('Failed!');
-    }
-
-    if (data) {
-      alert('Article added successfully!');
-      setFormData({
-        author: '',
-        title: {
-          ar: '',
-          en: '',
-        },
-        excerpt: {
-          ar: '',
-          en: '',
-        },
-        content: {
-          ar: '',
-          en: '',
-        },
-      });
-    }
-  }
+async function AddArticle({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const messages = (await import(`@/locales/${locale}.json`)).default;
 
   return (
-    <main>
-      <h1 className="text-4xl text-emerald-700 font-bold text-center">إضافة مقال</h1>
-
-      <form onSubmit={handleSubmit} className="max-w-4xl mx-auto mt-8 flex flex-col gap-4">
-        <div className="flex flex-col gap-1">
-          <label htmlFor="author" className="font-semibold text-emerald-700">
-            الكاتب
-          </label>
-          <input id="author" name="author" type="text" value={formData.author} onChange={handleChange} placeholder="اسم الكاتب" className="w-full px-4 py-2 border-2 rounded-md focus:outline-none focus:border-emerald-700" />
+    <div className="space-y-12">
+      <section className="bg-emerald-700 text-white py-10 rounded-lg">
+        <div className="container mx-auto sm:px-4 px-2 text-center">
+          <h1 className="text-3xl md:text-4xl font-bold">{messages.articles.addArticle}</h1>
         </div>
+      </section>
 
-        <div className="flex flex-col gap-1">
-          <label htmlFor="title" className="font-semibold text-emerald-700">
-            العنوان
-          </label>
-          <input id="title" name="title" type="text" value={formData.title[locale]} onChange={handleChange} placeholder="عنوان المقال" className="w-full px-4 py-2 border-2 rounded-md focus:outline-none focus:border-emerald-700" />
+      <section>
+        <div className="container mx-auto sm:px-4 px-2">
+          <AddArticleForm messages={messages} />
         </div>
-
-        <div className="flex flex-col gap-1">
-          <label htmlFor="excerpt" className="font-semibold text-emerald-700">
-            نبذة عن المقال
-          </label>
-          <input id="excerpt" name="excerpt" type="text" value={formData.excerpt[locale]} onChange={handleChange} placeholder="نبذة عن المقال" className="w-full px-4 py-2 border-2 rounded-md focus:outline-none focus:border-emerald-700" />
-        </div>
-
-        <div className="flex flex-col gap-1">
-          <label htmlFor="content" className="font-semibold text-emerald-700">
-            المحتوى
-          </label>
-
-          <Editor id="content" name="content" value={formData.content[locale]} onChange={handleEditorChange} className=" h-fit" />
-        </div>
-
-        <button className="bg-emerald-700 text-white py-3 font-semibold rounded-md">إرسال</button>
-      </form>
-    </main>
+      </section>
+    </div>
   );
 }
 export default AddArticle;
