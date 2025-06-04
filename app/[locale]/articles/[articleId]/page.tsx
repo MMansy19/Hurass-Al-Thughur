@@ -48,7 +48,7 @@ async function Article({ params }: { params: Promise<ArticlePageParamsInterface>
       {/* Article Content */}
       <section className="py-12">
         <div className="container mx-auto sm:px-4 px-2">
-          <div className="max-w-4xl mx-auto">{article.content[locale]}</div>
+          <div className="max-w-4xl mx-auto" dangerouslySetInnerHTML={{ __html: article.content[locale] }}></div>
         </div>
       </section>
     </>
