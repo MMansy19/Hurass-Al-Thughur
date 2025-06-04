@@ -1,10 +1,12 @@
-{  "common": {
+{
+  "common": {
     "language": "English",
     "switchLanguage": "العربية",
     "home": "Home",
     "magazine": "Magazine",
     "dawah": "Dawah",
     "library": "Library",
+    "articles": "Articles",
     "contact": "Contact",
     "readMore": "Read More",
     "view": "View",
@@ -31,7 +33,7 @@
     "magazineDescription": "Browse magazine issues and PDF files with high quality",
     "dawahDescription": "Introductory materials about Islam for non-Muslims",
     "libraryDescription": "Comprehensive library of images and brochures"
-  },  
+  },
   "magazine": {
     "title": "Hurass Magazine",
     "description": "Browse magazine issues and PDF files with high quality",
@@ -57,24 +59,24 @@
     "facing": "Facing Pages",
     "issues": {
       "issue1": {
-      "title": "Not Quranists: Instinct and Covenant",
-      "description": "An exploration of the concept of instinct, the covenant, and the restricted meaning of worship in Islamic thought.",
-      "date": "2025"
+        "title": "Not Quranists: Instinct and Covenant",
+        "description": "An exploration of the concept of instinct, the covenant, and the restricted meaning of worship in Islamic thought.",
+        "date": "2025"
       },
       "issue2": {
-      "title": "Tawhid Al-Uluhiyyah and Linguistic Weakness", 
-      "description": "A study on the doctrine of Tawhid Al-Uluhiyyah and the impact of linguistic weakness on denying what is not rightfully denied.",
-      "date": "2025"
+        "title": "Tawhid Al-Uluhiyyah and Linguistic Weakness",
+        "description": "A study on the doctrine of Tawhid Al-Uluhiyyah and the impact of linguistic weakness on denying what is not rightfully denied.",
+        "date": "2025"
       },
       "issue3": {
-      "title": "Proofs of Prophethood and Orientalist Narratives",
-      "description": "An analysis of the proofs of prophethood, addressing orientalist narratives and doubts, including the Battle of Zallaqa.", 
-      "date": "2025"
+        "title": "Proofs of Prophethood and Orientalist Narratives",
+        "description": "An analysis of the proofs of prophethood, addressing orientalist narratives and doubts, including the Battle of Zallaqa.",
+        "date": "2025"
       }
     },
     "categoryNames": {
       "aqeedah": "Aqeedah",
-      "fiqh": "Fiqh", 
+      "fiqh": "Fiqh",
       "prophetBiography": "Prophetic Biography",
       "islamicHistory": "Islamic History"
     }
@@ -169,7 +171,8 @@
       "howToPray": "How to Pray",
       "supplications": "Supplications from Quran and Sunnah"
     }
-  },  "contact": {
+  },
+  "contact": {
     "title": "Contact Us",
     "description": "We'd love to hear from you. Send us a message or contact us directly.",
     "name": "Name",
@@ -192,7 +195,8 @@
     "formTitle": "Contact Form",
     "thankYou": "Thank you for your message! We will get back to you soon.",
     "sendAnother": "Send another message"
-  },  "footer": {
+  },
+  "footer": {
     "rightsReserved": "© 2025 Hurass Al-Thughur. All rights reserved.",
     "terms": "Terms and Conditions",
     "privacy": "Privacy Policy",
@@ -206,7 +210,8 @@
     "logoDescription": "Islamic outreach platform seeking to spread accurate knowledge about Islam",
     "madeWith": "Made with",
     "by": "by"
-  },  "notFound": {
+  },
+  "notFound": {
     "title": "PDF Not Found",
     "message": "The PDF file you're looking for doesn't exist or has been moved.",
     "backToLibrary": "Back to Library",
@@ -217,7 +222,8 @@
     "pageNotAvailable": "Page Not Available",
     "selectPDF": "Please select a PDF file to view from the library page.",
     "goToHome": "Go to Home Page"
-  },  "errors": {
+  },
+  "errors": {
     "pdfNotFound": "PDF file not found",
     "loadingError": "Error loading content",
     "networkError": "Network connection error"
@@ -239,7 +245,7 @@
     "readMore": "Read more →",
     "difficulty": {
       "beginner": "Beginner",
-      "intermediate": "Intermediate", 
+      "intermediate": "Intermediate",
       "advanced": "Advanced"
     },
     "difficultyArabic": {
@@ -265,7 +271,8 @@
     "breadcrumbDawah": "Dawah",
     "breadcrumbLibrary": "Library",
     "breadcrumbMagazine": "Magazine"
-  },  "newsletter": {
+  },
+  "newsletter": {
     "subscribeTitle": "Subscribe to Newsletter",
     "subscribeDescription": "Get the latest issues and featured articles in your email",
     "subscribe": "Subscribe",
@@ -308,8 +315,9 @@
     "exploreSections": "Explore different sections of the magazine and browse content by your interests",
     "browse": "Browse",
     "issuesInCategory": "issues in this category",
-    "issueWord": "Issues",    "pageWord": "Pages",
-    "issues": "Issues", 
+    "issueWord": "Issues",
+    "pageWord": "Pages",
+    "issues": "Issues",
     "pages": "Pages",
     "issuesOf": "Issues of",
     "issueInThisCategory": "issue in this category",
