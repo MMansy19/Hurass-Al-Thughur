@@ -8,13 +8,13 @@ import Editor from 'react-simple-wysiwyg';
 
 interface AddArticleFormProps {
   method: 'add' | 'edit';
-  initialData?: ArticleInterface;
+  initialData?: ArticleInterface | null;
   messages: Record<string, any>;
 }
 
 function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
   const params = useParams();
-  const { locale, id }: { locale?: string; id?: string } = params;
+  const { locale, articleId }: { locale?: string; articleId?: string } = params;
 
   const [formData, setFormData] = useState(
     initialData || {
@@ -58,9 +58,13 @@ function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
 
     try {
       if (method === 'add') {
-        const { data, error } = await supabase.from('articles').insert([formData]).select();
+        const { error } = await supabase.from('articles').insert([formData]).select();
 
-        if (data) {
+        if (error) {
+          console.error('Error inserting article:', error);
+          alert('Failed!');
+          return;
+        } else {
           alert('Article added successfully!');
 
           setFormData({
@@ -71,29 +75,15 @@ function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
             content: '',
           });
         }
-        if (error) {
-          console.error('Error inserting article:', error);
-          alert('Failed!');
-          return;
-        }
       } else if (method === 'edit') {
-        const { data, error } = await supabase.from('articles').update(formData).eq('id', id);
+        const { error } = await supabase.from('articles').update(formData).eq('id', articleId);
 
-        if (data) {
-          alert('Article Edited successfully!');
-
-          setFormData({
-            lang: locale || 'ar',
-            author: '',
-            title: '',
-            excerpt: '',
-            content: '',
-          });
-        }
         if (error) {
           console.error('Error Editing article:', error);
           alert('Failed!');
           return;
+        } else {
+          alert('Article Edited successfully!');
         }
       }
     } catch (error) {
