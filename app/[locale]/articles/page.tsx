@@ -20,8 +20,6 @@ async function Articles({ params }: { params: Promise<{ locale: string }> }) {
     return <h1>Error in Fetching</h1>;
   }
 
-  console.log(articles, error);
-
   return (
     <>
       <div className="bg-gradient-to-r from-emerald-700 to-emerald-900 text-white py-10 rounded-lg shadow-lg">
@@ -38,11 +36,11 @@ async function Articles({ params }: { params: Promise<{ locale: string }> }) {
               <div className="p-4 flex flex-col h-full">
                 <div className="flex items-center mb-3">
                   <h3 className="font-medium text-lg" dir="auto">
-                    {article.title[locale]}
+                    {article.title}
                   </h3>
                 </div>
                 <p className="text-gray-600 text-sm mb-3 flex-grow" dir="auto">
-                  {article.excerpt[locale]}
+                  {article.excerpt}
                 </p>
                 <div className="mt-auto pt-4">
                   <Link href={`/${locale}/articles/${article.id}`} className="block w-full sm:px-4 px-2 py-2 text-center bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors">
