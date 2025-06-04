@@ -1,4 +1,4 @@
-import ArticleForm from '../(action)/ArticleForm';
+import ArticleForm from '../ArticleForm';
 
 async function AddArticle({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
