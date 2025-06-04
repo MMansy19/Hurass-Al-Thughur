@@ -11,3 +11,8 @@ export interface MultiLanguageText {
   ar: string;
   en: string;
 }
+
+export interface ArticlePageParamsInterface {
+  articleId: string;
+  locale: string;
+}

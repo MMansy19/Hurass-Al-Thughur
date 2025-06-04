@@ -1,9 +1,14 @@
 import { supabase } from '@/supabase/initializing';
-import { ArticleInterface } from '@/types/articles';
+import { ArticleInterface, ArticlePageParamsInterface } from '@/types/articles';
 
-async function Article({ params }: { params: Promise<{ articleId: string }> }) {
-  const { articleId } = await params;
+async function Article({ params }: { params: Promise<ArticlePageParamsInterface> }) {
+  const { locale, articleId } = await params;
 
+  if (locale !== 'ar' && locale !== 'en') {
+    return <h1>Page Error</h1>;
+  }
+
+  // Getting Article from Supabase
   let { data: article }: { data: ArticleInterface | null } = await supabase.from('articles').select('*').eq('id', articleId).single();
 
   if (!article) {
@@ -34,8 +39,8 @@ async function Article({ params }: { params: Promise<{ articleId: string }> }) {
             </div>
 
             {/* Title and Excerpt */}
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">{article.title.ar}</h1>
-            <p className="text-xl text-emerald-100 leading-relaxed">{article.excerpt.ar}</p>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">{article.title[locale]}</h1>
+            <p className="text-xl text-emerald-100 leading-relaxed">{article.excerpt[locale]}</p>
           </div>
         </div>
       </section>
@@ -43,7 +48,7 @@ async function Article({ params }: { params: Promise<{ articleId: string }> }) {
       {/* Article Content */}
       <section className="py-12">
         <div className="container mx-auto sm:px-4 px-2">
-          <div className="max-w-4xl mx-auto">{article.content.ar}</div>
+          <div className="max-w-4xl mx-auto">{article.content[locale]}</div>
         </div>
       </section>
     </>
