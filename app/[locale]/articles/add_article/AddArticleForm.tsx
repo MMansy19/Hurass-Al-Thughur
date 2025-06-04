@@ -46,6 +46,11 @@ function AddArticleForm({ messages }: AddArticleFormProps) {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
+    if (!formData.author || !formData.title || !formData.excerpt || !formData.content) {
+      alert('Please fill in all fields.');
+      return;
+    }
+
     const { data, error } = await supabase.from('articles').insert([formData]).select();
     if (error) {
       console.error('Error inserting article:', error);
