@@ -9,7 +9,8 @@ async function Articles({ params }: { params: Promise<{ locale: string }> }) {
   // Translations
   const messages = (await import(`@/locales/${locale}.json`)).default;
 
-  let { data: articles, error }: { data: ArticleInterface[] | null; error: PostgrestError | null } = await supabase.from('articles').select('*');
+  // Getting articles depending on Website language
+  let { data: articles, error }: { data: ArticleInterface[] | null; error: PostgrestError | null } = await supabase.from('articles').select('*').eq('lang', locale).order('created_at', { ascending: false });
 
   if (locale !== 'ar' && locale !== 'en') {
     return <h1>Error in Locale!</h1>;
