@@ -1,8 +1,12 @@
 'use client';
 
+import { useParams } from 'next/navigation';
 import Editor from 'react-simple-wysiwyg';
 
 function AddArticle() {
+  const params = useParams();
+  const { locale } = params;
+
   return (
     <main>
       <h1 className="text-4xl text-emerald-700 font-bold text-center">إضافة مقال</h1>
