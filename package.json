@@ -19,6 +19,7 @@
     "@fontsource/roboto": "^5.2.5",
     "@next/bundle-analyzer": "^15.3.3",
     "@supabase/supabase-js": "^2.49.9",
+    "dayjs": "^1.11.13",
     "next": "15.3.2",
     "next-intl": "^4.1.0",
     "next-pwa": "^5.6.0",
