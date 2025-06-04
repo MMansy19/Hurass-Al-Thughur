@@ -6,6 +6,9 @@ import Link from 'next/link';
 async function Articles({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
 
+  // Translations
+  const messages = (await import(`@/locales/${locale}.json`)).default;
+
   let { data: articles, error }: { data: ArticleInterface[] | null; error: PostgrestError | null } = await supabase.from('articles').select('*');
 
   if (locale !== 'ar' && locale !== 'en') {
@@ -22,8 +25,8 @@ async function Articles({ params }: { params: Promise<{ locale: string }> }) {
     <>
       <div className="bg-gradient-to-r from-emerald-700 to-emerald-900 text-white py-10 rounded-lg shadow-lg">
         <div className="container mx-auto sm:px-4 px-2 text-center">
-          <h1 className="text-3xl md:text-4xl font-bold">المقالات</h1>
-          <p className="text-xl mt-2 max-w-2xl mx-auto">مقالات متنوعة حول موضوعات هامة.</p>
+          <h1 className="text-3xl md:text-4xl font-bold">{messages.articles.articles}</h1>
+          <p className="text-xl mt-2 max-w-2xl mx-auto">{messages.articles.articlesSectionDescription}</p>
         </div>
       </div>
 
@@ -42,7 +45,7 @@ async function Articles({ params }: { params: Promise<{ locale: string }> }) {
                 </p>
                 <div className="mt-auto pt-4">
                   <Link href={`/${locale}/articles/${article.id}`} className="block w-full sm:px-4 px-2 py-2 text-center bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors">
-                    عرض المقال
+                    {messages.articles.viewArticle}
                   </Link>
                 </div>
               </div>

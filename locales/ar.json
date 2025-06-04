@@ -206,6 +206,9 @@
     "sendAnother": "إرسال رسالة أخرى"
   },
   "articles": {
+    "articles": "المقالات",
+    "articlesSectionDescription": "مقالات متنوعة حول موضوعات هامة.",
+    "viewArticle": "عرض المقال",
     "addArticle": "إضافة مقال",
     "author": "المؤلف",
     "title": "العنوان",

@@ -197,6 +197,9 @@
     "sendAnother": "Send another message"
   },
   "articles": {
+    "articles": "Articles",
+    "articlesSectionDescription": "Various articles on important topics.",
+    "viewArticle": "View Article",
     "addArticle": "Add an Article",
     "author": "Author",
     "title": "Title",
