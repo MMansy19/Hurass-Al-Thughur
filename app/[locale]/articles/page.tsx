@@ -42,9 +42,12 @@ async function Articles({ params }: { params: Promise<{ locale: string }> }) {
                 <p className="text-gray-600 text-sm mb-3 flex-grow" dir="auto">
                   {article.excerpt}
                 </p>
-                <div className="mt-auto pt-4">
+                <div className="mt-auto pt-4 flex items-center gap-4">
                   <Link href={`/${locale}/articles/${article.id}`} className="block w-full sm:px-4 px-2 py-2 text-center bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors">
                     {messages.articles.viewArticle}
+                  </Link>
+                  <Link href={`/${locale}/articles/edit/${article.id}`} className="block w-full sm:px-4 px-2 py-2 text-center bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors">
+                    {messages.articles.editArticle}
                   </Link>
                 </div>
               </div>
