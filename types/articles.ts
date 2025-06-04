@@ -1,10 +1,11 @@
 export interface ArticleInterface {
   id: number;
   created_at: string;
+  lang: 'ar' | 'en';
   author: string;
-  title: MultiLanguageText;
-  excerpt: MultiLanguageText;
-  content: MultiLanguageText;
+  title: string;
+  excerpt: string;
+  content: string;
 }
 
 export interface MultiLanguageText {
