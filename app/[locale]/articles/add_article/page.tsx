@@ -9,10 +9,6 @@ function AddArticle() {
   const params = useParams();
   const { locale }: { locale?: string } = params;
 
-  if (locale !== 'ar' && locale !== 'en') {
-    return <h1>Error Page.</h1>;
-  }
-
   const [formData, setFormData] = useState({
     author: '',
     title: {
@@ -28,6 +24,10 @@ function AddArticle() {
       en: '',
     },
   });
+
+  if (locale !== 'ar' && locale !== 'en') {
+    return <h1>Error Page.</h1>;
+  }
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     const { name, value } = e.target;
