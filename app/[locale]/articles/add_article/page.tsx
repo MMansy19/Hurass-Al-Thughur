@@ -1,5 +1,6 @@
 'use client';
 
+import { supabase } from '@/supabase/initializing';
 import { useParams } from 'next/navigation';
 import { useState } from 'react';
 import Editor from 'react-simple-wysiwyg';
@@ -59,8 +60,33 @@ function AddArticle() {
     }));
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    const { data, error } = await supabase.from('articles').insert([formData]).select();
+    if (error) {
+      console.error('Error inserting article:', error);
+      alert('Failed!');
+    }
+
+    if (data) {
+      alert('Article added successfully!');
+      setFormData({
+        author: '',
+        title: {
+          ar: '',
+          en: '',
+        },
+        excerpt: {
+          ar: '',
+          en: '',
+        },
+        content: {
+          ar: '',
+          en: '',
+        },
+      });
+    }
   }
 
   return (
@@ -84,7 +110,7 @@ function AddArticle() {
 
         <div className="flex flex-col gap-1">
           <label htmlFor="excerpt" className="font-semibold text-emerald-700">
-            <Editor id="content" name="content" value={formData.content[locale]} onChange={handleEditorChange} className="h-60" />
+            نبذة عن المقال
           </label>
           <input id="excerpt" name="excerpt" type="text" value={formData.excerpt[locale]} onChange={handleChange} placeholder="نبذة عن المقال" className="w-full px-4 py-2 border-2 rounded-md focus:outline-none focus:border-emerald-700" />
         </div>
@@ -94,7 +120,7 @@ function AddArticle() {
             المحتوى
           </label>
 
-          <Editor id="content" name="content" value={formData.content[locale]} onChange={handleEditorChange} className="h-60" />
+          <Editor id="content" name="content" value={formData.content[locale]} onChange={handleEditorChange} className=" h-fit" />
         </div>
 
         <button className="bg-emerald-700 text-white py-3 font-semibold rounded-md">إرسال</button>
