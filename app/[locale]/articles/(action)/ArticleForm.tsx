@@ -58,19 +58,44 @@ function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
 
     try {
       if (method === 'add') {
-        await supabase.from('articles').insert([formData]).select();
-      } else if (method === 'edit') {
-        await supabase.from('articles').update(formData).eq('id', id);
-      }
+        const { data, error } = await supabase.from('articles').insert([formData]).select();
 
-      alert('Article added successfully!');
-      setFormData({
-        lang: locale || 'ar',
-        author: '',
-        title: '',
-        excerpt: '',
-        content: '',
-      });
+        if (data) {
+          alert('Article added successfully!');
+
+          setFormData({
+            lang: locale || 'ar',
+            author: '',
+            title: '',
+            excerpt: '',
+            content: '',
+          });
+        }
+        if (error) {
+          console.error('Error inserting article:', error);
+          alert('Failed!');
+          return;
+        }
+      } else if (method === 'edit') {
+        const { data, error } = await supabase.from('articles').update(formData).eq('id', id);
+
+        if (data) {
+          alert('Article Edited successfully!');
+
+          setFormData({
+            lang: locale || 'ar',
+            author: '',
+            title: '',
+            excerpt: '',
+            content: '',
+          });
+        }
+        if (error) {
+          console.error('Error Editing article:', error);
+          alert('Failed!');
+          return;
+        }
+      }
     } catch (error) {
       console.error('Error inserting article:', error);
       alert('Failed!');
