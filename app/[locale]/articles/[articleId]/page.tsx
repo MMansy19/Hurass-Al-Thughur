@@ -1,6 +1,7 @@
 import '@/styles/articles.css';
 import { supabase } from '@/supabase/initializing';
 import { ArticleInterface, ArticlePageParamsInterface } from '@/types/articles';
+import dayjs from 'dayjs';
 
 async function Article({ params }: { params: Promise<ArticlePageParamsInterface> }) {
   const { locale, articleId } = await params;
@@ -34,14 +35,15 @@ async function Article({ params }: { params: Promise<ArticlePageParamsInterface>
                   <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
                   </svg>
-                  {article.created_at}
+
+                  {dayjs(article.created_at).format('DD - MM - YYYY')}
                 </span>
               </div>
             </div>
 
             {/* Title and Excerpt */}
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">{article.title[locale]}</h1>
-            <p className="text-xl text-emerald-100 leading-relaxed">{article.excerpt[locale]}</p>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">{article.title}</h1>
+            <p className="text-xl text-emerald-100 leading-relaxed">{article.excerpt}</p>
           </div>
         </div>
       </section>
@@ -49,7 +51,7 @@ async function Article({ params }: { params: Promise<ArticlePageParamsInterface>
       {/* Article Content */}
       <section id="article" className="py-12">
         <div className="container mx-auto sm:px-4 px-2">
-          <div className="max-w-4xl mx-auto" dangerouslySetInnerHTML={{ __html: article.content[locale] }}></div>
+          <div className="max-w-4xl mx-auto" dangerouslySetInnerHTML={{ __html: article.content }}></div>
         </div>
       </section>
     </>

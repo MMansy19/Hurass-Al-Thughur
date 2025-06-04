@@ -20,7 +20,8 @@
     "madeWith": "Made with",
     "by": "by",
     "goToLibrary": "Go to Library",
-    "siteName": "Hurass Al-Thughur"
+    "siteName": "Hurass Al-Thughur",
+    "send": "Send"
   },
   "home": {
     "title": "Hurass Home",
@@ -195,6 +196,18 @@
     "formTitle": "Contact Form",
     "thankYou": "Thank you for your message! We will get back to you soon.",
     "sendAnother": "Send another message"
+  },
+  "articles": {
+    "articles": "Articles",
+    "articlesSectionDescription": "Various articles on important topics.",
+    "articleLang": "Article Language",
+    "viewArticle": "View Article",
+    "addArticle": "Add an Article",
+    "editArticle": "Edit an Article",
+    "author": "Author",
+    "title": "Title",
+    "excerpt": "Excerpt",
+    "content": "Content"
   },
   "footer": {
     "rightsReserved": "© 2025 Hurass Al-Thughur. All rights reserved.",

@@ -20,7 +20,8 @@
     "madeWith": "صُنع بكل حب",
     "by": "بواسطة",
     "goToLibrary": "الذهاب إلى المكتبة",
-    "siteName": "حُراس الثغور"
+    "siteName": "حُراس الثغور",
+    "send": "إرسال"
   },
   "home": {
     "title": "حُراس الثغور - الرئيسية",
@@ -204,6 +205,18 @@
     "formTitle": "نموذج الاتصال",
     "thankYou": "شكراً لك على رسالتك! سنعود إليك قريباً.",
     "sendAnother": "إرسال رسالة أخرى"
+  },
+  "articles": {
+    "articles": "المقالات",
+    "articlesSectionDescription": "مقالات متنوعة حول موضوعات هامة.",
+    "articleLang": "لغة المقال",
+    "viewArticle": "عرض المقال",
+    "addArticle": "إضافة مقال",
+    "editArticle": "تعديل المقال",
+    "author": "المؤلف",
+    "title": "العنوان",
+    "excerpt": "نبذة",
+    "content": "المحتوى"
   },
   "footer": {
     "rightsReserved": "© 2025 حُراس الثغور. جميع الحقوق محفوظة.",
