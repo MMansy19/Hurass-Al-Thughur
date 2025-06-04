@@ -102,10 +102,10 @@ function AddArticleForm({ messages }: AddArticleFormProps) {
           {messages.articles.content}
         </label>
 
-        <Editor id="content" name="content" value={formData.content} onChange={handleEditorChange} className=" h-fit" />
+        <Editor id="content" name="content" value={formData.content} onChange={handleEditorChange} className="min-h-40 h-fit" />
       </div>
 
-      <button className="bg-emerald-700 text-white py-3 font-semibold rounded-md">إرسال</button>
+      <button className="bg-emerald-700 text-white py-3 font-semibold rounded-md">{messages.common.send}</button>
     </form>
   );
 }
