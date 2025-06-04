@@ -1,3 +1,4 @@
+import '@/styles/articles.css';
 import { supabase } from '@/supabase/initializing';
 import { ArticleInterface, ArticlePageParamsInterface } from '@/types/articles';
 
@@ -46,7 +47,7 @@ async function Article({ params }: { params: Promise<ArticlePageParamsInterface>
       </section>
 
       {/* Article Content */}
-      <section className="py-12">
+      <section id="article" className="py-12">
         <div className="container mx-auto sm:px-4 px-2">
           <div className="max-w-4xl mx-auto" dangerouslySetInnerHTML={{ __html: article.content[locale] }}></div>
         </div>
