@@ -1,10 +1,13 @@
 import SigninForm from './SigninForm';
 
-function SignIn() {
+async function SignIn({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const messages = (await import(`@/locales/${locale}.json`)).default;
+
   return (
-    <section>
-      <h1 className="text-center text-4xl font-bold text-emerald-700">تسجيل الدخول</h1>
-      <SigninForm />
+    <section className="py-10">
+      <h1 className="text-center text-4xl font-bold text-emerald-700">{messages.auth.signin}</h1>
+      <SigninForm messages={messages} />
     </section>
   );
 }

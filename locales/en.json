@@ -23,6 +23,18 @@
     "siteName": "Hurass Al-Thughur",
     "send": "Send"
   },
+  "auth": {
+    "signin": "Sign In",
+    "signout": "Sign Out",
+    "signup": "Sign Up",
+    "password": "Password",
+    "email": "Email",
+    "signinSuccess": "Login successful!",
+    "signoutSuccess": "Logout successful!",
+    "signupSuccess": "Registration successful! Please check your email to verify your account.",
+    "signinError": "Invalid username or password.",
+    "signupError": "Registration failed. Please try again."
+  },
   "home": {
     "title": "Hurass Home",
     "description": "Hurass Al-Thughur Platform for Islamic Outreach",
