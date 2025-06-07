@@ -1,5 +1,6 @@
 'use client';
 
+import { supabase } from '@/supabase/initializing';
 import { useState } from 'react';
 
 function SignIn() {
@@ -17,8 +18,21 @@ function SignIn() {
     }));
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: formData.email,
+      password: formData.password,
+    });
+
+    if (data.user) {
+      alert('تم تسجيل الدخول بنجاح!');
+    }
+
+    if (error) {
+      alert(`فشل تسجيل الدخول: ${error.message}`);
+    }
   }
 
   return (
