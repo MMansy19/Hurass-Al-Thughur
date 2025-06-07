@@ -30,14 +30,14 @@ function SignIn() {
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">
             البريد الإلكتروني
           </label>
-          <input id="author" name="email" type="email" value={formData.email} onChange={handleChange} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" />
+          <input id="author" name="email" type="email" required value={formData.email} onChange={handleChange} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" />
         </div>
 
         <div className="flex flex-col gap-1">
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="password" className="block text-sm font-medium text-gray-700">
             كلمة المرور
           </label>
-          <input id="author" name="email" type="email" value={formData.password} onChange={handleChange} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" />
+          <input id="password" name="password" type="password" required value={formData.password} onChange={handleChange} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" />
         </div>
 
         <button className="bg-emerald-700 text-white py-3 font-semibold rounded-md">تسجيل الدخول</button>
