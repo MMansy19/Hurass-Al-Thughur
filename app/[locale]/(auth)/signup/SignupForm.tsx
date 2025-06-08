@@ -1,6 +1,7 @@
 'use client';
 
 import { supabase } from '@/supabase/initializing';
+import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 function SignupForm({ messages }: { messages: Record<string, any> }) {
@@ -9,6 +10,13 @@ function SignupForm({ messages }: { messages: Record<string, any> }) {
     email: '',
     password: '',
   });
+
+  // Getting the locale from the URL parameters
+  const params = useParams<{ locale: string }>();
+  const { locale } = params;
+
+  // Using the Next.js router to navigate
+  const router = useRouter();
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
@@ -34,6 +42,7 @@ function SignupForm({ messages }: { messages: Record<string, any> }) {
 
     if (data.user) {
       alert(messages.auth.signupSuccess);
+      router.push(`/${locale}`);
     }
 
     if (error) {
