@@ -30,6 +30,11 @@ async function Articles({ params }: { params: Promise<{ locale: string }> }) {
       </div>
 
       <div className="py-8">
+        <div className="container mx-auto sm:px-4 px-2 mb-6">
+          <Link href={`/${locale}/articles/add`} className="inline-block px-6 py-3 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors">
+            {messages.articles.addNewArticle}
+          </Link>
+        </div>
         <div className="container mx-auto sm:px-4 grid md:grid-cols-2 lg:grid-cols-3 gap-4 px-2">
           {articles?.map((article) => (
             <div key={article.id} className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white">
