@@ -22,8 +22,7 @@
     "goToLibrary": "Go to Library",
     "siteName": "Hurass Al-Thughur",
     "send": "Send"
-  },
-  "auth": {
+  },  "auth": {
     "signin": "Sign In",
     "signout": "Sign Out",
     "signup": "Sign Up",
@@ -34,7 +33,9 @@
     "signoutSuccess": "Logout successful!",
     "signupSuccess": "Registration successful! Please check your email to verify your account.",
     "signinError": "Invalid username or password.",
-    "signupError": "Registration failed. Please try again."
+    "signupError": "Registration failed. Please try again.",
+    "dontHaveAccount": "Don't have an account?",
+    "alreadyHaveAccount": "Already have an account?"
   },
   "home": {
     "title": "Hurass Home",

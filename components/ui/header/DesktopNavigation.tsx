@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import styles from '../Header.module.css';
-import SignoutButton from './SignoutButton';
+import AuthButtons from './AuthButtons';
 
 interface NavigationLink {
   href: string;
@@ -18,12 +18,14 @@ interface DesktopNavigationProps {
   isArabic: boolean;
   messages: {
     switchLanguage: string;
+    signin: string;
+    signup: string;
   };
 }
 
 const DesktopNavigation = ({ navLinks, oppositeLocale, pathname, isArabic, messages }: DesktopNavigationProps) => {
   return (
-    <nav className="hidden md:flex items-center justify-between flex-grow mx-6">
+    <nav className="hidden xl:flex items-center justify-between flex-grow mx-6">
       <ul className="flex items-center space-x-1 rtl:space-x-reverse lg:space-x-2">
         {navLinks.map((link, index) => (
           <li key={index}>
@@ -37,10 +39,8 @@ const DesktopNavigation = ({ navLinks, oppositeLocale, pathname, isArabic, messa
             </Link>
           </li>
         ))}
-      </ul>
-
-      <div className="flex">
-        <SignoutButton />
+      </ul>      <div className="flex">
+        <AuthButtons messages={{ signin: messages.signin, signup: messages.signup }} />
         {/* Language Switch - Desktop */}
         <LanguageSwitch oppositeLocale={oppositeLocale} pathname={pathname} isArabic={isArabic} switchText={messages.switchLanguage} />
       </div>
@@ -65,7 +65,7 @@ export const LanguageSwitch = ({ oppositeLocale, pathname, isArabic, switchText,
 
   if (isMobile) {
     return (
-      <Link href={`/${oppositeLocale}${pathname.substring(3) || ''}`} className="md:mr-3 rtl:md:mr-0 rtl:md:ml-3 mr-2 rtl:mr-0 rtl:ml-2 flex items-center justify-center w-10 h-10 bg-emerald-600 text-white rounded-md hover:bg-emerald-700" aria-label={switchText}>
+      <Link href={`/${oppositeLocale}${pathname.substring(3) || ''}`} className="md:mr-3 rtl:md:mr-0 rtl:md:ml-3 mr-2 rtl:mr-0 rtl:ml-2 flex items-center justify-center w-8 h-8 bg-emerald-600 text-white rounded-md hover:bg-emerald-700" aria-label={switchText}>
         <GlobeIcon />
       </Link>
     );

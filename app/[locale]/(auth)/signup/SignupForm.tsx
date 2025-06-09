@@ -3,6 +3,7 @@
 import { supabase } from '@/supabase/initializing';
 import { useParams, useRouter } from 'next/navigation';
 import { useState } from 'react';
+import Link from 'next/link';
 
 function SignupForm({ messages }: { messages: Record<string, any> }) {
   const [formData, setFormData] = useState({
@@ -71,9 +72,17 @@ function SignupForm({ messages }: { messages: Record<string, any> }) {
           {messages.auth.password}
         </label>
         <input id="password" name="password" type="password" required value={formData.password} onChange={handleChange} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" />
+      </div>      <button className="bg-emerald-700 text-white py-3 font-semibold rounded-md">{messages.auth.signup}</button>
+      
+      {/* Sign in link */}
+      <div className="text-center mt-4">
+        <p className="text-gray-600">
+          {messages.auth.alreadyHaveAccount}{' '}
+          <Link href={`/${locale}/signin`} className="text-emerald-700 hover:text-emerald-800 font-semibold">
+            {messages.auth.signin}
+          </Link>
+        </p>
       </div>
-
-      <button className="bg-emerald-700 text-white py-3 font-semibold rounded-md">{messages.auth.signup}</button>
     </form>
   );
 }

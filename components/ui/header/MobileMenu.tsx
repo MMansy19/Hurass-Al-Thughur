@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { LanguageSwitch } from './DesktopNavigation';
 import styles from '../Header.module.css';
-import SignoutButton from './SignoutButton';
+import AuthButtons from './AuthButtons';
 
 interface MobileMenuProps {
   isMenuOpen: boolean;
@@ -17,9 +17,10 @@ interface MobileMenuProps {
   headerHeight: number;
   isArabic: boolean;
   oppositeLocale: string;
-  pathname: string;
-  messages: {
+  pathname: string;  messages: {
     switchLanguage: string;
+    signin: string;
+    signup: string;
   };
 }
 
@@ -37,10 +38,9 @@ const MobileMenu = ({ isMenuOpen, setIsMenuOpen, navLinks, headerHeight, isArabi
   );
 
   return (
-    <>
-      {/* Mobile Menu Button */}
-      <div className="flex gap-2 items-center md:hidden">
-        <SignoutButton />
+    <>      {/* Mobile Menu Button */}
+      <div className="flex gap-2 items-center xl:hidden">
+        <AuthButtons messages={{ signin: messages.signin, signup: messages.signup }} isMobile={true} />
         <LanguageSwitch oppositeLocale={oppositeLocale} pathname={pathname} isArabic={isArabic} switchText={messages.switchLanguage} isMobile={true} />
 
         <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="rtl:p-2 p-1 rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500" aria-expanded={isMenuOpen} aria-controls="mobile-menu" aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}>

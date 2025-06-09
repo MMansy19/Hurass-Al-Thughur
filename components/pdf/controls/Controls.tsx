@@ -160,9 +160,9 @@ export function ViewModeControl({ mode, onChange, fitWidth, fitPage, fitWidthLab
         onChange={(e) => onChange(e.target.value as 'single' | 'continuous' | 'facing')}
         className="sm:px-3 sm:py-2 p-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
       >
-        <option value="single">{singleLabel}</option>
-        <option value="continuous">{continuousLabel}</option>
-        <option value="facing">{facingLabel}</option>
+        <option value="single">{singleLabel || "صفحة واحدة"}</option>
+        <option value="continuous">{continuousLabel || "مستمر"}</option>
+        <option value="facing">{facingLabel || "صفحات متقابلة"}</option>
       </select>
 
       <button
