@@ -77,10 +77,13 @@ export default async function LocaleLayout({
       <body className="antialiased min-h-screen flex flex-col bg-gray-50">
         <PerformanceMonitor />
         <ErrorBoundary>
-          <AccessibilityProvider>
-            <Header 
+          <AccessibilityProvider>            <Header 
               locale={locale} 
-              messages={messages.common}
+              messages={{
+                ...messages.common,
+                signin: messages.auth.signin,
+                signup: messages.auth.signup
+              }}
             />
             <main className="container mx-auto sm:px-4 px-2 py-8 flex-grow">
               <div className="h-16 md:h-20"></div>
