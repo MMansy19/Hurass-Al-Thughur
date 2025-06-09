@@ -4,7 +4,7 @@ import { supabase } from '@/supabase/initializing';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-function layout({ children }: { children: React.ReactNode }) {
+function Layout({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
@@ -26,12 +26,11 @@ function layout({ children }: { children: React.ReactNode }) {
     }
 
     checkSession();
-  }, []);
+  }, [locale, router]);
 
   if (loading) {
     return <p className="text-emerald-700 text-4xl font-bold text-center py-20">{locale === 'ar' ? 'جارٍ التحميل...' : 'Loading...'}</p>;
   }
-
   return <>{children}</>;
 }
-export default layout;
+export default Layout;
