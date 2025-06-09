@@ -2,8 +2,11 @@
 
 import { supabase } from '@/supabase/initializing';
 import { useParams, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 function SignoutButton() {
+  const [isSignedIn, setIsSignedIn] = useState(false);
+
   // Getting the locale from the URL parameters
   const params = useParams<{ locale: string }>();
   const { locale } = params;
@@ -20,6 +23,35 @@ function SignoutButton() {
       alert('Signed out successfully');
       router.push(`/${locale}`);
     }
+  }
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        setIsSignedIn(true);
+      } else {
+        setIsSignedIn(false);
+      }
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event) => {
+      if (event === 'SIGNED_IN') {
+        setIsSignedIn(true);
+      } else if (event === 'SIGNED_OUT') {
+        setIsSignedIn(false);
+      }
+    });
+
+    // Cleanup subscription on component unmount
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  if (!isSignedIn) {
+    return null;
   }
 
   return (
