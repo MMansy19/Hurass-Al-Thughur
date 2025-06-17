@@ -19,7 +19,13 @@ async function Articles({ params }: { params: Promise<{ locale: string }> }) {
   if (error || !articles) {
     return <h1>Error in Fetching</h1>;
   }
-
+  // Remove specific articles by name
+  articles = articles.filter(article => 
+    article.id !== 1 && 
+    article.id !== 2 &&
+    article.author !== 'محمود عبدالفتاح'
+  );
+console.log(articles);
   return (
     <>
       <div className="bg-gradient-to-r from-emerald-700 to-emerald-900 text-white py-10 rounded-lg shadow-lg">
