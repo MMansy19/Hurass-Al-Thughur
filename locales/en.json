@@ -17,12 +17,12 @@
     "items": "items",
     "loading": "Loading...",
     "sending": "Sending...",
-    "madeWith": "Made with",
-    "by": "by",
+    "madeWith": "Made with",    "by": "by",
     "goToLibrary": "Go to Library",
     "siteName": "Hurass Al-Thughur",
-    "send": "Send"
-  },  "auth": {
+    "send": "Send",
+    "goBack": "Go Back"
+  },"auth": {
     "signin": "Sign In",
     "signout": "Sign Out",
     "signup": "Sign Up",
@@ -250,11 +250,13 @@
     "pageNotAvailable": "Page Not Available",
     "selectPDF": "Please select a PDF file to view from the library page.",
     "goToHome": "Go to Home Page"
-  },
-  "errors": {
+  },  "errors": {
     "pdfNotFound": "PDF file not found",
     "loadingError": "Error loading content",
-    "networkError": "Network connection error"
+    "networkError": "Network connection error",
+    "unauthorizedEdit": "Unauthorized Access",
+    "cannotEditArticle": "You can only edit articles that you created.",
+    "articleNotFound": "Article not found"
   },
   "pdfViewer": {
     "loadingViewer": "Loading PDF Viewer",
