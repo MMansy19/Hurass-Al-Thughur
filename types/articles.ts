@@ -6,6 +6,7 @@ export interface ArticleInterface {
   title: string;
   excerpt: string;
   content: string;
+  user_id?: string; // Add user_id field for authorization
 }
 
 export interface MultiLanguageText {

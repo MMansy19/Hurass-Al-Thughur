@@ -2,9 +2,10 @@
 
 import { supabase } from '@/supabase/initializing';
 import { ArticleInterface } from '@/types/articles';
-import { useParams } from 'next/navigation';
-import { useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
 import Editor from 'react-simple-wysiwyg';
+import { useCanEditArticle } from '@/components/ui/hooks/useCanEditArticle';
 
 interface AddArticleFormProps {
   method: 'add' | 'edit';
@@ -14,8 +15,11 @@ interface AddArticleFormProps {
 
 function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
   const params = useParams();
+  const router = useRouter();
   const { locale, articleId }: { locale?: string; articleId?: string } = params;
-
+    // Check edit permission for edit mode
+  const { canEdit, loading: authLoading, user } = useCanEditArticle(articleId || '');
+  
   const [formData, setFormData] = useState(
     initialData || {
       lang: locale || 'ar',
@@ -25,6 +29,60 @@ function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
       content: '',
     }
   );
+
+  useEffect(() => {
+    // Redirect if user is not signed in for add mode
+    async function checkAuthForAdd() {
+      if (method === 'add') {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) {
+          router.push(`/${locale}/signin`);
+        }
+      }
+    }
+    checkAuthForAdd();
+  }, [method, router, locale]);
+
+  // Redirect if user is not signed in
+  useEffect(() => {
+    if (!authLoading && method === 'edit' && !user) {
+      router.push(`/${locale}/signin`);
+    }
+  }, [authLoading, method, user, router, locale]);
+
+  // Show loading while checking authorization for edit mode
+  if (method === 'edit' && authLoading) {
+    return (
+      <div className="max-w-4xl mx-auto mt-8 text-center">
+        <div className="animate-pulse">
+          <div className="h-8 bg-gray-200 rounded w-1/3 mx-auto mb-4"></div>
+          <div className="h-4 bg-gray-200 rounded w-1/2 mx-auto"></div>
+        </div>
+      </div>
+    );
+  }
+
+  // Show unauthorized message if user cannot edit
+  if (method === 'edit' && !canEdit) {
+    return (
+      <div className="max-w-4xl mx-auto mt-8 text-center">
+        <div className="bg-red-50 border border-red-200 rounded-md p-6">
+          <h2 className="text-lg font-semibold text-red-800 mb-2">
+            {messages?.errors?.unauthorizedEdit || 'Unauthorized'}
+          </h2>
+          <p className="text-red-600 mb-4">
+            {messages?.errors?.cannotEditArticle || 'You can only edit articles that you created.'}
+          </p>
+          <button
+            onClick={() => router.push(`/${locale}/articles`)}
+            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+          >
+            {messages?.common?.goBack || 'Go Back'}
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (locale !== 'ar' && locale !== 'en') {
     return <h1>Error Page.</h1>;
@@ -47,7 +105,6 @@ function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
       content: value,
     }));
   }
-
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -58,7 +115,22 @@ function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
 
     try {
       if (method === 'add') {
-        const { error } = await supabase.from('articles').insert([formData]).select();
+        // Get current user for adding articles
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (!user) {
+          alert('You must be signed in to create articles.');
+          router.push(`/${locale}/signin`);
+          return;
+        }
+
+        // Include user_id when creating new article
+        const articleData = {
+          ...formData,
+          user_id: user.id
+        };
+
+        const { error } = await supabase.from('articles').insert([articleData]).select();
 
         if (error) {
           console.error('Error inserting article:', error);
@@ -76,6 +148,12 @@ function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
           });
         }
       } else if (method === 'edit') {
+        // Double-check authorization before updating
+        if (!canEdit) {
+          alert('You are not authorized to edit this article.');
+          return;
+        }
+
         const { error } = await supabase.from('articles').update(formData).eq('id', articleId);
 
         if (error) {
@@ -87,7 +165,7 @@ function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
         }
       }
     } catch (error) {
-      console.error('Error inserting article:', error);
+      console.error('Error with article operation:', error);
       alert('Failed!');
     }
   }

@@ -17,10 +17,11 @@
     "items": "عنصر",
     "loading": "جاري التحميل...",
     "sending": "جاري الإرسال...",
-    "madeWith": "صُنع بكل حب",
-    "by": "بواسطة",
+    "madeWith": "صُنع بكل حب",    "by": "بواسطة",
     "goToLibrary": "الذهاب إلى المكتبة",
-    "siteName": "حُراس الثغور",    "send": "إرسال"
+    "siteName": "حُراس الثغور",
+    "send": "إرسال",
+    "goBack": "العودة"
   },
   "auth": {
     "signin": "تسجيل الدخول",
@@ -259,11 +260,13 @@
     "pageNotAvailable": "الصفحة غير متاحة",
     "selectPDF": "يرجى تحديد ملف PDF لعرضه من صفحة المكتبة.",
     "goToHome": "الذهاب إلى الصفحة الرئيسية"
-  },
-  "errors": {
+  },  "errors": {
     "pdfNotFound": "لم يتم العثور على ملف PDF",
     "loadingError": "خطأ في تحميل المحتوى",
-    "networkError": "خطأ في الاتصال بالشبكة"
+    "networkError": "خطأ في الاتصال بالشبكة",
+    "unauthorizedEdit": "وصول غير مصرح",
+    "cannotEditArticle": "يمكنك فقط تعديل المقالات التي أنشأتها.",
+    "articleNotFound": "المقال غير موجود"
   },
   "pdfViewer": {
     "loadingViewer": "تحميل عارض PDF",
