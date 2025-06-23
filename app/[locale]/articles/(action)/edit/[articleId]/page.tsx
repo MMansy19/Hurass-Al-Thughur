@@ -1,3 +1,5 @@
+"use client";
+        
 import { ArticleInterface } from "@/types/articles";
 import ArticleForm from "../../ArticleForm";
 import { supabase } from "@/supabase/initializing";
@@ -17,7 +19,34 @@ async function AddArticle({
     .single();
 
   if (!article) {
-    return <h1>عذرًا؛ لا يوجد مقال بهذا الـid.</h1>;
+    return (
+      <div className="max-w-4xl mx-auto mt-8 text-center">
+        <div className="bg-red-50 border border-red-200 rounded-md p-6">
+          <h1 className="text-xl font-semibold text-red-800">
+            {messages?.errors?.articleNotFound ||
+              "عذرًا؛ لا يوجد مقال بهذا الـid."}
+          </h1>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAuthorized) {
+    return (
+      <PasswordDialog
+        isOpen={showPasswordDialog}
+        onClose={handlePasswordClose}
+        onSuccess={handlePasswordSuccess}
+        title={messages.auth.adminPasswordRequired}
+        description={messages.auth.enterAdminPassword}
+        messages={{
+          password: messages.auth.password,
+          cancel: messages.common.cancel,
+          confirm: messages.common.confirm,
+          incorrectPassword: messages.auth.incorrectPassword,
+        }}
+      />
+    );
   }
 
   return (
@@ -42,4 +71,4 @@ async function AddArticle({
     </div>
   );
 }
-export default AddArticle;
+export default EditArticle;

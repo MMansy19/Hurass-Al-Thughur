@@ -26,85 +26,7 @@ export default async function LibraryPage({
 }) {
   const { locale } = await params; // Import translations
   const messages = (await import(`@/locales/${locale}.json`)).default;
-  const { library, common } = messages;
-  // Categories for the library
-  const categories = [
-    { id: 1, name: library.categoryNames.tawheed, count: 12 },
-    { id: 2, name: library.categoryNames.worship, count: 15 },
-    { id: 3, name: library.categoryNames.ethics, count: 8 },
-    { id: 4, name: library.categoryNames.prophetBiography, count: 10 },
-    { id: 5, name: library.categoryNames.family, count: 7 },
-    { id: 6, name: library.categoryNames.society, count: 5 },
-  ];
-  // Mock data for images
-  const images = [
-    {
-      id: 1,
-      title: library.imageTopics.pillarsOfIslam,
-      category: library.categoryNames.worship,
-      thumbnail: "/images/pillars-of-islam-thumb.jpg", // Placeholder
-      fullImage: "/images/pillars-of-islam.jpg", // Placeholder
-    },
-    {
-      id: 2,
-      title: library.imageTopics.namesOfAllah,
-      category: library.categoryNames.tawheed,
-      thumbnail: "/images/names-of-allah-thumb.jpg", // Placeholder
-      fullImage: "/images/names-of-allah.jpg", // Placeholder
-    },
-    {
-      id: 3,
-      title: library.imageTopics.prayer,
-      category: library.categoryNames.worship,
-      thumbnail: "/images/prayer-thumb.jpg", // Placeholder
-      fullImage: "/images/prayer.jpg", // Placeholder
-    },
-    {
-      id: 4,
-      title: library.imageTopics.fasting,
-      category: library.categoryNames.worship,
-      thumbnail: "/images/fasting-thumb.jpg", // Placeholder
-      fullImage: "/images/fasting.jpg", // Placeholder
-    },
-    {
-      id: 5,
-      title: library.imageTopics.hajj,
-      category: library.categoryNames.worship,
-      thumbnail: "/images/hajj-thumb.jpg", // Placeholder
-      fullImage: "/images/hajj.jpg", // Placeholder
-    },
-    {
-      id: 6,
-      title: library.imageTopics.zakah,
-      category: library.categoryNames.worship,
-      thumbnail: "/images/zakah-thumb.jpg", // Placeholder
-      fullImage: "/images/zakah.jpg", // Placeholder
-    },
-  ];
-  // Mock data for brochures
-  const brochures = [
-    {
-      id: 1,
-      title: library.brochureTopics.newMuslimGuide,
-      category: library.categoryNames.worship,
-      thumbnail: "/images/new-muslim-guide-thumb.jpg", // Placeholder
-      pdfUrl: "/pdfs/new-muslim-guide.pdf", // Placeholder
-    },
-    {
-      id: 2,
-      title: library.brochureTopics.howToPray,
-      category: library.categoryNames.worship,
-      thumbnail: "/images/how-to-pray-thumb.jpg", // Placeholder
-      pdfUrl: "/pdfs/how-to-pray.pdf", // Placeholder
-    },
-    {
-      id: 3,
-      title: library.brochureTopics.supplications,
-      category: library.categoryNames.worship,
-      thumbnail: "/images/supplications-thumb.jpg", // Placeholder
-      pdfUrl: "/pdfs/supplications.pdf", // Placeholder
-    },
-  ];
+  const { library } = messages;
 
   return (
     <div className="space-y-12">
@@ -132,7 +54,6 @@ export default async function LibraryPage({
           />
         </div>
       </section>
-
       {/* Categories Section */}
       <section>
         <div className="container mx-auto sm:px-4 px-2">
@@ -246,6 +167,7 @@ export default async function LibraryPage({
           </div>
         </div>
       </section>
+
     </div>
   );
 }

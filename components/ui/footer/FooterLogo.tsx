@@ -15,7 +15,7 @@ export default function FooterLogo({ locale, messages }: FooterLogoProps) {
   return (
     <div className="md:col-span-1">
       <Link href={`/${locale}`} className="flex items-center group">
-        <div className="relative overflow-hidden rounded-full border-2 border-emerald-500 mx-3">
+        <div className="overflow-hidden rounded-full border-2 border-emerald-500 mx-3">
           <Image
             src="/images/logo.jpg"
             alt="Hurass Al-Thughur Logo"

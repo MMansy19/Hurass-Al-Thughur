@@ -27,7 +27,10 @@ async function Articles({ params }: { params: Promise<{ locale: string }> }) {
   if (error || !articles) {
     return <h1>Error in Fetching</h1>;
   }
-
+  console.log(articles);
+  // Remove specific articles by name
+  // articles = articles.filter((article) => ![8, 9, 10, 11].includes(article.id));
+<!--   articles = articles.filter((article) => article.author === "محمود عبدالفتاح"); -->
   return (
     <>
       <div className="bg-gradient-to-r from-emerald-700 to-emerald-900 text-white py-10 rounded-lg shadow-lg">
@@ -56,7 +59,7 @@ async function Articles({ params }: { params: Promise<{ locale: string }> }) {
                 </div>
                 <p className="text-gray-600 text-sm mb-3 flex-grow" dir="auto">
                   {article.excerpt}
-                </p>
+                </p>{" "}
                 <div className="mt-auto pt-4 flex items-center gap-4">
                   <Link
                     href={`/${locale}/articles/${article.id}`}

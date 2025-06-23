@@ -18,12 +18,13 @@ export const pdfMetadata: PDFMetadata[] = [
   {
     filename: "1.pdf",
     title: {
-      en: "Not Quranists: Instinct and Covenant",
-      ar: "ليسوا قرآنيين: الفطرة والميثاق",
+
+      en: "The First Issue",
+      ar: "العدد الأول",
     },
     description: {
-      en: "An exploration of the concept of instinct, the covenant, and the restricted meaning of worship in Islamic thought.",
-      ar: "استكشاف مفهوم الفطرة والميثاق والمفهوم المقيد للعبادة في الفكر الإسلامي.",
+      en: "Not Quraniyyun: Fitrah and Covenant",
+      ar: "ليسوا قرآنيين: الفطرة والميثاق"
     },
     category: "Religious Studies",
     author: "Islamic Theology Department",
@@ -33,12 +34,12 @@ export const pdfMetadata: PDFMetadata[] = [
   {
     filename: "2.pdf",
     title: {
-      en: "Tawhid Al-Uluhiyyah and Linguistic Weakness",
-      ar: "توحيد الألوهية وضعف الملكة اللغوية",
+      en: "The Second Issue",
+      ar: "العدد الثاني",
     },
     description: {
-      en: "A study on the doctrine of Tawhid Al-Uluhiyyah and the impact of linguistic weakness on denying what is not rightfully denied.",
-      ar: "دراسة حول عقيدة توحيد الألوهية وأثر ضعف الملكة اللغوية في الإنكار على ما ليس حقه الإنكار.",
+      en: "Tawhid Al-Uluhiyyah and Linguistic Weakness",
+      ar: "توحيد الألوهية وضعف الملكة اللغوية",
     },
     category: "Theology",
     author: "Dr. Abdullah Al-Lughawi",
@@ -48,12 +49,12 @@ export const pdfMetadata: PDFMetadata[] = [
   {
     filename: "3.pdf",
     title: {
-      en: "Proofs of Prophethood and Orientalist Narratives",
-      ar: "دلائل النبوة ومعركة الزلاقة",
+      en: "The Third Issue",
+      ar: "العدد الثالث",
     },
     description: {
-      en: "An analysis of the proofs of prophethood, addressing orientalist narratives and doubts, including the Battle of Zallaqa.",
-      ar: "تحليل دلائل النبوة، مع الرد على الروايات المستشرقين والشبهات، بما في ذلك معركة الزلاقة.",
+      en: "Proofs of Prophethood and Orientalist Narratives",
+      ar: "دلائل النبوة ومعركة الزلاقة",
     },
     category: "Islamic History",
     author: "Historical Studies Council",
