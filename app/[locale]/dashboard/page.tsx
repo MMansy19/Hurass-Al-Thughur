@@ -3,10 +3,11 @@
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { loadMessages } from './utils';
+import { loadSignedInUser, loadMessages } from './utils';
 
 function page() {
   const [messages, setMessages] = useState<any>({});
+  const [user, setUser] = useState<any>(null);
 
   const params = useParams();
   const { locale } = params;
@@ -15,6 +16,8 @@ function page() {
     if (typeof locale === 'string') {
       loadMessages(locale, setMessages);
     }
+
+    loadSignedInUser(setUser);
   }, [locale]);
 
   return (
