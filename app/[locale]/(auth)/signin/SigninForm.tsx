@@ -36,6 +36,7 @@ function SigninForm({ messages }: { messages: Record<string, any> }) {
     });
 
     if (data.user) {
+      window.localStorage.setItem('user', JSON.stringify(data.user));
       alert(messages.auth.signinSuccess);
       router.push(`/${locale}`);
     }
@@ -65,10 +66,7 @@ function SigninForm({ messages }: { messages: Record<string, any> }) {
       <div className="text-center mt-4">
         <p className="text-gray-600">
           {messages.auth.dontHaveAccount}{' '}
-          <Link
-            href={`/${locale}/signup`}
-            className="text-emerald-700 hover:text-emerald-800 font-semibold underline"
-          >
+          <Link href={`/${locale}/signup`} className="text-emerald-700 hover:text-emerald-800 font-semibold underline">
             {messages.auth.signup}
           </Link>
         </p>

@@ -42,6 +42,7 @@ function SignupForm({ messages }: { messages: Record<string, any> }) {
     });
 
     if (data.user) {
+      window.localStorage.setItem('user', JSON.stringify(data.user));
       alert(messages.auth.signupSuccess);
       router.push(`/${locale}`);
     }
@@ -59,21 +60,19 @@ function SignupForm({ messages }: { messages: Record<string, any> }) {
         </label>
         <input id="name" name="name" type="text" required value={formData.name} onChange={handleChange} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" />
       </div>
-
       <div className="flex flex-col gap-1">
         <label htmlFor="email" className="block text-sm font-medium text-gray-700">
           {messages.auth.email}
         </label>
         <input id="email" name="email" type="email" required value={formData.email} onChange={handleChange} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" />
       </div>
-
       <div className="flex flex-col gap-1">
         <label htmlFor="password" className="block text-sm font-medium text-gray-700">
           {messages.auth.password}
         </label>
         <input id="password" name="password" type="password" required value={formData.password} onChange={handleChange} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" />
-      </div>      <button className="bg-emerald-700 text-white py-3 font-semibold rounded-md">{messages.auth.signup}</button>
-      
+      </div>{' '}
+      <button className="bg-emerald-700 text-white py-3 font-semibold rounded-md">{messages.auth.signup}</button>
       {/* Sign in link */}
       <div className="text-center mt-4">
         <p className="text-gray-600">
