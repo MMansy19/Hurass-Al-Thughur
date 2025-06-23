@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { loadSignedInUser, loadMessages, loadArticles } from './utils';
+import { ArticleInterface } from '@/types/articles';
+import DeleteArticleButton from './DeleteArticleButton';
 
 function page() {
   const [messages, setMessages] = useState<any>({});
@@ -29,28 +31,33 @@ function page() {
       </Link>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-        {articles?.map((article) => (
-          <div key={article.id} className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white">
-            <div className="p-4 flex flex-col h-full">
-              <div className="flex items-center mb-3">
-                <h3 className="font-medium text-lg" dir="auto">
-                  {article.title}
-                </h3>
-              </div>
-              <p className="text-gray-600 text-sm mb-3 flex-grow" dir="auto">
-                {article.excerpt}
-              </p>
-              <div className="mt-auto pt-4 flex items-center gap-4">
-                <Link href={`/${locale}/articles/${article.id}`} className="block w-full sm:px-4 px-2 py-2 text-center bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors">
-                  {messages.common.view}
-                </Link>
-                <Link href={`/${locale}/articles/edit/${article.id}`} className="block w-full sm:px-4 px-2 py-2 text-center bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors">
-                  {messages.common.edit}
-                </Link>
+        {articles.length === 0 ? (
+          <p>No Articles Yet.</p>
+        ) : (
+          articles?.map((article: ArticleInterface) => (
+            <div key={article.id} className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white">
+              <div className="p-4 flex flex-col h-full">
+                <div className="flex items-center mb-3">
+                  <h3 className="font-medium text-lg" dir="auto">
+                    {article.title}
+                  </h3>
+                </div>
+                <p className="text-gray-600 text-sm mb-3 flex-grow" dir="auto">
+                  {article.excerpt}
+                </p>
+                <div className="mt-auto pt-4 flex items-center gap-4">
+                  <Link href={`/${locale}/articles/${article.id}`} className="block w-full sm:px-4 px-2 py-2 text-center bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors">
+                    {messages.common.view}
+                  </Link>
+                  <Link href={`/${locale}/articles/edit/${article.id}`} className="block w-full sm:px-4 px-2 py-2 text-center bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors">
+                    {messages.common.edit}
+                  </Link>
+                  <DeleteArticleButton articleId={article.id} />
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </div>
   );
