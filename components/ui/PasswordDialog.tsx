@@ -57,7 +57,7 @@ export default function PasswordDialog({
   if (!isOpen) return null;
 
   return (
-      <div className="fixed inset-0 flex items-center justify-center z-50 p-4 md:top-20 top-40">
+    <div className="fixed inset-0 flex items-center justify-center z-50 p-4 md:top-20 top-40">
       <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4">
         <div className="p-6">
           <h2 className="text-xl font-semibold text-gray-900 mb-2">{title}</h2>

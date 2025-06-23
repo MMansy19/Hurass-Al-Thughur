@@ -167,7 +167,6 @@ export default async function LibraryPage({
           </div>
         </div>
       </section>
-
     </div>
   );
 }

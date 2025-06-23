@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useState, useCallback, useRef, useEffect } from "react";
 import { ImageProps } from "@/types";
 
-interface OptimizedImageProps extends Omit<ImageProps, "onLoad" | "onError"> {
+interface OptimizedImageProps extends Omit<ImageProps, "onLoad" | "onError" | "placeholder"> {
   fallbackSrc?: string;
   lazy?: boolean;
   quality?: number;
@@ -106,14 +106,13 @@ export function OptimizedImage({
   const imageProps = {
     src: currentSrc,
     alt,
-    width: fill ? undefined : width,
-    height: fill ? undefined : height,
+    ...(fill ? {} : { width, height }),
     fill,
     sizes: sizes || (width ? `${width}px` : "100vw"),
     quality,
     priority,
     placeholder: placeholder === "skeleton" ? "empty" : placeholder,
-    blurDataURL: placeholder === "blur" ? defaultBlurDataURL : undefined,
+    ...(placeholder === "blur" && defaultBlurDataURL ? { blurDataURL: defaultBlurDataURL } : {}),
     onLoad: handleLoad,
     onError: handleError,
     className: `transition-opacity duration-300 ${
@@ -367,7 +366,7 @@ export function useProgressiveImage(src: string, fallbackSrc?: string) {
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
-    const img = new Image();
+    const img = new window.Image();
 
     img.onload = () => {
       setCurrentSrc(src);

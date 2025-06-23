@@ -1,5 +1,5 @@
 "use client";
-        
+
 import { ArticleInterface } from "@/types/articles";
 import ArticleForm from "../../ArticleForm";
 import { supabase } from "@/supabase/initializing";
