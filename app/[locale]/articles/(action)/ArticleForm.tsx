@@ -16,13 +16,19 @@ function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
   const params = useParams();
   const { locale, articleId }: { locale?: string; articleId?: string } = params;
 
+  const user = window.localStorage.getItem('user');
+
+  const user_id = user ? JSON.parse(user).id : null;
+  const user_name = user ? JSON.parse(user).user_metadata.name : '';
+
   const [formData, setFormData] = useState(
     initialData || {
       lang: locale || 'ar',
-      author: '',
+      author: user_name,
       title: '',
       excerpt: '',
       content: '',
+      user_id,
     }
   );
 
@@ -69,10 +75,11 @@ function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
 
           setFormData({
             lang: locale || 'ar',
-            author: '',
+            author: user_name,
             title: '',
             excerpt: '',
             content: '',
+            user_id,
           });
         }
       } else if (method === 'edit') {
@@ -102,13 +109,6 @@ function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
           <option value="ar">عربي</option>
           <option value="en">English</option>
         </select>
-      </div>
-
-      <div className="flex flex-col gap-1">
-        <label htmlFor="author" className="block text-sm font-medium text-gray-700">
-          {messages.articles.author}
-        </label>
-        <input id="author" name="author" type="text" value={formData.author} onChange={handleChange} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-emerald-500 focus:border-emerald-500" />
       </div>
 
       <div className="flex flex-col gap-1">
