@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 // Declare gtag as a global variable for TypeScript
 declare global {
-  function gtag(...args: any[]): void;
+  function gtag(...args: unknown[]): void;
 }
 
 // Web Vitals monitoring
@@ -13,7 +13,11 @@ export function useWebVitals() {
     if (typeof window === "undefined") return;
 
     // Monitor Core Web Vitals
-    const reportWebVitals = (metric: any) => {
+    const reportWebVitals = (metric: {
+      name: string;
+      id: string;
+      value: number;
+    }) => {
       // Log to console in development
       if (process.env.NODE_ENV === "development") {
         console.log("Web Vital:", metric);
@@ -68,7 +72,7 @@ export function useLongTaskMonitoring() {
 
     try {
       observer.observe({ entryTypes: ["longtask"] });
-    } catch (e) {
+    } catch {
       // PerformanceObserver not supported
     }
 
@@ -85,7 +89,13 @@ export function useMemoryMonitoring() {
 
     const checkMemory = () => {
       if ("memory" in performance) {
-        const memory = (performance as any).memory;
+        const memory = (performance as Performance & {
+          memory: {
+            usedJSHeapSize: number;
+            totalJSHeapSize: number;
+            jsHeapSizeLimit: number;
+          };
+        }).memory;
         const memoryUsage = {
           used: Math.round(memory.usedJSHeapSize / 1048576), // MB
           total: Math.round(memory.totalJSHeapSize / 1048576), // MB
@@ -139,7 +149,7 @@ export function useImagePerformance() {
 
     try {
       observer.observe({ entryTypes: ["resource"] });
-    } catch (e) {
+    } catch {
       // Observer not supported
     }
 
@@ -173,7 +183,7 @@ export function useBundleAnalysis() {
 
     try {
       observer.observe({ entryTypes: ["resource"] });
-    } catch (e) {
+    } catch {
       // Observer not supported
     }
 

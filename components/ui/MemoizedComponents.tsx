@@ -10,7 +10,7 @@ import React, {
   useEffect,
 } from "react";
 import { Magazine, Category } from "@/types";
-import { OptimizedImage, MagazineCoverImage } from "./OptimizedImage";
+import { MagazineCoverImage } from "./OptimizedImage";
 
 // Memoized magazine card component
 interface MagazineCardProps {
@@ -224,7 +224,7 @@ export const MemoizedSearch = memo<SearchProps>(
     debounceMs = 300,
   }) => {
     const [query, setQuery] = useState("");
-    const timeoutRef = useRef<NodeJS.Timeout>();
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     // Debounced search effect
     useEffect(() => {
@@ -337,7 +337,7 @@ export const MemoizedPagination = memo<PaginationProps>(
     const visiblePages = useMemo(() => {
       const half = Math.floor(maxVisiblePages / 2);
       let start = Math.max(1, currentPage - half);
-      let end = Math.min(totalPages, start + maxVisiblePages - 1);
+      const end = Math.min(totalPages, start + maxVisiblePages - 1);
 
       if (end - start < maxVisiblePages - 1) {
         start = Math.max(1, end - maxVisiblePages + 1);

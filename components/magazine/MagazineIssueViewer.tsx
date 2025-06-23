@@ -17,6 +17,7 @@ interface MagazineIssueViewerProps {
   pdfUrl: string;
   title: string;
   locale: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   messages: any;
 }
 export default function MagazineIssueViewer({

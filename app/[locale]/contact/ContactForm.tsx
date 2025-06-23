@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { Messages } from "@/types/messages";
 
 interface ContactFormProps {
-  messages: Record<string, any>;
+  messages: Messages;
 }
 
 export default function ContactForm({ messages }: ContactFormProps) {

@@ -8,9 +8,8 @@ async function Articles({ params }: { params: Promise<{ locale: string }> }) {
 
   // Translations
   const messages = (await import(`@/locales/${locale}.json`)).default;
-
   // Getting articles depending on Website language
-  let {
+  const {
     data: articles,
     error,
   }: { data: ArticleInterface[] | null; error: PostgrestError | null } =

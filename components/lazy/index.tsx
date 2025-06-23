@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import { ComponentType } from "react";
 
 // Dynamic loading wrapper with enhanced error handling
-function createDynamicComponent<T extends Record<string, any>>(
+function createDynamicComponent<T extends Record<string, unknown>>(
   importFn: () => Promise<{ default: ComponentType<T> }>,
   options: {
     displayName?: string;

@@ -6,11 +6,13 @@ import { useEffect, useState } from "react";
 import { loadSignedInUser, loadMessages, loadArticles } from "./utils";
 import { ArticleInterface } from "@/types/articles";
 import DeleteArticleButton from "./DeleteArticleButton";
+import { Messages } from "@/types/messages";
+import { User } from "@supabase/supabase-js";
 
-function page() {
-  const [messages, setMessages] = useState<any>({});
-  const [user, setUser] = useState<any>(null);
-  const [articles, setArticles] = useState<any[]>([]);
+function Dashboard() {
+  const [messages, setMessages] = useState<Messages>({} as Messages);
+  const [user, setUser] = useState<User | null>(null);
+  const [articles, setArticles] = useState<ArticleInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   const params = useParams();
@@ -22,7 +24,9 @@ function page() {
     }
 
     loadSignedInUser(setUser);
-    loadArticles(user?.id, setArticles, setLoading);
+    if (user?.id) {
+      loadArticles(user.id, setArticles, setLoading);
+    }
   }, [locale, user]);
 
   if (loading) {
@@ -99,4 +103,4 @@ function page() {
     </div>
   );
 }
-export default page;
+export default Dashboard;

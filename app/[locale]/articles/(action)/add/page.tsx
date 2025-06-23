@@ -2,12 +2,13 @@
 import { useState, useEffect } from "react";
 import ArticleForm from "../ArticleForm";
 import PasswordDialog from "@/components/ui/PasswordDialog";
+import { Messages } from "@/types/messages";
 
 function AddArticle({ params }: { params: Promise<{ locale: string }> }) {
   const [resolvedParams, setResolvedParams] = useState<{
     locale: string;
   } | null>(null);
-  const [messages, setMessages] = useState<any>(null);
+  const [messages, setMessages] = useState<Messages | null>(null);
   const [showPasswordDialog, setShowPasswordDialog] = useState(true);
   const [isAuthorized, setIsAuthorized] = useState(false);
 

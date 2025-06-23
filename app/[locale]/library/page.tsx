@@ -1,5 +1,4 @@
 import { Metadata } from "next/types";
-import Link from "next/link";
 import SEO from "@/components/ui/SEO";
 import PDFBrowser from "@/components/pdf/PDFBrowser";
 
@@ -26,7 +25,31 @@ export default async function LibraryPage({
 }) {
   const { locale } = await params; // Import translations
   const messages = (await import(`@/locales/${locale}.json`)).default;
-  const { library } = messages;
+  const { library, common } = messages;
+
+  // Placeholder data - in a real app, this would come from a database or API
+  const categories = [
+    { id: 1, name: "Islamic Beliefs", count: 25 },
+    { id: 2, name: "Prayer", count: 18 },
+    { id: 3, name: "Quran", count: 32 },
+    { id: 4, name: "Hadith", count: 28 },
+    { id: 5, name: "Islamic History", count: 15 },
+    { id: 6, name: "Prophets", count: 22 },
+  ];
+
+  const images = [
+    { id: 1, title: "Islamic Calligraphy", url: "/images/sample1.jpg", category: "Art" },
+    { id: 2, title: "Mosque Architecture", url: "/images/sample2.jpg", category: "Architecture" },
+    { id: 3, title: "Islamic Patterns", url: "/images/sample3.jpg", category: "Design" },
+    { id: 4, title: "Quran Verses", url: "/images/sample4.jpg", category: "Scripture" },
+  ];
+
+  const brochures = [
+    { id: 1, title: "Introduction to Islam", pages: 12, category: "Basics" },
+    { id: 2, title: "Five Pillars of Islam", pages: 8, category: "Practices" },
+    { id: 3, title: "Prophet Muhammad (PBUH)", pages: 16, category: "Biography" },
+    { id: 4, title: "Islamic Ethics", pages: 10, category: "Morality" },
+  ];
 
   return (
     <div className="space-y-12">
