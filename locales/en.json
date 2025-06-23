@@ -222,6 +222,7 @@
     "addArticle": "Add an Article",
     "addNewArticle": "Add New Article",
     "editArticle": "Edit an Article",
+    "noArticlesYet": "No articles have been added yet.",
     "author": "Author",
     "title": "Title",
     "excerpt": "Excerpt",
