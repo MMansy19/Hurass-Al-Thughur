@@ -147,12 +147,12 @@ html[dir="rtl"] body {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .pdf-container.fullscreen .pdf-controls {
     flex-wrap: wrap;
     gap: 0.5rem;
   }
-  
+
   .thumbnail-page {
     transform: scale(0.8);
   }
@@ -164,12 +164,12 @@ html[dir="rtl"] body {
   .pdf-sidebar {
     display: none !important;
   }
-  
+
   .pdf-document {
     box-shadow: none;
     border: none;
   }
-  
+
   .pdf-page {
     box-shadow: none;
     border: none;
@@ -179,7 +179,8 @@ html[dir="rtl"] body {
 
 /* Loading animations */
 @keyframes pulse-slow {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -220,11 +221,11 @@ html[dir="rtl"] body {
     background: #1f2937;
     border-color: #374151;
   }
-  
+
   .pdf-page {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
   }
-  
+
   .pdf-sidebar {
     background: #1f2937;
     border-color: #374151;

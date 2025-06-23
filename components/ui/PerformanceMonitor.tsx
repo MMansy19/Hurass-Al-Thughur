@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 // Declare gtag as a global variable for TypeScript
 declare global {
@@ -10,58 +10,64 @@ declare global {
 // Web Vitals monitoring
 export function useWebVitals() {
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
     // Monitor Core Web Vitals
     const reportWebVitals = (metric: any) => {
       // Log to console in development
-      if (process.env.NODE_ENV === 'development') {
-        console.log('Web Vital:', metric);
+      if (process.env.NODE_ENV === "development") {
+        console.log("Web Vital:", metric);
       }
 
       // Send to analytics service in production
-      if (process.env.NODE_ENV === 'production') {
+      if (process.env.NODE_ENV === "production") {
         // Example: Send to Google Analytics
-        if (typeof gtag !== 'undefined') {
-          gtag('event', metric.name, {
-            event_category: 'Web Vitals',
+        if (typeof gtag !== "undefined") {
+          gtag("event", metric.name, {
+            event_category: "Web Vitals",
             event_label: metric.id,
-            value: Math.round(metric.name === 'CLS' ? metric.value * 1000 : metric.value),
+            value: Math.round(
+              metric.name === "CLS" ? metric.value * 1000 : metric.value,
+            ),
             non_interaction: true,
           });
         }
       }
-    };    // Import web-vitals dynamically to avoid SSR issues
-    import('web-vitals').then(({ onCLS, onFCP, onLCP, onTTFB }) => {
-      onCLS(reportWebVitals);
-      onFCP(reportWebVitals);
-      onLCP(reportWebVitals);
-      onTTFB(reportWebVitals);
-    }).catch(() => {
-      // Silently fail if web-vitals is not available
-    });
+    }; // Import web-vitals dynamically to avoid SSR issues
+    import("web-vitals")
+      .then(({ onCLS, onFCP, onLCP, onTTFB }) => {
+        onCLS(reportWebVitals);
+        onFCP(reportWebVitals);
+        onLCP(reportWebVitals);
+        onTTFB(reportWebVitals);
+      })
+      .catch(() => {
+        // Silently fail if web-vitals is not available
+      });
   }, []);
 }
 
 // Performance observer for long tasks
 export function useLongTaskMonitoring() {
   useEffect(() => {
-    if (typeof window === 'undefined' || !('PerformanceObserver' in window)) return;
+    if (typeof window === "undefined" || !("PerformanceObserver" in window))
+      return;
 
     const observer = new PerformanceObserver((list) => {
       list.getEntries().forEach((entry) => {
-        if (entry.duration > 50) { // Tasks longer than 50ms
-          console.warn('Long task detected:', {
+        if (entry.duration > 50) {
+          // Tasks longer than 50ms
+          console.warn("Long task detected:", {
             duration: entry.duration,
             startTime: entry.startTime,
-            name: entry.name
+            name: entry.name,
           });
         }
       });
     });
 
     try {
-      observer.observe({ entryTypes: ['longtask'] });
+      observer.observe({ entryTypes: ["longtask"] });
     } catch (e) {
       // PerformanceObserver not supported
     }
@@ -75,10 +81,10 @@ export function useLongTaskMonitoring() {
 // Memory usage monitoring
 export function useMemoryMonitoring() {
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
     const checkMemory = () => {
-      if ('memory' in performance) {
+      if ("memory" in performance) {
         const memory = (performance as any).memory;
         const memoryUsage = {
           used: Math.round(memory.usedJSHeapSize / 1048576), // MB
@@ -88,11 +94,11 @@ export function useMemoryMonitoring() {
 
         // Warn if memory usage is high
         if (memoryUsage.used / memoryUsage.limit > 0.9) {
-          console.warn('High memory usage detected:', memoryUsage);
+          console.warn("High memory usage detected:", memoryUsage);
         }
 
-        if (process.env.NODE_ENV === 'development') {
-          console.log('Memory usage:', memoryUsage);
+        if (process.env.NODE_ENV === "development") {
+          console.log("Memory usage:", memoryUsage);
         }
       }
     };
@@ -108,16 +114,23 @@ export function useMemoryMonitoring() {
 // Image loading performance
 export function useImagePerformance() {
   useEffect(() => {
-    if (typeof window === 'undefined') return;    const observer = new PerformanceObserver((list) => {
+    if (typeof window === "undefined") return;
+    const observer = new PerformanceObserver((list) => {
       list.getEntries().forEach((entry) => {
-        if (entry.name.includes('.jpg') || entry.name.includes('.png') || entry.name.includes('.webp')) {
+        if (
+          entry.name.includes(".jpg") ||
+          entry.name.includes(".png") ||
+          entry.name.includes(".webp")
+        ) {
           const resourceEntry = entry as PerformanceResourceTiming;
-          const loadTime = resourceEntry.responseEnd - resourceEntry.requestStart;
-          if (loadTime > 1000) { // Images taking longer than 1 second
-            console.warn('Slow image loading:', {
+          const loadTime =
+            resourceEntry.responseEnd - resourceEntry.requestStart;
+          if (loadTime > 1000) {
+            // Images taking longer than 1 second
+            console.warn("Slow image loading:", {
               url: entry.name,
               loadTime: loadTime,
-              size: resourceEntry.transferSize
+              size: resourceEntry.transferSize,
             });
           }
         }
@@ -125,7 +138,7 @@ export function useImagePerformance() {
     });
 
     try {
-      observer.observe({ entryTypes: ['resource'] });
+      observer.observe({ entryTypes: ["resource"] });
     } catch (e) {
       // Observer not supported
     }
@@ -139,17 +152,19 @@ export function useImagePerformance() {
 // Bundle size monitoring
 export function useBundleAnalysis() {
   useEffect(() => {
-    if (typeof window === 'undefined' || process.env.NODE_ENV !== 'development') return;    // Report the size of loaded JavaScript bundles
+    if (typeof window === "undefined" || process.env.NODE_ENV !== "development")
+      return; // Report the size of loaded JavaScript bundles
     const observer = new PerformanceObserver((list) => {
       list.getEntries().forEach((entry) => {
         const resourceEntry = entry as PerformanceResourceTiming;
-        if (entry.name.includes('.js') && resourceEntry.transferSize) {
+        if (entry.name.includes(".js") && resourceEntry.transferSize) {
           const sizeKB = Math.round(resourceEntry.transferSize / 1024);
-          if (sizeKB > 100) { // Bundles larger than 100KB
-            console.warn('Large JavaScript bundle:', {
+          if (sizeKB > 100) {
+            // Bundles larger than 100KB
+            console.warn("Large JavaScript bundle:", {
               url: entry.name,
               size: `${sizeKB}KB`,
-              loadTime: resourceEntry.responseEnd - resourceEntry.requestStart
+              loadTime: resourceEntry.responseEnd - resourceEntry.requestStart,
             });
           }
         }
@@ -157,7 +172,7 @@ export function useBundleAnalysis() {
     });
 
     try {
-      observer.observe({ entryTypes: ['resource'] });
+      observer.observe({ entryTypes: ["resource"] });
     } catch (e) {
       // Observer not supported
     }
@@ -185,55 +200,52 @@ export function PerformanceMonitor() {
 
 // Resource hints helpers
 export function preloadCriticalResources() {
-  if (typeof document === 'undefined') return;
+  if (typeof document === "undefined") return;
 
   // Preload critical fonts
   const fontLinks = [
-    { href: '/fonts/inter-var.woff2', as: 'font', type: 'font/woff2' },
-    { href: '/fonts/arabic-font.woff2', as: 'font', type: 'font/woff2' },
+    { href: "/fonts/inter-var.woff2", as: "font", type: "font/woff2" },
+    { href: "/fonts/arabic-font.woff2", as: "font", type: "font/woff2" },
   ];
 
   fontLinks.forEach(({ href, as, type }) => {
-    const link = document.createElement('link');
-    link.rel = 'preload';
+    const link = document.createElement("link");
+    link.rel = "preload";
     link.href = href;
     link.as = as;
     link.type = type;
-    link.crossOrigin = 'anonymous';
+    link.crossOrigin = "anonymous";
     document.head.appendChild(link);
   });
 
   // Preload critical images
-  const criticalImages = [
-    '/images/logo.webp',
-    '/images/hero-background.webp',
-  ];
+  const criticalImages = ["/images/logo.webp", "/images/hero-background.webp"];
 
   criticalImages.forEach((src) => {
-    const link = document.createElement('link');
-    link.rel = 'preload';
+    const link = document.createElement("link");
+    link.rel = "preload";
     link.href = src;
-    link.as = 'image';
+    link.as = "image";
     document.head.appendChild(link);
   });
 }
 
 // Prefetch resources for next navigation
 export function prefetchNextPage(href: string) {
-  if (typeof document === 'undefined') return;
+  if (typeof document === "undefined") return;
 
-  const link = document.createElement('link');
-  link.rel = 'prefetch';
+  const link = document.createElement("link");
+  link.rel = "prefetch";
   link.href = href;
   document.head.appendChild(link);
 }
 
 // Critical CSS inlining utility
 export function inlineCriticalCSS(css: string) {
-  if (typeof document === 'undefined') return;
+  if (typeof document === "undefined") return;
 
-  const style = document.createElement('style');
+  const style = document.createElement("style");
   style.innerHTML = css;
-  style.setAttribute('data-critical', 'true');
+  style.setAttribute("data-critical", "true");
   document.head.appendChild(style);
 }

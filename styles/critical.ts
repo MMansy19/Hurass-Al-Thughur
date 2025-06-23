@@ -300,11 +300,11 @@ export const criticalCSS = `
 
 // Function to inject critical CSS
 export function injectCriticalCSS(): void {
-  if (typeof document !== 'undefined') {
-    const existingStyle = document.getElementById('critical-css');
+  if (typeof document !== "undefined") {
+    const existingStyle = document.getElementById("critical-css");
     if (!existingStyle) {
-      const style = document.createElement('style');
-      style.id = 'critical-css';
+      const style = document.createElement("style");
+      style.id = "critical-css";
       style.textContent = criticalCSS;
       document.head.insertBefore(style, document.head.firstChild);
     }
@@ -374,34 +374,31 @@ export const loadingCSS = `
 
 // Function to preload critical resources
 export function preloadCriticalResources(): void {
-  if (typeof document !== 'undefined') {
+  if (typeof document !== "undefined") {
     // Preload critical fonts
     const fontPreloads = [
-      { href: '/fonts/cairo-variable.woff2', type: 'font/woff2' },
-      { href: '/fonts/roboto-variable.woff2', type: 'font/woff2' },
+      { href: "/fonts/cairo-variable.woff2", type: "font/woff2" },
+      { href: "/fonts/roboto-variable.woff2", type: "font/woff2" },
     ];
 
-    fontPreloads.forEach(font => {
-      const link = document.createElement('link');
-      link.rel = 'preload';
+    fontPreloads.forEach((font) => {
+      const link = document.createElement("link");
+      link.rel = "preload";
       link.href = font.href;
-      link.as = 'font';
+      link.as = "font";
       link.type = font.type;
-      link.crossOrigin = 'anonymous';
+      link.crossOrigin = "anonymous";
       document.head.appendChild(link);
     });
 
     // Preload critical images
-    const imagePreloads = [
-      '/images/logo.svg',
-      '/images/hero-bg.webp',
-    ];
+    const imagePreloads = ["/images/logo.svg", "/images/hero-bg.webp"];
 
-    imagePreloads.forEach(src => {
-      const link = document.createElement('link');
-      link.rel = 'preload';
+    imagePreloads.forEach((src) => {
+      const link = document.createElement("link");
+      link.rel = "preload";
       link.href = src;
-      link.as = 'image';
+      link.as = "image";
       document.head.appendChild(link);
     });
   }

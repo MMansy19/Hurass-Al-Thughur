@@ -1,4 +1,3 @@
-
 import { Metadata } from "next/types";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -9,15 +8,22 @@ import { StructuredData } from "@/components/ui/StructuredData";
 import { MagazineGridWrapper } from "@/components/ui/MagazineGridWrapper";
 
 // Dynamic imports for better code splitting
-const PDFViewerSection = dynamic(() => import("@/components/pdf/PDFViewerSection"), {
-  loading: () => <div className="animate-pulse bg-gray-200 h-96 rounded-lg" />
-});
+const PDFViewerSection = dynamic(
+  () => import("@/components/pdf/PDFViewerSection"),
+  {
+    loading: () => (
+      <div className="animate-pulse bg-gray-200 h-96 rounded-lg" />
+    ),
+  },
+);
 
-const EnhancedPerformanceMonitor = dynamic(() => import("@/components/ui/EnhancedPerformanceMonitor"));
+const EnhancedPerformanceMonitor = dynamic(
+  () => import("@/components/ui/EnhancedPerformanceMonitor"),
+);
 
 // Generate metadata for the page with enhanced SEO
 export async function generateMetadata({
-  params
+  params,
 }: {
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
@@ -38,7 +44,7 @@ export async function generateMetadata({
       locale === "ar" ? "السنة النبوية" : "Hadith",
       locale === "ar" ? "الفقه الإسلامي" : "Islamic jurisprudence",
       locale === "ar" ? "العقيدة" : "Islamic belief",
-      locale === "ar" ? "التاريخ الإسلامي" : "Islamic history"
+      locale === "ar" ? "التاريخ الإسلامي" : "Islamic history",
     ].join(", "),
     robots: {
       index: true,
@@ -46,19 +52,19 @@ export async function generateMetadata({
       googleBot: {
         index: true,
         follow: true,
-        'max-video-preview': -1,
-        'max-image-preview': 'large',
-        'max-snippet': -1,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
       },
     },
     alternates: {
       languages: {
-        'ar': `/ar/magazine`,
-        'en': `/en/magazine`,
+        ar: `/ar/magazine`,
+        en: `/en/magazine`,
       },
     },
     verification: {
-      google: 'your-google-verification-code',
+      google: "your-google-verification-code",
     },
   };
 }
@@ -99,12 +105,10 @@ export default async function EnhancedMagazinePage({
       description: magazine.issues.issue1.description,
       coverImage: "/images/magazine-cover-1.jpg",
       pdfUrl: "/pdfs/magazine-issue-1.pdf",
-      date: magazine.issues.issue1.date,      author: messages.hardcoded.editorialTeam,
+      date: magazine.issues.issue1.date,
+      author: messages.hardcoded.editorialTeam,
       category: magazine.categoryNames.aqeedah,
-      tags: [
-        messages.hardcoded.faith,
-        messages.hardcoded.monotheism
-      ]
+      tags: [messages.hardcoded.faith, messages.hardcoded.monotheism],
     },
     {
       id: "2",
@@ -112,12 +116,10 @@ export default async function EnhancedMagazinePage({
       description: magazine.issues.issue2.description,
       coverImage: "/images/magazine-cover-2.jpg",
       pdfUrl: "/pdfs/magazine-issue-2.pdf",
-      date: magazine.issues.issue2.date,      author: messages.hardcoded.editorialTeam,
+      date: magazine.issues.issue2.date,
+      author: messages.hardcoded.editorialTeam,
       category: magazine.categoryNames.fiqh,
-      tags: [
-        messages.hardcoded.jurisprudence,
-        messages.hardcoded.rulings
-      ]
+      tags: [messages.hardcoded.jurisprudence, messages.hardcoded.rulings],
     },
     {
       id: "3",
@@ -125,35 +127,37 @@ export default async function EnhancedMagazinePage({
       description: magazine.issues.issue3.description,
       coverImage: "/images/magazine-cover-3.jpg",
       pdfUrl: "/pdfs/magazine-issue-3.pdf",
-      date: magazine.issues.issue3.date,      author: messages.hardcoded.editorialTeam,
+      date: magazine.issues.issue3.date,
+      author: messages.hardcoded.editorialTeam,
       category: magazine.categoryNames.prophetBiography,
-      tags: [
-        messages.hardcoded.prophetsBiography,
-        messages.hardcoded.ethics
-      ]
+      tags: [messages.hardcoded.prophetsBiography, messages.hardcoded.ethics],
     },
   ];
   // Enhanced categories with descriptions and icons
   const categories: Category[] = [
     {
-      id: "1",      name: magazine.categoryNames.aqeedah,
+      id: "1",
+      name: magazine.categoryNames.aqeedah,
       description: messages.hardcoded.articlesAboutIslamic,
-      icon: "🕌"
+      icon: "🕌",
     },
     {
-      id: "2",      name: magazine.categoryNames.fiqh,
+      id: "2",
+      name: magazine.categoryNames.fiqh,
       description: messages.hardcoded.islamicJurisprudenceRulings,
-      icon: "⚖️"
+      icon: "⚖️",
     },
     {
-      id: "3",      name: magazine.categoryNames.prophetBiography,
+      id: "3",
+      name: magazine.categoryNames.prophetBiography,
       description: messages.hardcoded.biographyOfProphet,
-      icon: "📖"
+      icon: "📖",
     },
     {
-      id: "4",      name: magazine.categoryNames.islamicHistory,
+      id: "4",
+      name: magazine.categoryNames.islamicHistory,
       description: messages.hardcoded.historyOfIslamic,
-      icon: "🏛️"
+      icon: "🏛️",
     },
   ];
 
@@ -171,26 +175,26 @@ export default async function EnhancedMagazinePage({
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": magazine.title,
-    "description": magazine.description,
-    "url": `https://your-domain.com/${locale}/magazine`,
-    "inLanguage": locale,
-    "potentialAction": {
+    name: magazine.title,
+    description: magazine.description,
+    url: `https://your-domain.com/${locale}/magazine`,
+    inLanguage: locale,
+    potentialAction: {
       "@type": "SearchAction",
-      "target": {
+      target: {
         "@type": "EntryPoint",
-        "urlTemplate": `https://your-domain.com/${locale}/magazine/search?q={search_term_string}`
+        urlTemplate: `https://your-domain.com/${locale}/magazine/search?q={search_term_string}`,
       },
-      "query-input": "required name=search_term_string"
+      "query-input": "required name=search_term_string",
     },
-    "publisher": {
+    publisher: {
       "@type": "Organization",
-      "name": "Hurass Magazine",
-      "logo": {
+      name: "Hurass Magazine",
+      logo: {
         "@type": "ImageObject",
-        "url": "https://your-domain.com/logo.png"
-      }
-    }
+        url: "https://your-domain.com/logo.png",
+      },
+    },
   };
 
   return (
@@ -199,17 +203,19 @@ export default async function EnhancedMagazinePage({
       <SkipLinks links={skipLinks} />
 
       {/* Performance monitoring in development */}
-      {process.env.NODE_ENV === 'development' && (
+      {process.env.NODE_ENV === "development" && (
         <Suspense fallback={null}>
           <EnhancedPerformanceMonitor />
         </Suspense>
       )}
 
       <main id="main-content" className="space-y-12" role="main">
-        {/* Hero Section */}          
+        {/* Hero Section */}
         <section className="bg-gradient-to-r from-emerald-700 to-emerald-500 text-white py-20 rounded-lg">
           <div className="container mx-auto sm:px-4 px-2 flex flex-col items-center text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">{magazine.title}</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+              {magazine.title}
+            </h1>
             <p className="text-xl max-w-2xl mb-8">{magazine.description}</p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Link
@@ -226,9 +232,9 @@ export default async function EnhancedMagazinePage({
               </Link>
             </div>
           </div>
-        </section>        
- 
-         {/* Latest Issues Section */}
+        </section>
+
+        {/* Latest Issues Section */}
         <section
           id="latest-issues"
           className="pb-12"
@@ -236,9 +242,13 @@ export default async function EnhancedMagazinePage({
         >
           <div className="container mx-auto sm:px-4 px-2">
             <div className="mb-12 flex justify-between items-center">
-              <h2 id="latest-issues-heading" className="text-3xl font-bold text-emerald-800">
+              <h2
+                id="latest-issues-heading"
+                className="text-3xl font-bold text-emerald-800"
+              >
                 {magazine.latestIssues}
-              </h2>              <Link
+              </h2>{" "}
+              <Link
                 href={`/${locale}/magazine/all`}
                 className="inline-flex items-center text-emerald-600 hover:text-emerald-800 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 rounded-lg sm:px-4 px-2 py-2 font-semibold hover:bg-emerald-50"
                 aria-label={`${magazine.allIssues} - ${messages.hardcoded.opensInNewPage}`}
@@ -251,7 +261,12 @@ export default async function EnhancedMagazinePage({
                   viewBox="0 0 24 24"
                   aria-hidden="true"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 7l5 5m0 0l-5 5m5-5H6"
+                  />
                 </svg>
               </Link>
             </div>
@@ -261,20 +276,23 @@ export default async function EnhancedMagazinePage({
               columns={3}
             />
           </div>
-        </section>        
+        </section>
         {/* PDF Viewer Section */}
         <section id="pdf-viewer" aria-labelledby="pdf-viewer-heading">
-          <div className="container mx-auto sm:px-4 px-2">            
-              <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200">
-                <Suspense fallback={
+          <div className="container mx-auto sm:px-4 px-2">
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200">
+              <Suspense
+                fallback={
                   <div className="h-96 bg-gray-100 animate-pulse flex items-center justify-center">
                     <div className="text-center">
-                      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto mb-4"></div>                    <p className="text-gray-600">
+                      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto mb-4"></div>{" "}
+                      <p className="text-gray-600">
                         {messages.hardcoded.loadingPDFViewer}
                       </p>
                     </div>
                   </div>
-                }>
+                }
+              >
                 <PDFViewerSection
                   pdfUrl={`/pdfs/${selectedIssue?.id}.pdf`}
                   title={selectedIssue?.title || magazine.title}
@@ -283,7 +301,7 @@ export default async function EnhancedMagazinePage({
               </Suspense>
             </div>
           </div>
-        </section>        
+        </section>
         {/* Categories Section */}
         <section
           id="categories"
@@ -292,9 +310,13 @@ export default async function EnhancedMagazinePage({
         >
           <div className="container mx-auto sm:px-4 px-2">
             <div className="text-center mb-12">
-              <h2 id="categories-heading" className="text-3xl font-bold text-emerald-800 mb-4">
+              <h2
+                id="categories-heading"
+                className="text-3xl font-bold text-emerald-800 mb-4"
+              >
                 {magazine.categories}
-              </h2>              <p className="text-gray-600 max-w-2xl mx-auto">
+              </h2>{" "}
+              <p className="text-gray-600 max-w-2xl mx-auto">
                 {messages.hardcoded.exploreSections}
               </p>
             </div>
@@ -307,9 +329,7 @@ export default async function EnhancedMagazinePage({
                   className="block bg-white border border-gray-200 p-6 rounded-lg text-center hover:bg-emerald-50 hover:border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-colors shadow-md hover:shadow-lg"
                   aria-label={`${messages.hardcoded.browseCategoryText}: ${category.name}`}
                 >
-                  <div className="text-3xl mb-4">
-                    {category.icon}
-                  </div>
+                  <div className="text-3xl mb-4">{category.icon}</div>
                   <h3 className="font-bold text-lg text-emerald-900 mb-2">
                     {category.name}
                   </h3>
@@ -317,32 +337,49 @@ export default async function EnhancedMagazinePage({
                     <p className="text-gray-600 text-sm mb-4">
                       {category.description}
                     </p>
-                  )}                  <div className="inline-flex items-center text-emerald-600 font-medium">
+                  )}{" "}
+                  <div className="inline-flex items-center text-emerald-600 font-medium">
                     {messages.hardcoded.browse}
-                    <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    <svg
+                      className="w-4 h-4 ml-1"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
                     </svg>
                   </div>
                 </Link>
               ))}
             </div>
           </div>
-        </section>        
+        </section>
         {/* Newsletter Subscription Section */}
-        <section className="py-12 bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-lg text-white" aria-labelledby="newsletter-heading">
-          <div className="container mx-auto sm:px-4 px-2 text-center">            <h2 id="newsletter-heading" className="text-3xl font-bold mb-4">
+        <section
+          className="py-12 bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-lg text-white"
+          aria-labelledby="newsletter-heading"
+        >
+          <div className="container mx-auto sm:px-4 px-2 text-center">
+            {" "}
+            <h2 id="newsletter-heading" className="text-3xl font-bold mb-4">
               {messages.newsletter.subscribeTitle}
-            </h2>            <p className="text-emerald-100 mb-8 max-w-2xl mx-auto">
+            </h2>{" "}
+            <p className="text-emerald-100 mb-8 max-w-2xl mx-auto">
               {messages.newsletter.subscribeDescription}
             </p>
-
             <form className="max-w-md mx-auto flex gap-3">
               <input
                 type="email"
                 placeholder={messages.newsletter.enterEmail}
                 className="flex-1 sm:px-4 px-2 py-3 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-300"
                 required
-              />              <button
+              />{" "}
+              <button
                 type="submit"
                 className="px-6 py-3 bg-white text-emerald-600 rounded-md font-semibold hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:ring-offset-2 focus:ring-offset-emerald-600"
               >

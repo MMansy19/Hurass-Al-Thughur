@@ -1,7 +1,7 @@
 "use client";
 
-import { ReactNode, forwardRef } from 'react';
-import { Document, Page } from 'react-pdf';
+import { ReactNode, forwardRef } from "react";
+import { Document, Page } from "react-pdf";
 
 interface LoadingProps {
   loadingText: string;
@@ -38,14 +38,25 @@ export function PDFError({ errorTitle, errorMessage }: ErrorProps) {
     <div className="p-8 max-w-lg mx-auto">
       <div className="bg-red-50 border border-red-200 rounded-xl p-6 shadow-sm">
         <div className="flex items-center text-red-600 mb-3">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 mr-3"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
           </svg>
           <h3 className="font-semibold text-lg">{errorTitle}</h3>
         </div>
         <p className="text-gray-700 mb-4">{errorMessage}</p>
-        <button 
-          onClick={() => window.location.reload()} 
+        <button
+          onClick={() => window.location.reload()}
           className="sm:px-4 px-2 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
         >
           Try Again
@@ -64,19 +75,19 @@ interface PDFContainerProps {
  * Enhanced container for PDF viewer with fullscreen support
  */
 export const PDFContainer = forwardRef<HTMLDivElement, PDFContainerProps>(
-  ({ children, className = '' }, ref) => {
+  ({ children, className = "" }, ref) => {
     return (
-      <div 
+      <div
         ref={ref}
         className={`w-full h-screen flex flex-col bg-gray-100 border border-gray-200 rounded-lg overflow-hidden shadow-lg relative ${className}`}
       >
         {children}
       </div>
     );
-  }
+  },
 );
 
-PDFContainer.displayName = 'PDFContainer';
+PDFContainer.displayName = "PDFContainer";
 
 interface PDFDocumentWrapperProps {
   children: ReactNode;
@@ -86,7 +97,10 @@ interface PDFDocumentWrapperProps {
 /**
  * Enhanced wrapper for PDF document content
  */
-export function PDFDocumentWrapper({ children, className = '' }: PDFDocumentWrapperProps) {
+export function PDFDocumentWrapper({
+  children,
+  className = "",
+}: PDFDocumentWrapperProps) {
   return (
     <div className={`flex-1 bg-gray-50 overflow-auto p-2 sm:p-4 ${className}`}>
       <div className="min-h-full flex flex-col items-center justify-center">
@@ -98,8 +112,8 @@ export function PDFDocumentWrapper({ children, className = '' }: PDFDocumentWrap
 
 interface PDFSidebarProps {
   children: ReactNode;
-  mode?: 'thumbnails' | 'outline' | 'bookmarks';
-  onModeChange?: (mode: 'thumbnails' | 'outline' | 'bookmarks') => void;
+  mode?: "thumbnails" | "outline" | "bookmarks";
+  onModeChange?: (mode: "thumbnails" | "outline" | "bookmarks") => void;
   isMobile?: boolean;
   onClose?: () => void;
 }
@@ -107,16 +121,20 @@ interface PDFSidebarProps {
 /**
  * Sidebar for PDF thumbnails and navigation
  */
-export function PDFSidebar({ children, isMobile = false, onClose }: PDFSidebarProps) {
+export function PDFSidebar({
+  children,
+  isMobile = false,
+  onClose,
+}: PDFSidebarProps) {
   if (isMobile) {
     return (
       <div className="fixed inset-0 z-50 flex">
         {/* Backdrop */}
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-50" 
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50"
           onClick={onClose}
         />
-        
+
         {/* Sidebar */}
         <div className="relative w-80 max-w-[80vw] bg-white shadow-xl overflow-y-auto">
           <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between">
@@ -127,14 +145,22 @@ export function PDFSidebar({ children, isMobile = false, onClose }: PDFSidebarPr
               onClick={onClose}
               className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
             >
-              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <svg
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </button>
           </div>
-          <div className="p-4">
-            {children}
-          </div>
+          <div className="p-4">{children}</div>
         </div>
       </div>
     );
@@ -165,7 +191,13 @@ interface PDFThumbnailsProps {
 /**
  * Thumbnails component for PDF pages
  */
-export function PDFThumbnails({ file, numPages, currentPage, onPageSelect, scale }: PDFThumbnailsProps) {
+export function PDFThumbnails({
+  file,
+  numPages,
+  currentPage,
+  onPageSelect,
+  scale,
+}: PDFThumbnailsProps) {
   if (!numPages) return null;
 
   return (
@@ -173,14 +205,14 @@ export function PDFThumbnails({ file, numPages, currentPage, onPageSelect, scale
       {Array.from(new Array(numPages), (_, index) => {
         const pageNumber = index + 1;
         const isCurrentPage = pageNumber === currentPage;
-        
+
         return (
           <div
             key={`thumbnail_${pageNumber}`}
             className={`relative cursor-pointer rounded-lg border-2 transition-all hover:shadow-md ${
-              isCurrentPage 
-                ? 'border-emerald-500 bg-emerald-50 shadow-md' 
-                : 'border-gray-200 hover:border-gray-300'
+              isCurrentPage
+                ? "border-emerald-500 bg-emerald-50 shadow-md"
+                : "border-gray-200 hover:border-gray-300"
             }`}
             onClick={() => onPageSelect(pageNumber)}
           >
@@ -195,9 +227,13 @@ export function PDFThumbnails({ file, numPages, currentPage, onPageSelect, scale
                 />
               </Document>
             </div>
-            <div className={`absolute bottom-1 left-1 right-1 text-xs text-center py-1 rounded ${
-              isCurrentPage ? 'bg-emerald-600 text-white' : 'bg-black bg-opacity-50 text-white'
-            }`}>
+            <div
+              className={`absolute bottom-1 left-1 right-1 text-xs text-center py-1 rounded ${
+                isCurrentPage
+                  ? "bg-emerald-600 text-white"
+                  : "bg-black bg-opacity-50 text-white"
+              }`}
+            >
               {pageNumber}
             </div>
           </div>
@@ -206,7 +242,6 @@ export function PDFThumbnails({ file, numPages, currentPage, onPageSelect, scale
     </div>
   );
 }
-
 
 interface PDFAnnotationsProps {
   annotations: any[];
@@ -217,7 +252,11 @@ interface PDFAnnotationsProps {
 /**
  * Annotations overlay component
  */
-export function PDFAnnotations({ annotations, onRemove, onEdit }: PDFAnnotationsProps) {
+export function PDFAnnotations({
+  annotations,
+  onRemove,
+  onEdit,
+}: PDFAnnotationsProps) {
   if (annotations.length === 0) return null;
 
   return (
@@ -231,7 +270,7 @@ export function PDFAnnotations({ annotations, onRemove, onEdit }: PDFAnnotations
             top: annotation.position.y,
           }}
         >
-          {annotation.type === 'highlight' && (
+          {annotation.type === "highlight" && (
             <div
               className="bg-yellow-300 bg-opacity-50 border border-yellow-400 rounded"
               style={{
@@ -240,13 +279,19 @@ export function PDFAnnotations({ annotations, onRemove, onEdit }: PDFAnnotations
               }}
             />
           )}
-          
-          {annotation.type === 'note' && (
+
+          {annotation.type === "note" && (
             <div className="bg-blue-500 text-white p-1 rounded shadow-lg min-w-[200px]">
               <div className="text-xs">{annotation.content}</div>
               <div className="flex gap-1 mt-1">
                 <button
-                  onClick={() => onEdit(annotation.id, prompt('Edit note:', annotation.content) || annotation.content)}
+                  onClick={() =>
+                    onEdit(
+                      annotation.id,
+                      prompt("Edit note:", annotation.content) ||
+                        annotation.content,
+                    )
+                  }
                   className="text-xs bg-blue-600 hover:bg-blue-700 px-1 py-0.5 rounded"
                 >
                   Edit

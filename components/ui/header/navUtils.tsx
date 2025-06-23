@@ -1,5 +1,12 @@
-import { ReactNode } from 'react';
-import { HomeIcon, MagazineIcon, DawahIcon, LibraryIcon, ContactIcon, ArticlesIcon } from './Icons';
+import { ReactNode } from "react";
+import {
+  HomeIcon,
+  MagazineIcon,
+  DawahIcon,
+  LibraryIcon,
+  ContactIcon,
+  ArticlesIcon,
+} from "./Icons";
 
 interface NavLink {
   href: string;
@@ -24,43 +31,47 @@ interface NavLinkParams {
 /**
  * Generate navigation links based on current path and locale
  */
-export const buildNavLinks = ({ locale, pathname, messages }: NavLinkParams): NavLink[] => {
+export const buildNavLinks = ({
+  locale,
+  pathname,
+  messages,
+}: NavLinkParams): NavLink[] => {
   return [
     {
       href: `/${locale}`,
       icon: <HomeIcon />,
       text: messages.home,
-      isActive: pathname === `/${locale}` || pathname === '/',
+      isActive: pathname === `/${locale}` || pathname === "/",
     },
     {
       href: `/${locale}/magazine`,
       icon: <MagazineIcon />,
       text: messages.magazine,
-      isActive: pathname.includes('/magazine'),
+      isActive: pathname.includes("/magazine"),
     },
     {
       href: `/${locale}/dawah`,
       icon: <DawahIcon />,
       text: messages.dawah,
-      isActive: pathname.includes('/dawah'),
+      isActive: pathname.includes("/dawah"),
     },
     {
       href: `/${locale}/library`,
       icon: <LibraryIcon />,
       text: messages.library,
-      isActive: pathname.includes('/library'),
+      isActive: pathname.includes("/library"),
     },
     {
       href: `/${locale}/articles`,
       icon: <ArticlesIcon />,
       text: messages.articles,
-      isActive: pathname.includes('/articles'),
+      isActive: pathname.includes("/articles"),
     },
     {
       href: `/${locale}/contact`,
       icon: <ContactIcon />,
       text: messages.contact,
-      isActive: pathname.includes('/contact'),
+      isActive: pathname.includes("/contact"),
     },
   ];
 };

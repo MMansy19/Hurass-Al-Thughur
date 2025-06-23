@@ -1,10 +1,10 @@
-import { createTranslator } from 'next-intl';
+import { createTranslator } from "next-intl";
 
-export function getTranslations(locale: string, namespace: string = 'common') {
+export function getTranslations(locale: string, namespace: string = "common") {
   try {
     // Import locale files dynamically
     const messages = require(`../locales/${locale}.json`);
-    
+
     // Create a translator with the messages
     return createTranslator({ locale, messages, namespace });
   } catch (error) {

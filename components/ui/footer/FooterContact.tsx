@@ -10,7 +10,10 @@ interface FooterContactProps {
   contactItems: ContactItem[];
 }
 
-export default function FooterContact({ title, contactItems }: FooterContactProps) {
+export default function FooterContact({
+  title,
+  contactItems,
+}: FooterContactProps) {
   return (
     <div>
       <h3 className="text-lg font-bold mb-4 border-b border-emerald-700 pb-2">

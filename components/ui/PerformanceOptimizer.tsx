@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import React from 'react';
-import { CSSOptimizer } from '@/utils/css-optimization';
+import React from "react";
+import { CSSOptimizer } from "@/utils/css-optimization";
 
 interface PerformanceOptimizerProps {
   children: React.ReactNode;
@@ -14,7 +14,7 @@ export const PerformanceOptimizer: React.FC<PerformanceOptimizerProps> = ({
   children,
   enableCriticalCSS = true,
   enableDeferredLoading = true,
-  className = ''
+  className = "",
 }) => {
   const optimizer = CSSOptimizer.getInstance();
 
@@ -22,9 +22,9 @@ export const PerformanceOptimizer: React.FC<PerformanceOptimizerProps> = ({
     if (enableCriticalCSS) {
       // Track critical CSS usage
       const observer = new MutationObserver(() => {
-        document.querySelectorAll('[class]').forEach(element => {
-          const classes = element.className.split(' ');
-          classes.forEach(cls => optimizer.trackUsedClass(cls));
+        document.querySelectorAll("[class]").forEach((element) => {
+          const classes = element.className.split(" ");
+          classes.forEach((cls) => optimizer.trackUsedClass(cls));
         });
       });
 
@@ -32,12 +32,12 @@ export const PerformanceOptimizer: React.FC<PerformanceOptimizerProps> = ({
         childList: true,
         subtree: true,
         attributes: true,
-        attributeFilter: ['class']
+        attributeFilter: ["class"],
       });
 
       return () => observer.disconnect();
     }
-    
+
     // Return empty cleanup function for consistency
     return () => {};
   }, [enableCriticalCSS, optimizer]);
@@ -47,7 +47,7 @@ export const PerformanceOptimizer: React.FC<PerformanceOptimizerProps> = ({
     if (enableDeferredLoading) {
       // Future implementation: Load non-critical CSS asynchronously
       // This prevents the unused parameter warning
-      console.debug('Deferred loading enabled for PerformanceOptimizer');
+      console.debug("Deferred loading enabled for PerformanceOptimizer");
     }
   }, [enableDeferredLoading]);
 

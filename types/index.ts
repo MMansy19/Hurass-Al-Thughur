@@ -12,7 +12,7 @@ export interface Magazine {
   downloadCount?: number;
   fileSize?: string;
   pageCount?: number;
-  language: 'ar' | 'en';
+  language: "ar" | "en";
   tags?: string[];
   author?: string;
   slug: string;
@@ -34,7 +34,7 @@ export interface SEOData {
   keywords?: string[];
   image?: string;
   url?: string;
-  type?: 'website' | 'article' | 'book' | 'profile';
+  type?: "website" | "article" | "book" | "profile";
   publishedTime?: string;
   modifiedTime?: string;
   author?: string;
@@ -50,7 +50,7 @@ export interface NavigationItem {
 }
 
 export interface LocaleParams {
-  locale: 'ar' | 'en';
+  locale: "ar" | "en";
 }
 
 export interface PageParams extends LocaleParams {
@@ -83,14 +83,14 @@ export interface PerformanceMetrics {
 export interface AccessibilitySettings {
   highContrast: boolean;
   reducedMotion: boolean;
-  fontSize: 'small' | 'medium' | 'large' | 'extra-large';
+  fontSize: "small" | "medium" | "large" | "extra-large";
   focusIndicator: boolean;
   screenReaderMode: boolean;
 }
 
 export interface UserPreferences {
-  language: 'ar' | 'en';
-  theme: 'light' | 'dark' | 'auto';
+  language: "ar" | "en";
+  theme: "light" | "dark" | "auto";
   accessibility: AccessibilitySettings;
   notifications: {
     newMagazines: boolean;
@@ -111,12 +111,12 @@ export interface ErrorInfo {
 
 // Web Vitals types
 export interface WebVitalsMetric {
-  name: 'CLS' | 'FCP' | 'FID' | 'LCP' | 'TTFB' | 'INP';
+  name: "CLS" | "FCP" | "FID" | "LCP" | "TTFB" | "INP";
   value: number;
   delta: number;
   entries: PerformanceEntry[];
   id: string;
-  navigationType: 'navigate' | 'reload' | 'back_forward' | 'prerender';
+  navigationType: "navigate" | "reload" | "back_forward" | "prerender";
 }
 
 // PDF Viewer types
@@ -140,7 +140,7 @@ export interface SearchResult {
   id: string;
   title: string;
   description: string;
-  type: 'magazine' | 'category' | 'page';
+  type: "magazine" | "category" | "page";
   url: string;
   relevance: number;
   highlight?: string;
@@ -150,10 +150,10 @@ export interface SearchFilters {
   category?: string;
   dateFrom?: Date;
   dateTo?: Date;
-  language?: 'ar' | 'en';
+  language?: "ar" | "en";
   featured?: boolean;
-  sortBy?: 'relevance' | 'date' | 'title' | 'popularity';
-  sortOrder?: 'asc' | 'desc';
+  sortBy?: "relevance" | "date" | "title" | "popularity";
+  sortOrder?: "asc" | "desc";
 }
 
 // Form types
@@ -169,14 +169,14 @@ export interface NewsletterForm {
   email: string;
   preferences: {
     categories: string[];
-    frequency: 'daily' | 'weekly' | 'monthly';
+    frequency: "daily" | "weekly" | "monthly";
   };
 }
 
 // Analytics types
 export interface AnalyticsEvent {
   name: string;
-  category: 'engagement' | 'navigation' | 'download' | 'error' | 'performance';
+  category: "engagement" | "navigation" | "download" | "error" | "performance";
   properties?: Record<string, any>;
   timestamp: Date;
   sessionId: string;
@@ -187,7 +187,7 @@ export interface AnalyticsEvent {
 export interface BaseComponentProps {
   className?: string;
   children?: React.ReactNode;
-  'data-testid'?: string;
+  "data-testid"?: string;
 }
 
 export interface LinkProps extends BaseComponentProps {
@@ -196,17 +196,17 @@ export interface LinkProps extends BaseComponentProps {
   download?: boolean;
   rel?: string;
   target?: string;
-  'aria-label'?: string;
+  "aria-label"?: string;
 }
 
 export interface ButtonProps extends BaseComponentProps {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: "primary" | "secondary" | "outline" | "ghost" | "danger";
+  size?: "sm" | "md" | "lg";
   disabled?: boolean;
   loading?: boolean;
-  type?: 'button' | 'submit' | 'reset';
+  type?: "button" | "submit" | "reset";
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  'aria-label'?: string;
+  "aria-label"?: string;
 }
 
 export interface ImageProps extends BaseComponentProps {
@@ -215,7 +215,7 @@ export interface ImageProps extends BaseComponentProps {
   width?: number;
   height?: number;
   priority?: boolean;
-  placeholder?: 'blur' | 'empty';
+  placeholder?: "blur" | "empty";
   blurDataURL?: string;
   quality?: number;
   fill?: boolean;
@@ -225,10 +225,10 @@ export interface ImageProps extends BaseComponentProps {
 }
 
 // Utility types
-export type Locale = 'ar' | 'en';
-export type Theme = 'light' | 'dark' | 'auto';
-export type SortOrder = 'asc' | 'desc';
-export type LoadingState = 'idle' | 'loading' | 'success' | 'error';
+export type Locale = "ar" | "en";
+export type Theme = "light" | "dark" | "auto";
+export type SortOrder = "asc" | "desc";
+export type LoadingState = "idle" | "loading" | "success" | "error";
 
 // Generic utility types
 export type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
@@ -238,18 +238,18 @@ export type DeepPartial<T> = {
 };
 
 // API endpoint types
-export type APIEndpoint = 
-  | '/api/magazines'
-  | '/api/magazines/[id]'
-  | '/api/categories'
-  | '/api/search'
-  | '/api/contact'
-  | '/api/newsletter'
-  | '/api/analytics';
+export type APIEndpoint =
+  | "/api/magazines"
+  | "/api/magazines/[id]"
+  | "/api/categories"
+  | "/api/search"
+  | "/api/contact"
+  | "/api/newsletter"
+  | "/api/analytics";
 
 // Environment variables
 export interface EnvironmentVariables {
-  NODE_ENV: 'development' | 'production' | 'test';
+  NODE_ENV: "development" | "production" | "test";
   NEXT_PUBLIC_SITE_URL: string;
   NEXT_PUBLIC_GA_ID?: string;
   NEXT_PUBLIC_HOTJAR_ID?: string;

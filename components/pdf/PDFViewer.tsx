@@ -26,7 +26,7 @@ import {
   PDFError,
   PDFSidebar,
   PDFThumbnails,
-  PDFAnnotations
+  PDFAnnotations,
 } from "./ui/PDFComponents";
 
 interface PDFViewerProps {
@@ -70,8 +70,9 @@ export default function PDFViewer({
   onError,
   enableAnnotations = true,
   enableBookmarks = true,
-  className = ""
-}: PDFViewerProps) {  // Use custom hook for PDF viewer functionality FIRST
+  className = "",
+}: PDFViewerProps) {
+  // Use custom hook for PDF viewer functionality FIRST
   const {
     numPages,
     pageNumber,
@@ -84,13 +85,17 @@ export default function PDFViewer({
     resetZoom,
     onDocumentLoadSuccess: baseOnDocumentLoadSuccess,
     setPageNumber,
-    setScale
+    setScale,
   } = usePDFViewer();
 
   // Enhanced state management
-  const [viewMode, setViewMode] = useState<'single' | 'continuous' | 'facing'>('single');
+  const [viewMode, setViewMode] = useState<"single" | "continuous" | "facing">(
+    "single",
+  );
   const [showSidebar, setShowSidebar] = useState(false);
-  const [sidebarMode, setSidebarMode] = useState<'thumbnails' | 'outline' | 'bookmarks'>('thumbnails');
+  const [sidebarMode, setSidebarMode] = useState<
+    "thumbnails" | "outline" | "bookmarks"
+  >("thumbnails");
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [annotations, setAnnotations] = useState<any[]>([]);
   const [bookmarks, setBookmarks] = useState<any[]>([]);
@@ -105,23 +110,30 @@ export default function PDFViewer({
     setupWorker();
   }, []);
   // Enhanced document load handler
-  const onDocumentLoadSuccess = useCallback((pdf: any) => {
-    baseOnDocumentLoadSuccess(pdf);
+  const onDocumentLoadSuccess = useCallback(
+    (pdf: any) => {
+      baseOnDocumentLoadSuccess(pdf);
 
-    // Extract outline/bookmarks if available
-    pdf.getOutline().then((outline: any) => {
-      if (outline) {
-        setBookmarks(outline);
-      }
-    }).catch(() => {
-      // No outline available
-    });
-  }, [baseOnDocumentLoadSuccess]);
+      // Extract outline/bookmarks if available
+      pdf
+        .getOutline()
+        .then((outline: any) => {
+          if (outline) {
+            setBookmarks(outline);
+          }
+        })
+        .catch(() => {
+          // No outline available
+        });
+    },
+    [baseOnDocumentLoadSuccess],
+  );
 
   // Enhanced zoom functions
   const fitWidth = useCallback(() => {
     if (containerRef.current && pageWidth > 0) {
-      const containerWidth = containerRef.current.offsetWidth - (showSidebar ? 300 : 40);
+      const containerWidth =
+        containerRef.current.offsetWidth - (showSidebar ? 300 : 40);
       const newScale = Math.max(0.1, Math.min(3.0, containerWidth / pageWidth));
       setScale(newScale);
     }
@@ -130,12 +142,16 @@ export default function PDFViewer({
     if (containerRef.current) {
       const containerHeight = containerRef.current.offsetHeight - 100;
       const pageHeight = 842; // Standard A4 height in points
-      const containerWidth = containerRef.current.offsetWidth - (showSidebar ? 300 : 40);
+      const containerWidth =
+        containerRef.current.offsetWidth - (showSidebar ? 300 : 40);
       const pageWidthPoints = 595; // Standard A4 width in points
 
       const scaleHeight = containerHeight / pageHeight;
       const scaleWidth = containerWidth / pageWidthPoints;
-      const newScale = Math.max(0.1, Math.min(3.0, Math.min(scaleHeight, scaleWidth)));
+      const newScale = Math.max(
+        0.1,
+        Math.min(3.0, Math.min(scaleHeight, scaleWidth)),
+      );
       setScale(newScale);
     }
   }, [showSidebar, setScale]);
@@ -152,32 +168,40 @@ export default function PDFViewer({
   }, []);
 
   const removeAnnotation = useCallback((id: string) => {
-    setAnnotations(prev => prev.filter(annotation => annotation.id !== id));
+    setAnnotations((prev) => prev.filter((annotation) => annotation.id !== id));
   }, []);
 
   // Bookmark functionality
-  const toggleBookmark = useCallback((pageNum: number) => {
-    const existingBookmark = bookmarks.find(b => b.page === pageNum);
-    if (existingBookmark) {
-      setBookmarks(prev => prev.filter(b => b.page !== pageNum));
-    } else {
-      const newBookmark = {
-        id: Date.now().toString(),
-        page: pageNum,
-        title: `Page ${pageNum}`,
-        timestamp: new Date().toISOString()
-      };
-      setBookmarks(prev => [...prev, newBookmark].sort((a, b) => a.page - b.page));
-    }
-  }, [bookmarks]);
+  const toggleBookmark = useCallback(
+    (pageNum: number) => {
+      const existingBookmark = bookmarks.find((b) => b.page === pageNum);
+      if (existingBookmark) {
+        setBookmarks((prev) => prev.filter((b) => b.page !== pageNum));
+      } else {
+        const newBookmark = {
+          id: Date.now().toString(),
+          page: pageNum,
+          title: `Page ${pageNum}`,
+          timestamp: new Date().toISOString(),
+        };
+        setBookmarks((prev) =>
+          [...prev, newBookmark].sort((a, b) => a.page - b.page),
+        );
+      }
+    },
+    [bookmarks],
+  );
 
   // Page measurement for responsive scaling
-  const onPageLoadSuccess = useCallback((page: any) => {
-    if (pageWidth === 0) {
-      const viewport = page.getViewport({ scale: 1 });
-      setPageWidth(viewport.width);
-    }
-  }, [pageWidth]);
+  const onPageLoadSuccess = useCallback(
+    (page: any) => {
+      if (pageWidth === 0) {
+        const viewport = page.getViewport({ scale: 1 });
+        setPageWidth(viewport.width);
+      }
+    },
+    [pageWidth],
+  );
 
   // Keyboard shortcuts with enhanced functionality
   useEffect(() => {
@@ -187,48 +211,48 @@ export default function PDFViewer({
       if (e.target instanceof HTMLInputElement) return;
 
       switch (e.key) {
-        case 'ArrowLeft':
+        case "ArrowLeft":
           e.preventDefault();
           changePage(-1);
           break;
-        case 'ArrowRight':
+        case "ArrowRight":
           e.preventDefault();
           changePage(1);
           break;
-        case 'Home':
+        case "Home":
           e.preventDefault();
           setPageNumber(1);
           break;
-        case 'End':
+        case "End":
           e.preventDefault();
           setPageNumber(numPages);
           break;
-        case '+':
-        case '=':
+        case "+":
+        case "=":
           e.preventDefault();
           zoomIn();
           break;
-        case '-':
+        case "-":
           e.preventDefault();
           zoomOut();
           break;
-        case '0':
+        case "0":
           if (e.ctrlKey) {
             e.preventDefault();
             resetZoom();
           }
           break;
-        case 'F11':
+        case "F11":
           e.preventDefault();
           toggleFullscreen();
           break;
-        case 'Escape':
+        case "Escape":
           if (isFullscreen) {
             e.preventDefault();
             toggleFullscreen();
           }
           break;
-        case 'b':
+        case "b":
           if (e.ctrlKey) {
             e.preventDefault();
             toggleBookmark(pageNumber);
@@ -237,9 +261,20 @@ export default function PDFViewer({
       }
     };
 
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
-  }, [pageNumber, numPages, changePage, setPageNumber, zoomIn, zoomOut, resetZoom, toggleFullscreen, isFullscreen, toggleBookmark]);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [
+    pageNumber,
+    numPages,
+    changePage,
+    setPageNumber,
+    zoomIn,
+    zoomOut,
+    resetZoom,
+    toggleFullscreen,
+    isFullscreen,
+    toggleBookmark,
+  ]);
 
   // Fullscreen event listener
   useEffect(() => {
@@ -247,8 +282,9 @@ export default function PDFViewer({
       setIsFullscreen(!!document.fullscreenElement);
     };
 
-    document.addEventListener('fullscreenchange', handleFullscreenChange);
-    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () =>
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
   }, []);
 
   // Auto-fit width on container resize
@@ -256,7 +292,7 @@ export default function PDFViewer({
     if (!containerRef.current || !fitPage) return;
 
     const resizeObserver = new ResizeObserver(() => {
-      if (viewMode === 'single') {
+      if (viewMode === "single") {
         // Auto-adjust scale based on container size
         fitPage();
       }
@@ -268,9 +304,9 @@ export default function PDFViewer({
 
   // Download functionality
   const handleDownload = useCallback(() => {
-    const link = document.createElement('a');
+    const link = document.createElement("a");
     link.href = pdfFile;
-    link.download = pdfFile.split('/').pop() || 'document.pdf';
+    link.download = pdfFile.split("/").pop() || "document.pdf";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -282,19 +318,22 @@ export default function PDFViewer({
   }, []);
 
   // Sidebar mode handler
-  const toggleSidebar = useCallback((mode?: 'thumbnails' | 'outline' | 'bookmarks') => {
-    if (showSidebar && sidebarMode === mode) {
-      setShowSidebar(false);
-    } else {
-      if (mode) setSidebarMode(mode);
-      setShowSidebar(true);
-    }
-  }, [showSidebar, sidebarMode]);
+  const toggleSidebar = useCallback(
+    (mode?: "thumbnails" | "outline" | "bookmarks") => {
+      if (showSidebar && sidebarMode === mode) {
+        setShowSidebar(false);
+      } else {
+        if (mode) setSidebarMode(mode);
+        setShowSidebar(true);
+      }
+    },
+    [showSidebar, sidebarMode],
+  );
 
   return (
     <PDFContainer
       ref={containerRef}
-      className={`${isFullscreen ? 'fullscreen' : ''} ${className}`}
+      className={`${isFullscreen ? "fullscreen" : ""} ${className}`}
       data-testid="pdf-viewer"
     >
       {/* Enhanced Controls */}
@@ -306,8 +345,18 @@ export default function PDFViewer({
             disabled={pageNumber <= 1}
             label={messages.previousPage}
             icon={
-              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              <svg
+                className="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
               </svg>
             }
           />
@@ -323,8 +372,18 @@ export default function PDFViewer({
             disabled={pageNumber >= numPages}
             label={messages.nextPage}
             icon={
-              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              <svg
+                className="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
               </svg>
             }
             isNext={true}
@@ -332,7 +391,7 @@ export default function PDFViewer({
         </div>
 
         {/* View Controls */}
-        <div className="flex items-center gap-2 md:flex-row flex-col">          
+        <div className="flex items-center gap-2 md:flex-row flex-col">
           <ViewModeControl
             mode={viewMode}
             onChange={setViewMode}
@@ -357,38 +416,38 @@ export default function PDFViewer({
         </div>
 
         <div className="flex items-center gap-1 md:gap-2 flex-row">
-        {/* Advanced Controls */}        
-        <AdvancedControls
-          onToggleSidebar={() => toggleSidebar('thumbnails')}
-          onToggleThumbnails={() => toggleSidebar('thumbnails')}
-          onToggleOutline={() => toggleSidebar('outline')}
-          onDownload={handleDownload}
-          onPrint={handlePrint}
-          sidebarOpen={showSidebar && sidebarMode === 'thumbnails'}
-          outlineOpen={showSidebar && sidebarMode === 'outline'}
-          thumbnailsLabel={messages.thumbnails}
-          outlineLabel={messages.outline}
-          downloadLabel={messages.download}
-          printLabel={messages.print}
-        />
-
-        {/* Bookmark Control - Only show if enabled */}
-        {enableBookmarks && (
-          <BookmarkControl
-            isBookmarked={bookmarks.some(b => b.page === pageNumber)}
-            onToggle={() => toggleBookmark(pageNumber)}
-            onShowBookmarks={() => toggleSidebar('bookmarks')}
-            bookmarkLabel={messages.bookmark}
-            bookmarksOpen={showSidebar && sidebarMode === 'bookmarks'}
+          {/* Advanced Controls */}
+          <AdvancedControls
+            onToggleSidebar={() => toggleSidebar("thumbnails")}
+            onToggleThumbnails={() => toggleSidebar("thumbnails")}
+            onToggleOutline={() => toggleSidebar("outline")}
+            onDownload={handleDownload}
+            onPrint={handlePrint}
+            sidebarOpen={showSidebar && sidebarMode === "thumbnails"}
+            outlineOpen={showSidebar && sidebarMode === "outline"}
+            thumbnailsLabel={messages.thumbnails}
+            outlineLabel={messages.outline}
+            downloadLabel={messages.download}
+            printLabel={messages.print}
           />
-        )}
 
-        {/* Fullscreen Control */}
-        <FullscreenControl
-          isFullscreen={isFullscreen}
-          onToggle={toggleFullscreen}
-          label={messages.fullscreen}
-        />
+          {/* Bookmark Control - Only show if enabled */}
+          {enableBookmarks && (
+            <BookmarkControl
+              isBookmarked={bookmarks.some((b) => b.page === pageNumber)}
+              onToggle={() => toggleBookmark(pageNumber)}
+              onShowBookmarks={() => toggleSidebar("bookmarks")}
+              bookmarkLabel={messages.bookmark}
+              bookmarksOpen={showSidebar && sidebarMode === "bookmarks"}
+            />
+          )}
+
+          {/* Fullscreen Control */}
+          <FullscreenControl
+            isFullscreen={isFullscreen}
+            onToggle={toggleFullscreen}
+            label={messages.fullscreen}
+          />
         </div>
       </PDFControlsWrapper>
 
@@ -396,7 +455,7 @@ export default function PDFViewer({
         {/* Enhanced Sidebar */}
         {showSidebar && (
           <PDFSidebar mode={sidebarMode} onModeChange={setSidebarMode}>
-            {sidebarMode === 'thumbnails' && (
+            {sidebarMode === "thumbnails" && (
               <PDFThumbnails
                 file={pdfFile}
                 numPages={numPages}
@@ -408,7 +467,7 @@ export default function PDFViewer({
               />
             )}
 
-            {sidebarMode === 'bookmarks' && enableBookmarks && (
+            {sidebarMode === "bookmarks" && enableBookmarks && (
               <div className="p-4">
                 <h3 className="font-semibold mb-4">{messages.bookmark}</h3>
                 <div className="space-y-2">
@@ -416,11 +475,16 @@ export default function PDFViewer({
                     <button
                       key={bookmark.id}
                       onClick={() => setPageNumber(bookmark.page)}
-                      className={`w-full text-left p-2 rounded hover:bg-gray-100 ${pageNumber === bookmark.page ? 'bg-blue-100 text-blue-700' : ''
-                        }`}
+                      className={`w-full text-left p-2 rounded hover:bg-gray-100 ${
+                        pageNumber === bookmark.page
+                          ? "bg-blue-100 text-blue-700"
+                          : ""
+                      }`}
                     >
                       <div className="font-medium">{bookmark.title}</div>
-                      <div className="text-sm text-gray-500">Page {bookmark.page}</div>
+                      <div className="text-sm text-gray-500">
+                        Page {bookmark.page}
+                      </div>
                     </button>
                   ))}
                   {bookmarks.length === 0 && (
@@ -430,7 +494,7 @@ export default function PDFViewer({
               </div>
             )}
 
-            {sidebarMode === 'outline' && (
+            {sidebarMode === "outline" && (
               <div className="p-4">
                 <h3 className="font-semibold mb-4">{messages.outline}</h3>
                 <div className="space-y-1">
@@ -445,7 +509,9 @@ export default function PDFViewer({
                       </button>
                     ))
                   ) : (
-                    <p className="text-gray-500 text-sm">No outline available</p>
+                    <p className="text-gray-500 text-sm">
+                      No outline available
+                    </p>
                   )}
                 </div>
               </div>
@@ -454,7 +520,9 @@ export default function PDFViewer({
         )}
 
         {/* Main PDF Document */}
-        <PDFDocumentWrapper className={`${showSidebar ? 'with-sidebar' : ''} ${viewMode}`}>
+        <PDFDocumentWrapper
+          className={`${showSidebar ? "with-sidebar" : ""} ${viewMode}`}
+        >
           <Document
             file={pdfFile}
             onLoadSuccess={onDocumentLoadSuccess}
@@ -463,12 +531,14 @@ export default function PDFViewer({
               onError?.();
             }}
             loading={<PDFLoading loadingText={messages.loading} />}
-            error={<PDFError errorTitle={messages.error} errorMessage={error} />}
+            error={
+              <PDFError errorTitle={messages.error} errorMessage={error} />
+            }
             className="pdf-document"
           >
             {!error && (
               <>
-                {viewMode === 'single' && (
+                {viewMode === "single" && (
                   <div className="pdf-page-container">
                     <Page
                       pageNumber={pageNumber}
@@ -482,11 +552,15 @@ export default function PDFViewer({
                     {/* Render annotations for current page */}
                     {enableAnnotations && (
                       <PDFAnnotations
-                        annotations={annotations.filter(a => a.page === pageNumber)}
+                        annotations={annotations.filter(
+                          (a) => a.page === pageNumber,
+                        )}
                         onRemove={removeAnnotation}
                         onEdit={(id, content) => {
-                          setAnnotations(prev =>
-                            prev.map(a => a.id === id ? { ...a, content } : a)
+                          setAnnotations((prev) =>
+                            prev.map((a) =>
+                              a.id === id ? { ...a, content } : a,
+                            ),
                           );
                         }}
                       />
@@ -494,10 +568,13 @@ export default function PDFViewer({
                   </div>
                 )}
 
-                {viewMode === 'continuous' && (
+                {viewMode === "continuous" && (
                   <div className="pdf-continuous space-y-4">
                     {Array.from(new Array(numPages), (_, index) => (
-                      <div key={`page_${index + 1}`} className="pdf-page-container">
+                      <div
+                        key={`page_${index + 1}`}
+                        className="pdf-page-container"
+                      >
                         <Page
                           pageNumber={index + 1}
                           scale={scale}
@@ -510,11 +587,15 @@ export default function PDFViewer({
                         {/* Render annotations for each page */}
                         {enableAnnotations && (
                           <PDFAnnotations
-                            annotations={annotations.filter(a => a.page === index + 1)}
+                            annotations={annotations.filter(
+                              (a) => a.page === index + 1,
+                            )}
                             onRemove={removeAnnotation}
                             onEdit={(id, content) => {
-                              setAnnotations(prev =>
-                                prev.map(a => a.id === id ? { ...a, content } : a)
+                              setAnnotations((prev) =>
+                                prev.map((a) =>
+                                  a.id === id ? { ...a, content } : a,
+                                ),
                               );
                             }}
                           />
@@ -524,7 +605,7 @@ export default function PDFViewer({
                   </div>
                 )}
 
-                {viewMode === 'facing' && (
+                {viewMode === "facing" && (
                   <div className="pdf-facing flex gap-4 justify-center">
                     {pageNumber > 1 && (
                       <div className="pdf-page-container">

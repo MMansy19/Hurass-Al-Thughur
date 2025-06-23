@@ -4,9 +4,9 @@ import Link from "next/link";
 import SEO from "../../components/ui/SEO";
 
 // Generate metadata for the page
-export async function generateMetadata({ 
-  params
-}: { 
+export async function generateMetadata({
+  params,
+}: {
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
@@ -19,11 +19,12 @@ export async function generateMetadata({
   });
 }
 
-export default async function Home({ 
-  params
-}: { 
+export default async function Home({
+  params,
+}: {
   params: Promise<{ locale: string }>;
-}) {  const { locale } = await params;
+}) {
+  const { locale } = await params;
   // Import translations
   const messages = (await import(`../../locales/${locale}.json`)).default;
   const { home } = messages;
@@ -54,16 +55,18 @@ export default async function Home({
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-emerald-700 to-emerald-500 text-white py-20 rounded-lg">
         <div className="container mx-auto sm:px-4 px-2 flex flex-col items-center text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">{home.welcome}</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6">
+            {home.welcome}
+          </h1>
           <p className="text-xl max-w-2xl mb-8">{home.description}</p>
           <div className="flex flex-wrap gap-4 justify-center">
-            <Link 
+            <Link
               href={`/${locale}/magazine`}
               className="px-8 py-3 bg-white text-emerald-700 rounded-md font-bold hover:bg-gray-100 transition-colors"
             >
               {messages.common.magazine}
             </Link>
-            <Link 
+            <Link
               href={`/${locale}/dawah`}
               className="px-8 py-3 bg-transparent border-2 border-white text-white rounded-md font-bold hover:bg-white hover:text-emerald-700 transition-colors"
             >
@@ -88,20 +91,31 @@ export default async function Home({
       {/* Sections Grid */}
       <section className="py-12 bg-gray-50">
         <div className="container mx-auto sm:px-4 px-2">
-          <h2 className="text-3xl font-bold mb-10 text-center">{home.sections}</h2>
+          <h2 className="text-3xl font-bold mb-10 text-center">
+            {home.sections}
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {sections.map((section, index) => (
-              <div 
-                key={index} 
+              <div
+                key={index}
                 className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
               >
                 <div className="p-6 flex flex-col h-full">
                   <div className="flex justify-center mb-4">
-                    <Image src={section.image} alt={section.title} width={64} height={64} />
+                    <Image
+                      src={section.image}
+                      alt={section.title}
+                      width={64}
+                      height={64}
+                    />
                   </div>
-                  <h3 className="text-xl font-bold mb-3 text-center">{section.title}</h3>
-                  <p className="text-gray-600 flex-grow mb-4 text-center">{section.description}</p>
-                  <Link 
+                  <h3 className="text-xl font-bold mb-3 text-center">
+                    {section.title}
+                  </h3>
+                  <p className="text-gray-600 flex-grow mb-4 text-center">
+                    {section.description}
+                  </p>
+                  <Link
                     href={section.link}
                     className="text-center block w-full sm:px-4 px-2 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors mt-auto"
                   >
@@ -116,4 +130,3 @@ export default async function Home({
     </div>
   );
 }
-

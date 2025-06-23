@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 interface UsePDFViewerResult {
   numPages: number;
@@ -28,14 +28,16 @@ export function usePDFViewer(): UsePDFViewerResult {
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [scale, setScale] = useState<number>(1.0);
   const [error, setError] = useState<string | null>(null);
-  const [width, setWidth] = useState<number>(typeof window !== 'undefined' ? window.innerWidth : 1024);
-  
+  const [width, setWidth] = useState<number>(
+    typeof window !== "undefined" ? window.innerWidth : 1024,
+  );
+
   const isMobile = width < 768; // Mobile breakpoint
 
   useEffect(() => {
     const handleResize = () => setWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   // Auto-adjust scale for mobile devices
@@ -48,17 +50,17 @@ export function usePDFViewer(): UsePDFViewerResult {
   }, [isMobile]);
 
   function changePage(offset: number) {
-    setPageNumber(prev => Math.min(Math.max(1, prev + offset), numPages));
+    setPageNumber((prev) => Math.min(Math.max(1, prev + offset), numPages));
   }
 
   function zoomIn() {
     const increment = isMobile ? 0.1 : 0.2; // Smaller increments on mobile
-    setScale(s => Math.min(s + increment, isMobile ? 2 : 3));
+    setScale((s) => Math.min(s + increment, isMobile ? 2 : 3));
   }
 
   function zoomOut() {
     const decrement = isMobile ? 0.1 : 0.2; // Smaller decrements on mobile
-    setScale(s => Math.max(s - decrement, 0.3));
+    setScale((s) => Math.max(s - decrement, 0.3));
   }
 
   function resetZoom() {
@@ -69,7 +71,8 @@ export function usePDFViewer(): UsePDFViewerResult {
     setNumPages(numPages);
     setPageNumber(1);
     setError(null);
-  }  return {
+  }
+  return {
     numPages,
     pageNumber,
     scale,

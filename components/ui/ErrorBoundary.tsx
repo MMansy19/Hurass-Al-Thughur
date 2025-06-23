@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import React, { Component, ErrorInfo, ReactNode } from 'react';
+import React, { Component, ErrorInfo, ReactNode } from "react";
 
 interface Props {
   children: ReactNode;
@@ -24,15 +24,15 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('Error boundary caught an error:', error, errorInfo);
-    
+    console.error("Error boundary caught an error:", error, errorInfo);
+
     // Call the onError callback if provided
     if (this.props.onError) {
       this.props.onError(error, errorInfo);
     }
 
     // Log to external service in production
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === "production") {
       // Example: Send to error tracking service
       // Sentry.captureException(error, { contexts: { react: errorInfo } });
     }
@@ -67,25 +67,26 @@ export class ErrorBoundary extends Component<Props, State> {
               Something went wrong
             </h2>
             <p className="text-gray-600 mb-4">
-              We're sorry, but something unexpected happened. Please try refreshing the page.
+              We're sorry, but something unexpected happened. Please try
+              refreshing the page.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
               <button
-              onClick={() => window.location.reload()}
-              className="bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 w-full sm:w-auto"
+                onClick={() => window.location.reload()}
+                className="bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 w-full sm:w-auto"
               >
-              Refresh Page
+                Refresh Page
               </button>
-              
+
               <button
-              onClick={() => window.location.href = '/'}
-              className="bg-gray-600 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 w-full sm:w-auto"
+                onClick={() => (window.location.href = "/")}
+                className="bg-gray-600 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 w-full sm:w-auto"
               >
-              Back to Home
+                Back to Home
               </button>
             </div>
 
-            {process.env.NODE_ENV === 'development' && (
+            {process.env.NODE_ENV === "development" && (
               <details className="mt-4 text-left">
                 <summary className="cursor-pointer text-sm text-gray-500 hover:text-gray-700">
                   Error Details (Development)
@@ -105,13 +106,19 @@ export class ErrorBoundary extends Component<Props, State> {
 }
 
 // Async error boundary for React 18 concurrent features
-export function AsyncErrorBoundary({ children, fallback }: { children: ReactNode; fallback?: ReactNode }) {
+export function AsyncErrorBoundary({
+  children,
+  fallback,
+}: {
+  children: ReactNode;
+  fallback?: ReactNode;
+}) {
   return (
     <ErrorBoundary
       fallback={fallback}
       onError={(error, errorInfo) => {
         // Enhanced error reporting for async errors
-        console.error('Async error:', error, errorInfo);
+        console.error("Async error:", error, errorInfo);
       }}
     >
       {children}
@@ -130,7 +137,9 @@ export function PDFErrorBoundary({ children }: { children: ReactNode }) {
               <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
             </svg>
           </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">PDF Unavailable</h3>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">
+            PDF Unavailable
+          </h3>
           <p className="text-gray-600">
             We're having trouble loading the PDF viewer. Please try again later.
           </p>
@@ -158,7 +167,9 @@ export function NetworkErrorBoundary({ children }: { children: ReactNode }) {
               />
             </svg>
           </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">Connection Issue</h3>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">
+            Connection Issue
+          </h3>
           <p className="text-gray-600 mb-4">
             Please check your internet connection and try again.
           </p>

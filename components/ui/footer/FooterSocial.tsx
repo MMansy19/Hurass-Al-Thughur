@@ -1,10 +1,10 @@
 "use client";
-import React from 'react';
+import React from "react";
 
 interface SocialLink {
-    href: string;
-    icon: React.ReactNode;
-    label: string;
+  href: string;
+  icon: React.ReactNode;
+  label: string;
 }
 
 interface FooterSocialProps {
@@ -12,7 +12,10 @@ interface FooterSocialProps {
   socialLinks: SocialLink[];
 }
 
-export default function FooterSocial({ title, socialLinks }: FooterSocialProps) {
+export default function FooterSocial({
+  title,
+  socialLinks,
+}: FooterSocialProps) {
   return (
     <div>
       <h3 className="text-lg font-bold mb-4 border-b border-emerald-700 pb-2">
@@ -20,9 +23,9 @@ export default function FooterSocial({ title, socialLinks }: FooterSocialProps) 
       </h3>
       <div className="flex gap-4">
         {socialLinks.map((social, index) => (
-          <a 
+          <a
             key={index}
-            href={social.href} 
+            href={social.href}
             className="bg-emerald-800 w-10 h-10 rounded-full flex items-center justify-center hover:bg-emerald-700 transition-colors"
             aria-label={social.label}
           >

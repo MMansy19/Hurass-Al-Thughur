@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC } from "react";
 
 interface StructuredDataProps {
   data: Record<string, any>;
@@ -18,7 +18,7 @@ export const createWebsiteStructuredData = (
   name: string,
   description: string,
   url: string,
-  locale: string
+  locale: string,
 ) => ({
   "@context": "https://schema.org",
   "@type": "WebSite",
@@ -30,10 +30,10 @@ export const createWebsiteStructuredData = (
     "@type": "SearchAction",
     target: {
       "@type": "EntryPoint",
-      urlTemplate: `${url}/search?q={search_term_string}`
+      urlTemplate: `${url}/search?q={search_term_string}`,
     },
-    "query-input": "required name=search_term_string"
-  }
+    "query-input": "required name=search_term_string",
+  },
 });
 
 export const createArticleStructuredData = (
@@ -42,7 +42,7 @@ export const createArticleStructuredData = (
   author: string,
   datePublished: string,
   url: string,
-  imageUrl?: string
+  imageUrl?: string,
 ) => ({
   "@context": "https://schema.org",
   "@type": "Article",
@@ -50,23 +50,23 @@ export const createArticleStructuredData = (
   description,
   author: {
     "@type": "Person",
-    name: author
+    name: author,
   },
   datePublished,
   url,
   ...(imageUrl && {
     image: {
       "@type": "ImageObject",
-      url: imageUrl
-    }
-  })
+      url: imageUrl,
+    },
+  }),
 });
 
 export const createOrganizationStructuredData = (
   name: string,
   url: string,
   logoUrl: string,
-  description?: string
+  description?: string,
 ) => ({
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -74,13 +74,13 @@ export const createOrganizationStructuredData = (
   url,
   logo: {
     "@type": "ImageObject",
-    url: logoUrl
+    url: logoUrl,
   },
-  ...(description && { description })
+  ...(description && { description }),
 });
 
 export const createBreadcrumbStructuredData = (
-  items: Array<{ name: string; url: string }>
+  items: Array<{ name: string; url: string }>,
 ) => ({
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
@@ -88,8 +88,8 @@ export const createBreadcrumbStructuredData = (
     "@type": "ListItem",
     position: index + 1,
     name: item.name,
-    item: item.url
-  }))
+    item: item.url,
+  })),
 });
 
 export default StructuredData;

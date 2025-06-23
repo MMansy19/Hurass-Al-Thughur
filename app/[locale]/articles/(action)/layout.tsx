@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { supabase } from '@/supabase/initializing';
-import { useParams, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { supabase } from "@/supabase/initializing";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 function Layout({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
@@ -29,7 +29,11 @@ function Layout({ children }: { children: React.ReactNode }) {
   }, [locale, router]);
 
   if (loading) {
-    return <p className="text-emerald-700 text-4xl font-bold text-center py-20">{locale === 'ar' ? 'جارٍ التحميل...' : 'Loading...'}</p>;
+    return (
+      <p className="text-emerald-700 text-4xl font-bold text-center py-20">
+        {locale === "ar" ? "جارٍ التحميل..." : "Loading..."}
+      </p>
+    );
   }
   return <>{children}</>;
 }

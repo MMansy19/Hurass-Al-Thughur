@@ -16,10 +16,10 @@ export interface BundleStats {
 }
 
 export interface PerformanceBudget {
-  maxTotalSize: number;    // bytes
-  maxChunkSize: number;    // bytes  
-  maxAssetSize: number;    // bytes
-  gzipThreshold: number;   // compression ratio threshold
+  maxTotalSize: number; // bytes
+  maxChunkSize: number; // bytes
+  maxAssetSize: number; // bytes
+  gzipThreshold: number; // compression ratio threshold
 }
 
 export interface BundleAnalysis {
@@ -37,7 +37,7 @@ export interface ModuleInfo {
   size: number;
   gzippedSize: number;
   path: string;
-  type: 'js' | 'css' | 'image' | 'font' | 'other';
+  type: "js" | "css" | "image" | "font" | "other";
   duplicates?: number;
 }
 
@@ -67,12 +67,17 @@ export interface PerformanceMetrics {
 }
 
 export interface OptimizationRecommendation {
-  type: 'critical' | 'warning' | 'info';
-  category: 'bundle-size' | 'code-splitting' | 'compression' | 'caching' | 'images';
+  type: "critical" | "warning" | "info";
+  category:
+    | "bundle-size"
+    | "code-splitting"
+    | "compression"
+    | "caching"
+    | "images";
   title: string;
   description: string;
-  impact: 'high' | 'medium' | 'low';
-  effort: 'low' | 'medium' | 'high';
+  impact: "high" | "medium" | "low";
+  effort: "low" | "medium" | "high";
   recommendation: string;
   codeExample?: string;
 }
@@ -80,9 +85,9 @@ export interface OptimizationRecommendation {
 // Default performance budgets
 const DEFAULT_BUDGETS: PerformanceBudget = {
   maxTotalSize: 244 * 1024, // 244KB (recommended for mobile)
-  maxChunkSize: 128 * 1024,  // 128KB per chunk
-  maxAssetSize: 100 * 1024,  // 100KB per asset
-  gzipThreshold: 0.7        // 70% compression ratio
+  maxChunkSize: 128 * 1024, // 128KB per chunk
+  maxAssetSize: 100 * 1024, // 100KB per asset
+  gzipThreshold: 0.7, // 70% compression ratio
 };
 
 /**
@@ -109,8 +114,10 @@ export class BundleAnalyzer {
    */
   async analyzeBundleSize(): Promise<BundleAnalysis> {
     try {
-      const resources = performance.getEntriesByType('resource') as PerformanceResourceTiming[];
-      
+      const resources = performance.getEntriesByType(
+        "resource",
+      ) as PerformanceResourceTiming[];
+
       // Calculate total transferred size
       const totalSize = resources.reduce((total, resource) => {
         return total + (resource.transferSize || 0);
@@ -121,11 +128,11 @@ export class BundleAnalyzer {
 
       // Analyze chunk sizes
       const chunkSizes: Record<string, number> = {};
-      const jsResources = resources.filter(r => 
-        r.name.includes('_next/static') && r.name.endsWith('.js')
+      const jsResources = resources.filter(
+        (r) => r.name.includes("_next/static") && r.name.endsWith(".js"),
       );
 
-      jsResources.forEach(resource => {
+      jsResources.forEach((resource) => {
         const name = this.extractChunkName(resource.name);
         if (name) {
           chunkSizes[name] = resource.transferSize || 0;
@@ -147,7 +154,7 @@ export class BundleAnalyzer {
         gzippedSize,
         chunkSizes,
         largestChunks,
-        duplicates
+        duplicates,
       });
 
       // Calculate performance score
@@ -155,7 +162,7 @@ export class BundleAnalyzer {
         totalSize,
         gzippedSize,
         chunkSizes,
-        largestChunks
+        largestChunks,
       });
 
       this.analysis = {
@@ -165,12 +172,12 @@ export class BundleAnalyzer {
         duplicates,
         largestChunks,
         recommendations,
-        score
+        score,
       };
 
       return this.analysis;
     } catch (error) {
-      console.error('Bundle analysis failed:', error);
+      console.error("Bundle analysis failed:", error);
       throw error;
     }
   }
@@ -179,10 +186,10 @@ export class BundleAnalyzer {
    * Extract chunk name from URL
    */
   private extractChunkName(url: string): string | null {
-    const parts = url.split('/');
+    const parts = url.split("/");
     const filename = parts[parts.length - 1];
     if (!filename) return null;
-    return filename.replace(/\.[a-z0-9]+\.js$/, '.js');
+    return filename.replace(/\.[a-z0-9]+\.js$/, ".js");
   }
   /**
    * Detect potential duplicate resources
@@ -191,14 +198,14 @@ export class BundleAnalyzer {
     const duplicates: string[] = [];
     const seen = new Set<string>();
 
-    resources.forEach(resource => {
+    resources.forEach((resource) => {
       if (!resource.name) return;
-      
-      const baseName = resource.name.split('?')[0]?.split('#')[0];
+
+      const baseName = resource.name.split("?")[0]?.split("#")[0];
       if (!baseName) return;
-      
-      const filename = baseName.split('/').pop();
-      
+
+      const filename = baseName.split("/").pop();
+
       if (filename && seen.has(filename)) {
         duplicates.push(filename);
       } else if (filename) {
@@ -219,7 +226,7 @@ export class BundleAnalyzer {
     // Bundle size recommendations
     if (totalSize && totalSize > this.budgets.maxTotalSize) {
       recommendations.push(
-        `Total bundle size (${this.formatBytes(totalSize)}) exceeds budget (${this.formatBytes(this.budgets.maxTotalSize)}). Consider code splitting and lazy loading.`
+        `Total bundle size (${this.formatBytes(totalSize)}) exceeds budget (${this.formatBytes(this.budgets.maxTotalSize)}). Consider code splitting and lazy loading.`,
       );
     }
 
@@ -228,7 +235,7 @@ export class BundleAnalyzer {
       Object.entries(chunkSizes).forEach(([name, size]) => {
         if (size > this.budgets.maxChunkSize) {
           recommendations.push(
-            `Chunk ${name} (${this.formatBytes(size)}) exceeds recommended size. Consider splitting this chunk.`
+            `Chunk ${name} (${this.formatBytes(size)}) exceeds recommended size. Consider splitting this chunk.`,
           );
         }
       });
@@ -239,7 +246,7 @@ export class BundleAnalyzer {
       const largestChunk = largestChunks[0];
       if (largestChunk && largestChunk.size > this.budgets.maxChunkSize) {
         recommendations.push(
-          `Consider optimizing ${largestChunk.name} - it's your largest chunk at ${this.formatBytes(largestChunk.size)}.`
+          `Consider optimizing ${largestChunk.name} - it's your largest chunk at ${this.formatBytes(largestChunk.size)}.`,
         );
       }
     }
@@ -247,17 +254,17 @@ export class BundleAnalyzer {
     // Duplicate recommendations
     if (duplicates && duplicates.length > 0) {
       recommendations.push(
-        `Found ${duplicates.length} potential duplicate resources. Review: ${duplicates.slice(0, 3).join(', ')}`
+        `Found ${duplicates.length} potential duplicate resources. Review: ${duplicates.slice(0, 3).join(", ")}`,
       );
     }
 
     // General recommendations
     recommendations.push(
-      'Use dynamic imports for non-critical components',
-      'Enable gzip/brotli compression on your server',
-      'Consider using next/dynamic for heavy components',
-      'Optimize images with next/image component',
-      'Remove unused dependencies and code'
+      "Use dynamic imports for non-critical components",
+      "Enable gzip/brotli compression on your server",
+      "Consider using next/dynamic for heavy components",
+      "Optimize images with next/image component",
+      "Remove unused dependencies and code",
     );
 
     return recommendations;
@@ -272,19 +279,27 @@ export class BundleAnalyzer {
 
     // Penalize large bundle size
     if (totalSize) {
-      const sizePenalty = Math.max(0, (totalSize - this.budgets.maxTotalSize) / this.budgets.maxTotalSize * 30);
+      const sizePenalty = Math.max(
+        0,
+        ((totalSize - this.budgets.maxTotalSize) / this.budgets.maxTotalSize) *
+          30,
+      );
       score -= sizePenalty;
     }
 
     // Penalize large chunks
     if (chunkSizes) {
-      const largeChunks = Object.values(chunkSizes).filter(size => size > this.budgets.maxChunkSize);
+      const largeChunks = Object.values(chunkSizes).filter(
+        (size) => size > this.budgets.maxChunkSize,
+      );
       score -= largeChunks.length * 10;
     }
 
     // Penalize very large chunks
     if (largestChunks) {
-      const veryLargeChunks = largestChunks.filter(chunk => chunk.size > this.budgets.maxChunkSize * 2);
+      const veryLargeChunks = largestChunks.filter(
+        (chunk) => chunk.size > this.budgets.maxChunkSize * 2,
+      );
       score -= veryLargeChunks.length * 15;
     }
 
@@ -295,13 +310,13 @@ export class BundleAnalyzer {
    * Format bytes to human readable format
    */
   formatBytes(bytes: number): string {
-    if (bytes === 0) return '0 Bytes';
-    
+    if (bytes === 0) return "0 Bytes";
+
     const k = 1024;
-    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+    const sizes = ["Bytes", "KB", "MB", "GB"];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-    
-    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
   }
 
   /**
@@ -322,18 +337,22 @@ export class BundleAnalyzer {
     const violations: string[] = [];
 
     if (this.analysis.totalSize > this.budgets.maxTotalSize) {
-      violations.push(`Bundle size exceeds budget: ${this.formatBytes(this.analysis.totalSize)} > ${this.formatBytes(this.budgets.maxTotalSize)}`);
+      violations.push(
+        `Bundle size exceeds budget: ${this.formatBytes(this.analysis.totalSize)} > ${this.formatBytes(this.budgets.maxTotalSize)}`,
+      );
     }
 
     Object.entries(this.analysis.chunkSizes).forEach(([name, size]) => {
       if (size > this.budgets.maxChunkSize) {
-        violations.push(`Chunk ${name} exceeds budget: ${this.formatBytes(size)} > ${this.formatBytes(this.budgets.maxChunkSize)}`);
+        violations.push(
+          `Chunk ${name} exceeds budget: ${this.formatBytes(size)} > ${this.formatBytes(this.budgets.maxChunkSize)}`,
+        );
       }
     });
 
     return {
       exceeded: violations.length > 0,
-      violations
+      violations,
     };
   }
   /**
@@ -346,38 +365,38 @@ export class BundleAnalyzer {
       totalSize: 680 * 1024, // 680KB in bytes
       gzippedSize: 210 * 1024, // 210KB in bytes
       chunkSizes: {
-        'main': 180.5 * 1024,
-        'pdf-viewer': 156.8 * 1024,
-        'animations': 67.4 * 1024,
-        'vendors': 275.3 * 1024
+        main: 180.5 * 1024,
+        "pdf-viewer": 156.8 * 1024,
+        animations: 67.4 * 1024,
+        vendors: 275.3 * 1024,
       },
       assetSizes: {
-        'main.js': 180.5 * 1024,
-        'styles.css': 89.2 * 1024,
-        'pdf-worker.js': 156.8 * 1024
+        "main.js": 180.5 * 1024,
+        "styles.css": 89.2 * 1024,
+        "pdf-worker.js": 156.8 * 1024,
       },
       largestChunks: [
-        { name: 'vendors', size: 275.3 * 1024 },
-        { name: 'main', size: 180.5 * 1024 },
-        { name: 'pdf-viewer', size: 156.8 * 1024 },
-        { name: 'animations', size: 67.4 * 1024 }
+        { name: "vendors", size: 275.3 * 1024 },
+        { name: "main", size: 180.5 * 1024 },
+        { name: "pdf-viewer", size: 156.8 * 1024 },
+        { name: "animations", size: 67.4 * 1024 },
       ],
       score: this.calculatePerformanceScore({
         totalSize: 680 * 1024,
         chunkSizes: {
-          'main': 180.5 * 1024,
-          'pdf-viewer': 156.8 * 1024,
-          'animations': 67.4 * 1024,
-          'vendors': 275.3 * 1024
-        }
+          main: 180.5 * 1024,
+          "pdf-viewer": 156.8 * 1024,
+          animations: 67.4 * 1024,
+          vendors: 275.3 * 1024,
+        },
       }),
       recommendations: [
-        'Consider code splitting the vendors chunk',
-        'Implement dynamic imports for PDF viewer',
-        'Use tree shaking to reduce bundle size',
-        'Enable compression on server'
+        "Consider code splitting the vendors chunk",
+        "Implement dynamic imports for PDF viewer",
+        "Use tree shaking to reduce bundle size",
+        "Enable compression on server",
       ],
-      timestamp: Date.now()
+      timestamp: Date.now(),
     };
 
     return mockStats;
@@ -386,19 +405,22 @@ export class BundleAnalyzer {
   /**
    * Generate detailed optimization recommendations
    */
-  generateOptimizationRecommendations(stats: BundleStats): OptimizationRecommendation[] {
+  generateOptimizationRecommendations(
+    stats: BundleStats,
+  ): OptimizationRecommendation[] {
     const recommendations: OptimizationRecommendation[] = [];
 
     // Critical bundle size issues
     if (stats.totalSize > this.budgets.maxTotalSize) {
       recommendations.push({
-        type: 'critical',
-        category: 'bundle-size',
-        title: 'Bundle size exceeds performance budget',
+        type: "critical",
+        category: "bundle-size",
+        title: "Bundle size exceeds performance budget",
         description: `Total bundle size (${this.formatBytes(stats.totalSize)}) exceeds the recommended budget of ${this.formatBytes(this.budgets.maxTotalSize)}`,
-        impact: 'high',
-        effort: 'medium',
-        recommendation: 'Implement code splitting and remove unused dependencies',
+        impact: "high",
+        effort: "medium",
+        recommendation:
+          "Implement code splitting and remove unused dependencies",
         codeExample: `
 // Use dynamic imports for heavy components
 const PDFViewer = dynamic(() => import('./PDFViewer'), {
@@ -421,28 +443,30 @@ module.exports = {
     };
     return config;
   }
-};`
+};`,
       });
     }
 
     // Large chunk warnings
-    const largeChunks = Object.entries(stats.chunkSizes).filter(([_, size]) => size > this.budgets.maxChunkSize);
+    const largeChunks = Object.entries(stats.chunkSizes).filter(
+      ([_, size]) => size > this.budgets.maxChunkSize,
+    );
     if (largeChunks.length > 0) {
       recommendations.push({
-        type: 'warning',
-        category: 'code-splitting',
-        title: 'Large chunks detected',
+        type: "warning",
+        category: "code-splitting",
+        title: "Large chunks detected",
         description: `${largeChunks.length} chunks exceed the recommended size of ${this.formatBytes(this.budgets.maxChunkSize)}`,
-        impact: 'medium',
-        effort: 'medium',
-        recommendation: 'Split large chunks into smaller, more focused bundles',
+        impact: "medium",
+        effort: "medium",
+        recommendation: "Split large chunks into smaller, more focused bundles",
         codeExample: `
 // Route-based code splitting
 const MagazinePage = dynamic(() => import('./MagazinePage'));
 const PDFBrowser = dynamic(() => import('./PDFBrowser'));
 
 // Component-based splitting
-const LazyAnimations = lazy(() => import('./AnimationSystem'));`
+const LazyAnimations = lazy(() => import('./AnimationSystem'));`,
       });
     }
 
@@ -453,7 +477,9 @@ const LazyAnimations = lazy(() => import('./AnimationSystem'));`
 /**
  * Utility function to create a bundle analyzer instance
  */
-export function createBundleAnalyzer(budgets?: Partial<PerformanceBudget>): BundleAnalyzer {
+export function createBundleAnalyzer(
+  budgets?: Partial<PerformanceBudget>,
+): BundleAnalyzer {
   const fullBudgets = { ...DEFAULT_BUDGETS, ...budgets };
   return new BundleAnalyzer(fullBudgets);
 }
@@ -462,13 +488,13 @@ export function createBundleAnalyzer(budgets?: Partial<PerformanceBudget>): Bund
  * Format bytes utility function
  */
 export function formatBytes(bytes: number): string {
-  if (bytes === 0) return '0 Bytes';
-  
+  if (bytes === 0) return "0 Bytes";
+
   const k = 1024;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+  const sizes = ["Bytes", "KB", "MB", "GB"];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
-  
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
 }
 
 export default BundleAnalyzer;

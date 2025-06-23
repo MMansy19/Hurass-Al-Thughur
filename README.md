@@ -31,19 +31,22 @@ This platform bridges traditional Islamic scholarship with modern technology, pr
 ## ✨ Platform Features
 
 ### 🎯 Core Functionality
+
 - **📖 Islamic Magazine**: Digital magazine with issues covering Aqeedah, Fiqh, Prophet's Biography, and Islamic History
 - **📚 Digital Library**: Comprehensive collection of Islamic educational materials, brochures, and resources
 - **🤲 Dawah Section**: Introduction to Islam materials for non-Muslims and new Muslim guides
 - **💬 Contact System**: Interactive contact forms for community engagement
 
 ### 🌍 Internationalization & Accessibility
+
 - **Bilingual Interface**: Complete Arabic (RTL) and English (LTR) support
 - **Cultural Adaptation**: Authentic Arabic typography with Cairo font family
 - **Accessibility Standards**: WCAG compliant with screen reader support
 - **Responsive Design**: Optimized for desktop, tablet, and mobile devices
 
 ### 🔧 Technical Excellence
-- **Advanced PDF Viewer**: 
+
+- **Advanced PDF Viewer**:
   - Full-text search within documents
   - Zoom controls (fit-to-width, fit-to-page, custom levels)
   - Thumbnail navigation and page jumping
@@ -54,6 +57,7 @@ This platform bridges traditional Islamic scholarship with modern technology, pr
 - **SEO Optimized**: Dynamic metadata generation and structured data markup
 
 ### 🎨 User Experience
+
 - **Modern UI/UX**: Clean, intuitive interface with Islamic design principles
 - **Animation System**: Smooth transitions and micro-interactions
 - **Loading States**: Elegant loading indicators and skeleton screens
@@ -163,41 +167,44 @@ hurass/
 
 ### Core Technologies
 
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| **Next.js** | 15.3.2 | React framework with App Router |
-| **React** | 19.0 | UI library with concurrent features |
-| **TypeScript** | 5.0 | Type-safe development |
-| **TailwindCSS** | 4.1.8 | Utility-first CSS framework |
-| **PDF.js** | Latest | PDF rendering engine |
-| **next-intl** | Latest | Internationalization |
+| Technology      | Version | Purpose                             |
+| --------------- | ------- | ----------------------------------- |
+| **Next.js**     | 15.3.2  | React framework with App Router     |
+| **React**       | 19.0    | UI library with concurrent features |
+| **TypeScript**  | 5.0     | Type-safe development               |
+| **TailwindCSS** | 4.1.8   | Utility-first CSS framework         |
+| **PDF.js**      | Latest  | PDF rendering engine                |
+| **next-intl**   | Latest  | Internationalization                |
 
 ### Advanced Features
 
 #### 🔍 PDF Viewer Engine
+
 Our custom PDF viewer provides enterprise-grade document viewing:
 
 ```typescript
 // Advanced PDF features
 const pdfFeatures = {
-  rendering: 'Canvas + SVG hybrid rendering',
-  search: 'Full-text search with highlighting',
-  navigation: 'Thumbnail sidebar, page jumping',
-  zoom: 'Smart zoom with fit-to-width/page',
-  annotations: 'Highlighting and note-taking',
-  export: 'High-quality PDF download',
-  performance: 'Lazy loading + virtualization',
-  accessibility: 'Screen reader compatible'
+  rendering: "Canvas + SVG hybrid rendering",
+  search: "Full-text search with highlighting",
+  navigation: "Thumbnail sidebar, page jumping",
+  zoom: "Smart zoom with fit-to-width/page",
+  annotations: "Highlighting and note-taking",
+  export: "High-quality PDF download",
+  performance: "Lazy loading + virtualization",
+  accessibility: "Screen reader compatible",
 };
 ```
 
 #### 🌐 Internationalization System
+
 - **RTL/LTR Support**: Automatic layout direction switching
 - **Font Optimization**: Cairo for Arabic, Roboto for English
 - **Dynamic Content**: Locale-aware routing and content
 - **Cultural Adaptation**: Islamic calendar, number formatting
 
 #### ⚡ Performance Optimizations
+
 - **Image Optimization**: Next.js Image component with blur placeholders
 - **Bundle Splitting**: Dynamic imports and code splitting
 - **Caching Strategy**: Intelligent caching for static assets
@@ -223,32 +230,40 @@ npm run lighthouse       # Performance auditing
 ## 📱 Platform Sections
 
 ### 🏠 Homepage
+
 - **Hero Section**: Welcoming introduction to the platform
 - **Feature Overview**: Quick access to main sections
 - **About Section**: Information about the Hurass team mission
 
 ### 📖 Magazine Section (`/magazine`)
+
 Digital Islamic magazine with rich content:
+
 - **Latest Issues**: Recent publications with topics like Aqeedah, Fiqh, Prophet's Biography
 - **Category Browser**: Organized by Islamic knowledge areas
 - **Issue Viewer**: Professional PDF reader with advanced features
 - **Search & Filter**: Find specific topics and authors
 
 ### 📚 Library Section (`/library`)
+
 Comprehensive digital library:
+
 - **PDF Collection**: Scholarly articles, research papers, and books
 - **Brochures**: Educational pamphlets and quick reference guides
 - **Image Resources**: Islamic educational graphics and infographics
 - **Smart Categorization**: Organized by topic and difficulty level
 
 ### 🤲 Dawah Section (`/dawah`)
+
 Islamic outreach and education:
+
 - **Introduction to Islam**: Fundamental concepts for non-Muslims
 - **New Muslim Guide**: Step-by-step guidance for new converts
 - **Educational Articles**: Comprehensive explanations of Islamic principles
 - **Downloadable Materials**: Shareable content for dawah activities
 
 ### 📞 Contact Section (`/contact`)
+
 - **Interactive Forms**: Multi-language contact forms
 - **Direct Communication**: Email, phone, and social media links
 - **Location Information**: Office details and visiting hours
@@ -264,12 +279,14 @@ Islamic outreach and education:
 ## 🌍 Deployment & Infrastructure
 
 ### Live Deployment
+
 - **Production URL**: [https://hurass-althughur.vercel.app](https://hurass-althughur.vercel.app)
 - **Platform**: Vercel (Optimized for Next.js)
 - **CDN**: Global edge network for fast content delivery
 - **SSL**: Automatic HTTPS with TLS 1.3
 
 ### Performance Metrics
+
 - **Core Web Vitals**: Optimized for Google's performance standards
 - **Lighthouse Score**: 90+ across all categories
 - **Mobile Optimization**: Perfect mobile experience
@@ -282,11 +299,13 @@ We welcome contributions from the global Muslim community! Here's how you can he
 ### How to Contribute
 
 1. **Fork the Repository**
+
    ```bash
    git fork https://github.com/MMansy19/hurass.git
    ```
 
 2. **Create a Feature Branch**
+
    ```bash
    git checkout -b feature/new-amazing-feature
    ```
@@ -297,6 +316,7 @@ We welcome contributions from the global Muslim community! Here's how you can he
    - Update documentation as needed
 
 4. **Commit Your Changes**
+
    ```bash
    git commit -m "feat: add amazing new feature"
    ```
@@ -326,6 +346,7 @@ We welcome contributions from the global Muslim community! Here's how you can he
 ## 👨‍💻 Author
 
 **Mahmoud Al-Mansy (MMansy19)**
+
 - 🌐 **GitHub**: [@MMansy19](https://github.com/MMansy19)
 - 📧 **Contact**: Available through the website contact form
 - 🌍 **Location**: Saudi Arabia
@@ -335,6 +356,7 @@ We welcome contributions from the global Muslim community! Here's how you can he
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
 ### Third-Party Licenses
+
 - **PDF.js**: Apache License 2.0
 - **Next.js**: MIT License
 - **TailwindCSS**: MIT License
@@ -359,11 +381,11 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ### 🕌 Built with ❤️ for the Global Muslim Community
 
-**"And whoever saves a life, it is as if he has saved all of mankind"** - *Quran 5:32*
+**"And whoever saves a life, it is as if he has saved all of mankind"** - _Quran 5:32_
 
 [![Website](https://img.shields.io/badge/🌐_Visit_Website-hurass--althughur.vercel.app-brightgreen?style=for-the-badge)](https://hurass-althughur.vercel.app)
 [![GitHub](https://img.shields.io/badge/⭐_Star_on_GitHub-MMansy19/hurass-yellow?style=for-the-badge)](https://github.com/MMansy19/Hurass-Al-Thughur)
 
-*Preserving and sharing Islamic knowledge through modern technology*
+_Preserving and sharing Islamic knowledge through modern technology_
 
 </div>

@@ -23,14 +23,13 @@ export default function FooterLogo({ locale, messages }: FooterLogoProps) {
             height={50}
             className="transition-transform group-hover:scale-110 duration-300"
           />
-        </div>              <span className="font-bold text-2xl text-emerald-100 group-hover:text-white transition-colors">
+        </div>{" "}
+        <span className="font-bold text-2xl text-emerald-100 group-hover:text-white transition-colors">
           {messages.logoText}
         </span>
       </Link>
-      
-      <p className="text-emerald-100 mt-3">
-        {messages.logoDescription}
-      </p>
+
+      <p className="text-emerald-100 mt-3">{messages.logoDescription}</p>
     </div>
   );
 }

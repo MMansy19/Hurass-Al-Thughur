@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, ReactNode } from 'react';
-import { useAccessibility } from './AccessibilityProvider';
+import React, { useState, useEffect, ReactNode } from "react";
+import { useAccessibility } from "./AccessibilityProvider";
 
 interface SkipLinksProps {
   links: Array<{
@@ -13,7 +13,10 @@ interface SkipLinksProps {
 export function SkipLinks({ links }: SkipLinksProps) {
   return (
     <div className="sr-only focus-within:not-sr-only">
-      <nav aria-label="Skip links" className="fixed top-0 left-0 z-[100] bg-emerald-600 text-white p-2 rounded-br-md">
+      <nav
+        aria-label="Skip links"
+        className="fixed top-0 left-0 z-[100] bg-emerald-600 text-white p-2 rounded-br-md"
+      >
         <ul className="flex flex-col gap-1">
           {links.map((link, index) => (
             <li key={index}>
@@ -33,19 +36,26 @@ export function SkipLinks({ links }: SkipLinksProps) {
 }
 
 interface LoadingSpinnerProps {
-  size?: 'sm' | 'md' | 'lg';
+  size?: "sm" | "md" | "lg";
   label?: string;
 }
 
-export function LoadingSpinner({ size = 'md', label = 'Loading...' }: LoadingSpinnerProps) {
+export function LoadingSpinner({
+  size = "md",
+  label = "Loading...",
+}: LoadingSpinnerProps) {
   const sizeClasses = {
-    sm: 'w-4 h-4',
-    md: 'w-8 h-8',
-    lg: 'w-12 h-12'
+    sm: "w-4 h-4",
+    md: "w-8 h-8",
+    lg: "w-12 h-12",
   };
 
   return (
-    <div className="flex items-center justify-center" role="status" aria-label={label}>
+    <div
+      className="flex items-center justify-center"
+      role="status"
+      aria-label={label}
+    >
       <div
         className={`animate-spin rounded-full border-2 border-gray-300 border-t-emerald-600 ${sizeClasses[size]}`}
         aria-hidden="true"
@@ -60,7 +70,10 @@ interface VisuallyHiddenProps {
   focusable?: boolean;
 }
 
-export function VisuallyHidden({ children, focusable = false }: VisuallyHiddenProps) {
+export function VisuallyHidden({
+  children,
+  focusable = false,
+}: VisuallyHiddenProps) {
   return (
     <span className={focusable ? "sr-only focus:not-sr-only" : "sr-only"}>
       {children}
@@ -74,8 +87,13 @@ interface FocusTrapProps {
   restoreFocus?: boolean;
 }
 
-export function FocusTrap({ children, active, restoreFocus = true }: FocusTrapProps) {
-  const [previouslyFocused, setPreviouslyFocused] = useState<HTMLElement | null>(null);
+export function FocusTrap({
+  children,
+  active,
+  restoreFocus = true,
+}: FocusTrapProps) {
+  const [previouslyFocused, setPreviouslyFocused] =
+    useState<HTMLElement | null>(null);
   const containerRef = React.useRef<HTMLDivElement>(null);
   const { trapFocus } = useAccessibility();
 
@@ -111,11 +129,14 @@ export function FocusTrap({ children, active, restoreFocus = true }: FocusTrapPr
 
 interface AnnouncementProps {
   message: string;
-  priority?: 'polite' | 'assertive';
+  priority?: "polite" | "assertive";
   clear?: boolean;
 }
 
-export function Announcement({ message, priority = 'polite' }: AnnouncementProps) {
+export function Announcement({
+  message,
+  priority = "polite",
+}: AnnouncementProps) {
   const { announceToScreenReader } = useAccessibility();
 
   useEffect(() => {
@@ -135,21 +156,21 @@ interface KeyboardNavigationProps {
   className?: string;
 }
 
-export function KeyboardNavigation({ 
-  children, 
-  onEscape, 
-  onEnter, 
-  className = '' 
+export function KeyboardNavigation({
+  children,
+  onEscape,
+  onEnter,
+  className = "",
 }: KeyboardNavigationProps) {
   const handleKeyDown = (e: React.KeyboardEvent) => {
     switch (e.key) {
-      case 'Escape':
+      case "Escape":
         if (onEscape) {
           e.preventDefault();
           onEscape();
         }
         break;
-      case 'Enter':
+      case "Enter":
         if (onEnter) {
           e.preventDefault();
           onEnter();
@@ -173,12 +194,12 @@ interface AriaExpandableProps {
   className?: string;
 }
 
-export function AriaExpandable({ 
-  children, 
-  expanded, 
-  onToggle, 
-  label, 
-  className = '' 
+export function AriaExpandable({
+  children,
+  expanded,
+  onToggle,
+  label,
+  className = "",
 }: AriaExpandableProps) {
   const buttonId = React.useId();
   const contentId = React.useId();
@@ -194,13 +215,18 @@ export function AriaExpandable({
       >
         <span>{label}</span>
         <svg
-          className={`w-4 h-4 transition-transform ${expanded ? 'rotate-180' : ''}`}
+          className={`w-4 h-4 transition-transform ${expanded ? "rotate-180" : ""}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
           aria-hidden="true"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 9l-7 7-7-7"
+          />
         </svg>
       </button>
       <div
@@ -208,12 +234,10 @@ export function AriaExpandable({
         role="region"
         aria-labelledby={buttonId}
         className={`transition-all duration-200 overflow-hidden ${
-          expanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+          expanded ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="p-3">
-          {children}
-        </div>
+        <div className="p-3">{children}</div>
       </div>
     </div>
   );
@@ -226,11 +250,11 @@ interface ProgressIndicatorProps {
   showPercentage?: boolean;
 }
 
-export function ProgressIndicator({ 
-  value, 
-  max, 
-  label, 
-  showPercentage = true 
+export function ProgressIndicator({
+  value,
+  max,
+  label,
+  showPercentage = true,
 }: ProgressIndicatorProps) {
   const percentage = Math.round((value / max) * 100);
 

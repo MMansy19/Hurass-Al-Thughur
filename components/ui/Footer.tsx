@@ -71,7 +71,11 @@ const PhoneIcon = () => (
 
 const LocationIcon = () => (
   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-    <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd"></path>
+    <path
+      fillRule="evenodd"
+      d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+      clipRule="evenodd"
+    ></path>
   </svg>
 );
 
@@ -99,44 +103,45 @@ const YoutubeIcon = () => (
   </svg>
 );
 
-const Footer = ({ locale, messages }: FooterProps) => {  // Quick Links configuration
+const Footer = ({ locale, messages }: FooterProps) => {
+  // Quick Links configuration
   const quickLinks = [
     {
       href: `/${locale}`,
       icon: <HomeIcon />,
-      label: messages.common.home
+      label: messages.common.home,
     },
     {
       href: `/${locale}/magazine`,
       icon: <MagazineIcon />,
-      label: messages.common.magazine
+      label: messages.common.magazine,
     },
     {
       href: `/${locale}/dawah`,
       icon: <DawahIcon />,
-      label: messages.common.dawah
+      label: messages.common.dawah,
     },
     {
       href: `/${locale}/library`,
       icon: <LibraryIcon />,
-      label: messages.common.library
-    }
+      label: messages.common.library,
+    },
   ];
 
   // Contact information
   const contactInfo = [
     {
       icon: <EmailIcon />,
-      text: "info@hurass.org"
+      text: "info@hurass.org",
     },
     {
       icon: <PhoneIcon />,
-      text: "+123456789"
+      text: "+123456789",
     },
     {
       icon: <LocationIcon />,
-      text: messages.location
-    }
+      text: messages.location,
+    },
   ];
 
   // Social links
@@ -144,55 +149,50 @@ const Footer = ({ locale, messages }: FooterProps) => {  // Quick Links configur
     {
       href: "https://twitter.com",
       icon: <TwitterIcon />,
-      label: "Twitter"
+      label: "Twitter",
     },
     {
       href: "https://instagram.com",
       icon: <InstagramIcon />,
-      label: "Instagram"
+      label: "Instagram",
     },
     {
       href: "https://facebook.com",
       icon: <FacebookIcon />,
-      label: "Facebook"
+      label: "Facebook",
     },
     {
       href: "https://youtube.com",
       icon: <YoutubeIcon />,
-      label: "YouTube"
-    }
+      label: "YouTube",
+    },
   ];
   return (
     <footer className="bg-emerald-900 text-white mt-auto">
       <div className="container mx-auto sm:px-4 px-2 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <FooterLogo 
-            locale={locale} 
+          <FooterLogo
+            locale={locale}
             messages={{
               logoText: messages.logoText,
-              logoDescription: messages.logoDescription
-            }} 
+              logoDescription: messages.logoDescription,
+            }}
           />
-            <FooterNavigation
-            title={messages.quickLinks}
-            links={quickLinks}
-          />
-          
+          <FooterNavigation title={messages.quickLinks} links={quickLinks} />
+
           <FooterContact
             title={messages.contactUs}
             contactItems={contactInfo}
           />
-          
-          <FooterSocial
-            title={messages.followUs}
-            socialLinks={socialLinks}
-          />
-        </div>          <FooterBottom
+
+          <FooterSocial title={messages.followUs} socialLinks={socialLinks} />
+        </div>{" "}
+        <FooterBottom
           copyright={messages.rightsReserved}
           messages={{
             madeWith: messages.madeWith,
             by: messages.by,
-            authorName: messages.authorName
+            authorName: messages.authorName,
           }}
         />
       </div>

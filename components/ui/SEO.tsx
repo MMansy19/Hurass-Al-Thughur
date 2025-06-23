@@ -5,7 +5,7 @@ interface SEOProps {
   pageName: string;
   siteName?: string;
   image?: string;
-  type?: 'website' | 'article' | 'book';
+  type?: "website" | "article" | "book";
   publishedTime?: string;
   modifiedTime?: string;
   author?: string;
@@ -13,31 +13,34 @@ interface SEOProps {
 }
 
 // This is a server component that generates appropriate SEO metadata
-export default function SEO({ 
-  title, 
-  description, 
-  locale, 
-  pageName, 
-  siteName, 
+export default function SEO({
+  title,
+  description,
+  locale,
+  pageName,
+  siteName,
   image,
-  type = 'website',
+  type = "website",
   publishedTime,
   modifiedTime,
   author,
-  keywords = []
+  keywords = [],
 }: SEOProps) {
   const alternateLocale = locale === "ar" ? "en" : "ar";
   const url = pageName === "" ? `/${locale}` : `/${locale}/${pageName}`;
-  const alternateUrl = pageName === "" ? `/${alternateLocale}` : `/${alternateLocale}/${pageName}`;
-  const defaultSiteName = siteName || (locale === "ar" ? "حُراس الثغور" : "Hurass Al-Thughur");
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://hurass-al-thughur.com';
+  const alternateUrl =
+    pageName === "" ? `/${alternateLocale}` : `/${alternateLocale}/${pageName}`;
+  const defaultSiteName =
+    siteName || (locale === "ar" ? "حُراس الثغور" : "Hurass Al-Thughur");
+  const baseUrl =
+    process.env.NEXT_PUBLIC_BASE_URL || "https://hurass-al-thughur.com";
   const fullUrl = `${baseUrl}${url}`;
   const defaultImage = `${baseUrl}/images/logo.jpg`;
 
   // Generate structured data
   const structuredData = {
     "@context": "https://schema.org",
-    "@type": type === 'article' ? "Article" : "WebPage",
+    "@type": type === "article" ? "Article" : "WebPage",
     name: title,
     headline: title,
     description: description,
@@ -50,23 +53,23 @@ export default function SEO({
       url: baseUrl,
       logo: {
         "@type": "ImageObject",
-        url: defaultImage
-      }
+        url: defaultImage,
+      },
     },
-    ...(type === 'article' && {
+    ...(type === "article" && {
       author: {
         "@type": "Person",
-        name: author || defaultSiteName
+        name: author || defaultSiteName,
       },
       ...(publishedTime && { datePublished: publishedTime }),
-      ...(modifiedTime && { dateModified: modifiedTime })
-    })
+      ...(modifiedTime && { dateModified: modifiedTime }),
+    }),
   };
 
   return {
     title,
     description,
-    keywords: keywords.length > 0 ? keywords.join(', ') : undefined,
+    keywords: keywords.length > 0 ? keywords.join(", ") : undefined,
     authors: author ? [{ name: author }] : undefined,
     creator: defaultSiteName,
     publisher: defaultSiteName,
@@ -88,42 +91,43 @@ export default function SEO({
           width: 1200,
           height: 630,
           alt: title,
-        }
+        },
       ],
-      ...(type === 'article' && {
+      ...(type === "article" && {
         publishedTime,
         modifiedTime,
-        authors: author ? [author] : undefined
-      })
+        authors: author ? [author] : undefined,
+      }),
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title,
       description,
       images: [image || defaultImage],
-      creator: '@hurass_al_thughur',
+      creator: "@hurass_al_thughur",
     },
     alternates: {
       canonical: fullUrl,
       languages: {
         [alternateLocale]: `${baseUrl}${alternateUrl}`,
       },
-    },    robots: {
+    },
+    robots: {
       index: true,
       follow: true,
       googleBot: {
         index: true,
         follow: true,
-        'max-video-preview': -1,
-        'max-image-preview': 'large' as 'large',
-        'max-snippet': -1,
+        "max-video-preview": -1,
+        "max-image-preview": "large" as "large",
+        "max-snippet": -1,
       },
     },
     verification: {
       google: process.env.GOOGLE_SITE_VERIFICATION,
     },
     other: {
-      'application/ld+json': JSON.stringify(structuredData),
+      "application/ld+json": JSON.stringify(structuredData),
     },
   };
 }

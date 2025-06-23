@@ -24,13 +24,16 @@
   ],
   "rules": {
     // TypeScript rules
-    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "argsIgnorePattern": "^_" }
+    ],
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-explicit-any": "warn",
     "@typescript-eslint/prefer-const": "error",
     "@typescript-eslint/no-var-requires": "error",
-    
+
     // React rules
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
@@ -50,11 +53,11 @@
     "react/no-unknown-property": "error",
     "react/no-unsafe": "warn",
     "react/require-render-return": "error",
-    
+
     // React Hooks rules
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
-    
+
     // Accessibility rules
     "jsx-a11y/alt-text": "error",
     "jsx-a11y/anchor-has-content": "error",
@@ -85,7 +88,7 @@
     "jsx-a11y/role-supports-aria-props": "error",
     "jsx-a11y/scope": "error",
     "jsx-a11y/tabindex-no-positive": "error",
-    
+
     // Import rules
     "import/no-duplicate-imports": "error",
     "import/no-unresolved": "off",
@@ -107,7 +110,7 @@
         }
       }
     ],
-    
+
     // General rules
     "no-console": ["warn", { "allow": ["warn", "error"] }],
     "no-debugger": "error",

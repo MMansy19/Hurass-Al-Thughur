@@ -24,7 +24,8 @@ export default function ContactForm({ messages }: ContactFormProps) {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       setSubmitSuccess(true);
-      setFormData({ name: "", email: "", message: "" });    } catch {
+      setFormData({ name: "", email: "", message: "" });
+    } catch {
       setSubmitError(messages.contact.error);
     } finally {
       setIsSubmitting(false);
@@ -32,7 +33,7 @@ export default function ContactForm({ messages }: ContactFormProps) {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -41,15 +42,14 @@ export default function ContactForm({ messages }: ContactFormProps) {
     }));
   };
 
-  return (    <div className="w-full max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
+  return (
+    <div className="w-full max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-semibold mb-6 text-emerald-700">
         {messages.contact.formTitle}
       </h2>
       {submitSuccess ? (
         <div className="bg-emerald-100 p-4 rounded-md mb-6">
-          <p className="text-emerald-700">
-            {messages.contact.thankYou}
-          </p>
+          <p className="text-emerald-700">{messages.contact.thankYou}</p>
           <button
             onClick={() => setSubmitSuccess(false)}
             className="mt-2 text-emerald-700 font-medium underline"
@@ -59,7 +59,9 @@ export default function ContactForm({ messages }: ContactFormProps) {
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>            <label
+          <div>
+            {" "}
+            <label
               htmlFor="name"
               className="block text-sm font-medium text-gray-700"
             >
@@ -76,7 +78,9 @@ export default function ContactForm({ messages }: ContactFormProps) {
             />
           </div>
 
-          <div>            <label
+          <div>
+            {" "}
+            <label
               htmlFor="email"
               className="block text-sm font-medium text-gray-700"
             >
@@ -93,7 +97,9 @@ export default function ContactForm({ messages }: ContactFormProps) {
             />
           </div>
 
-          <div>            <label
+          <div>
+            {" "}
+            <label
               htmlFor="message"
               className="block text-sm font-medium text-gray-700"
             >
@@ -130,15 +136,18 @@ export default function ContactForm({ messages }: ContactFormProps) {
         </form>
       )}
 
-      <div className="mt-10 space-y-4">        <div>
-          <h3 className="text-lg font-medium text-gray-900">{messages.contact.visitUs}</h3>
-          <p className="mt-1 text-gray-600">
-            {messages.contact.address}
-          </p>
-        </div>
-
+      <div className="mt-10 space-y-4">
+        {" "}
         <div>
-          <h3 className="text-lg font-medium text-gray-900">{messages.contact.emailUs}</h3>
+          <h3 className="text-lg font-medium text-gray-900">
+            {messages.contact.visitUs}
+          </h3>
+          <p className="mt-1 text-gray-600">{messages.contact.address}</p>
+        </div>
+        <div>
+          <h3 className="text-lg font-medium text-gray-900">
+            {messages.contact.emailUs}
+          </h3>
           <p className="mt-1 text-gray-600">
             <a
               href={`mailto:${messages.contact.email_contact}`}
@@ -148,9 +157,10 @@ export default function ContactForm({ messages }: ContactFormProps) {
             </a>
           </p>
         </div>
-
         <div>
-          <h3 className="text-lg font-medium text-gray-900">{messages.contact.callUs}</h3>
+          <h3 className="text-lg font-medium text-gray-900">
+            {messages.contact.callUs}
+          </h3>
           <p className="mt-1 text-gray-600">{messages.contact.phone}</p>
         </div>
       </div>

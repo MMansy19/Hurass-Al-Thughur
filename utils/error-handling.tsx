@@ -1,17 +1,17 @@
 // Enhanced error handling with proper logging and recovery
-'use client';
+"use client";
 
-import { Component, ReactNode, ErrorInfo } from 'react';
-import { toast } from 'react-hot-toast';
+import { Component, ReactNode, ErrorInfo } from "react";
+import { toast } from "react-hot-toast";
 
 // Error types for better classification
 export enum ErrorType {
-  NETWORK = 'NETWORK',
-  PDF_LOAD = 'PDF_LOAD',
-  VALIDATION = 'VALIDATION',
-  RUNTIME = 'RUNTIME',
-  PERMISSION = 'PERMISSION',
-  TIMEOUT = 'TIMEOUT'
+  NETWORK = "NETWORK",
+  PDF_LOAD = "PDF_LOAD",
+  VALIDATION = "VALIDATION",
+  RUNTIME = "RUNTIME",
+  PERMISSION = "PERMISSION",
+  TIMEOUT = "TIMEOUT",
 }
 
 export interface AppError extends Error {
@@ -23,14 +23,14 @@ export interface AppError extends Error {
 
 // Enhanced error creation utility
 export function createAppError(
-  message: string, 
-  type: ErrorType, 
+  message: string,
+  type: ErrorType,
   options: {
     code?: string;
     context?: Record<string, any>;
     recoverable?: boolean;
     cause?: Error;
-  } = {}
+  } = {},
 ): AppError {
   const error = new Error(message) as AppError;
   error.type = type;
@@ -42,14 +42,14 @@ export function createAppError(
   }
   error.recoverable = options.recoverable ?? true;
   error.cause = options.cause;
-  
+
   return error;
 }
 
 // Error logging service
 class ErrorLogger {
   private static instance: ErrorLogger;
-  
+
   static getInstance(): ErrorLogger {
     if (!ErrorLogger.instance) {
       ErrorLogger.instance = new ErrorLogger();
@@ -62,23 +62,24 @@ class ErrorLogger {
       message: error.message,
       stack: error.stack,
       timestamp: new Date().toISOString(),
-      userAgent: typeof window !== 'undefined' ? window.navigator.userAgent : 'unknown',
-      url: typeof window !== 'undefined' ? window.location.href : 'unknown',
+      userAgent:
+        typeof window !== "undefined" ? window.navigator.userAgent : "unknown",
+      url: typeof window !== "undefined" ? window.location.href : "unknown",
       context,
-      ...(error as AppError).type && { type: (error as AppError).type },
-      ...(error as AppError).code && { code: (error as AppError).code }
+      ...((error as AppError).type && { type: (error as AppError).type }),
+      ...((error as AppError).code && { code: (error as AppError).code }),
     };
 
     // Console logging with proper formatting
     console.group(`🚨 Error: ${error.message}`);
-    console.error('Error Details:', errorInfo);
+    console.error("Error Details:", errorInfo);
     if (error.stack) {
-      console.error('Stack Trace:', error.stack);
+      console.error("Stack Trace:", error.stack);
     }
     console.groupEnd();
 
     // In production, send to error tracking service
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === "production") {
       this.sendToErrorService(errorInfo);
     }
   }
@@ -91,7 +92,7 @@ class ErrorLogger {
       //   body: JSON.stringify(errorInfo)
       // });
     } catch (logError) {
-      console.error('Failed to log error to service:', logError);
+      console.error("Failed to log error to service:", logError);
     }
   }
 }
@@ -112,30 +113,33 @@ interface EnhancedErrorBoundaryProps {
   showToast?: boolean;
 }
 
-export class EnhancedErrorBoundary extends Component<EnhancedErrorBoundaryProps, ErrorBoundaryState> {
+export class EnhancedErrorBoundary extends Component<
+  EnhancedErrorBoundaryProps,
+  ErrorBoundaryState
+> {
   private logger = ErrorLogger.getInstance();
   private retryTimeouts: NodeJS.Timeout[] = [];
   constructor(props: EnhancedErrorBoundaryProps) {
     super(props);
-    this.state = { 
-      hasError: false, 
+    this.state = {
+      hasError: false,
       error: null,
-      retryCount: 0 
+      retryCount: 0,
     };
   }
 
   static getDerivedStateFromError(error: Error): Partial<ErrorBoundaryState> {
-    return { 
-      hasError: true, 
+    return {
+      hasError: true,
       error,
-      errorId: Math.random().toString(36).substring(7)
+      errorId: Math.random().toString(36).substring(7),
     };
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    this.logger.log(error, { 
+    this.logger.log(error, {
       componentStack: errorInfo.componentStack,
-      errorBoundary: this.constructor.name
+      errorBoundary: this.constructor.name,
     });
 
     if (this.props.onError) {
@@ -143,21 +147,21 @@ export class EnhancedErrorBoundary extends Component<EnhancedErrorBoundaryProps,
     }
 
     if (this.props.showToast) {
-      toast.error('Something went wrong. Please try again.');
+      toast.error("Something went wrong. Please try again.");
     }
   }
 
   componentWillUnmount() {
-    this.retryTimeouts.forEach(timeout => clearTimeout(timeout));
+    this.retryTimeouts.forEach((timeout) => clearTimeout(timeout));
   }
   retry = () => {
     const { maxRetries = 3 } = this.props;
-    
+
     if (this.state.retryCount < maxRetries) {
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         hasError: false,
         error: null,
-        retryCount: prevState.retryCount + 1
+        retryCount: prevState.retryCount + 1,
       }));
     }
   };
@@ -166,11 +170,12 @@ export class EnhancedErrorBoundary extends Component<EnhancedErrorBoundaryProps,
     if (this.state.hasError && this.state.error) {
       const { maxRetries = 3 } = this.props;
       const canRetry = this.state.retryCount < maxRetries;
-      
+
       if (this.props.fallback) {
         return this.props.fallback(this.state.error, this.retry);
-      }      return (
-        <ErrorFallbackUI 
+      }
+      return (
+        <ErrorFallbackUI
           error={this.state.error}
           onRetry={canRetry ? this.retry : undefined}
           retryCount={this.state.retryCount}
@@ -191,9 +196,14 @@ interface ErrorFallbackUIProps {
   maxRetries: number;
 }
 
-function ErrorFallbackUI({ error, onRetry, retryCount, maxRetries }: ErrorFallbackUIProps) {
+function ErrorFallbackUI({
+  error,
+  onRetry,
+  retryCount,
+  maxRetries,
+}: ErrorFallbackUIProps) {
   const appError = error as AppError;
-  
+
   return (
     <div className="min-h-[400px] flex items-center justify-center p-6">
       <div className="max-w-md w-full bg-white rounded-lg shadow-lg border border-gray-200 p-6 text-center">
@@ -207,14 +217,12 @@ function ErrorFallbackUI({ error, onRetry, retryCount, maxRetries }: ErrorFallba
             />
           </svg>
         </div>
-        
+
         <h3 className="text-xl font-semibold text-gray-900 mb-2">
           {getErrorTitle(appError)}
         </h3>
-        
-        <p className="text-gray-600 mb-4">
-          {getErrorMessage(appError)}
-        </p>
+
+        <p className="text-gray-600 mb-4">{getErrorMessage(appError)}</p>
 
         {retryCount > 0 && (
           <p className="text-sm text-gray-500 mb-4">
@@ -231,7 +239,7 @@ function ErrorFallbackUI({ error, onRetry, retryCount, maxRetries }: ErrorFallba
               Try Again
             </button>
           )}
-          
+
           <button
             onClick={() => window.location.reload()}
             className="w-full bg-gray-600 hover:bg-gray-700 text-white font-medium py-2 sm:px-4 px-2 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
@@ -240,7 +248,7 @@ function ErrorFallbackUI({ error, onRetry, retryCount, maxRetries }: ErrorFallba
           </button>
         </div>
 
-        {process.env.NODE_ENV === 'development' && (
+        {process.env.NODE_ENV === "development" && (
           <details className="mt-4 text-left">
             <summary className="cursor-pointer text-sm text-gray-500 hover:text-gray-700">
               Error Details (Development)
@@ -259,34 +267,34 @@ function ErrorFallbackUI({ error, onRetry, retryCount, maxRetries }: ErrorFallba
 function getErrorTitle(error: AppError): string {
   switch (error.type) {
     case ErrorType.NETWORK:
-      return 'Connection Problem';
+      return "Connection Problem";
     case ErrorType.PDF_LOAD:
-      return 'PDF Loading Error';
+      return "PDF Loading Error";
     case ErrorType.VALIDATION:
-      return 'Invalid Input';
+      return "Invalid Input";
     case ErrorType.PERMISSION:
-      return 'Access Denied';
+      return "Access Denied";
     case ErrorType.TIMEOUT:
-      return 'Request Timeout';
+      return "Request Timeout";
     default:
-      return 'Something Went Wrong';
+      return "Something Went Wrong";
   }
 }
 
 function getErrorMessage(error: AppError): string {
   switch (error.type) {
     case ErrorType.NETWORK:
-      return 'Please check your internet connection and try again.';
+      return "Please check your internet connection and try again.";
     case ErrorType.PDF_LOAD:
-      return 'We\'re having trouble loading the PDF. The file might be corrupted or temporarily unavailable.';
+      return "We're having trouble loading the PDF. The file might be corrupted or temporarily unavailable.";
     case ErrorType.VALIDATION:
-      return 'Please check your input and try again.';
+      return "Please check your input and try again.";
     case ErrorType.PERMISSION:
-      return 'You don\'t have permission to access this resource.';
+      return "You don't have permission to access this resource.";
     case ErrorType.TIMEOUT:
-      return 'The request took too long to complete. Please try again.';
+      return "The request took too long to complete. Please try again.";
     default:
-      return 'An unexpected error occurred. Please try again or contact support if the problem persists.';
+      return "An unexpected error occurred. Please try again or contact support if the problem persists.";
   }
 }
 
@@ -301,12 +309,14 @@ export function PDFErrorBoundary({ children }: { children: ReactNode }) {
               <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
             </svg>
           </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">PDF Unavailable</h3>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">
+            PDF Unavailable
+          </h3>
           <p className="text-gray-600 mb-4">
             We're having trouble loading the PDF viewer.
           </p>
           {retry && (
-            <button 
+            <button
               onClick={retry}
               className="bg-emerald-600 hover:bg-emerald-700 text-white sm:px-4 px-2 py-2 rounded-md"
             >
@@ -337,12 +347,14 @@ export function NetworkErrorBoundary({ children }: { children: ReactNode }) {
               />
             </svg>
           </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">Connection Issue</h3>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">
+            Connection Issue
+          </h3>
           <p className="text-gray-600 mb-4">
             Please check your internet connection and try again.
           </p>
           {retry && (
-            <button 
+            <button
               onClick={retry}
               className="bg-yellow-600 hover:bg-yellow-700 text-white sm:px-4 px-2 py-2 rounded-md"
             >
@@ -362,17 +374,20 @@ export function NetworkErrorBoundary({ children }: { children: ReactNode }) {
 export function useErrorHandler() {
   const logger = ErrorLogger.getInstance();
 
-  const handleError = (error: Error | AppError, context?: Record<string, any>) => {
+  const handleError = (
+    error: Error | AppError,
+    context?: Record<string, any>,
+  ) => {
     logger.log(error, context);
-    
+
     if ((error as AppError).type === ErrorType.NETWORK) {
-      toast.error('Network connection error. Please try again.');
+      toast.error("Network connection error. Please try again.");
     } else if ((error as AppError).recoverable !== false) {
-      toast.error('Something went wrong. Please try again.');
+      toast.error("Something went wrong. Please try again.");
     }
   };
 
-  const createError = (message: string, type: ErrorType, options = {}) => 
+  const createError = (message: string, type: ErrorType, options = {}) =>
     createAppError(message, type, options);
 
   return { handleError, createError };
