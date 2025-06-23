@@ -1,6 +1,6 @@
 import { supabase } from '@/supabase/initializing';
 
-function DeleteArticleButton({ articleId }: { articleId: number }) {
+function DeleteArticleButton({ articleId, messages }: { articleId: number; messages?: any }) {
   async function handleClick() {
     if (!confirm('Are you sure you want to delete this article? This action cannot be undone.')) {
       return;
@@ -18,7 +18,7 @@ function DeleteArticleButton({ articleId }: { articleId: number }) {
 
   return (
     <button onClick={handleClick} className="block w-full sm:px-4 px-2 py-2 text-center bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors">
-      Delete Article
+      {messages.common.delete}
     </button>
   );
 }
