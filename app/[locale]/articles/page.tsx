@@ -51,9 +51,6 @@ async function Articles({ params }: { params: Promise<{ locale: string }> }) {
                   <Link href={`/${locale}/articles/${article.id}`} className="block w-full sm:px-4 px-2 py-2 text-center bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors">
                     {messages.articles.viewArticle}
                   </Link>
-                  <Link href={`/${locale}/articles/edit/${article.id}`} className="block w-full sm:px-4 px-2 py-2 text-center bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors">
-                    {messages.articles.editArticle}
-                  </Link>
                 </div>
               </div>
             </div>
