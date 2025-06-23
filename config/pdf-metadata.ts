@@ -18,6 +18,7 @@ export const pdfMetadata: PDFMetadata[] = [
   {
     filename: "1.pdf",
     title: {
+
       en: "The First Issue",
       ar: "العدد الأول",
     },

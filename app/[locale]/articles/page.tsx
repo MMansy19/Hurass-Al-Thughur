@@ -27,10 +27,10 @@ async function Articles({ params }: { params: Promise<{ locale: string }> }) {
   if (error || !articles) {
     return <h1>Error in Fetching</h1>;
   }
-  // console.log(articles);
+  console.log(articles);
   // Remove specific articles by name
   // articles = articles.filter((article) => ![8, 9, 10, 11].includes(article.id));
-  articles = articles.filter((article) => article.author === "محمود عبدالفتاح");
+<!--   articles = articles.filter((article) => article.author === "محمود عبدالفتاح"); -->
   return (
     <>
       <div className="bg-gradient-to-r from-emerald-700 to-emerald-900 text-white py-10 rounded-lg shadow-lg">
@@ -45,27 +45,6 @@ async function Articles({ params }: { params: Promise<{ locale: string }> }) {
       </div>
 
       <div className="py-8">
-        {" "}
-        <div className="container mx-auto sm:px-4 px-2 mb-6">
-          <Link
-            href={`/${locale}/articles/add`}
-            className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-5 h-5"
-            >
-              <path
-                fillRule="evenodd"
-                d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
-                clipRule="evenodd"
-              />
-            </svg>
-            {messages.articles.addNewArticle}
-          </Link>
-        </div>
         <div className="container mx-auto sm:px-4 grid md:grid-cols-2 lg:grid-cols-3 gap-4 px-2">
           {articles?.map((article) => (
             <div
@@ -87,12 +66,6 @@ async function Articles({ params }: { params: Promise<{ locale: string }> }) {
                     className="block w-full sm:px-4 px-2 py-2 text-center bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors"
                   >
                     {messages.articles.viewArticle}
-                  </Link>
-                  <Link
-                    href={`/${locale}/articles/edit/${article.id}`}
-                    className="block w-full sm:px-4 px-2 py-2 text-center bg-amber-600 text-white rounded-md hover:bg-amber-700 transition-colors"
-                  >
-                    {messages.articles.editArticle}
                   </Link>
                 </div>
               </div>

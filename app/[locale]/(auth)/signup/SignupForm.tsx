@@ -42,6 +42,7 @@ function SignupForm({ messages }: { messages: Record<string, any> }) {
     });
 
     if (data.user) {
+      window.localStorage.setItem("user", JSON.stringify(data.user));
       alert(messages.auth.signupSuccess);
       router.push(`/${locale}`);
     }
