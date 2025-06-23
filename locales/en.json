@@ -9,7 +9,9 @@
     "articles": "Articles",
     "contact": "Contact",
     "readMore": "Read More",
-    "view": "View",
+    "view": "عرض",
+    "edit": "تعديل",
+    "delete": "حذف",
     "viewAll": "View All",
     "preview": "Preview",
     "download": "Download",
@@ -22,7 +24,8 @@
     "goToLibrary": "Go to Library",
     "siteName": "Hurass Al-Thughur",
     "send": "Send"
-  },  "auth": {
+  },
+  "auth": {
     "signin": "Sign In",
     "signout": "Sign Out",
     "signup": "Sign Up",
