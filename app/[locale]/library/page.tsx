@@ -38,16 +38,41 @@ export default async function LibraryPage({
   ];
 
   const images = [
-    { id: 1, title: "Islamic Calligraphy", url: "/images/sample1.jpg", category: "Art" },
-    { id: 2, title: "Mosque Architecture", url: "/images/sample2.jpg", category: "Architecture" },
-    { id: 3, title: "Islamic Patterns", url: "/images/sample3.jpg", category: "Design" },
-    { id: 4, title: "Quran Verses", url: "/images/sample4.jpg", category: "Scripture" },
+    {
+      id: 1,
+      title: "Islamic Calligraphy",
+      url: "/images/sample1.jpg",
+      category: "Art",
+    },
+    {
+      id: 2,
+      title: "Mosque Architecture",
+      url: "/images/sample2.jpg",
+      category: "Architecture",
+    },
+    {
+      id: 3,
+      title: "Islamic Patterns",
+      url: "/images/sample3.jpg",
+      category: "Design",
+    },
+    {
+      id: 4,
+      title: "Quran Verses",
+      url: "/images/sample4.jpg",
+      category: "Scripture",
+    },
   ];
 
   const brochures = [
     { id: 1, title: "Introduction to Islam", pages: 12, category: "Basics" },
     { id: 2, title: "Five Pillars of Islam", pages: 8, category: "Practices" },
-    { id: 3, title: "Prophet Muhammad (PBUH)", pages: 16, category: "Biography" },
+    {
+      id: 3,
+      title: "Prophet Muhammad (PBUH)",
+      pages: 16,
+      category: "Biography",
+    },
     { id: 4, title: "Islamic Ethics", pages: 10, category: "Morality" },
   ];
 

@@ -21,16 +21,18 @@ function EditArticle({
   useEffect(() => {
     async function loadData() {
       const resolvedParamsResult = await params;
-      
+
       const { locale, articleId } = resolvedParamsResult;
-      const importedMessages = (await import(`@/locales/${locale}.json`)).default;
+      const importedMessages = (await import(`@/locales/${locale}.json`))
+        .default;
       setMessages(importedMessages);
 
-      const { data: articleData }: { data: ArticleInterface | null } = await supabase
-        .from("articles")
-        .select("*")
-        .eq("id", articleId)
-        .single();
+      const { data: articleData }: { data: ArticleInterface | null } =
+        await supabase
+          .from("articles")
+          .select("*")
+          .eq("id", articleId)
+          .single();
 
       setArticle(articleData);
       setLoading(false);

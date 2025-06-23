@@ -5,7 +5,8 @@ import Image from "next/image";
 import { useState, useCallback, useRef, useEffect } from "react";
 import { ImageProps } from "@/types";
 
-interface OptimizedImageProps extends Omit<ImageProps, "onLoad" | "onError" | "placeholder"> {
+interface OptimizedImageProps
+  extends Omit<ImageProps, "onLoad" | "onError" | "placeholder"> {
   fallbackSrc?: string;
   lazy?: boolean;
   quality?: number;
@@ -112,7 +113,9 @@ export function OptimizedImage({
     quality,
     priority,
     placeholder: placeholder === "skeleton" ? "empty" : placeholder,
-    ...(placeholder === "blur" && defaultBlurDataURL ? { blurDataURL: defaultBlurDataURL } : {}),
+    ...(placeholder === "blur" && defaultBlurDataURL
+      ? { blurDataURL: defaultBlurDataURL }
+      : {}),
     onLoad: handleLoad,
     onError: handleError,
     className: `transition-opacity duration-300 ${

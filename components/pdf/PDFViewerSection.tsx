@@ -12,11 +12,11 @@ const PDFViewer = dynamic(() => import("./PDFViewer"), {
 });
 
 // Enhanced loading placeholder component
-function PDFLoadingPlaceholder({ 
-  messages 
-}: { 
+function PDFLoadingPlaceholder({
+  messages,
+}: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  messages: any 
+  messages: any;
 }) {
   return (
     <div className="flex justify-center items-center h-96 bg-gray-50 rounded-lg">

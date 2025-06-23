@@ -89,13 +89,15 @@ export function useMemoryMonitoring() {
 
     const checkMemory = () => {
       if ("memory" in performance) {
-        const memory = (performance as Performance & {
-          memory: {
-            usedJSHeapSize: number;
-            totalJSHeapSize: number;
-            jsHeapSizeLimit: number;
-          };
-        }).memory;
+        const memory = (
+          performance as Performance & {
+            memory: {
+              usedJSHeapSize: number;
+              totalJSHeapSize: number;
+              jsHeapSizeLimit: number;
+            };
+          }
+        ).memory;
         const memoryUsage = {
           used: Math.round(memory.usedJSHeapSize / 1048576), // MB
           total: Math.round(memory.totalJSHeapSize / 1048576), // MB
