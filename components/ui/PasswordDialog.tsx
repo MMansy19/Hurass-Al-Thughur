@@ -16,7 +16,7 @@ interface PasswordDialogProps {
   };
 }
 
-const ADMIN_PASSWORD = "hurass-althughur-password";
+const ADMIN_PASSWORD = "hurass123";
 
 export default function PasswordDialog({
   isOpen,
