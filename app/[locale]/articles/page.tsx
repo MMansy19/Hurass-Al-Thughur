@@ -29,8 +29,8 @@ async function Articles({ params }: { params: Promise<{ locale: string }> }) {
   }
   // console.log(articles);
   // Remove specific articles by name
-  articles = articles.filter((article) => ![8, 9, 10, 11].includes(article.id));
-  // articles = articles.filter((article) => article.author === "محمود عبدالفتاح");
+  // articles = articles.filter((article) => ![8, 9, 10, 11].includes(article.id));
+  articles = articles.filter((article) => article.author === "محمود عبدالفتاح");
   return (
     <>
       <div className="bg-gradient-to-r from-emerald-700 to-emerald-900 text-white py-10 rounded-lg shadow-lg">
