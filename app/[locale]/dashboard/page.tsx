@@ -49,7 +49,6 @@ function Dashboard() {
         <p className="text-center font-bold text-2xl">
           {messages?.articles?.noArticlesYet}
         </p>
-        ;
       </>
     );
   }

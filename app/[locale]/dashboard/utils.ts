@@ -1,17 +1,14 @@
 import { supabase } from "@/supabase/initializing";
-import { Messages } from "@/types/messages";
-import { ArticleInterface } from "@/types/articles";
-import { User } from "@supabase/supabase-js";
 
 export async function loadMessages(
   locale: string,
-  setMessages: (messages: Messages) => void,
+  setMessages: (messages: any) => void,
 ) {
   const messagesModule = await import(`@/locales/${locale}.json`);
   setMessages(messagesModule.default);
 }
 
-export async function loadSignedInUser(setUser: (user: User | null) => void) {
+export async function loadSignedInUser(setUser: (user: any) => void) {
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -21,7 +18,7 @@ export async function loadSignedInUser(setUser: (user: User | null) => void) {
 
 export async function loadArticles(
   user_id: string,
-  setArticles: (articles: ArticleInterface[]) => void,
+  setArticles: (articles: any[]) => void,
   setLoading: (loading: boolean) => void,
 ) {
   const { data: articles, error } = await supabase
@@ -29,7 +26,6 @@ export async function loadArticles(
     .select("*")
     .eq("user_id", user_id)
     .order("created_at", { ascending: false });
-
   if (error) {
     console.error("Error fetching articles:", error);
     setArticles([]);

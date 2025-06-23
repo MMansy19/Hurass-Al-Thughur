@@ -26,10 +26,6 @@ async function Articles({ params }: { params: Promise<{ locale: string }> }) {
   if (error || !articles) {
     return <h1>Error in Fetching</h1>;
   }
-  console.log(articles);
-  // Remove specific articles by name
-  // articles = articles.filter((article) => ![8, 9, 10, 11].includes(article.id));
-  // articles = articles.filter((article) => article.author === "محمود عبدالفتاح");
   return (
     <>
       <div className="bg-gradient-to-r from-emerald-700 to-emerald-900 text-white py-10 rounded-lg shadow-lg">
@@ -86,12 +82,6 @@ async function Articles({ params }: { params: Promise<{ locale: string }> }) {
                     className="block w-full sm:px-4 px-2 py-2 text-center bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors"
                   >
                     {messages.articles.viewArticle}
-                  </Link>
-                  <Link
-                    href={`/${locale}/articles/edit/${article.id}`}
-                    className="block w-full sm:px-4 px-2 py-2 text-center bg-amber-600 text-white rounded-md hover:bg-amber-700 transition-colors"
-                  >
-                    {messages.articles.editArticle}
                   </Link>
                 </div>
               </div>
