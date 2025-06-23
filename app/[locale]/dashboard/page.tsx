@@ -42,11 +42,23 @@ function Dashboard() {
       <>
         <Link
           href={`/${locale}/articles/add`}
-          className="inline-block px-6 py-3 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors"
         >
-          {messages?.articles?.addNewArticle}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="w-5 h-5"
+          >
+            <path
+              fillRule="evenodd"
+              d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
+              clipRule="evenodd"
+            />
+          </svg>
+          {messages.articles.addNewArticle}
         </Link>
-        <p className="text-center font-bold text-2xl">
+        <p className="text-center font-bold text-2xl mt-10">
           {messages?.articles?.noArticlesYet}
         </p>
       </>
@@ -57,9 +69,21 @@ function Dashboard() {
     <div>
       <Link
         href={`/${locale}/articles/add`}
-        className="inline-block px-6 py-3 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors"
+        className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors"
       >
-        {messages?.articles?.addNewArticle}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          className="w-5 h-5"
+        >
+          <path
+            fillRule="evenodd"
+            d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
+            clipRule="evenodd"
+          />
+        </svg>
+        {messages.articles.addNewArticle}
       </Link>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">

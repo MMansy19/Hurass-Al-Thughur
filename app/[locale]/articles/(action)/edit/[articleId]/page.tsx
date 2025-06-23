@@ -4,7 +4,6 @@ import { ArticleInterface } from "@/types/articles";
 import ArticleForm from "../../ArticleForm";
 import { supabase } from "@/supabase/initializing";
 import { useState, useEffect } from "react";
-import PasswordDialog from "@/components/ui/PasswordDialog";
 import { Messages } from "@/types/messages";
 
 function EditArticle({
@@ -14,8 +13,6 @@ function EditArticle({
 }) {
   const [messages, setMessages] = useState<Messages | null>(null);
   const [article, setArticle] = useState<ArticleInterface | null>(null);
-  const [showPasswordDialog, setShowPasswordDialog] = useState(true);
-  const [isAuthorized, setIsAuthorized] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -41,15 +38,6 @@ function EditArticle({
     loadData();
   }, [params]);
 
-  const handlePasswordClose = () => {
-    setShowPasswordDialog(false);
-  };
-
-  const handlePasswordSuccess = () => {
-    setIsAuthorized(true);
-    setShowPasswordDialog(false);
-  };
-
   if (loading || !messages) {
     return (
       <div className="max-w-4xl mx-auto mt-8 text-center">
@@ -68,24 +56,6 @@ function EditArticle({
           </h1>
         </div>
       </div>
-    );
-  }
-
-  if (!isAuthorized) {
-    return (
-      <PasswordDialog
-        isOpen={showPasswordDialog}
-        onClose={handlePasswordClose}
-        onSuccess={handlePasswordSuccess}
-        title={messages.auth.adminPasswordRequired}
-        description={messages.auth.enterAdminPassword}
-        messages={{
-          password: messages.auth.password,
-          cancel: messages.common.cancel,
-          confirm: messages.common.confirm,
-          incorrectPassword: messages.auth.incorrectPassword,
-        }}
-      />
     );
   }
 
