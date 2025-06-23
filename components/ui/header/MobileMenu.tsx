@@ -17,8 +17,7 @@ interface MobileMenuProps {
   headerHeight: number;
   isArabic: boolean;
   oppositeLocale: string;
-  pathname: string;
-  messages: {
+  pathname: string;  messages: {
     switchLanguage: string;
     signin: string;
     signup: string;
@@ -39,15 +38,8 @@ const MobileMenu = ({ isMenuOpen, setIsMenuOpen, navLinks, headerHeight, isArabi
   );
 
   return (
-    <>
-      {' '}
-      {/* Mobile Menu Button */}
+    <>      {/* Mobile Menu Button */}
       <div className="flex gap-2 items-center xl:hidden">
-        <Link href={`${oppositeLocale === 'en' ? '/ar/dashboard' : '/en/dashboard'}`} className="flex items-center justify-center transition-colors w-8 h-8 bg-emerald-600 text-white rounded-md hover:bg-emerald-700">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="size-6">
-            <path d="M11.25 4.533A9.707 9.707 0 0 0 6 3a9.735 9.735 0 0 0-3.25.555.75.75 0 0 0-.5.707v14.25a.75.75 0 0 0 1 .707A8.237 8.237 0 0 1 6 18.75c1.995 0 3.823.707 5.25 1.886V4.533ZM12.75 20.636A8.214 8.214 0 0 1 18 18.75c.966 0 1.89.166 2.75.47a.75.75 0 0 0 1-.708V4.262a.75.75 0 0 0-.5-.707A9.735 9.735 0 0 0 18 3a9.707 9.707 0 0 0-5.25 1.533v16.103Z" />
-          </svg>
-        </Link>
         <AuthButtons messages={{ signin: messages.signin, signup: messages.signup }} isMobile={true} />
         <LanguageSwitch oppositeLocale={oppositeLocale} pathname={pathname} isArabic={isArabic} switchText={messages.switchLanguage} isMobile={true} />
 
@@ -55,6 +47,7 @@ const MobileMenu = ({ isMenuOpen, setIsMenuOpen, navLinks, headerHeight, isArabi
           {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
         </button>
       </div>
+
       {/* Mobile Navigation Menu */}
       <div id="mobile-menu" className={`fixed inset-x-0 bottom-0 z-40 bg-white ${styles.mobileMenu} ${isMenuOpen ? 'translate-x-0' : isArabic ? 'translate-x-full' : '-translate-x-full'}`} style={{ top: `${headerHeight}px`, height: `calc(100vh - ${headerHeight}px)` }}>
         <div className="sm:px-4 px-2 py-6 space-y-1 h-full overflow-y-auto">
@@ -66,6 +59,7 @@ const MobileMenu = ({ isMenuOpen, setIsMenuOpen, navLinks, headerHeight, isArabi
           ))}
         </div>
       </div>
+
       {/* Overlay for mobile menu */}
       {isMenuOpen && <div className="fixed inset-0 bg-black/30 z-30" style={{ top: `${headerHeight}px` }} onClick={() => setIsMenuOpen(false)} aria-hidden="true" />}
     </>
