@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useState } from 'react';
+import { ReactNode, useState } from "react";
 
 interface PDFControlsWrapperProps {
   children: ReactNode;
@@ -28,7 +28,13 @@ interface NavigationButtonProps {
 /**
  * Navigation button for PDF viewer
  */
-export function NavigationButton({ onClick, disabled, label, icon, isNext = false }: NavigationButtonProps) {
+export function NavigationButton({
+  onClick,
+  disabled,
+  label,
+  icon,
+  isNext = false,
+}: NavigationButtonProps) {
   return (
     <button
       onClick={onClick}
@@ -52,7 +58,11 @@ interface PageIndicatorProps {
 /**
  * Enhanced page number indicator with input
  */
-export function PageIndicator({ currentPage, totalPages, onPageChange }: PageIndicatorProps) {
+export function PageIndicator({
+  currentPage,
+  totalPages,
+  onPageChange,
+}: PageIndicatorProps) {
   const [inputValue, setInputValue] = useState(currentPage.toString());
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -67,7 +77,9 @@ export function PageIndicator({ currentPage, totalPages, onPageChange }: PageInd
 
   return (
     <form onSubmit={handleSubmit} className="flex items-center gap-1 sm:gap-2">
-      <span className="text-xs sm:text-sm text-gray-600 hidden sm:inline">Page</span>
+      <span className="text-xs sm:text-sm text-gray-600 hidden sm:inline">
+        Page
+      </span>
       <input
         type="number"
         value={inputValue}
@@ -77,7 +89,9 @@ export function PageIndicator({ currentPage, totalPages, onPageChange }: PageInd
         min={1}
         max={totalPages}
       />
-      <span className="text-xs sm:text-sm text-gray-600">/ {totalPages || 0}</span>
+      <span className="text-xs sm:text-sm text-gray-600">
+        / {totalPages || 0}
+      </span>
     </form>
   );
 }
@@ -95,7 +109,15 @@ interface ZoomControlProps {
 /**
  * Enhanced zoom control component
  */
-export function ZoomControl({ scale, onZoomIn, onZoomOut, zoomInLabel, zoomOutLabel, onReset, actualSizeLabel }: ZoomControlProps) {
+export function ZoomControl({
+  scale,
+  onZoomIn,
+  onZoomOut,
+  zoomInLabel,
+  zoomOutLabel,
+  onReset,
+  actualSizeLabel,
+}: ZoomControlProps) {
   return (
     <div className="flex items-center gap-1 bg-white rounded-lg border border-gray-300 shadow-sm">
       <button
@@ -104,8 +126,17 @@ export function ZoomControl({ scale, onZoomIn, onZoomOut, zoomInLabel, zoomOutLa
         aria-label={zoomOutLabel}
         title={zoomOutLabel}
       >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-          <path fillRule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-4 w-4"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fillRule="evenodd"
+            d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+            clipRule="evenodd"
+          />
         </svg>
       </button>
       <div className="px-3 py-2 text-sm bg-gray-50 border-x border-gray-300 min-w-[60px] text-center">
@@ -117,8 +148,17 @@ export function ZoomControl({ scale, onZoomIn, onZoomOut, zoomInLabel, zoomOutLa
         aria-label={zoomInLabel}
         title={zoomInLabel}
       >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-          <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-4 w-4"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fillRule="evenodd"
+            d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+            clipRule="evenodd"
+          />
         </svg>
       </button>
       {onReset && (
@@ -128,8 +168,17 @@ export function ZoomControl({ scale, onZoomIn, onZoomOut, zoomInLabel, zoomOutLa
           aria-label={actualSizeLabel || "Reset zoom"}
           title={actualSizeLabel || "Reset zoom"}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clipRule="evenodd" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-4 w-4"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fillRule="evenodd"
+              d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"
+              clipRule="evenodd"
+            />
           </svg>
         </button>
       )}
@@ -138,8 +187,8 @@ export function ZoomControl({ scale, onZoomIn, onZoomOut, zoomInLabel, zoomOutLa
 }
 
 interface ViewModeControlProps {
-  mode: 'single' | 'continuous' | 'facing';
-  onChange: (mode: 'single' | 'continuous' | 'facing') => void;
+  mode: "single" | "continuous" | "facing";
+  onChange: (mode: "single" | "continuous" | "facing") => void;
   fitWidth: () => void;
   fitPage: () => void;
   fitWidthLabel: string;
@@ -152,12 +201,24 @@ interface ViewModeControlProps {
 /**
  * View mode control component
  */
-export function ViewModeControl({ mode, onChange, fitWidth, fitPage, fitWidthLabel, fitPageLabel, singleLabel, continuousLabel, facingLabel }: ViewModeControlProps) {
+export function ViewModeControl({
+  mode,
+  onChange,
+  fitWidth,
+  fitPage,
+  fitWidthLabel,
+  fitPageLabel,
+  singleLabel,
+  continuousLabel,
+  facingLabel,
+}: ViewModeControlProps) {
   return (
     <div className="flex items-center gap-1">
       <select
         value={mode}
-        onChange={(e) => onChange(e.target.value as 'single' | 'continuous' | 'facing')}
+        onChange={(e) =>
+          onChange(e.target.value as "single" | "continuous" | "facing")
+        }
         className="sm:px-3 sm:py-2 p-1 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
       >
         <option value="single">{singleLabel || "صفحة واحدة"}</option>
@@ -172,7 +233,7 @@ export function ViewModeControl({ mode, onChange, fitWidth, fitPage, fitWidthLab
       >
         {fitWidthLabel}
       </button>
-      
+
       <button
         onClick={fitPage}
         className="sm:px-3 sm:py-2 p-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
@@ -201,64 +262,112 @@ interface AdvancedControlsProps {
 /**
  * Advanced controls component
  */
-export function AdvancedControls({ 
-  onToggleSidebar, 
-  onDownload, 
-  onPrint, 
-  sidebarOpen, 
-  thumbnailsLabel, 
-  downloadLabel, 
+export function AdvancedControls({
+  onToggleSidebar,
+  onDownload,
+  onPrint,
+  sidebarOpen,
+  thumbnailsLabel,
+  downloadLabel,
   printLabel,
   onToggleThumbnails,
   onToggleOutline,
   outlineOpen,
-  outlineLabel
+  outlineLabel,
 }: AdvancedControlsProps) {
   return (
     <div className="flex items-center gap-2">
       <button
         onClick={onToggleThumbnails || onToggleSidebar}
         className={`p-2 rounded-lg transition-colors ${
-          sidebarOpen ? 'bg-emerald-100 text-emerald-700' : 'bg-gray-100 hover:bg-gray-200'
+          sidebarOpen
+            ? "bg-emerald-100 text-emerald-700"
+            : "bg-gray-100 hover:bg-gray-200"
         }`}
         title={thumbnailsLabel}
       >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+          />
         </svg>
       </button>
-      
+
       {onToggleOutline && (
         <button
           onClick={onToggleOutline}
           className={`p-2 rounded-lg transition-colors ${
-            outlineOpen ? 'bg-emerald-100 text-emerald-700' : 'bg-gray-100 hover:bg-gray-200'
+            outlineOpen
+              ? "bg-emerald-100 text-emerald-700"
+              : "bg-gray-100 hover:bg-gray-200"
           }`}
           title={outlineLabel || "Outline"}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 10h16M4 14h16M4 18h16"
+            />
           </svg>
         </button>
       )}
-      
+
       <button
         onClick={onDownload}
         className="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
         title={downloadLabel}
       >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+          />
         </svg>
       </button>
-      
+
       <button
         onClick={onPrint}
         className="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
         title={printLabel}
       >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"
+          />
         </svg>
       </button>
     </div>
@@ -274,7 +383,11 @@ interface FullscreenControlProps {
 /**
  * Fullscreen control component
  */
-export function FullscreenControl({ isFullscreen, onToggle, label }: FullscreenControlProps) {
+export function FullscreenControl({
+  isFullscreen,
+  onToggle,
+  label,
+}: FullscreenControlProps) {
   return (
     <button
       onClick={onToggle}
@@ -282,12 +395,34 @@ export function FullscreenControl({ isFullscreen, onToggle, label }: FullscreenC
       title={label}
     >
       {isFullscreen ? (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 9V4.5M9 9H4.5M9 9L3.5 3.5M15 9h4.5M15 9V4.5M15 9l5.5-5.5M9 15v4.5M9 15H4.5M9 15l-5.5 5.5M15 15h4.5M15 15v4.5m0-4.5l5.5 5.5" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 9V4.5M9 9H4.5M9 9L3.5 3.5M15 9h4.5M15 9V4.5M15 9l5.5-5.5M9 15v4.5M9 15H4.5M9 15l-5.5 5.5M15 15h4.5M15 15v4.5m0-4.5l5.5 5.5"
+          />
         </svg>
       ) : (
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"
+          />
         </svg>
       )}
     </button>
@@ -305,39 +440,64 @@ interface BookmarkControlProps {
 /**
  * Bookmark control component
  */
-export function BookmarkControl({ 
-  isBookmarked, 
-  onToggle, 
-  onShowBookmarks, 
-  bookmarkLabel, 
-  bookmarksOpen 
+export function BookmarkControl({
+  isBookmarked,
+  onToggle,
+  onShowBookmarks,
+  bookmarkLabel,
+  bookmarksOpen,
 }: BookmarkControlProps) {
   return (
     <div className="flex items-center gap-1">
       <button
         onClick={onToggle}
         className={`p-2 rounded-lg transition-colors ${
-          isBookmarked ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 hover:bg-gray-200'
+          isBookmarked
+            ? "bg-yellow-100 text-yellow-700"
+            : "bg-gray-100 hover:bg-gray-200"
         }`}
         title={bookmarkLabel}
       >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill={isBookmarked ? "currentColor" : "none"} viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
+          fill={isBookmarked ? "currentColor" : "none"}
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
+          />
         </svg>
       </button>
-      
+
       <button
         onClick={onShowBookmarks}
         className={`p-2 rounded-lg transition-colors ${
-          bookmarksOpen ? 'bg-blue-100 text-blue-700' : 'bg-gray-100 hover:bg-gray-200'
+          bookmarksOpen
+            ? "bg-blue-100 text-blue-700"
+            : "bg-gray-100 hover:bg-gray-200"
         }`}
         title="Show Bookmarks"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+          />
         </svg>
       </button>
     </div>
   );
 }
-

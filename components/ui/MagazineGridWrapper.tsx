@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import React, { useCallback } from 'react';
-import { IntegratedMagazineGrid } from './IntegratedComponents';
+import React, { useCallback } from "react";
+import { IntegratedMagazineGrid } from "./IntegratedComponents";
 
 interface MagazineIssue {
   id: string;
@@ -31,26 +31,33 @@ export function MagazineGridWrapper({
   locale,
   isLoading = false,
   columns = 3,
-  readNowText = locale === 'ar' ? 'اقرأ الآن' : 'Read Now',
+  readNowText = locale === "ar" ? "اقرأ الآن" : "Read Now",
   enableAnimations = true,
   enableAccessibilityFeatures = true,
-  className = ''
-}: MagazineGridWrapperProps) {  // Handle issue view action - navigate to magazine issue page
-  const handleIssueView = useCallback((id: string) => {
-    window.location.href = `/${locale}/magazine/issue/${id}`;
-  }, [locale]);
+  className = "",
+}: MagazineGridWrapperProps) {
+  // Handle issue view action - navigate to magazine issue page
+  const handleIssueView = useCallback(
+    (id: string) => {
+      window.location.href = `/${locale}/magazine/issue/${id}`;
+    },
+    [locale],
+  );
 
   // Handle issue download action - trigger PDF download
-  const handleIssueDownload = useCallback((id: string) => {
-    // Find the issue to get its title for proper filename
-    const issue = issues.find(i => i.id === id);
-    const link = document.createElement('a');
-    link.href = `/pdfs/magazine-issue-${id}.pdf`;
-    link.download = `${issue?.title?.replace(/[^a-zA-Z0-9\u0600-\u06FF]/g, '_') || `magazine-issue-${id}`}.pdf`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }, [issues]);
+  const handleIssueDownload = useCallback(
+    (id: string) => {
+      // Find the issue to get its title for proper filename
+      const issue = issues.find((i) => i.id === id);
+      const link = document.createElement("a");
+      link.href = `/pdfs/magazine-issue-${id}.pdf`;
+      link.download = `${issue?.title?.replace(/[^a-zA-Z0-9\u0600-\u06FF]/g, "_") || `magazine-issue-${id}`}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    },
+    [issues],
+  );
 
   return (
     <div className={className}>

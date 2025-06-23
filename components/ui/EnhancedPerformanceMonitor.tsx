@@ -1,7 +1,7 @@
 // Enhanced Performance Monitor with Web Vitals visualization
-'use client';
+"use client";
 
-import { useEffect, useState, memo } from 'react';
+import { useEffect, useState, memo } from "react";
 
 interface PerformanceData {
   cls: number | null;
@@ -27,21 +27,28 @@ const PERFORMANCE_THRESHOLDS: PerformanceThresholds = {
   fid: { good: 100, needs_improvement: 300 },
   fcp: { good: 1800, needs_improvement: 3000 },
   lcp: { good: 2500, needs_improvement: 4000 },
-  ttfb: { good: 800, needs_improvement: 1800 }
+  ttfb: { good: 800, needs_improvement: 1800 },
 };
 
-function getMetricStatus(value: number, thresholds: { good: number; needs_improvement: number }): 'good' | 'needs-improvement' | 'poor' {
-  if (value <= thresholds.good) return 'good';
-  if (value <= thresholds.needs_improvement) return 'needs-improvement';
-  return 'poor';
+function getMetricStatus(
+  value: number,
+  thresholds: { good: number; needs_improvement: number },
+): "good" | "needs-improvement" | "poor" {
+  if (value <= thresholds.good) return "good";
+  if (value <= thresholds.needs_improvement) return "needs-improvement";
+  return "poor";
 }
 
 function getStatusColor(status: string): string {
   switch (status) {
-    case 'good': return 'text-green-600 bg-green-50 border-green-200';
-    case 'needs-improvement': return 'text-yellow-600 bg-yellow-50 border-yellow-200';
-    case 'poor': return 'text-red-600 bg-red-50 border-red-200';
-    default: return 'text-gray-600 bg-gray-50 border-gray-200';
+    case "good":
+      return "text-green-600 bg-green-50 border-green-200";
+    case "needs-improvement":
+      return "text-yellow-600 bg-yellow-50 border-yellow-200";
+    case "poor":
+      return "text-red-600 bg-red-50 border-red-200";
+    default:
+      return "text-gray-600 bg-gray-50 border-gray-200";
   }
 }
 
@@ -54,62 +61,67 @@ const EnhancedPerformanceMonitor = memo(() => {
     ttfb: null,
     memoryUsage: null,
     loadTime: null,
-    connectionType: null
+    connectionType: null,
   });
 
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     // Only show in development or when specifically enabled
-    const shouldShow = process.env.NODE_ENV === 'development' || 
-                      localStorage.getItem('showPerformanceMonitor') === 'true';
+    const shouldShow =
+      process.env.NODE_ENV === "development" ||
+      localStorage.getItem("showPerformanceMonitor") === "true";
     setIsVisible(shouldShow);
 
-    if (!shouldShow) return;    // Import web-vitals dynamically to avoid SSR issues
-    import('web-vitals').then(({ onCLS, onINP, onFCP, onLCP, onTTFB }) => {
-      const handleMetric = (metric: any) => {
-        setPerformanceData(prev => ({
-          ...prev,
-          [metric.name.toLowerCase()]: metric.value
-        }));
+    if (!shouldShow) return; // Import web-vitals dynamically to avoid SSR issues
+    import("web-vitals")
+      .then(({ onCLS, onINP, onFCP, onLCP, onTTFB }) => {
+        const handleMetric = (metric: any) => {
+          setPerformanceData((prev) => ({
+            ...prev,
+            [metric.name.toLowerCase()]: metric.value,
+          }));
 
-        // Log to console for debugging
-        console.log(`${metric.name}: ${metric.value}`, metric);
-      };      // Register Web Vitals observers
-      onCLS(handleMetric);
-      onINP(handleMetric);
-      onFCP(handleMetric);
-      onLCP(handleMetric);
-      onTTFB(handleMetric);
-    }).catch(() => {
-      console.warn('Web Vitals not available');
-    });
+          // Log to console for debugging
+          console.log(`${metric.name}: ${metric.value}`, metric);
+        }; // Register Web Vitals observers
+        onCLS(handleMetric);
+        onINP(handleMetric);
+        onFCP(handleMetric);
+        onLCP(handleMetric);
+        onTTFB(handleMetric);
+      })
+      .catch(() => {
+        console.warn("Web Vitals not available");
+      });
 
     // Get memory usage if available
-    if ('memory' in performance) {
+    if ("memory" in performance) {
       const memInfo = (performance as any).memory;
-      setPerformanceData(prev => ({
+      setPerformanceData((prev) => ({
         ...prev,
-        memoryUsage: Math.round(memInfo.usedJSHeapSize / 1024 / 1024)
+        memoryUsage: Math.round(memInfo.usedJSHeapSize / 1024 / 1024),
       }));
     }
 
     // Get connection info
-    if ('connection' in navigator) {
+    if ("connection" in navigator) {
       const connection = (navigator as any).connection;
-      setPerformanceData(prev => ({
+      setPerformanceData((prev) => ({
         ...prev,
-        connectionType: connection.effectiveType || connection.type || 'unknown'
+        connectionType:
+          connection.effectiveType || connection.type || "unknown",
       }));
     }
 
     // Calculate load time
     if (performance.timing) {
-      const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+      const loadTime =
+        performance.timing.loadEventEnd - performance.timing.navigationStart;
       if (loadTime > 0) {
-        setPerformanceData(prev => ({
+        setPerformanceData((prev) => ({
           ...prev,
-          loadTime: Math.round(loadTime)
+          loadTime: Math.round(loadTime),
         }));
       }
     }
@@ -118,25 +130,28 @@ const EnhancedPerformanceMonitor = memo(() => {
   if (!isVisible) return null;
 
   const renderMetric = (
-    label: string, 
-    value: number | null, 
-    unit: string, 
-    thresholds?: { good: number; needs_improvement: number }
+    label: string,
+    value: number | null,
+    unit: string,
+    thresholds?: { good: number; needs_improvement: number },
   ) => {
     if (value === null) return null;
 
-    const status = thresholds ? getMetricStatus(value, thresholds) : 'good';
+    const status = thresholds ? getMetricStatus(value, thresholds) : "good";
     const colorClass = getStatusColor(status);
 
     return (
       <div className={`p-3 rounded-lg border ${colorClass}`}>
         <div className="text-sm font-medium">{label}</div>
         <div className="text-xl font-bold">
-          {typeof value === 'number' ? value.toFixed(label === 'CLS' ? 3 : 0) : value}{unit}
+          {typeof value === "number"
+            ? value.toFixed(label === "CLS" ? 3 : 0)
+            : value}
+          {unit}
         </div>
         {thresholds && (
           <div className="text-xs capitalize mt-1">
-            {status.replace('-', ' ')}
+            {status.replace("-", " ")}
           </div>
         )}
       </div>
@@ -150,13 +165,17 @@ const EnhancedPerformanceMonitor = memo(() => {
         <button
           onClick={() => {
             setIsVisible(false);
-            localStorage.setItem('showPerformanceMonitor', 'false');
+            localStorage.setItem("showPerformanceMonitor", "false");
           }}
           className="text-gray-400 hover:text-gray-600"
           aria-label="Close performance monitor"
         >
           <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+            <path
+              fillRule="evenodd"
+              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+              clipRule="evenodd"
+            />
           </svg>
         </button>
       </div>
@@ -164,22 +183,49 @@ const EnhancedPerformanceMonitor = memo(() => {
       <div className="space-y-2 text-sm">
         {/* Core Web Vitals */}
         <div className="grid grid-cols-2 gap-2">
-          {renderMetric('LCP', performanceData.lcp, 'ms', PERFORMANCE_THRESHOLDS.lcp)}
-          {renderMetric('FID', performanceData.fid, 'ms', PERFORMANCE_THRESHOLDS.fid)}
-        </div>
-        
-        <div className="grid grid-cols-2 gap-2">
-          {renderMetric('CLS', performanceData.cls, '', PERFORMANCE_THRESHOLDS.cls)}
-          {renderMetric('FCP', performanceData.fcp, 'ms', PERFORMANCE_THRESHOLDS.fcp)}
+          {renderMetric(
+            "LCP",
+            performanceData.lcp,
+            "ms",
+            PERFORMANCE_THRESHOLDS.lcp,
+          )}
+          {renderMetric(
+            "FID",
+            performanceData.fid,
+            "ms",
+            PERFORMANCE_THRESHOLDS.fid,
+          )}
         </div>
 
-        {renderMetric('TTFB', performanceData.ttfb, 'ms', PERFORMANCE_THRESHOLDS.ttfb)}
+        <div className="grid grid-cols-2 gap-2">
+          {renderMetric(
+            "CLS",
+            performanceData.cls,
+            "",
+            PERFORMANCE_THRESHOLDS.cls,
+          )}
+          {renderMetric(
+            "FCP",
+            performanceData.fcp,
+            "ms",
+            PERFORMANCE_THRESHOLDS.fcp,
+          )}
+        </div>
+
+        {renderMetric(
+          "TTFB",
+          performanceData.ttfb,
+          "ms",
+          PERFORMANCE_THRESHOLDS.ttfb,
+        )}
 
         {/* Additional metrics */}
         <div className="pt-2 border-t border-gray-200">
           <div className="grid grid-cols-2 gap-2">
-            {performanceData.memoryUsage && renderMetric('Memory', performanceData.memoryUsage, 'MB')}
-            {performanceData.loadTime && renderMetric('Load Time', performanceData.loadTime, 'ms')}
+            {performanceData.memoryUsage &&
+              renderMetric("Memory", performanceData.memoryUsage, "MB")}
+            {performanceData.loadTime &&
+              renderMetric("Load Time", performanceData.loadTime, "ms")}
           </div>
           {performanceData.connectionType && (
             <div className="mt-2 text-xs text-gray-600">
@@ -211,6 +257,6 @@ const EnhancedPerformanceMonitor = memo(() => {
   );
 });
 
-EnhancedPerformanceMonitor.displayName = 'EnhancedPerformanceMonitor';
+EnhancedPerformanceMonitor.displayName = "EnhancedPerformanceMonitor";
 
 export default EnhancedPerformanceMonitor;

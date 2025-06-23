@@ -9,7 +9,12 @@ interface SearchBarProps {
   searchLabel: string;
 }
 
-export function SearchBar({ searchTerm, setSearchTerm, placeholder, searchLabel }: SearchBarProps) {
+export function SearchBar({
+  searchTerm,
+  setSearchTerm,
+  placeholder,
+  searchLabel,
+}: SearchBarProps) {
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };

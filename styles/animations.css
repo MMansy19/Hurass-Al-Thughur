@@ -164,7 +164,8 @@
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -173,7 +174,8 @@
 }
 
 @keyframes breathe {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
     opacity: 0.8;
   }
@@ -193,7 +195,11 @@
 }
 
 @keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
     transform: translateY(0);
   }
   40% {
@@ -205,7 +211,9 @@
 }
 
 @keyframes wave {
-  0%, 60%, 100% {
+  0%,
+  60%,
+  100% {
     transform: initial;
   }
   30% {
@@ -223,10 +231,12 @@
 }
 
 @keyframes blink {
-  0%, 50% {
+  0%,
+  50% {
     opacity: 1;
   }
-  51%, 100% {
+  51%,
+  100% {
     opacity: 0;
   }
 }
@@ -254,7 +264,8 @@
 }
 
 @keyframes wiggle {
-  0%, 7% {
+  0%,
+  7% {
     transform: rotateZ(0);
   }
   15% {
@@ -272,19 +283,28 @@
   35% {
     transform: rotateZ(-4deg);
   }
-  40%, 100% {
+  40%,
+  100% {
     transform: rotateZ(0);
   }
 }
 
 @keyframes shake {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0);
   }
-  10%, 30%, 50%, 70%, 90% {
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
     transform: translateX(-10px);
   }
-  20%, 40%, 60%, 80% {
+  20%,
+  40%,
+  60%,
+  80% {
     transform: translateX(10px);
   }
 }
@@ -483,9 +503,15 @@
   animation: wave 1.4s ease-in-out infinite;
 }
 
-.loading-dots > div:nth-child(1) { animation-delay: -0.32s; }
-.loading-dots > div:nth-child(2) { animation-delay: -0.16s; }
-.loading-dots > div:nth-child(3) { animation-delay: 0s; }
+.loading-dots > div:nth-child(1) {
+  animation-delay: -0.32s;
+}
+.loading-dots > div:nth-child(2) {
+  animation-delay: -0.16s;
+}
+.loading-dots > div:nth-child(3) {
+  animation-delay: 0s;
+}
 
 .loading-bars {
   display: inline-flex;
@@ -499,22 +525,49 @@
   animation: wave 0.9s ease-in-out infinite;
 }
 
-.loading-bars > div:nth-child(1) { height: 20px; animation-delay: 0s; }
-.loading-bars > div:nth-child(2) { height: 16px; animation-delay: 0.1s; }
-.loading-bars > div:nth-child(3) { height: 12px; animation-delay: 0.2s; }
-.loading-bars > div:nth-child(4) { height: 16px; animation-delay: 0.3s; }
-.loading-bars > div:nth-child(5) { height: 20px; animation-delay: 0.4s; }
+.loading-bars > div:nth-child(1) {
+  height: 20px;
+  animation-delay: 0s;
+}
+.loading-bars > div:nth-child(2) {
+  height: 16px;
+  animation-delay: 0.1s;
+}
+.loading-bars > div:nth-child(3) {
+  height: 12px;
+  animation-delay: 0.2s;
+}
+.loading-bars > div:nth-child(4) {
+  height: 16px;
+  animation-delay: 0.3s;
+}
+.loading-bars > div:nth-child(5) {
+  height: 20px;
+  animation-delay: 0.4s;
+}
 
 /* ============================================================================
    Stagger Animation Delays
    ========================================================================== */
 
-.stagger-delay-1 { animation-delay: 0.1s; }
-.stagger-delay-2 { animation-delay: 0.2s; }
-.stagger-delay-3 { animation-delay: 0.3s; }
-.stagger-delay-4 { animation-delay: 0.4s; }
-.stagger-delay-5 { animation-delay: 0.5s; }
-.stagger-delay-6 { animation-delay: 0.6s; }
+.stagger-delay-1 {
+  animation-delay: 0.1s;
+}
+.stagger-delay-2 {
+  animation-delay: 0.2s;
+}
+.stagger-delay-3 {
+  animation-delay: 0.3s;
+}
+.stagger-delay-4 {
+  animation-delay: 0.4s;
+}
+.stagger-delay-5 {
+  animation-delay: 0.5s;
+}
+.stagger-delay-6 {
+  animation-delay: 0.6s;
+}
 
 /* ============================================================================
    3D Transform Effects
@@ -585,15 +638,15 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-  
+
   .animate-spin {
     animation: none;
   }
-  
+
   .animate-pulse {
     animation: none;
   }
-  
+
   .animate-bounce {
     animation: none;
   }
@@ -632,16 +685,16 @@
   .animate-fadeInRight {
     animation-duration: 0.4s;
   }
-  
+
   .hover-lift:hover,
   .hover-scale:hover {
     transform: none;
   }
-  
+
   .flip-card {
     transform: none;
   }
-  
+
   .flip-card:hover {
     transform: none;
   }

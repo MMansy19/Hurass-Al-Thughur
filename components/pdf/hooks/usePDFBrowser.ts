@@ -1,8 +1,12 @@
 "use client";
 
-import { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
-import { getPDFTitle, getPDFDescription, getPDFMetadata } from '@/config/pdf-metadata';
+import { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
+import {
+  getPDFTitle,
+  getPDFDescription,
+  getPDFMetadata,
+} from "@/config/pdf-metadata";
 
 interface PDFFile {
   name: string;
@@ -12,11 +16,12 @@ interface PDFFile {
 export function usePDFBrowser() {
   const params = useParams();
   const locale = params.locale as string;
-  
+
   const [pdfFiles, setPdfFiles] = useState<PDFFile[]>([]);
   const [filteredPDFs, setFilteredPDFs] = useState<PDFFile[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [searchTerm, setSearchTerm] = useState<string>('');  const [error, setError] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
 
   // Fetch PDF list from API
   const fetchPDFList = async () => {
@@ -31,7 +36,8 @@ export function usePDFBrowser() {
       setPdfFiles(data);
       setFilteredPDFs(data);
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
       console.error("Error fetching PDFs:", errorMessage);
       setError(errorMessage);
     } finally {
@@ -53,33 +59,42 @@ export function usePDFBrowser() {
         if (pdf.name.toLowerCase().includes(searchLower)) {
           return true;
         }
-        
+
         // Search in metadata title
         const title = getPDFTitle(pdf.name, locale);
         if (title.toLowerCase().includes(searchLower)) {
           return true;
         }
-        
+
         // Search in metadata description
         const description = getPDFDescription(pdf.name, locale);
         if (description && description.toLowerCase().includes(searchLower)) {
           return true;
         }
-        
+
         // Search in metadata tags and category
         const metadata = getPDFMetadata(pdf.name);
         if (metadata) {
-          if (metadata.category && metadata.category.toLowerCase().includes(searchLower)) {
+          if (
+            metadata.category &&
+            metadata.category.toLowerCase().includes(searchLower)
+          ) {
             return true;
           }
-          if (metadata.author && metadata.author.toLowerCase().includes(searchLower)) {
+          if (
+            metadata.author &&
+            metadata.author.toLowerCase().includes(searchLower)
+          ) {
             return true;
           }
-          if (metadata.tags && metadata.tags.some(tag => tag.toLowerCase().includes(searchLower))) {
+          if (
+            metadata.tags &&
+            metadata.tags.some((tag) => tag.toLowerCase().includes(searchLower))
+          ) {
             return true;
           }
         }
-        
+
         return false;
       });
       setFilteredPDFs(filtered);
@@ -92,6 +107,6 @@ export function usePDFBrowser() {
     searchTerm,
     setSearchTerm,
     error,
-    retryFetch: fetchPDFList
+    retryFetch: fetchPDFList,
   };
 }

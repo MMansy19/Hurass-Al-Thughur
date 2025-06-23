@@ -3,9 +3,9 @@ import Link from "next/link";
 import SEO from "@/components/ui/SEO";
 
 // Generate metadata for the page
-export async function generateMetadata({ 
-  params
-}: { 
+export async function generateMetadata({
+  params,
+}: {
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
@@ -22,22 +22,26 @@ export default async function DawahPage({
   params,
 }: {
   params: Promise<{ locale: string }>;
-}) {  const { locale } = await params;  // Import translations
+}) {
+  const { locale } = await params; // Import translations
   const messages = (await import(`@/locales/${locale}.json`)).default;
   const { dawah, common } = messages;
 
   // Mock data for introductory articles
-  const introArticles = [    {
+  const introArticles = [
+    {
       id: 1,
       title: dawah.articles.whatIsIslam.title,
       excerpt: dawah.articles.whatIsIslam.excerpt,
       image: "/images/what-is-islam.jpg", // Placeholder
-    },    {
+    },
+    {
       id: 2,
       title: dawah.articles.whoIsMuhammad.title,
       excerpt: dawah.articles.whoIsMuhammad.excerpt,
       image: "/images/prophet-muhammad.jpg", // Placeholder
-    },    {
+    },
+    {
       id: 3,
       title: dawah.articles.holyQuran.title,
       excerpt: dawah.articles.holyQuran.excerpt,
@@ -46,17 +50,20 @@ export default async function DawahPage({
   ];
 
   // Mock data for new Muslim materials
-  const newMuslimMaterials = [    {
+  const newMuslimMaterials = [
+    {
       id: 1,
       title: dawah.newMuslimMaterials.firstSteps.title,
       type: dawah.newMuslimMaterials.firstSteps.type,
       image: "/images/first-steps.jpg", // Placeholder
-    },    {
+    },
+    {
       id: 2,
       title: dawah.newMuslimMaterials.learnPrayer.title,
       type: dawah.newMuslimMaterials.learnPrayer.type,
       image: "/images/prayer-guide.jpg", // Placeholder
-    },    {
+    },
+    {
       id: 3,
       title: dawah.newMuslimMaterials.dailyRemembrances.title,
       type: dawah.newMuslimMaterials.dailyRemembrances.type,
@@ -97,16 +104,22 @@ export default async function DawahPage({
           <h2 className="text-2xl font-bold mb-6">{dawah.introToIslam}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {introArticles.map((article) => (
-              <div key={article.id} className="border rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+              <div
+                key={article.id}
+                className="border rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow"
+              >
                 <div className="aspect-video relative bg-gray-100">
                   {/* Placeholder for article image */}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-xl font-bold text-gray-400">{article.title}</div>
+                    <div className="text-xl font-bold text-gray-400">
+                      {article.title}
+                    </div>
                   </div>
                 </div>
                 <div className="p-4">
                   <h3 className="font-bold text-lg mb-2">{article.title}</h3>
-                  <p className="text-gray-700 mb-4">{article.excerpt}</p>                  <Link 
+                  <p className="text-gray-700 mb-4">{article.excerpt}</p>{" "}
+                  <Link
                     href={`/${locale}/dawah/article/${article.id}`}
                     className="inline-block sm:px-4 px-2 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors"
                   >
@@ -125,29 +138,34 @@ export default async function DawahPage({
           <h2 className="text-2xl font-bold mb-6">{dawah.newMuslims}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {newMuslimMaterials.map((material) => (
-              <div key={material.id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow">
+              <div
+                key={material.id}
+                className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow"
+              >
                 <div className="aspect-video relative bg-gray-100">
                   {/* Placeholder for material image */}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-lg font-medium text-gray-400">{material.title}</div>
+                    <div className="text-lg font-medium text-gray-400">
+                      {material.title}
+                    </div>
                   </div>
                 </div>
                 <div className="p-4">
                   <div className="flex justify-between items-start mb-2">
                     <h3 className="font-bold text-lg">{material.title}</h3>
-                    <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">{material.type}</span>
+                    <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
+                      {material.type}
+                    </span>
                   </div>
-                  <div className="mt-4 flex justify-between">                    
-                    <button 
-                    // Link Component must be used for navigation
+                  <div className="mt-4 flex justify-between">
+                    <button
+                      // Link Component must be used for navigation
                       // href={`/${locale}/dawah/material/${material.id}`}
                       className="inline-block sm:px-4 px-2 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors"
                     >
                       {common.view}
                     </button>
-                    <button 
-                      className="sm:px-4 px-2 py-2 border border-emerald-600 text-emerald-600 rounded-md hover:bg-emerald-50 transition-colors"
-                    >
+                    <button className="sm:px-4 px-2 py-2 border border-emerald-600 text-emerald-600 rounded-md hover:bg-emerald-50 transition-colors">
                       {dawah.download}
                     </button>
                   </div>
@@ -164,10 +182,15 @@ export default async function DawahPage({
           <h2 className="text-2xl font-bold mb-6">{dawah.materials}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {downloadableImages.map((img) => (
-              <div key={img.id} className="group relative border rounded-lg overflow-hidden">
+              <div
+                key={img.id}
+                className="group relative border rounded-lg overflow-hidden"
+              >
                 <div className="aspect-square bg-gray-100 flex items-center justify-center">
                   {/* Placeholder for downloadable image */}
-                  <div className="text-lg font-medium text-gray-400">{img.title}</div>
+                  <div className="text-lg font-medium text-gray-400">
+                    {img.title}
+                  </div>
                 </div>
                 <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                   <div className="text-white text-center p-4">

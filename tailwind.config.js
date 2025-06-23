@@ -3,7 +3,8 @@ module.exports = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
-  ],  theme: {
+  ],
+  theme: {
     extend: {
       animation: {
         // Entrance animations
@@ -13,13 +14,14 @@ module.exports = {
         fadeInLeft: "fadeInLeft 0.6s ease-out forwards",
         fadeInRight: "fadeInRight 0.6s ease-out forwards",
         scaleIn: "scaleIn 0.5s ease-out forwards",
-        bounceIn: "bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards",
+        bounceIn:
+          "bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards",
         slideInLeft: "slideInLeft 0.6s ease-out forwards",
         slideInRight: "slideInRight 0.6s ease-out forwards",
         rotateIn: "rotateIn 0.8s ease-out forwards",
         flipInX: "flipInX 0.8s ease-out forwards",
         flipInY: "flipInY 0.8s ease-out forwards",
-        
+
         // Loading animations
         shimmer: "shimmer 2s infinite",
         breathe: "breathe 3s ease-in-out infinite",
@@ -27,12 +29,12 @@ module.exports = {
         rubberBand: "rubberBand 1s ease-out",
         typewriter: "typewriter 3s steps(40, end) forwards",
         blink: "blink 1s step-end infinite",
-        
+
         // Enhanced existing animations
-        'spin-slow': 'spin 3s linear infinite',
-        'pulse-slow': 'pulse 3s ease-in-out infinite',
-        'bounce-slow': 'bounce 2s infinite',
-        
+        "spin-slow": "spin 3s linear infinite",
+        "pulse-slow": "pulse 3s ease-in-out infinite",
+        "bounce-slow": "bounce 2s infinite",
+
         // Page transitions
         slideInFromTop: "slideInFromTop 0.6s ease-out forwards",
         slideInFromBottom: "slideInFromBottom 0.6s ease-out forwards",
@@ -82,18 +84,30 @@ module.exports = {
           "100%": { opacity: "1", transform: "rotate(0deg) scale(1)" },
         },
         flipInX: {
-          "0%": { opacity: "0", transform: "perspective(400px) rotateX(-90deg)" },
+          "0%": {
+            opacity: "0",
+            transform: "perspective(400px) rotateX(-90deg)",
+          },
           "40%": { transform: "perspective(400px) rotateX(-20deg)" },
           "60%": { transform: "perspective(400px) rotateX(10deg)" },
           "80%": { transform: "perspective(400px) rotateX(-5deg)" },
-          "100%": { opacity: "1", transform: "perspective(400px) rotateX(0deg)" },
+          "100%": {
+            opacity: "1",
+            transform: "perspective(400px) rotateX(0deg)",
+          },
         },
         flipInY: {
-          "0%": { opacity: "0", transform: "perspective(400px) rotateY(-90deg)" },
+          "0%": {
+            opacity: "0",
+            transform: "perspective(400px) rotateY(-90deg)",
+          },
           "40%": { transform: "perspective(400px) rotateY(-20deg)" },
           "60%": { transform: "perspective(400px) rotateY(10deg)" },
           "80%": { transform: "perspective(400px) rotateY(-5deg)" },
-          "100%": { opacity: "1", transform: "perspective(400px) rotateY(0deg)" },
+          "100%": {
+            opacity: "1",
+            transform: "perspective(400px) rotateY(0deg)",
+          },
         },
         shimmer: {
           "0%": { transform: "translateX(-100%)" },
@@ -143,15 +157,15 @@ module.exports = {
         },
       },
       transitionTimingFunction: {
-        'bounce-in': 'cubic-bezier(0.68, -0.55, 0.265, 1.55)',
-        'bounce-out': 'cubic-bezier(0.34, 1.56, 0.64, 1)',
-        'ease-in-out-back': 'cubic-bezier(0.68, -0.6, 0.32, 1.6)',
+        "bounce-in": "cubic-bezier(0.68, -0.55, 0.265, 1.55)",
+        "bounce-out": "cubic-bezier(0.34, 1.56, 0.64, 1)",
+        "ease-in-out-back": "cubic-bezier(0.68, -0.6, 0.32, 1.6)",
       },
       transitionDuration: {
-        '2000': '2000ms',
-        '3000': '3000ms',
-        '4000': '4000ms',
-        '5000': '5000ms',
+        2000: "2000ms",
+        3000: "3000ms",
+        4000: "4000ms",
+        5000: "5000ms",
       },
       fontFamily: {
         cairo: ["var(--font-cairo)"],
@@ -172,23 +186,23 @@ module.exports = {
         },
       },
       boxShadow: {
-        'inner-lg': 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)',
-        'glow': '0 0 20px rgba(5, 150, 105, 0.3)',
-        'glow-lg': '0 0 40px rgba(5, 150, 105, 0.4)',
-        'lift': '0 20px 40px rgba(0, 0, 0, 0.1)',
+        "inner-lg": "inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)",
+        glow: "0 0 20px rgba(5, 150, 105, 0.3)",
+        "glow-lg": "0 0 40px rgba(5, 150, 105, 0.4)",
+        lift: "0 20px 40px rgba(0, 0, 0, 0.1)",
       },
       scale: {
-        '102': '1.02',
-        '103': '1.03',
-        '98': '0.98',
-        '97': '0.97',
+        102: "1.02",
+        103: "1.03",
+        98: "0.98",
+        97: "0.97",
       },
       spacing: {
-        '18': '4.5rem',
-        '88': '22rem',
-        '100': '25rem',
-        '112': '28rem',
-        '128': '32rem',
+        18: "4.5rem",
+        88: "22rem",
+        100: "25rem",
+        112: "28rem",
+        128: "32rem",
       },
     },
   },

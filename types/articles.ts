@@ -1,7 +1,7 @@
 export interface ArticleInterface {
   id: number;
   created_at: string;
-  lang: 'ar' | 'en';
+  lang: "ar" | "en";
   author: string;
   title: string;
   excerpt: string;

@@ -19,7 +19,7 @@
     },
     {
       "src": "/images/logo-512.jpg",
-      "sizes": "512x512", 
+      "sizes": "512x512",
       "type": "image/jpeg",
       "purpose": "any maskable"
     },
@@ -32,7 +32,7 @@
     {
       "src": "/images/logo-512.webp",
       "sizes": "512x512",
-      "type": "image/webp", 
+      "type": "image/webp",
       "purpose": "any"
     }
   ],
@@ -45,7 +45,7 @@
       "label": "Hurass Al-Thughur Magazine Desktop View"
     },
     {
-      "src": "/images/screenshot-mobile.jpg", 
+      "src": "/images/screenshot-mobile.jpg",
       "sizes": "390x844",
       "type": "image/jpeg",
       "form_factor": "narrow",
@@ -69,7 +69,7 @@
     },
     {
       "name": "Library",
-      "short_name": "Library", 
+      "short_name": "Library",
       "description": "Browse PDF library",
       "url": "/library",
       "icons": [
@@ -88,7 +88,7 @@
       "icons": [
         {
           "src": "/images/contact-icon.jpg",
-          "sizes": "96x96", 
+          "sizes": "96x96",
           "type": "image/jpeg"
         }
       ]

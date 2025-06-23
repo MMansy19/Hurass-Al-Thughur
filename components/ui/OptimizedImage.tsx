@@ -1,15 +1,15 @@
 // Optimized image components with WebP/AVIF support and lazy loading
-'use client';
+"use client";
 
-import Image from 'next/image';
-import { useState, useCallback, useRef, useEffect } from 'react';
-import { ImageProps } from '@/types';
+import Image from "next/image";
+import { useState, useCallback, useRef, useEffect } from "react";
+import { ImageProps } from "@/types";
 
-interface OptimizedImageProps extends Omit<ImageProps, 'onLoad' | 'onError'> {
+interface OptimizedImageProps extends Omit<ImageProps, "onLoad" | "onError"> {
   fallbackSrc?: string;
   lazy?: boolean;
   quality?: number;
-  placeholder?: 'blur' | 'empty' | 'skeleton';
+  placeholder?: "blur" | "empty" | "skeleton";
   blurDataURL?: string;
   onLoadComplete?: () => void;
   onLoadError?: (error: Error) => void;
@@ -26,13 +26,13 @@ export function OptimizedImage({
   fallbackSrc,
   lazy = true,
   quality = 85,
-  placeholder = 'blur',
+  placeholder = "blur",
   blurDataURL,
   onLoadComplete,
   onLoadError,
   showSkeleton = true,
   aspectRatio,
-  className = '',
+  className = "",
   priority = false,
   fill = false,
   sizes,
@@ -45,20 +45,22 @@ export function OptimizedImage({
 
   // Generate placeholder blur data URL if not provided
   const generateBlurDataURL = useCallback((w: number, h: number) => {
-    const canvas = document.createElement('canvas');
+    const canvas = document.createElement("canvas");
     canvas.width = w;
     canvas.height = h;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     if (ctx) {
-      ctx.fillStyle = '#f3f4f6';
+      ctx.fillStyle = "#f3f4f6";
       ctx.fillRect(0, 0, w, h);
     }
     return canvas.toDataURL();
   }, []);
 
-  const defaultBlurDataURL = blurDataURL || 
-    (width && height ? generateBlurDataURL(width, height) : 
-     'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyFGSckZHHvXFry9t7ndEMoJE2lnzPKDhW/lX1ZIuW9Q32XgPHl+ffntuYY3jANHOcaWV5hqOTh7Z/+QCC1zfkUgfKEUQhTqGFOBKgBE8hJTKVLPpOuRCKKqSBP83b8q8FaPqVJ');
+  const defaultBlurDataURL =
+    blurDataURL ||
+    (width && height
+      ? generateBlurDataURL(width, height)
+      : "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyFGSckZHHvXFry9t7ndEMoJE2lnzPKDhW/lX1ZIuW9Q32XgPHl+ffntuYY3jANHOcaWV5hqOTh7Z/+QCC1zfkUgfKEUQhTqGFOBKgBE8hJTKVLPpOuRCKKqSBP83b8q8FaPqVJ");
 
   const handleLoad = useCallback(() => {
     setIsLoading(false);
@@ -69,7 +71,7 @@ export function OptimizedImage({
   const handleError = useCallback(() => {
     setIsLoading(false);
     setHasError(true);
-    
+
     if (fallbackSrc && currentSrc !== fallbackSrc) {
       setCurrentSrc(fallbackSrc);
       setHasError(false);
@@ -93,7 +95,7 @@ export function OptimizedImage({
           }
         });
       },
-      { threshold: 0.1, rootMargin: '50px' }
+      { threshold: 0.1, rootMargin: "50px" },
     );
 
     observer.observe(imgRef.current);
@@ -107,43 +109,45 @@ export function OptimizedImage({
     width: fill ? undefined : width,
     height: fill ? undefined : height,
     fill,
-    sizes: sizes || (width ? `${width}px` : '100vw'),
+    sizes: sizes || (width ? `${width}px` : "100vw"),
     quality,
     priority,
-    placeholder: placeholder === 'skeleton' ? 'empty' : placeholder,
-    blurDataURL: placeholder === 'blur' ? defaultBlurDataURL : undefined,
+    placeholder: placeholder === "skeleton" ? "empty" : placeholder,
+    blurDataURL: placeholder === "blur" ? defaultBlurDataURL : undefined,
     onLoad: handleLoad,
     onError: handleError,
     className: `transition-opacity duration-300 ${
-      isLoading ? 'opacity-0' : 'opacity-100'
+      isLoading ? "opacity-0" : "opacity-100"
     } ${className}`,
     ...props,
   };
 
-  const containerStyle = aspectRatio ? {
-    aspectRatio: aspectRatio.toString(),
-    position: 'relative' as const,
-  } : {};
+  const containerStyle = aspectRatio
+    ? {
+        aspectRatio: aspectRatio.toString(),
+        position: "relative" as const,
+      }
+    : {};
 
   if (hasError && !fallbackSrc) {
     return (
-      <div 
+      <div
         className={`flex items-center justify-center bg-gray-200  ${className}`}
         style={{ width, height, ...containerStyle }}
         aria-label={`Image failed to load: ${alt}`}
       >
-        <svg 
-          className="w-8 h-8 text-gray-400" 
-          fill="none" 
-          stroke="currentColor" 
+        <svg
+          className="w-8 h-8 text-gray-400"
+          fill="none"
+          stroke="currentColor"
           viewBox="0 0 24 24"
           aria-hidden="true"
         >
-          <path 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
-            strokeWidth={2} 
-            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" 
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
           />
         </svg>
       </div>
@@ -152,8 +156,8 @@ export function OptimizedImage({
 
   return (
     <div ref={imgRef} style={containerStyle} className="relative">
-      {showSkeleton && isLoading && placeholder === 'skeleton' && (
-        <div 
+      {showSkeleton && isLoading && placeholder === "skeleton" && (
+        <div
           className="absolute inset-0 bg-gray-200  animate-pulse rounded"
           style={{ width, height }}
           aria-hidden="true"
@@ -168,9 +172,9 @@ export function OptimizedImage({
 export function MagazineCoverImage({
   src,
   alt,
-  className = '',
+  className = "",
   ...props
-}: Omit<OptimizedImageProps, 'width' | 'height'>) {
+}: Omit<OptimizedImageProps, "width" | "height">) {
   return (
     <OptimizedImage
       src={src}
@@ -192,9 +196,9 @@ export function MagazineCoverImage({
 export function HeroImage({
   src,
   alt,
-  className = '',
+  className = "",
   ...props
-}: Omit<OptimizedImageProps, 'width' | 'height' | 'fill'>) {
+}: Omit<OptimizedImageProps, "width" | "height" | "fill">) {
   return (
     <OptimizedImage
       src={src}
@@ -216,9 +220,9 @@ export function AvatarImage({
   src,
   alt,
   size = 48,
-  className = '',
+  className = "",
   ...props
-}: Omit<OptimizedImageProps, 'width' | 'height'> & { size?: number }) {
+}: Omit<OptimizedImageProps, "width" | "height"> & { size?: number }) {
   return (
     <OptimizedImage
       src={src}
@@ -238,14 +242,14 @@ export function AvatarImage({
 export function GalleryImage({
   src,
   alt,
-  className = '',
+  className = "",
   onZoom,
   ...props
 }: OptimizedImageProps & { onZoom?: () => void }) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div 
+    <div
       className="relative overflow-hidden rounded-lg cursor-pointer group"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -253,7 +257,7 @@ export function GalleryImage({
       role="button"
       tabIndex={0}
       onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
+        if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
           onZoom?.();
         }
@@ -263,23 +267,23 @@ export function GalleryImage({
         src={src}
         alt={alt}
         className={`transition-transform duration-300 ${
-          isHovered ? 'scale-105' : 'scale-100'
+          isHovered ? "scale-105" : "scale-100"
         } ${className}`}
         {...props}
       />
       {onZoom && (
         <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
-          <svg 
+          <svg
             className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            fill="none" 
-            stroke="currentColor" 
+            fill="none"
+            stroke="currentColor"
             viewBox="0 0 24 24"
           >
-            <path 
-              strokeLinecap="round" 
-              strokeLinejoin="round" 
-              strokeWidth={2} 
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" 
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"
             />
           </svg>
         </div>
@@ -310,7 +314,7 @@ export function ResponsiveImageGrid({
   columns = { mobile: 1, tablet: 2, desktop: 3 },
   gap = 4,
   onImageClick,
-  className = '',
+  className = "",
 }: ImageGridProps) {
   const gridClass = `grid gap-${gap} grid-cols-${columns.mobile} md:grid-cols-${columns.tablet} lg:grid-cols-${columns.desktop}`;
 
@@ -340,7 +344,7 @@ interface CaptionedImageProps extends OptimizedImageProps {
 export function CaptionedImage({
   caption,
   credit,
-  className = '',
+  className = "",
   ...props
 }: CaptionedImageProps) {
   return (
@@ -364,13 +368,13 @@ export function useProgressiveImage(src: string, fallbackSrc?: string) {
 
   useEffect(() => {
     const img = new Image();
-    
+
     img.onload = () => {
       setCurrentSrc(src);
       setIsLoading(false);
       setHasError(false);
     };
-    
+
     img.onerror = () => {
       setIsLoading(false);
       setHasError(true);
@@ -379,7 +383,7 @@ export function useProgressiveImage(src: string, fallbackSrc?: string) {
         setHasError(false);
       }
     };
-    
+
     img.src = src;
   }, [src, fallbackSrc, currentSrc]);
 

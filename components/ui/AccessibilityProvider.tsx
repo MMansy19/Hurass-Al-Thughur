@@ -1,31 +1,47 @@
 "use client";
 
-import React, { createContext, useContext, useRef, useEffect, ReactNode } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useRef,
+  useEffect,
+  ReactNode,
+} from "react";
 
 interface AccessibilityContextType {
-  announceToScreenReader: (message: string, priority?: 'polite' | 'assertive') => void;
+  announceToScreenReader: (
+    message: string,
+    priority?: "polite" | "assertive",
+  ) => void;
   focusElement: (elementId: string) => void;
   trapFocus: (container: HTMLElement) => () => void;
   announcePageChange: (pageName: string) => void;
 }
 
-const AccessibilityContext = createContext<AccessibilityContextType | undefined>(undefined);
+const AccessibilityContext = createContext<
+  AccessibilityContextType | undefined
+>(undefined);
 
 interface AccessibilityProviderProps {
   children: ReactNode;
 }
 
-export function AccessibilityProvider({ children }: AccessibilityProviderProps) {
+export function AccessibilityProvider({
+  children,
+}: AccessibilityProviderProps) {
   const announceRef = useRef<HTMLDivElement>(null);
 
-  const announceToScreenReader = (message: string, priority: 'polite' | 'assertive' = 'polite') => {
+  const announceToScreenReader = (
+    message: string,
+    priority: "polite" | "assertive" = "polite",
+  ) => {
     if (announceRef.current) {
       // Clear previous announcement
-      announceRef.current.textContent = '';
-      
+      announceRef.current.textContent = "";
+
       // Set the priority
-      announceRef.current.setAttribute('aria-live', priority);
-      
+      announceRef.current.setAttribute("aria-live", priority);
+
       // Add the announcement after a small delay to ensure it's picked up
       setTimeout(() => {
         if (announceRef.current) {
@@ -40,20 +56,22 @@ export function AccessibilityProvider({ children }: AccessibilityProviderProps) 
     if (element) {
       element.focus();
       // Scroll into view if necessary
-      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      element.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   };
 
   const trapFocus = (container: HTMLElement) => {
     const focusableElements = container.querySelectorAll(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
     );
-    
+
     const firstElement = focusableElements[0] as HTMLElement;
-    const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
+    const lastElement = focusableElements[
+      focusableElements.length - 1
+    ] as HTMLElement;
 
     const handleTabKey = (e: KeyboardEvent) => {
-      if (e.key !== 'Tab') return;
+      if (e.key !== "Tab") return;
 
       if (e.shiftKey) {
         if (document.activeElement === firstElement) {
@@ -68,7 +86,7 @@ export function AccessibilityProvider({ children }: AccessibilityProviderProps) 
       }
     };
 
-    container.addEventListener('keydown', handleTabKey);
+    container.addEventListener("keydown", handleTabKey);
 
     // Focus the first element
     if (firstElement) {
@@ -77,12 +95,12 @@ export function AccessibilityProvider({ children }: AccessibilityProviderProps) 
 
     // Return cleanup function
     return () => {
-      container.removeEventListener('keydown', handleTabKey);
+      container.removeEventListener("keydown", handleTabKey);
     };
   };
 
   const announcePageChange = (pageName: string) => {
-    announceToScreenReader(`Navigated to ${pageName} page`, 'assertive');
+    announceToScreenReader(`Navigated to ${pageName} page`, "assertive");
   };
 
   const value: AccessibilityContextType = {
@@ -110,7 +128,9 @@ export function AccessibilityProvider({ children }: AccessibilityProviderProps) 
 export function useAccessibility() {
   const context = useContext(AccessibilityContext);
   if (context === undefined) {
-    throw new Error('useAccessibility must be used within an AccessibilityProvider');
+    throw new Error(
+      "useAccessibility must be used within an AccessibilityProvider",
+    );
   }
   return context;
 }
@@ -143,17 +163,17 @@ export function useFocusManagement() {
 // Hook for skip links
 export function useSkipLinks() {
   useEffect(() => {
-    const skipLinks = document.querySelectorAll('[data-skip-link]');
-    
-    skipLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
+    const skipLinks = document.querySelectorAll("[data-skip-link]");
+
+    skipLinks.forEach((link) => {
+      link.addEventListener("click", (e) => {
         e.preventDefault();
-        const targetId = link.getAttribute('href')?.substring(1);
+        const targetId = link.getAttribute("href")?.substring(1);
         if (targetId) {
           const target = document.getElementById(targetId);
           if (target) {
             target.focus();
-            target.scrollIntoView({ behavior: 'smooth' });
+            target.scrollIntoView({ behavior: "smooth" });
           }
         }
       });

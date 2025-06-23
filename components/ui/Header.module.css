@@ -3,7 +3,9 @@
    ========================================================================== */
 .headerScrolled {
   backdrop-filter: blur(10px);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 /* Logo animations */
@@ -19,7 +21,7 @@
 }
 
 .navItem::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 0;
   height: 2px;
@@ -52,6 +54,9 @@
    Mobile Menu
    ========================================================================== */
 .mobileMenu {
-  transition: transform 0.3s ease-in-out, top 0.3s ease-in-out, height 0.3s ease-in-out;
+  transition:
+    transform 0.3s ease-in-out,
+    top 0.3s ease-in-out,
+    height 0.3s ease-in-out;
   box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
 }

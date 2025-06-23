@@ -6,17 +6,17 @@ import { SkipLinks } from "@/components/ui/AccessibilityComponents";
 import { Motion } from "@/components/ui/AnimationSystem";
 
 // Generate metadata for the page
-export async function generateMetadata({ 
-  params
-}: { 
+export async function generateMetadata({
+  params,
+}: {
   params: Promise<{ locale: string; articleId: string }>;
 }): Promise<Metadata> {
   const { locale, articleId } = await params;
   const messages = (await import(`@/locales/${locale}.json`)).default;
-  
+
   const articleInfo = getArticleInfo(articleId, messages.dawah, locale);
   if (!articleInfo) return notFound();
-  
+
   return {
     ...SEO({
       title: `${articleInfo.title} - ${messages.dawah.title}`,
@@ -43,15 +43,19 @@ interface Article {
   tags: string[];
 }
 
-function getArticleInfo(articleId: string, dawah: Record<string, any>, locale: string): Article | null {
-  const isArabic = locale === 'ar';
-  
+function getArticleInfo(
+  articleId: string,
+  dawah: Record<string, any>,
+  locale: string,
+): Article | null {
+  const isArabic = locale === "ar";
+
   const articles: Record<string, Article> = {
     "1": {
       id: "1",
       title: dawah.articles.whatIsIslam.title,
       excerpt: dawah.articles.whatIsIslam.excerpt,
-      content: isArabic 
+      content: isArabic
         ? `الإسلام هو دين التوحيد الذي جاء به النبي محمد صلى الله عليه وسلم. إنه دين السلام والاستسلام لله تعالى وحده.
 
 ## ما معنى كلمة الإسلام؟
@@ -124,9 +128,9 @@ Islam aligns with the pure nature that Allah has created in people. It is a simp
       author: isArabic ? "فريق حراس الثغور" : "Hurass Team",
       date: isArabic ? "١٥ ربيع الأول ١٤٤٥" : "October 15, 2023",
       readTime: 8,
-      tags: isArabic 
-        ? ["الإسلام", "التوحيد", "العقيدة", "الأركان"] 
-        : ["Islam", "Monotheism", "Faith", "Pillars"]
+      tags: isArabic
+        ? ["الإسلام", "التوحيد", "العقيدة", "الأركان"]
+        : ["Islam", "Monotheism", "Faith", "Pillars"],
     },
     "2": {
       id: "2",
@@ -211,9 +215,9 @@ The Prophet (peace be upon him) died in Madinah in the eleventh year of Hijra, h
       author: isArabic ? "فريق حراس الثغور" : "Hurass Team",
       date: isArabic ? "٢٢ ربيع الأول ١٤٤٥" : "October 22, 2023",
       readTime: 10,
-      tags: isArabic 
-        ? ["محمد", "النبي", "السيرة", "الرسول"] 
-        : ["Muhammad", "Prophet", "Biography", "Messenger"]
+      tags: isArabic
+        ? ["محمد", "النبي", "السيرة", "الرسول"]
+        : ["Muhammad", "Prophet", "Biography", "Messenger"],
     },
     "3": {
       id: "3",
@@ -324,10 +328,10 @@ Covers all aspects of life: faith, worship, transactions, ethics
       author: isArabic ? "فريق حراس الثغور" : "Hurass Team",
       date: isArabic ? "٥ ربيع الآخر ١٤٤٥" : "November 5, 2023",
       readTime: 12,
-      tags: isArabic 
-        ? ["القرآن", "الكتاب المقدس", "التلاوة", "الإعجاز"] 
-        : ["Quran", "Holy Book", "Recitation", "Miracles"]
-    }
+      tags: isArabic
+        ? ["القرآن", "الكتاب المقدس", "التلاوة", "الإعجاز"]
+        : ["Quran", "Holy Book", "Recitation", "Miracles"],
+    },
   };
 
   return articles[articleId] || null;
@@ -341,7 +345,7 @@ export default async function DawahArticlePage({
   const { locale, articleId } = await params;
   const messages = (await import(`@/locales/${locale}.json`)).default;
   const { dawah } = messages;
-  const isArabic = locale === 'ar';
+  const isArabic = locale === "ar";
 
   // Get article information
   const article = getArticleInfo(articleId, dawah, locale);
@@ -351,22 +355,33 @@ export default async function DawahArticlePage({
 
   // Related articles
   const relatedArticles = ["1", "2", "3"]
-    .filter(id => id !== articleId)
+    .filter((id) => id !== articleId)
     .slice(0, 2)
-    .map(id => getArticleInfo(id, dawah, locale))
+    .map((id) => getArticleInfo(id, dawah, locale))
     .filter(Boolean);
 
   // Skip links for accessibility
   const skipLinks = [
-    { href: "#main-content", label: isArabic ? "انتقل إلى المحتوى الرئيسي" : "Skip to main content" },
-    { href: "#article-content", label: isArabic ? "انتقل إلى المقال" : "Skip to article" },
-    { href: "#related-articles", label: isArabic ? "انتقل إلى المقالات ذات الصلة" : "Skip to related articles" },
+    {
+      href: "#main-content",
+      label: isArabic ? "انتقل إلى المحتوى الرئيسي" : "Skip to main content",
+    },
+    {
+      href: "#article-content",
+      label: isArabic ? "انتقل إلى المقال" : "Skip to article",
+    },
+    {
+      href: "#related-articles",
+      label: isArabic
+        ? "انتقل إلى المقالات ذات الصلة"
+        : "Skip to related articles",
+    },
   ];
 
   return (
     <>
       <SkipLinks links={skipLinks} />
-      
+
       <main id="main-content" className="space-y-8" role="main">
         {/* Article Header */}
         <Motion preset="fadeInUp">
@@ -375,10 +390,13 @@ export default async function DawahArticlePage({
               <div className="container mx-auto sm:px-4 px-2">
                 <div className="max-w-4xl mx-auto">
                   {/* Breadcrumb */}
-                  <nav aria-label={isArabic ? "مسار التنقل" : "Breadcrumb"} className="mb-8">
+                  <nav
+                    aria-label={isArabic ? "مسار التنقل" : "Breadcrumb"}
+                    className="mb-8"
+                  >
                     <ol className="flex items-center space-x-2 rtl:space-x-reverse text-emerald-100">
                       <li>
-                        <Link 
+                        <Link
                           href={`/${locale}`}
                           className="hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-emerald-600 rounded px-2 py-1"
                         >
@@ -387,7 +405,7 @@ export default async function DawahArticlePage({
                       </li>
                       <li aria-hidden="true">/</li>
                       <li>
-                        <Link 
+                        <Link
                           href={`/${locale}/dawah`}
                           className="hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-emerald-600 rounded px-2 py-1"
                         >
@@ -395,7 +413,10 @@ export default async function DawahArticlePage({
                         </Link>
                       </li>
                       <li aria-hidden="true">/</li>
-                      <li aria-current="page" className="text-white font-medium">
+                      <li
+                        aria-current="page"
+                        className="text-white font-medium"
+                      >
                         {article.title}
                       </li>
                     </ol>
@@ -405,22 +426,48 @@ export default async function DawahArticlePage({
                   <div className="mb-6">
                     <div className="flex flex-wrap items-center gap-4 text-emerald-100 text-sm">
                       <span className="flex items-center">
-                        <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                        <svg
+                          className="w-4 h-4 mr-2"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                            clipRule="evenodd"
+                          />
                         </svg>
                         {article.author}
                       </span>
                       <span className="flex items-center">
-                        <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
+                        <svg
+                          className="w-4 h-4 mr-2"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                            clipRule="evenodd"
+                          />
                         </svg>
                         {article.date}
                       </span>
                       <span className="flex items-center">
-                        <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+                        <svg
+                          className="w-4 h-4 mr-2"
+                          fill="currentColor"
+                          viewBox="0 0 20 20"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                            clipRule="evenodd"
+                          />
                         </svg>
-                        {isArabic ? `${article.readTime} دقائق قراءة` : `${article.readTime} min read`}
+                        {isArabic
+                          ? `${article.readTime} دقائق قراءة`
+                          : `${article.readTime} min read`}
                       </span>
                     </div>
                   </div>
@@ -454,47 +501,62 @@ export default async function DawahArticlePage({
                 <div className="container mx-auto sm:px-4 px-2">
                   <div className="max-w-4xl mx-auto">
                     <div className="prose prose-lg max-w-none prose-emerald prose-headings:text-emerald-800 prose-a:text-emerald-600 prose-strong:text-emerald-800">
-                      {article.content.split('\n').map((paragraph, index) => {
-                        if (paragraph.startsWith('## ')) {
+                      {article.content.split("\n").map((paragraph, index) => {
+                        if (paragraph.startsWith("## ")) {
                           return (
-                            <h2 key={index} className="text-2xl font-bold text-emerald-800 mt-8 mb-4">
-                              {paragraph.replace('## ', '')}
+                            <h2
+                              key={index}
+                              className="text-2xl font-bold text-emerald-800 mt-8 mb-4"
+                            >
+                              {paragraph.replace("## ", "")}
                             </h2>
                           );
                         }
-                        if (paragraph.startsWith('### ')) {
+                        if (paragraph.startsWith("### ")) {
                           return (
-                            <h3 key={index} className="text-xl font-semibold text-emerald-700 mt-6 mb-3">
-                              {paragraph.replace('### ', '')}
+                            <h3
+                              key={index}
+                              className="text-xl font-semibold text-emerald-700 mt-6 mb-3"
+                            >
+                              {paragraph.replace("### ", "")}
                             </h3>
                           );
                         }
-                        if (paragraph.startsWith('- ')) {
+                        if (paragraph.startsWith("- ")) {
                           return (
                             <li key={index} className="ml-6 mb-2">
-                              {paragraph.replace('- ', '')}
+                              {paragraph.replace("- ", "")}
                             </li>
                           );
                         }
                         if (paragraph.match(/^\d+\./)) {
                           return (
                             <li key={index} className="ml-6 mb-2">
-                              {paragraph.replace(/^\d+\.\s*/, '')}
+                              {paragraph.replace(/^\d+\.\s*/, "")}
                             </li>
                           );
                         }
-                        if (paragraph.includes('﴿') && paragraph.includes('﴾')) {
+                        if (
+                          paragraph.includes("﴿") &&
+                          paragraph.includes("﴾")
+                        ) {
                           return (
-                            <blockquote key={index} className="border-l-4 border-emerald-500 pl-6 my-6 text-emerald-800 font-semibold text-center bg-emerald-50 py-4 rounded-r-lg">
+                            <blockquote
+                              key={index}
+                              className="border-l-4 border-emerald-500 pl-6 my-6 text-emerald-800 font-semibold text-center bg-emerald-50 py-4 rounded-r-lg"
+                            >
                               {paragraph}
                             </blockquote>
                           );
                         }
-                        if (paragraph.trim() === '') {
+                        if (paragraph.trim() === "") {
                           return <br key={index} />;
                         }
                         return (
-                          <p key={index} className="mb-4 leading-relaxed text-gray-700">
+                          <p
+                            key={index}
+                            className="mb-4 leading-relaxed text-gray-700"
+                          >
                             {paragraph}
                           </p>
                         );
@@ -508,20 +570,41 @@ export default async function DawahArticlePage({
                       </h3>
                       <div className="flex gap-4">
                         <button className="flex items-center sm:px-4 px-2 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
-                          <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M20 10c0-5.523-4.477-10-10-10S0 4.477 0 10c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V10h2.54V7.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V10h2.773l-.443 2.89h-2.33v6.988C16.343 19.128 20 14.991 20 10z" />
+                          <svg
+                            className="w-5 h-5 mr-2"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M20 10c0-5.523-4.477-10-10-10S0 4.477 0 10c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V10h2.54V7.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V10h2.773l-.443 2.89h-2.33v6.988C16.343 19.128 20 14.991 20 10z"
+                            />
                           </svg>
                           Facebook
                         </button>
                         <button className="flex items-center sm:px-4 px-2 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
-                          <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M.057 9.5a9.443 9.443 0 1 1 18.886 0A9.443 9.443 0 0 1 .057 9.5zM14.9 5.1a7.2 7.2 0 1 0-9.8 0l4.9 4.9z"/>
+                          <svg
+                            className="w-5 h-5 mr-2"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path d="M.057 9.5a9.443 9.443 0 1 1 18.886 0A9.443 9.443 0 0 1 .057 9.5zM14.9 5.1a7.2 7.2 0 1 0-9.8 0l4.9 4.9z" />
                           </svg>
                           WhatsApp
                         </button>
                         <button className="flex items-center sm:px-4 px-2 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
-                          <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+                          <svg
+                            className="w-5 h-5 mr-2"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"
+                            />
                           </svg>
                           {isArabic ? "نسخ الرابط" : "Copy Link"}
                         </button>
@@ -537,12 +620,15 @@ export default async function DawahArticlePage({
         {/* Related Articles */}
         {relatedArticles.length > 0 && (
           <Motion preset="slideInUp" delay={300}>
-            <section id="related-articles" className="py-12 bg-gray-50 rounded-xl">
+            <section
+              id="related-articles"
+              className="py-12 bg-gray-50 rounded-xl"
+            >
               <div className="container mx-auto sm:px-4 px-2">
                 <h3 className="text-2xl font-bold text-center text-gray-900 mb-8">
                   {isArabic ? "مقالات ذات صلة" : "Related Articles"}
                 </h3>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
                   {relatedArticles.map((relatedArticle) => (
                     <Link
@@ -563,10 +649,20 @@ export default async function DawahArticlePage({
                           {relatedArticle!.excerpt}
                         </p>
                         <div className="mt-4 flex items-center text-sm text-gray-500">
-                          <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+                          <svg
+                            className="w-4 h-4 mr-1"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
+                              clipRule="evenodd"
+                            />
                           </svg>
-                          {isArabic ? `${relatedArticle!.readTime} دقائق` : `${relatedArticle!.readTime} min`}
+                          {isArabic
+                            ? `${relatedArticle!.readTime} دقائق`
+                            : `${relatedArticle!.readTime} min`}
                         </div>
                       </div>
                     </Link>
@@ -586,10 +682,9 @@ export default async function DawahArticlePage({
                   {isArabic ? "تريد معرفة المزيد؟" : "Want to learn more?"}
                 </h3>
                 <p className="text-emerald-700 mb-6 max-w-2xl mx-auto">
-                  {isArabic 
-                    ? "استكشف المزيد من المقالات والمواد الإسلامية في مكتبتنا" 
-                    : "Explore more Islamic articles and materials in our library"
-                  }
+                  {isArabic
+                    ? "استكشف المزيد من المقالات والمواد الإسلامية في مكتبتنا"
+                    : "Explore more Islamic articles and materials in our library"}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Link
