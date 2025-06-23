@@ -13,7 +13,7 @@ export async function loadSignedInUser(setUser: (user: any) => void) {
   setUser(user);
 }
 
-export async function loadArticles(user_id: string, setArticles: (articles: any[]) => void) {
+export async function loadArticles(user_id: string, setArticles: (articles: any[]) => void, setLoading: (loading: boolean) => void) {
   const { data: articles, error } = await supabase.from('articles').select('*').eq('user_id', user_id).order('created_at', { ascending: false });
 
   if (error) {
@@ -22,4 +22,6 @@ export async function loadArticles(user_id: string, setArticles: (articles: any[
   } else {
     setArticles(articles || []);
   }
+
+  setLoading(false);
 }
