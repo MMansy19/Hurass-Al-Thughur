@@ -56,8 +56,9 @@ interface CategoryInfo {
 
 function getCategoryInfo(
   categoryId: string,
-  magazine: Record<string, any>,
-  locale: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  magazine: any,
+  _locale: string,
 ): CategoryInfo | null {
   // Note: messages are already loaded in the calling function
   const categories: Record<string, CategoryInfo> = {
@@ -92,9 +93,11 @@ function getCategoryInfo(
 
 function getIssuesByCategory(
   categoryId: string,
-  magazine: Record<string, any>,
-  messages: Record<string, any>,
-  locale: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  magazine: any,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  messages: any,
+  _locale: string,
 ): MagazineIssue[] {
   // Mock data filtered by category
   const allIssues: Record<string, MagazineIssue[]> = {

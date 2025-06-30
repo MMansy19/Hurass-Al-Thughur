@@ -26,7 +26,6 @@ export async function loadArticles(
     .select("*")
     .eq("user_id", user_id)
     .order("created_at", { ascending: false });
-
   if (error) {
     console.error("Error fetching articles:", error);
     setArticles([]);

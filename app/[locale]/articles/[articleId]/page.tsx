@@ -15,7 +15,7 @@ async function Article({
   }
 
   // Getting Article from Supabase
-  let { data: article }: { data: ArticleInterface | null } = await supabase
+  const { data: article }: { data: ArticleInterface | null } = await supabase
     .from("articles")
     .select("*")
     .eq("id", articleId)

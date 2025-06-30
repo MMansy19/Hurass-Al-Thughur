@@ -18,13 +18,12 @@ export const pdfMetadata: PDFMetadata[] = [
   {
     filename: "1.pdf",
     title: {
-
       en: "The First Issue",
       ar: "العدد الأول",
     },
     description: {
       en: "Not Quraniyyun: Fitrah and Covenant",
-      ar: "ليسوا قرآنيين: الفطرة والميثاق"
+      ar: "ليسوا قرآنيين: الفطرة والميثاق",
     },
     category: "Religious Studies",
     author: "Islamic Theology Department",

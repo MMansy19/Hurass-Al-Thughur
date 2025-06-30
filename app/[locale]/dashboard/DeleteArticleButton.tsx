@@ -1,11 +1,12 @@
 import { supabase } from "@/supabase/initializing";
+import { Messages } from "@/types/messages";
 
 function DeleteArticleButton({
   articleId,
   messages,
 }: {
   articleId: number;
-  messages?: any;
+  messages?: Messages;
 }) {
   async function handleClick() {
     if (
@@ -34,7 +35,7 @@ function DeleteArticleButton({
       onClick={handleClick}
       className="block w-full sm:px-4 px-2 py-2 text-center bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors"
     >
-      {messages.common.delete}
+      {messages?.common?.delete || "Delete"}
     </button>
   );
 }

@@ -5,11 +5,12 @@ import { ArticleInterface } from "@/types/articles";
 import { useParams } from "next/navigation";
 import { useState } from "react";
 import Editor from "react-simple-wysiwyg";
+import { Messages } from "@/types/messages";
 
 interface AddArticleFormProps {
   method: "add" | "edit";
   initialData?: ArticleInterface | null;
-  messages: Record<string, any>;
+  messages: Messages;
 }
 
 function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {

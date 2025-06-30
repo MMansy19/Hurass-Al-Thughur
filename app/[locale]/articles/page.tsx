@@ -8,9 +8,8 @@ async function Articles({ params }: { params: Promise<{ locale: string }> }) {
 
   // Translations
   const messages = (await import(`@/locales/${locale}.json`)).default;
-
   // Getting articles depending on Website language
-  let {
+  const {
     data: articles,
     error,
   }: { data: ArticleInterface[] | null; error: PostgrestError | null } =
@@ -27,10 +26,13 @@ async function Articles({ params }: { params: Promise<{ locale: string }> }) {
   if (error || !articles) {
     return <h1>Error in Fetching</h1>;
   }
-  // console.log(articles);
-  // Remove specific articles by name
-  // articles = articles.filter((article) => ![8, 9, 10, 11].includes(article.id));
-  // <!--   articles = articles.filter((article) => article.author === "محمود عبدالفتاح"); -->
+  if (articles.length === 0) {
+    return (
+      <p className="text-center font-bold text-2xl mt-10">
+        {messages.articles.noArticlesYet}
+      </p>
+    );
+  }
   return (
     <>
       <div className="bg-gradient-to-r from-emerald-700 to-emerald-900 text-white py-10 rounded-lg shadow-lg">
@@ -45,6 +47,7 @@ async function Articles({ params }: { params: Promise<{ locale: string }> }) {
       </div>
 
       <div className="py-8">
+        {" "}
         <div className="container mx-auto sm:px-4 grid md:grid-cols-2 lg:grid-cols-3 gap-4 px-2">
           {articles?.map((article) => (
             <div

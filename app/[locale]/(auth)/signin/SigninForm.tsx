@@ -4,8 +4,9 @@ import { supabase } from "@/supabase/initializing";
 import { useRouter, useParams } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
+import { Messages } from "@/types/messages";
 
-function SigninForm({ messages }: { messages: Record<string, any> }) {
+function SigninForm({ messages }: { messages: Messages }) {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
