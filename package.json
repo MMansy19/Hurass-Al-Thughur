@@ -2,6 +2,10 @@
   "name": "hurass-al-thughur",
   "version": "0.1.0",
   "private": true,
+  "prettier": {
+    "printWidth": 80,
+    "singleQuote": false
+  },
   "scripts": {
     "dev": "next dev",
     "dev:turbo": "next dev --turbopack",
