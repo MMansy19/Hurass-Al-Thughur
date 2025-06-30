@@ -18,8 +18,18 @@ function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
 
   const user = window.localStorage.getItem("user");
 
-  const user_id = user ? JSON.parse(user).id : null;
-  const user_name = user ? JSON.parse(user).user_metadata.name : "";
+  let user_id = "";
+  let user_name = "مجهول";
+
+  if (user) {
+    if (JSON.parse(user).id) {
+      user_id = JSON.parse(user).id;
+    }
+
+    if (JSON.parse(user).user_metadata.name) {
+      user_name = JSON.parse(user).user_metadata.name;
+    }
+  }
 
   const [formData, setFormData] = useState(
     initialData || {
@@ -29,7 +39,7 @@ function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
       excerpt: "",
       content: "",
       user_id,
-    },
+    }
   );
 
   if (locale !== "ar" && locale !== "en") {
@@ -39,7 +49,7 @@ function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
   function handleChange(
     e: React.ChangeEvent<
       HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement
-    >,
+    >
   ) {
     const { name, value } = e.target;
 
