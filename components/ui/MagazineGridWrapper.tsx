@@ -36,13 +36,6 @@ export function MagazineGridWrapper({
   enableAccessibilityFeatures = true,
   className = "",
 }: MagazineGridWrapperProps) {
-  // Handle issue view action - navigate to magazine issue page
-  const handleIssueView = useCallback(
-    (id: string) => {
-      window.location.href = `/${locale}/magazine/issue/${id}`;
-    },
-    [locale],
-  );
 
   // Handle issue download action - trigger PDF download
   const handleIssueDownload = useCallback(
@@ -63,7 +56,6 @@ export function MagazineGridWrapper({
     <div className={className}>
       <IntegratedMagazineGrid
         issues={issues}
-        onIssueView={handleIssueView}
         onIssueDownload={handleIssueDownload}
         locale={locale}
         isLoading={isLoading}

@@ -43,7 +43,6 @@ interface IntegratedMagazineGridProps {
     fileSize?: string;
     pageCount?: number;
   }>;
-  onIssueView: (id: string) => void;
   onIssueDownload?: (id: string) => void;
   locale: string;
   isLoading?: boolean;
@@ -56,7 +55,6 @@ interface IntegratedMagazineGridProps {
 export const IntegratedMagazineGrid = memo<IntegratedMagazineGridProps>(
   ({
     issues,
-    onIssueView,
     onIssueDownload,
     locale,
     isLoading = false,
@@ -67,13 +65,6 @@ export const IntegratedMagazineGrid = memo<IntegratedMagazineGridProps>(
     messages,
   }) => {
     const isArabic = locale === "ar";
-
-    const handleIssueView = useCallback(
-      (id: string) => {
-        onIssueView(id);
-      },
-      [onIssueView],
-    );
 
     const handleIssueDownload = useCallback(
       (id: string) => {
@@ -138,7 +129,6 @@ export const IntegratedMagazineGrid = memo<IntegratedMagazineGridProps>(
           <MagazineCard
             key={issue.id}
             issue={issue}
-            onView={handleIssueView}
             {...(onIssueDownload && { onDownload: handleIssueDownload })}
             locale={locale}
             delay={enableAnimations ? index * 0.1 : 0}
