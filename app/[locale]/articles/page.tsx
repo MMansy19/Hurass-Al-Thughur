@@ -17,6 +17,7 @@ async function Articles({ params }: { params: Promise<{ locale: string }> }) {
       .from("articles")
       .select("*")
       .eq("lang", locale)
+      .eq("approved", true)
       .order("created_at", { ascending: false });
 
   if (locale !== "ar" && locale !== "en") {
