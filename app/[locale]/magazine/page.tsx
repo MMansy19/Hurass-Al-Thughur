@@ -3,13 +3,12 @@ import Link from "next/link";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import SEO from "@/components/ui/SEO";
-import { SkipLinks } from "@/components/ui/AccessibilityComponents";
 import { StructuredData } from "@/components/ui/StructuredData";
 import { MagazineGridWrapper } from "@/components/ui/MagazineGridWrapper";
 
 // Dynamic imports for better code splitting
-const PDFViewerSection = dynamic(
-  () => import("@/components/pdf/PDFViewerSection"),
+const PDFViewerSectionWithSelector = dynamic(
+  () => import("@/components/magazine/PDFViewerSectionWithSelector"),
   {
     loading: () => (
       <div className="animate-pulse bg-gray-200 h-96 rounded-lg" />
@@ -97,8 +96,8 @@ export default async function EnhancedMagazinePage({
       id: "1",
       title: magazine.issues.issue1.title,
       description: magazine.issues.issue1.description,
-      coverImage: "/images/magazine-cover-1.jpg",
-      pdfUrl: "/pdfs/magazine-issue-1.pdf",
+      coverImage: "/images/magazine/1.png",
+      pdfUrl: "/pdfs/1.pdf",
       date: magazine.issues.issue1.date,
       author: messages.hardcoded.editorialTeam,
       category: magazine.categoryNames.aqeedah,
@@ -108,8 +107,8 @@ export default async function EnhancedMagazinePage({
       id: "2",
       title: magazine.issues.issue2.title,
       description: magazine.issues.issue2.description,
-      coverImage: "/images/magazine-cover-2.jpg",
-      pdfUrl: "/pdfs/magazine-issue-2.pdf",
+      coverImage: "/images/magazine/2.png",
+      pdfUrl: "/pdfs/2.pdf",
       date: magazine.issues.issue2.date,
       author: messages.hardcoded.editorialTeam,
       category: magazine.categoryNames.fiqh,
@@ -119,21 +118,35 @@ export default async function EnhancedMagazinePage({
       id: "3",
       title: magazine.issues.issue3.title,
       description: magazine.issues.issue3.description,
-      coverImage: "/images/magazine-cover-3.jpg",
-      pdfUrl: "/pdfs/magazine-issue-3.pdf",
+      coverImage: "/images/magazine/3.png",
+      pdfUrl: "/pdfs/3.pdf",
       date: magazine.issues.issue3.date,
       author: messages.hardcoded.editorialTeam,
       category: magazine.categoryNames.prophetBiography,
       tags: [messages.hardcoded.prophetsBiography, messages.hardcoded.ethics],
     },
-  ];
-  const selectedIssue = magazineIssues[0] || null;
-  // Enhanced skip links
-  const skipLinks = [
-    { href: "#main-content", label: messages.hardcoded.skipToMainContent },
-    { href: "#search", label: messages.hardcoded.skipToSearch },
-    { href: "#latest-issues", label: messages.hardcoded.skipToLatestIssues },
-    { href: "#pdf-viewer", label: messages.hardcoded.skipToPDFViewer },
+    {
+      id: "4",
+      title: magazine.issues.issue4.title,
+      description: magazine.issues.issue4.description,
+      coverImage: "/images/magazine/4.png",
+      pdfUrl: "/pdfs/4.pdf",
+      date: magazine.issues.issue4.date,
+      author: messages.hardcoded.editorialTeam,
+      category: magazine.categoryNames.aqeedah,
+      tags: [messages.hardcoded.faith, messages.hardcoded.prophethood],
+    },
+    {
+      id: "5",
+      title: magazine.issues.issue5.title,
+      description: magazine.issues.issue5.description,
+      coverImage: "/images/magazine/5.png",
+      pdfUrl: "/pdfs/5.pdf",
+      date: magazine.issues.issue5.date,
+      author: messages.hardcoded.editorialTeam,
+      category: magazine.categoryNames.aqeedah,
+      tags: [messages.hardcoded.fitrah, messages.hardcoded.guidance],
+    },
   ];
 
   // Structured data for SEO
@@ -161,11 +174,10 @@ export default async function EnhancedMagazinePage({
       },
     },
   };
-
+  
   return (
     <>
       <StructuredData data={structuredData} />
-      <SkipLinks links={skipLinks} />
 
       {/* Performance monitoring in development */}
       {process.env.NODE_ENV === "development" && (
@@ -245,25 +257,21 @@ export default async function EnhancedMagazinePage({
         {/* PDF Viewer Section */}
         <section id="pdf-viewer" aria-labelledby="pdf-viewer-heading">
           <div className="container mx-auto sm:px-4 px-2">
+            <h2
+              id="pdf-viewer-heading" 
+              className="text-3xl font-bold text-emerald-800 mb-6"
+            >
+              {magazine.pdfViewer}
+            </h2>
             <div className="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200">
-              <Suspense
-                fallback={
-                  <div className="h-96 bg-gray-100 animate-pulse flex items-center justify-center">
-                    <div className="text-center">
-                      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto mb-4"></div>{" "}
-                      <p className="text-gray-600">
-                        {messages.hardcoded.loadingPDFViewer}
-                      </p>
-                    </div>
-                  </div>
-                }
-              >
-                <PDFViewerSection
-                  pdfUrl={`/pdfs/${selectedIssue?.id}.pdf`}
-                  title={selectedIssue?.title || magazine.title}
-                  messages={magazine}
-                />
-              </Suspense>
+              <PDFViewerSectionWithSelector
+                issues={magazineIssues}
+                magazine={magazine}
+                locale={locale}
+                loadingMessage={messages?.hardcoded?.loadingPDFViewer}
+                selectIssueText={messages?.hardcoded?.selectIssue || "Select an issue"}
+                noIssuesText={messages?.hardcoded?.noIssues || "No issues available"}
+              />
             </div>
           </div>
         </section>

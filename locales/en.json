@@ -98,6 +98,16 @@
         "title": "The Third Issue",
         "description": "Proofs of Prophethood and Orientalist Narratives",
         "date": "2025"
+      },
+      "issue4": {
+        "title": "The Fourth Issue",
+        "description": "Spiritual Atheism. Proofs of Prophethood. The Twenty Revolution",
+        "date": "2025"
+      },
+      "issue5": {
+        "title": "The Fifth Issue",
+        "description": "The Map to the Path. What is Fitrah",
+        "date": "2025"
       }
     },
     "categoryNames": {
@@ -329,6 +339,9 @@
     "rulings": "Rulings",
     "prophetsBiography": "Prophet's Biography",
     "ethics": "Ethics",
+    "prophethood": "Prophethood",
+    "fitrah": "Fitrah",
+    "guidance": "Guidance",
     "articlesAboutIslamic": "Articles about Islamic faith and monotheism",
     "islamicJurisprudenceRulings": "Islamic jurisprudence and religious rulings",
     "biographyOfProphet": "Biography of Prophet Muhammad (PBUH)",
@@ -389,6 +402,8 @@
       "muharram1445": "August 2023"
     },
     "opensInNewPage": "Opens in new page",
+    "selectIssue": "Select Issue",
+    "noIssuesAvailable": "No issues available",
     "monotheismPolytheism": "Monotheism and Polytheism",
     "monotheismPolytheismDesc": "Understanding the concept of monotheism and types of polytheism",
     "fastingRulings": "Fasting Rulings",

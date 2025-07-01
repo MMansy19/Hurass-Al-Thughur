@@ -103,10 +103,16 @@
         "author": "مجلس الدراسات التاريخية"
       },
       "issue4": {
-        "title": "جوامع أدعية النبي وتعوذاته",
-        "description": "مجموعة شاملة من أدعية النبي محمد صلى الله عليه وسلم وتعوذاته من مختلف الأضرار",
+        "title": "العدد الرابع",
+        "description": "الإلحاد الروحي. أدلة النبوة. ثورة العشرين",
         "date": "2025",
-        "author": "قسم الدراسات الإسلامية"
+        "author": "مجلس البحوث الإسلامية"
+      },
+      "issue5": {
+        "title": "العدد الخامس",
+        "description": "الخريطة إلى الطريق. ما هي الفطرة",
+        "date": "2025",
+        "author": "قسم دراسات الفطرة"
       }
     },
     "categoryNames": {
@@ -339,6 +345,9 @@
     "rulings": "الأحكام",
     "prophetsBiography": "السيرة النبوية",
     "ethics": "الأخلاق",
+    "prophethood": "النبوة",
+    "fitrah": "الفطرة",
+    "guidance": "الهداية",
     "articlesAboutIslamic": "مقالات حول العقيدة والتوحيد الإسلامي",
     "islamicJurisprudenceRulings": "الفقه الإسلامي والأحكام الشرعية",
     "biographyOfProphet": "سيرة النبي محمد صلى الله عليه وسلم",
@@ -399,6 +408,8 @@
       "muharram1445": "أغسطس 2023"
     },
     "opensInNewPage": "يفتح في صفحة جديدة",
+    "selectIssue": "اختر العدد", 
+    "noIssuesAvailable": "لا توجد أعداد متاحة",
     "monotheismPolytheism": "التوحيد والشرك",
     "monotheismPolytheismDesc": "فهم مفهوم التوحيد وأنواع الشرك",
     "fastingRulings": "أحكام الصيام",

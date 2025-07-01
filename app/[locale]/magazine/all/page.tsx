@@ -317,12 +317,6 @@ export default async function AllMagazinesPage({
                     className="inline-flex items-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-700 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
                   >
                     {messages.hardcoded.browseLibrary}
-                  </Link>{" "}
-                  <Link
-                    href={`/${locale}/contact`}
-                    className="inline-flex items-center px-6 py-3 border border-emerald-600 text-emerald-600 rounded-lg font-semibold hover:bg-emerald-50 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
-                  >
-                    {messages.hardcoded.contactUs}
                   </Link>
                 </div>
               </div>

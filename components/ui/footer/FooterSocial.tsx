@@ -21,7 +21,7 @@ export default function FooterSocial({
       <h3 className="text-lg font-bold mb-4 border-b border-emerald-700 pb-2">
         {title}
       </h3>
-      <div className="flex gap-4">
+      <div className="grid grid-cols-6 md:grid-cols-3 xl:grid-cols-6 gap-2 max-w-md mx-auto">
         {socialLinks.map((social, index) => (
           <a
             key={index}

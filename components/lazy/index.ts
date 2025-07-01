@@ -35,13 +35,6 @@ export const LazyPDFBrowser = createDynamicComponent(
   },
 );
 
-// Contact Form (Should be lazy loaded as it's not always needed)
-export const LazyContactForm = createDynamicComponent(
-  () => import("@/app/[locale]/contact/ContactForm"),
-  {
-    displayName: "LazyContactForm",
-  },
-);
 
 // Performance Monitor (Development only)
 export const LazyPerformanceMonitor = createDynamicComponent(

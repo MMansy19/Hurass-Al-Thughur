@@ -79,19 +79,6 @@
           "type": "image/jpeg"
         }
       ]
-    },
-    {
-      "name": "Contact",
-      "short_name": "Contact",
-      "description": "Contact us",
-      "url": "/contact",
-      "icons": [
-        {
-          "src": "/images/contact-icon.jpg",
-          "sizes": "96x96",
-          "type": "image/jpeg"
-        }
-      ]
     }
   ],
   "prefer_related_applications": false,

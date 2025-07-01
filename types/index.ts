@@ -232,7 +232,6 @@ export type LoadingState = "idle" | "loading" | "success" | "error";
 
 // Generic utility types
 export type Optional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
-export type Required<T, K extends keyof T> = T & Required<Pick<T, K>>;
 export type DeepPartial<T> = {
   [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
 };
@@ -243,7 +242,6 @@ export type APIEndpoint =
   | "/api/magazines/[id]"
   | "/api/categories"
   | "/api/search"
-  | "/api/contact"
   | "/api/newsletter"
   | "/api/analytics";
 

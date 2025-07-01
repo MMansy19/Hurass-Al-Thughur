@@ -3,7 +3,6 @@ import {
   HomeIcon,
   MagazineIcon,
   LibraryIcon,
-  ContactIcon,
   ArticlesIcon,
 } from "./Icons";
 
@@ -59,12 +58,6 @@ export const buildNavLinks = ({
       icon: <ArticlesIcon />,
       text: messages.articles,
       isActive: pathname.includes("/articles"),
-    },
-    {
-      href: `/${locale}/contact`,
-      icon: <ContactIcon />,
-      text: messages.contact,
-      isActive: pathname.includes("/contact"),
     },
   ];
 };

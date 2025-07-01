@@ -63,17 +63,32 @@ export const pdfMetadata: PDFMetadata[] = [
   {
     filename: "4.pdf",
     title: {
-      en: "Comprehensive Collection of the Prophet's Supplications and Seeking Refuge",
-      ar: "جوامع أدعية النبي وتعوذاته",
+      en: "The Fourth Issue",
+      ar: "العدد الرابع",
     },
     description: {
-      en: "A comprehensive collection of the Prophet Muhammad's supplications and invocations for seeking refuge from various harms.",
-      ar: "مجموعة شاملة من أدعية النبي محمد صلى الله عليه وسلم وتعوذاته من مختلف الأضرار.",
+      en: "Spiritual Atheism. Proofs of Prophethood. The Twenty Revolution",
+      ar: "الإلحاد الروحي. أدلة النبوة. ثورة العشرين",
     },
-    category: "Islamic Supplications",
-    author: "Islamic Studies Department",
+    category: "Islamic Studies",
+    author: "Islamic Research Council",
     publishDate: "2025",
-    tags: ["supplications", "duas", "seeking refuge", "prophet", "sunnah"],
+    tags: ["atheism", "prophethood", "revolution", "spirituality"],
+  },
+  {
+    filename: "5.pdf",
+    title: {
+      en: "The Fifth Issue",
+      ar: "العدد الخامس",
+    },
+    description: {
+      en: "The Map to the Path. What is Fitrah",
+      ar: "الخريطة إلى الطريق. ما هي الفطرة",
+    },
+    category: "Religious Studies",
+    author: "Fitrah Studies Department",
+    publishDate: "2025",
+    tags: ["fitrah", "guidance", "path", "nature"],
   },
 ];
 
