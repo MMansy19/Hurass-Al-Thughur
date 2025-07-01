@@ -40,6 +40,7 @@ function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
       excerpt: "",
       content: "",
       user_id,
+      approved: false,
     }
   );
 
@@ -103,6 +104,7 @@ function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
             excerpt: "",
             content: "",
             user_id,
+            approved: false,
           });
         }
       } else if (method === "edit") {
