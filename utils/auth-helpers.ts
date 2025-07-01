@@ -1,5 +1,6 @@
 import { supabase } from '@/supabase/initializing';
 import { AuthError } from '@supabase/supabase-js';
+import toast from 'react-hot-toast';
 
 export interface AuthErrorHandlerOptions {
   redirectOnError?: boolean;
@@ -50,7 +51,7 @@ export async function handleAuthError(
         ? 'Your session has expired. Please sign in again.' 
         : `Authentication error: ${error.message}`);
     
-    alert(message);
+    toast.error(message);
   }
 
   if (redirectOnError && typeof window !== 'undefined') {

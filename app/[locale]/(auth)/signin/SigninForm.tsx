@@ -5,6 +5,7 @@ import { useRouter, useParams } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
 import { Messages } from "@/types/messages";
+import toast from "react-hot-toast";
 
 function SigninForm({ messages }: { messages: Messages }) {
   const [formData, setFormData] = useState({
@@ -39,18 +40,18 @@ function SigninForm({ messages }: { messages: Messages }) {
 
       if (error) {
         console.error('Sign in error:', error);
-        alert(`${messages.auth.signinError}: ${error.message}`);
+        toast.error(`${messages.auth.signinError}: ${error.message}`);
         return;
       }
 
       if (data.user) {
         // Don't store user in localStorage, let the auth provider handle it
-        alert(messages.auth.signinSuccess);
+        toast.success(messages.auth.signinSuccess);
         router.push(`/${locale}`);
       }
     } catch (error) {
       console.error('Unexpected sign in error:', error);
-      alert(`${messages.auth.signinError}: An unexpected error occurred`);
+      toast.error(`${messages.auth.signinError}: An unexpected error occurred`);
     }
   }
   return (

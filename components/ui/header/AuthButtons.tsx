@@ -3,6 +3,7 @@
 import { useParams, useRouter } from "next/navigation";
 import { useAuth } from "@/components/auth/AuthProvider";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 interface AuthButtonsProps {
   messages: {
@@ -25,11 +26,11 @@ function AuthButtons({ messages, isMobile = false }: AuthButtonsProps) {
   async function handleSignOut() {
     try {
       await signOut();
-      alert("Signed out successfully");
+      toast.success("Signed out successfully");
       router.push(`/${locale}`);
     } catch (error) {
       console.error('Sign out error:', error);
-      alert("Error signing out. Please try again.");
+      toast.error("Error signing out. Please try again.");
     }
   }
 

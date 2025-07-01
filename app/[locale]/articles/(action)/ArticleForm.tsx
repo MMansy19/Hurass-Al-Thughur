@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import { useState } from "react";
 import Editor from "react-simple-wysiwyg";
 import { Messages } from "@/types/messages";
+import toast from "react-hot-toast";
 
 interface AddArticleFormProps {
   method: "add" | "edit";
@@ -78,7 +79,7 @@ function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
       !formData.excerpt ||
       !formData.content
     ) {
-      alert("Please fill in all fields.");
+      toast.error("Please fill in all fields.");
       return;
     }
 
@@ -91,10 +92,10 @@ function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
 
         if (error) {
           console.error("Error inserting article:", error);
-          alert("Failed!");
+          toast.error("Failed!");
           return;
         } else {
-          alert("Article added successfully!");
+          toast.success("Article added successfully!");
 
           setFormData({
             lang: locale || "ar",
@@ -113,15 +114,15 @@ function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
 
         if (error) {
           console.error("Error Editing article:", error);
-          alert("Failed!");
+          toast.error("Failed!");
           return;
         } else {
-          alert("Article Edited successfully!");
+          toast.success("Article Edited successfully!");
         }
       }
     } catch (error) {
       console.error("Error inserting article:", error);
-      alert("Failed!");
+      toast.error("Failed!");
     }
   }
 

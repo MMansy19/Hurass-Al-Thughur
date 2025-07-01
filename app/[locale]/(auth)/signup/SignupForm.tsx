@@ -5,6 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import Link from "next/link";
 import { Messages } from "@/types/messages";
+import toast from "react-hot-toast";
 
 function SignupForm({ messages }: { messages: Messages }) {
   const [formData, setFormData] = useState({
@@ -44,12 +45,12 @@ function SignupForm({ messages }: { messages: Messages }) {
 
     if (data.user) {
       window.localStorage.setItem("user", JSON.stringify(data.user));
-      alert(messages.auth.signupSuccess);
+      toast.success(messages.auth.signupSuccess);
       router.push(`/${locale}`);
     }
 
     if (error) {
-      alert(`${messages.auth.signupError}`);
+      toast.error(`${messages.auth.signupError}`);
     }
   }
 

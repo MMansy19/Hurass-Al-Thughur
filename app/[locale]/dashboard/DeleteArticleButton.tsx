@@ -1,5 +1,6 @@
 import { supabase } from "@/supabase/initializing";
 import { Messages } from "@/types/messages";
+import toast from "react-hot-toast";
 
 function DeleteArticleButton({
   articleId,
@@ -22,9 +23,9 @@ function DeleteArticleButton({
       .eq("id", articleId);
 
     if (error) {
-      alert("Failed to delete the article. Please try again.");
+      toast.error("Failed to delete the article. Please try again.");
     } else {
-      alert("Article deleted successfully!");
+      toast.success("Article deleted successfully!");
       // Optionally, you can redirect or refresh the page here
       window.location.reload();
     }

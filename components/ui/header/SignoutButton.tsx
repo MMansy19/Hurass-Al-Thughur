@@ -3,6 +3,7 @@
 import { supabase } from "@/supabase/initializing";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 function SignoutButton() {
   const [isSignedIn, setIsSignedIn] = useState(false);
@@ -18,9 +19,9 @@ function SignoutButton() {
     const { error } = await supabase.auth.signOut();
 
     if (error) {
-      alert(`Error signing out: ${error.message}`);
+      toast.error(`Error signing out: ${error.message}`);
     } else {
-      alert("Signed out successfully");
+      toast.success("Signed out successfully");
       router.push(`/${locale}`);
     }
   }
