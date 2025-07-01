@@ -31,19 +31,26 @@ function SigninForm({ messages }: { messages: Messages }) {
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: formData.email,
-      password: formData.password,
-    });
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password,
+      });
 
-    if (data.user) {
-      window.localStorage.setItem("user", JSON.stringify(data.user));
-      alert(messages.auth.signinSuccess);
-      router.push(`/${locale}`);
-    }
+      if (error) {
+        console.error('Sign in error:', error);
+        alert(`${messages.auth.signinError}: ${error.message}`);
+        return;
+      }
 
-    if (error) {
-      alert(`${messages.auth.signinError}`);
+      if (data.user) {
+        // Don't store user in localStorage, let the auth provider handle it
+        alert(messages.auth.signinSuccess);
+        router.push(`/${locale}`);
+      }
+    } catch (error) {
+      console.error('Unexpected sign in error:', error);
+      alert(`${messages.auth.signinError}: An unexpected error occurred`);
     }
   }
   return (

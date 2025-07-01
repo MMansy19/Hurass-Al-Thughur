@@ -1,8 +1,7 @@
 "use client";
 
-import { supabase } from "@/supabase/initializing";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useAuth } from "@/components/auth/AuthProvider";
 import Link from "next/link";
 
 interface AuthButtonsProps {
@@ -14,8 +13,7 @@ interface AuthButtonsProps {
 }
 
 function AuthButtons({ messages, isMobile = false }: AuthButtonsProps) {
-  const [isSignedIn, setIsSignedIn] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const { user, loading, signOut } = useAuth();
 
   // Getting the locale from the URL parameters
   const params = useParams<{ locale: string }>();
@@ -25,42 +23,21 @@ function AuthButtons({ messages, isMobile = false }: AuthButtonsProps) {
   const router = useRouter();
 
   async function handleSignOut() {
-    const { error } = await supabase.auth.signOut();
-
-    if (error) {
-      alert(`Error signing out: ${error.message}`);
-    } else {
+    try {
+      await signOut();
       alert("Signed out successfully");
       router.push(`/${locale}`);
+    } catch (error) {
+      console.error('Sign out error:', error);
+      alert("Error signing out. Please try again.");
     }
   }
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setIsSignedIn(!!session);
-      setLoading(false);
-    });
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((event) => {
-      if (event === "SIGNED_IN") {
-        setIsSignedIn(true);
-      } else if (event === "SIGNED_OUT") {
-        setIsSignedIn(false);
-      }
-    });
-
-    // Cleanup subscription on component unmount
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
 
   if (loading) {
     return <div className="w-20 h-10"></div>; // Placeholder to prevent layout shift
   }
-  if (isSignedIn) {
+  
+  if (user) {
     return (
       <button
         onClick={handleSignOut}

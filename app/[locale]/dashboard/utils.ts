@@ -9,11 +9,28 @@ export async function loadMessages(
 }
 
 export async function loadSignedInUser(setUser: (user: any) => void) {
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  try {
+    const {
+      data: { user },
+      error
+    } = await supabase.auth.getUser();
 
-  setUser(user);
+    if (error) {
+      console.error('Error getting user:', error);
+      // If refresh token is invalid, clear the session
+      if (error.message.includes('refresh') || error.message.includes('token')) {
+        console.log('Clearing invalid session...');
+        await supabase.auth.signOut({ scope: 'local' });
+      }
+      setUser(null);
+      return;
+    }
+
+    setUser(user);
+  } catch (error) {
+    console.error('Unexpected error getting user:', error);
+    setUser(null);
+  }
 }
 
 export async function loadArticles(

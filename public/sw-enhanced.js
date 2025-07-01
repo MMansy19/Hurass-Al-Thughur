@@ -44,6 +44,9 @@ const NETWORK_FIRST_PATTERNS = [
   /\/api\/.*$/,
   /\/_next\/webpack-hmr/,
   /\/_next\/static\/hmr/,
+  // Add Supabase auth endpoints
+  /https:\/\/.*\.supabase\.co\/auth\/.*$/,
+  /https:\/\/.*\.supabase\.co\/rest\/.*$/,
 ];
 
 // Cache-first patterns (try cache first)
@@ -388,6 +391,11 @@ self.addEventListener("fetch", (event) => {
 
   // Skip chrome-extension requests
   if (event.request.url.startsWith("chrome-extension://")) {
+    return;
+  }
+
+  // Skip Supabase auth/API requests to prevent token caching issues
+  if (event.request.url.includes('.supabase.co')) {
     return;
   }
 

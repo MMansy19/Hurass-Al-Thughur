@@ -6,6 +6,8 @@ import Footer from "@/components/ui/Footer";
 import { ErrorBoundary } from "@/components/ui/ErrorBoundary";
 import { PerformanceMonitor } from "@/components/ui/PerformanceMonitor";
 import { AccessibilityProvider } from "@/components/ui/AccessibilityProvider";
+import { AuthProvider } from "@/components/auth/AuthProvider";
+import { AuthErrorBoundary } from "@/components/auth/AuthErrorBoundary";
 import { inter, arabicFont, criticalCSS } from "@/styles/fonts";
 
 // Import the Cairo font for Arabic (fallback)
@@ -82,25 +84,29 @@ export default async function LocaleLayout({
       <body className="antialiased min-h-screen flex flex-col bg-gray-50">
         <PerformanceMonitor />
         <ErrorBoundary>
-          <AccessibilityProvider>
-            {" "}
-            <Header
-              locale={locale}
-              messages={{
-                ...messages.common,
-                signin: messages.auth.signin,
-                signup: messages.auth.signup,
-              }}
-            />
-            <main className="container mx-auto sm:px-4 px-2 py-8 flex-grow">
-              <div className="h-16 md:h-20"></div>
-              <div className="animate-fadeIn">{children}</div>
-            </main>
-            <Footer
-              locale={locale}
-              messages={{ ...messages.footer, common: messages.common }}
-            />
-          </AccessibilityProvider>
+          <AuthErrorBoundary>
+            <AuthProvider>
+              <AccessibilityProvider>
+                {" "}
+                <Header
+                  locale={locale}
+                  messages={{
+                    ...messages.common,
+                    signin: messages.auth.signin,
+                    signup: messages.auth.signup,
+                  }}
+                />
+                <main className="container mx-auto sm:px-4 px-2 py-8 flex-grow">
+                  <div className="h-16 md:h-20"></div>
+                  <div className="animate-fadeIn">{children}</div>
+                </main>
+                <Footer
+                  locale={locale}
+                  messages={{ ...messages.footer, common: messages.common }}
+                />
+              </AccessibilityProvider>
+            </AuthProvider>
+          </AuthErrorBoundary>
         </ErrorBoundary>
       </body>
     </html>
