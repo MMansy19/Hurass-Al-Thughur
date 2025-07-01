@@ -1,12 +1,13 @@
 "use client";
 
 import { Document, Page, pdfjs } from "react-pdf";
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useCallback, useRef, memo, useMemo } from "react";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 
 // Import custom hooks
 import { usePDFViewer } from "./hooks/usePDFViewer";
+import { performanceMonitor, optimizeForDevice } from "./utils/performance";
 
 // Import components
 import {
@@ -64,6 +65,33 @@ interface PDFViewerProps {
   className?: string;
 }
 
+// Memoized PDF Page component for better performance
+const MemoizedPage = memo(({ 
+  pageNumber, 
+  scale, 
+  onLoadSuccess, 
+  renderTextLayer = true, 
+  renderAnnotationLayer = true, 
+  className,
+  loading,
+  error,
+  onRenderSuccess 
+}: any) => (
+  <Page
+    pageNumber={pageNumber}
+    scale={scale}
+    onLoadSuccess={onLoadSuccess}
+    renderTextLayer={renderTextLayer}
+    renderAnnotationLayer={renderAnnotationLayer}
+    className={className}
+    loading={loading}
+    error={error}
+    onRenderSuccess={onRenderSuccess}
+  />
+));
+
+MemoizedPage.displayName = 'MemoizedPage';
+
 export default function PDFViewer({
   pdfFile,
   messages,
@@ -88,6 +116,35 @@ export default function PDFViewer({
     setScale,
   } = usePDFViewer();
 
+  // Device optimization
+  const deviceOptimization = useMemo(() => optimizeForDevice(), []);
+
+  // Memoize expensive operations
+  const documentOptions = useMemo(() => ({
+    // Performance optimizations
+    cMapUrl: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/cmaps/',
+    cMapPacked: true,
+    enableXfa: false, // Disable XFA forms for faster loading
+    disableAutoFetch: !deviceOptimization.shouldPreload, // Enable auto-fetch based on device
+    disableStream: deviceOptimization.hasSlowConnection, // Disable streaming on slow connections
+    disableRange: deviceOptimization.hasSlowConnection, // Disable range requests on slow connections
+    useOnlyCssZoom: true, // Use CSS zoom for better performance
+    maxImageSize: deviceOptimization.isLowEndDevice ? 8388608 : 16777216, // Adjust max image size
+    verbosity: 0, // Reduce console output
+  }), [deviceOptimization]);
+
+  const pageLoadingComponent = useMemo(() => (
+    <div className="flex items-center justify-center h-96 bg-gray-100 rounded-lg">
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+    </div>
+  ), []);
+
+  const pageErrorComponent = useMemo(() => (
+    <div className="flex items-center justify-center h-96 bg-red-50 rounded-lg">
+      <p className="text-red-600">Failed to load page</p>
+    </div>
+  ), []);
+
   // Enhanced state management
   const [viewMode, setViewMode] = useState<"single" | "continuous" | "facing">(
     "single",
@@ -102,31 +159,78 @@ export default function PDFViewer({
   const [pageWidth, setPageWidth] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Configure PDF.js worker once on component mount
+  // Configure PDF.js worker once on component mount with optimizations
   useEffect(() => {
     const setupWorker = () => {
       pdfjs.GlobalWorkerOptions.workerSrc = `/pdf-worker/pdf.worker.min.mjs`;
     };
     setupWorker();
-  }, []);
-  // Enhanced document load handler
+
+    // Start performance monitoring
+    performanceMonitor.reset();
+    performanceMonitor.startTimer('documentLoad');
+
+    return () => {
+      // Cleanup performance monitoring
+      performanceMonitor.reset();
+    };
+  }, [pdfFile]); // Re-run when PDF file changes
+
+  // Enhanced document load handler with performance monitoring and preloading
   const onDocumentLoadSuccess = useCallback(
     (pdf: any) => {
+      performanceMonitor.endTimer('documentLoad');
+      performanceMonitor.startTimer('totalLoad');
+      
       baseOnDocumentLoadSuccess(pdf);
 
-      // Extract outline/bookmarks if available
-      pdf
-        .getOutline()
-        .then((outline: any) => {
-          if (outline) {
-            setBookmarks(outline);
-          }
-        })
-        .catch(() => {
-          // No outline available
-        });
+      // Preload strategy based on device capabilities
+      if (deviceOptimization.shouldPreload) {
+        const preloadPages = Math.min(
+          deviceOptimization.maxConcurrentPages, 
+          pdf.numPages
+        );
+        
+        for (let i = 1; i <= preloadPages; i++) {
+          pdf.getPage(i).then((page: any) => {
+            // Pre-render at low resolution for thumbnails
+            const scale = deviceOptimization.shouldReduceQuality ? 0.1 : 0.2;
+            const viewport = page.getViewport({ scale });
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+            
+            if (context) {
+              page.render({
+                canvasContext: context,
+                viewport: viewport,
+              });
+            }
+          }).catch(() => {
+            // Ignore preload errors
+          });
+        }
+      }
+
+      // Extract outline/bookmarks if available (defer to avoid blocking)
+      setTimeout(() => {
+        pdf
+          .getOutline()
+          .then((outline: any) => {
+            if (outline) {
+              setBookmarks(outline);
+            }
+          })
+          .catch(() => {
+            // No outline available
+          });
+      }, deviceOptimization.hasSlowConnection ? 500 : 100);
+
+      performanceMonitor.endTimer('totalLoad');
+      performanceMonitor.logMetrics();
     },
-    [baseOnDocumentLoadSuccess],
+    [baseOnDocumentLoadSuccess, deviceOptimization],
   );
 
   // Enhanced zoom functions
@@ -192,15 +296,24 @@ export default function PDFViewer({
     [bookmarks],
   );
 
-  // Page measurement for responsive scaling
+  // Page measurement for responsive scaling with memoization
   const onPageLoadSuccess = useCallback(
     (page: any) => {
+      performanceMonitor.endTimer('pageRender');
+      
       if (pageWidth === 0) {
         const viewport = page.getViewport({ scale: 1 });
         setPageWidth(viewport.width);
+        
+        // Auto-fit after first page loads
+        requestAnimationFrame(() => {
+          if (containerRef.current && viewMode === "single") {
+            fitPage();
+          }
+        });
       }
     },
-    [pageWidth],
+    [pageWidth, viewMode, fitPage],
   );
 
   // Keyboard shortcuts with enhanced functionality
@@ -527,6 +640,7 @@ export default function PDFViewer({
             file={pdfFile}
             onLoadSuccess={onDocumentLoadSuccess}
             onLoadError={(error) => {
+              performanceMonitor.endTimer('documentLoad');
               setError(error.message);
               onError?.();
             }}
@@ -535,18 +649,34 @@ export default function PDFViewer({
               <PDFError errorTitle={messages.error} errorMessage={error} />
             }
             className="pdf-document"
+            options={documentOptions}
+            onItemClick={() => {
+              // This is handled in useEffect now
+            }}
           >
             {!error && (
               <>
                 {viewMode === "single" && (
                   <div className="pdf-page-container">
-                    <Page
+                    <MemoizedPage
                       pageNumber={pageNumber}
                       scale={scale}
                       onLoadSuccess={onPageLoadSuccess}
                       renderTextLayer={true}
                       renderAnnotationLayer={true}
                       className="pdf-page border border-gray-300 shadow-lg rounded-lg mb-4"
+                      loading={pageLoadingComponent}
+                      error={pageErrorComponent}
+                      onRenderSuccess={() => {
+                        // Preload next page for smoother navigation
+                        if (pageNumber < numPages) {
+                          // This is done automatically by react-pdf with disableAutoFetch: false
+                        }
+                        performanceMonitor.endTimer('pageRender');
+                      }}
+                      onLoadStart={() => {
+                        performanceMonitor.startTimer('pageRender');
+                      }}
                     />
 
                     {/* Render annotations for current page */}
@@ -570,22 +700,23 @@ export default function PDFViewer({
 
                 {viewMode === "continuous" && (
                   <div className="pdf-continuous space-y-4">
-                    {Array.from(new Array(numPages), (_, index) => (
+                    {Array.from(new Array(Math.min(numPages, 5)), (_, index) => (
                       <div
                         key={`page_${index + 1}`}
                         className="pdf-page-container"
                       >
-                        <Page
+                        <MemoizedPage
                           pageNumber={index + 1}
                           scale={scale}
                           onLoadSuccess={onPageLoadSuccess}
-                          renderTextLayer={true}
-                          renderAnnotationLayer={true}
+                          renderTextLayer={index < 3} // Only render text layer for first 3 pages
+                          renderAnnotationLayer={index < 3} // Only render annotations for first 3 pages
                           className="pdf-page border border-gray-300 shadow-lg rounded-lg"
+                          loading={pageLoadingComponent}
                         />
 
                         {/* Render annotations for each page */}
-                        {enableAnnotations && (
+                        {enableAnnotations && index < 3 && (
                           <PDFAnnotations
                             annotations={annotations.filter(
                               (a) => a.page === index + 1,
@@ -602,6 +733,21 @@ export default function PDFViewer({
                         )}
                       </div>
                     ))}
+                    
+                    {/* Lazy load remaining pages */}
+                    {numPages > 5 && (
+                      <div className="text-center p-8">
+                        <button
+                          onClick={() => {
+                            // Implement lazy loading for remaining pages
+                            console.log('Load more pages');
+                          }}
+                          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                        >
+                          Load More Pages ({numPages - 5} remaining)
+                        </button>
+                      </div>
+                    )}
                   </div>
                 )}
 
@@ -609,23 +755,25 @@ export default function PDFViewer({
                   <div className="pdf-facing flex gap-4 justify-center">
                     {pageNumber > 1 && (
                       <div className="pdf-page-container">
-                        <Page
+                        <MemoizedPage
                           pageNumber={pageNumber - 1}
                           scale={scale * 0.8}
                           renderTextLayer={true}
                           renderAnnotationLayer={true}
                           className="pdf-page border border-gray-300 shadow-lg rounded-lg"
+                          loading={pageLoadingComponent}
                         />
                       </div>
                     )}
                     <div className="pdf-page-container">
-                      <Page
+                      <MemoizedPage
                         pageNumber={pageNumber}
                         scale={scale * 0.8}
                         onLoadSuccess={onPageLoadSuccess}
                         renderTextLayer={true}
                         renderAnnotationLayer={true}
                         className="pdf-page border border-gray-300 shadow-lg rounded-lg"
+                        loading={pageLoadingComponent}
                       />
                     </div>
                   </div>

@@ -34,43 +34,71 @@ export function usePDFViewer(): UsePDFViewerResult {
 
   const isMobile = width < 768; // Mobile breakpoint
 
+  // Debounced resize handler for better performance
   useEffect(() => {
-    const handleResize = () => setWidth(window.innerWidth);
+    let timeoutId: NodeJS.Timeout;
+    
+    const handleResize = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        setWidth(window.innerWidth);
+      }, 150); // Debounce resize events
+    };
+    
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      clearTimeout(timeoutId);
+    };
   }, []);
 
-  // Auto-adjust scale for mobile devices
+  // Auto-adjust scale for mobile devices with better initial values
   useEffect(() => {
     if (isMobile) {
-      setScale(0.6); // Smaller scale for mobile
+      setScale(0.7); // Slightly larger scale for mobile readability
     } else {
-      setScale(1.0); // Default scale for desktop
+      setScale(1.2); // Better default scale for desktop
     }
   }, [isMobile]);
 
   function changePage(offset: number) {
-    setPageNumber((prev) => Math.min(Math.max(1, prev + offset), numPages));
+    setPageNumber((prev) => {
+      const newPage = prev + offset;
+      return Math.min(Math.max(1, newPage), numPages);
+    });
   }
 
   function zoomIn() {
-    const increment = isMobile ? 0.1 : 0.2; // Smaller increments on mobile
-    setScale((s) => Math.min(s + increment, isMobile ? 2 : 3));
+    const increment = isMobile ? 0.15 : 0.25; // Better increments
+    setScale((s) => {
+      const newScale = s + increment;
+      return Math.min(newScale, isMobile ? 2.5 : 4); // Higher max zoom
+    });
   }
 
   function zoomOut() {
-    const decrement = isMobile ? 0.1 : 0.2; // Smaller decrements on mobile
-    setScale((s) => Math.max(s - decrement, 0.3));
+    const decrement = isMobile ? 0.15 : 0.25; // Better decrements
+    setScale((s) => {
+      const newScale = s - decrement;
+      return Math.max(newScale, 0.2); // Lower min zoom for overview
+    });
   }
 
   function resetZoom() {
-    setScale(isMobile ? 0.6 : 1.0);
+    setScale(isMobile ? 0.7 : 1.2); // Match initial values
   }
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
     setNumPages(numPages);
     setPageNumber(1);
     setError(null);
+    
+    // Auto-adjust scale based on document and screen size
+    if (typeof window !== "undefined") {
+      const devicePixelRatio = window.devicePixelRatio || 1;
+      const baseScale = isMobile ? 0.7 : 1.2;
+      setScale(baseScale * Math.min(devicePixelRatio, 2)); // Optimize for high-DPI displays
+    }
   }
   return {
     numPages,
