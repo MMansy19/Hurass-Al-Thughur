@@ -21,7 +21,7 @@ export function PDFCard({ name, path, locale, viewText }: PDFCardProps) {
         {" "}
         <div className="flex items-center mb-3">
           <svg
-            className="w-8 h-8 text-red-500 mr-2"
+            className="w-8 h-8 text-red-500 mx-2"
             fill="currentColor"
             viewBox="0 0 20 20"
           >

@@ -145,7 +145,7 @@ export default function PDFViewerSection({
             </button>
             <button
               onClick={() => window.location.reload()}
-              className="ml-2 bg-gray-600 hover:bg-gray-700 text-white sm:px-4 px-2 py-2 rounded-md transition-colors"
+              className="mx-2 bg-gray-600 hover:bg-gray-700 text-white sm:px-4 px-2 py-2 rounded-md transition-colors"
             >
               Refresh Page
             </button>

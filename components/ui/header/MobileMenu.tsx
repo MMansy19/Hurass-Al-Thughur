@@ -112,7 +112,7 @@ const MobileMenu = ({
               onClick={() => setIsMenuOpen(false)}
             >
               <span
-                className={`mr-3 rtl:ml-3 ${link.isActive ? "text-white" : "text-emerald-600"}`}
+                className={`mx-3 rtl:ml-3 ${link.isActive ? "text-white" : "text-emerald-600"}`}
               >
                 {link.icon}
               </span>

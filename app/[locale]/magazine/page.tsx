@@ -81,12 +81,6 @@ interface MagazineIssue {
   tags?: string[];
 }
 
-interface Category {
-  id: string;
-  name: string;
-  description?: string;
-  icon?: string;
-}
 
 export default async function EnhancedMagazinePage({
   params,
@@ -133,34 +127,6 @@ export default async function EnhancedMagazinePage({
       tags: [messages.hardcoded.prophetsBiography, messages.hardcoded.ethics],
     },
   ];
-  // Enhanced categories with descriptions and icons
-  const categories: Category[] = [
-    {
-      id: "1",
-      name: magazine.categoryNames.aqeedah,
-      description: messages.hardcoded.articlesAboutIslamic,
-      icon: "🕌",
-    },
-    {
-      id: "2",
-      name: magazine.categoryNames.fiqh,
-      description: messages.hardcoded.islamicJurisprudenceRulings,
-      icon: "⚖️",
-    },
-    {
-      id: "3",
-      name: magazine.categoryNames.prophetBiography,
-      description: messages.hardcoded.biographyOfProphet,
-      icon: "📖",
-    },
-    {
-      id: "4",
-      name: magazine.categoryNames.islamicHistory,
-      description: messages.hardcoded.historyOfIslamic,
-      icon: "🏛️",
-    },
-  ];
-
   const selectedIssue = magazineIssues[0] || null;
   // Enhanced skip links
   const skipLinks = [
@@ -168,7 +134,6 @@ export default async function EnhancedMagazinePage({
     { href: "#search", label: messages.hardcoded.skipToSearch },
     { href: "#latest-issues", label: messages.hardcoded.skipToLatestIssues },
     { href: "#pdf-viewer", label: messages.hardcoded.skipToPDFViewer },
-    { href: "#categories", label: messages.hardcoded.skipToCategories },
   ];
 
   // Structured data for SEO
@@ -225,10 +190,10 @@ export default async function EnhancedMagazinePage({
                 {magazine.latestIssues}
               </Link>
               <Link
-                href={`#categories`}
+                href={`#pdf-viewer`}
                 className="px-8 py-3 bg-transparent border-2 border-white text-white rounded-md font-bold hover:bg-white hover:text-emerald-700 transition-colors"
               >
-                {magazine.categories}
+                {magazine.pdfViewer}
               </Link>
             </div>
           </div>
@@ -249,13 +214,13 @@ export default async function EnhancedMagazinePage({
                 {magazine.latestIssues}
               </h2>{" "}
               <Link
-                href={`/${locale}/magazine/all`}
+                href={`/${locale}/library`}
                 className="inline-flex items-center text-emerald-600 hover:text-emerald-800 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 rounded-lg sm:px-4 px-2 py-2 font-semibold hover:bg-emerald-50"
                 aria-label={`${magazine.allIssues} - ${messages.hardcoded.opensInNewPage}`}
               >
                 {magazine.allIssues}
                 <svg
-                  className="w-5 h-5 ml-2"
+                  className="w-5 h-5 mx-2"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -300,92 +265,6 @@ export default async function EnhancedMagazinePage({
                 />
               </Suspense>
             </div>
-          </div>
-        </section>
-        {/* Categories Section */}
-        <section
-          id="categories"
-          className="py-12 bg-gray-50 rounded-lg"
-          aria-labelledby="categories-heading"
-        >
-          <div className="container mx-auto sm:px-4 px-2">
-            <div className="text-center mb-12">
-              <h2
-                id="categories-heading"
-                className="text-3xl font-bold text-emerald-800 mb-4"
-              >
-                {magazine.categories}
-              </h2>{" "}
-              <p className="text-gray-600 max-w-2xl mx-auto">
-                {messages.hardcoded.exploreSections}
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {categories.map((category) => (
-                <Link
-                  key={category.id}
-                  href={`/${locale}/magazine/category/${category.id}`}
-                  className="block bg-white border border-gray-200 p-6 rounded-lg text-center hover:bg-emerald-50 hover:border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-colors shadow-md hover:shadow-lg"
-                  aria-label={`${messages.hardcoded.browseCategoryText}: ${category.name}`}
-                >
-                  <div className="text-3xl mb-4">{category.icon}</div>
-                  <h3 className="font-bold text-lg text-emerald-900 mb-2">
-                    {category.name}
-                  </h3>
-                  {category.description && (
-                    <p className="text-gray-600 text-sm mb-4">
-                      {category.description}
-                    </p>
-                  )}{" "}
-                  <div className="inline-flex items-center text-emerald-600 font-medium">
-                    {messages.hardcoded.browse}
-                    <svg
-                      className="w-4 h-4 ml-1"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-        {/* Newsletter Subscription Section */}
-        <section
-          className="py-12 bg-gradient-to-r from-emerald-600 to-emerald-700 rounded-lg text-white"
-          aria-labelledby="newsletter-heading"
-        >
-          <div className="container mx-auto sm:px-4 px-2 text-center">
-            {" "}
-            <h2 id="newsletter-heading" className="text-3xl font-bold mb-4">
-              {messages.newsletter.subscribeTitle}
-            </h2>{" "}
-            <p className="text-emerald-100 mb-8 max-w-2xl mx-auto">
-              {messages.newsletter.subscribeDescription}
-            </p>
-            <form className="max-w-md mx-auto flex gap-3">
-              <input
-                type="email"
-                placeholder={messages.newsletter.enterEmail}
-                className="flex-1 sm:px-4 px-2 py-3 rounded-md text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-300"
-                required
-              />{" "}
-              <button
-                type="submit"
-                className="px-6 py-3 bg-white text-emerald-600 rounded-md font-semibold hover:bg-gray-100 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:ring-offset-2 focus:ring-offset-emerald-600"
-              >
-                {messages.newsletter.subscribe}
-              </button>
-            </form>
           </div>
         </section>
       </main>

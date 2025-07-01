@@ -2,7 +2,6 @@ import { ReactNode } from "react";
 import {
   HomeIcon,
   MagazineIcon,
-  DawahIcon,
   LibraryIcon,
   ContactIcon,
   ArticlesIcon,
@@ -48,12 +47,6 @@ export const buildNavLinks = ({
       icon: <MagazineIcon />,
       text: messages.magazine,
       isActive: pathname.includes("/magazine"),
-    },
-    {
-      href: `/${locale}/dawah`,
-      icon: <DawahIcon />,
-      text: messages.dawah,
-      isActive: pathname.includes("/dawah"),
     },
     {
       href: `/${locale}/library`,

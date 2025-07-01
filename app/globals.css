@@ -37,6 +37,67 @@ html[dir="rtl"] body {
   animation: fadeIn 0.5s ease-out forwards;
 }
 
+/* Enhanced animations for articles */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-slideInUp {
+  animation: slideInUp 0.6s ease-out forwards;
+}
+
+.animate-slideInLeft {
+  animation: slideInLeft 0.6s ease-out forwards;
+}
+
+.animate-slideInRight {
+  animation: slideInRight 0.6s ease-out forwards;
+}
+
+.animate-scaleIn {
+  animation: scaleIn 0.5s ease-out forwards;
+}
+
 /* Enhanced PDF viewer styles */
 .pdf-container {
   min-height: 600px;
@@ -213,6 +274,49 @@ html[dir="rtl"] body {
 .pdf-controls input:focus {
   outline: 2px solid #059669;
   outline-offset: 2px;
+}
+
+/* Enhanced smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Article card hover effects */
+.article-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.article-card:hover {
+  transform: translateY(-8px) scale(1.02);
+}
+
+/* Reading progress bar */
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(to right, #059669, #10b981);
+  z-index: 100;
+  transition: width 0.3s ease;
+}
+
+/* Enhanced focus styles for accessibility */
+.focus\:ring-emerald:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.5);
+}
+
+/* Better text selection */
+::selection {
+  background: rgba(5, 150, 105, 0.2);
+  color: inherit;
+}
+
+::-moz-selection {
+  background: rgba(5, 150, 105, 0.2);
+  color: inherit;
 }
 
 /* Dark mode support */

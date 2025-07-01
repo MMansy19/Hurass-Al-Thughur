@@ -235,7 +235,7 @@ export function BundleAnalysisDashboard({
                   key={index}
                   className="text-sm text-gray-600 flex items-start"
                 >
-                  <span className="text-blue-500 mr-2">•</span>
+                  <span className="text-blue-500 mx-2">•</span>
                   {recommendation}
                 </li>
               ))}

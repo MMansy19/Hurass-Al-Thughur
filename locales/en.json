@@ -9,9 +9,9 @@
     "articles": "Articles",
     "contact": "Contact",
     "readMore": "Read More",
-    "view": "عرض",
-    "edit": "تعديل",
-    "delete": "حذف",
+    "view": "View",
+    "edit": "Edit",
+    "delete": "delete",
     "viewAll": "View All",
     "preview": "Preview",
     "download": "Download",
@@ -56,6 +56,7 @@
     "exploreMore": "Explore More",
     "magazineDescription": "Browse magazine issues and PDF files with high quality",
     "dawahDescription": "Introductory materials about Islam for non-Muslims",
+    "articlesDescription": "Various articles on important topics.",
     "libraryDescription": "Comprehensive library of images and brochures"
   },
   "magazine": {
@@ -64,6 +65,7 @@
     "latestIssues": "Latest Issues",
     "allIssues": "All Issues",
     "categories": "Categories",
+    "pdfViewer": "Browse PDF Files",
     "readNow": "Read Now",
     "download": "Download",
     "previousPage": "Previous",
@@ -83,18 +85,18 @@
     "facing": "Facing Pages",
     "issues": {
       "issue1": {
-        "title": "Not Quranists: Instinct and Covenant",
-        "description": "An exploration of the concept of instinct, the covenant, and the restricted meaning of worship in Islamic thought.",
+        "title": "The First Issue",
+        "description": "Not Quranists: Instinct and Covenant",
         "date": "2025"
       },
       "issue2": {
-        "title": "Tawhid Al-Uluhiyyah and Linguistic Weakness",
-        "description": "A study on the doctrine of Tawhid Al-Uluhiyyah and the impact of linguistic weakness on denying what is not rightfully denied.",
+        "title": "The Second Issue",
+        "description": "Tawhid Al-Uluhiyyah and Linguistic Weakness",
         "date": "2025"
       },
       "issue3": {
-        "title": "Proofs of Prophethood and Orientalist Narratives",
-        "description": "An analysis of the proofs of prophethood, addressing orientalist narratives and doubts, including the Battle of Zallaqa.",
+        "title": "The Third Issue",
+        "description": "Proofs of Prophethood and Orientalist Narratives",
         "date": "2025"
       }
     },
@@ -287,9 +289,9 @@
       "advanced": "Advanced"
     },
     "difficultyArabic": {
-      "beginner": "مبتدئ",
-      "intermediate": "متوسط",
-      "advanced": "متقدم"
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced"
     },
     "breadcrumb": "Breadcrumb",
     "searchResults": "Search Results",

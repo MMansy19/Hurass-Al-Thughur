@@ -669,7 +669,7 @@ export const ProgressiveLoading = memo<ProgressiveLoadingProps>(
                   className="inline-flex items-center sm:px-4 px-2 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
                 >
                   <svg
-                    className="w-4 h-4 mr-2"
+                    className="w-4 h-4 mx-2"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"

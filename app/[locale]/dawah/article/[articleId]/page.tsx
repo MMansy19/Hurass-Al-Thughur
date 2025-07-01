@@ -427,7 +427,7 @@ export default async function DawahArticlePage({
                     <div className="flex flex-wrap items-center gap-4 text-emerald-100 text-sm">
                       <span className="flex items-center">
                         <svg
-                          className="w-4 h-4 mr-2"
+                          className="w-4 h-4 mx-2"
                           fill="currentColor"
                           viewBox="0 0 20 20"
                         >
@@ -441,7 +441,7 @@ export default async function DawahArticlePage({
                       </span>
                       <span className="flex items-center">
                         <svg
-                          className="w-4 h-4 mr-2"
+                          className="w-4 h-4 mx-2"
                           fill="currentColor"
                           viewBox="0 0 20 20"
                         >
@@ -455,7 +455,7 @@ export default async function DawahArticlePage({
                       </span>
                       <span className="flex items-center">
                         <svg
-                          className="w-4 h-4 mr-2"
+                          className="w-4 h-4 mx-2"
                           fill="currentColor"
                           viewBox="0 0 20 20"
                         >
@@ -571,7 +571,7 @@ export default async function DawahArticlePage({
                       <div className="flex gap-4">
                         <button className="flex items-center sm:px-4 px-2 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
                           <svg
-                            className="w-5 h-5 mr-2"
+                            className="w-5 h-5 mx-2"
                             fill="currentColor"
                             viewBox="0 0 20 20"
                           >
@@ -584,7 +584,7 @@ export default async function DawahArticlePage({
                         </button>
                         <button className="flex items-center sm:px-4 px-2 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
                           <svg
-                            className="w-5 h-5 mr-2"
+                            className="w-5 h-5 mx-2"
                             fill="currentColor"
                             viewBox="0 0 20 20"
                           >
@@ -594,7 +594,7 @@ export default async function DawahArticlePage({
                         </button>
                         <button className="flex items-center sm:px-4 px-2 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
                           <svg
-                            className="w-5 h-5 mr-2"
+                            className="w-5 h-5 mx-2"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -650,7 +650,7 @@ export default async function DawahArticlePage({
                         </p>
                         <div className="mt-4 flex items-center text-sm text-gray-500">
                           <svg
-                            className="w-4 h-4 mr-1"
+                            className="w-4 h-4 mx-1"
                             fill="currentColor"
                             viewBox="0 0 20 20"
                           >

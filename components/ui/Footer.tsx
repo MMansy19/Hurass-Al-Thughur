@@ -7,6 +7,13 @@ import FooterContact from "./footer/FooterContact";
 import FooterSocial from "./footer/FooterSocial";
 import FooterBottom from "./footer/FooterBottom";
 
+import {
+  HomeIcon,
+  MagazineIcon,
+  LibraryIcon,
+  ArticlesIcon,
+} from "./header/Icons";
+
 interface FooterProps {
   locale: string;
   messages: {
@@ -15,6 +22,7 @@ interface FooterProps {
       magazine: string;
       dawah: string;
       library: string;
+      articles: string;
     };
     rightsReserved: string;
     terms: string;
@@ -31,31 +39,6 @@ interface FooterProps {
   };
 }
 
-// Icons components
-const HomeIcon = () => (
-  <svg className="w-4 h-4 mx-2" fill="currentColor" viewBox="0 0 20 20">
-    <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
-  </svg>
-);
-
-const MagazineIcon = () => (
-  <svg className="w-4 h-4 mx-2" fill="currentColor" viewBox="0 0 20 20">
-    <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"></path>
-  </svg>
-);
-
-const DawahIcon = () => (
-  <svg className="w-4 h-4 mx-1" fill="currentColor" viewBox="0 0 20 20">
-    <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"></path>
-  </svg>
-);
-
-const LibraryIcon = () => (
-  <svg className="w-4 h-4 mx-1" fill="currentColor" viewBox="0 0 20 20">
-    <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path>
-  </svg>
-);
-
 const EmailIcon = () => (
   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
     <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
@@ -69,14 +52,10 @@ const PhoneIcon = () => (
   </svg>
 );
 
-const LocationIcon = () => (
+const ContactIcon = () => (
   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-    <path
-      fillRule="evenodd"
-      d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-      clipRule="evenodd"
-    ></path>
-  </svg>
+    <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z" />
+    </svg>
 );
 
 const TwitterIcon = () => (
@@ -97,9 +76,21 @@ const FacebookIcon = () => (
   </svg>
 );
 
-const YoutubeIcon = () => (
+const TelegramIcon = () => (
   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-    <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"></path>
+    <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+  </svg>
+);
+
+const ThreadsIcon = () => (
+  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+    <path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-.584-1.925-1.516-3.376-2.773-4.314-1.41-1.05-3.221-1.633-5.394-1.647-3.047-.012-5.817.818-7.576 2.267-1.625 1.336-2.52 3.391-2.549 5.896v.014c.029 2.506.924 4.561 2.549 5.896 1.759 1.449 4.529 2.279 7.576 2.267 2.173-.014 3.983-.597 5.394-1.647 1.257-.938 2.189-2.389 2.773-4.314l2.04.569c-.651 2.337-1.832 4.177-3.509 5.467C17.229 23.275 14.932 23.98 12.186 24zM12 6.25c-2.5 0-4.618 1.162-5.876 3.222-.371.607-.669 1.297-.876 2.053l1.737.484c.172-.632.398-1.2.669-1.681.906-1.611 2.372-2.578 4.346-2.578 1.543 0 2.82.678 3.697 1.953.608.884.942 2.003.942 3.147 0 .757-.128 1.394-.382 1.897-.254.502-.623.859-1.097 1.058-.475.2-1.039.3-1.685.3-.646 0-1.21-.1-1.685-.3-.474-.199-.843-.556-1.097-1.058-.254-.503-.382-1.14-.382-1.897v-1.5h-1.75v1.5c0 1.144.334 2.263.942 3.147.877 1.275 2.154 1.953 3.697 1.953.646 0 1.21-.1 1.685-.3.474-.199.843-.556 1.097-1.058.254-.503.382-1.14.382-1.897 0-1.144-.334-2.263-.942-3.147C14.82 6.928 13.543 6.25 12 6.25z"/>
+  </svg>
+);
+
+const WebsiteIcon = () => (
+  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+    <path fillRule="evenodd" d="M4.083 9h1.946c.089-1.546.383-2.97.837-4.118A6.004 6.004 0 004.083 9zM10 2a8 8 0 100 16 8 8 0 000-16zm0 2c-.076 0-.232.032-.465.262-.238.234-.497.623-.737 1.182-.389.907-.673 2.142-.766 3.556h3.936c-.093-1.414-.377-2.649-.766-3.556-.24-.559-.5-.948-.737-1.182C10.232 4.032 10.076 4 10 4zm3.971 5c-.089-1.546-.383-2.97-.837-4.118A6.004 6.004 0 0115.917 9h-1.946zm-2.003 2H8.032c.093 1.414.377 2.649.766 3.556.24.559.5.948.737 1.182.233.23.389.262.465.262.076 0 .232-.032.465-.262.238-.234.498-.623.737-1.182.389-.907.673-2.142.766-3.556zm1.166 4.118c.454-1.147.748-2.572.837-4.118h1.946a6.004 6.004 0 01-2.783 4.118zm-6.268 0C6.412 13.97 6.118 12.546 6.03 11H4.083a6.004 6.004 0 002.783 4.118z" clipRule="evenodd"/>
   </svg>
 );
 
@@ -117,9 +108,9 @@ const Footer = ({ locale, messages }: FooterProps) => {
       label: messages.common.magazine,
     },
     {
-      href: `/${locale}/dawah`,
-      icon: <DawahIcon />,
-      label: messages.common.dawah,
+            href: `/${locale}/articles`,
+            icon: <ArticlesIcon />,
+            label: messages.common.articles,
     },
     {
       href: `/${locale}/library`,
@@ -136,35 +127,45 @@ const Footer = ({ locale, messages }: FooterProps) => {
     },
     {
       icon: <PhoneIcon />,
-      text: "+123456789",
+      text: "+20 100 231 5657",
     },
     {
-      icon: <LocationIcon />,
-      text: messages.location,
+      icon: <ContactIcon />,
+      text: "Ryiuhgjh147BOT",
     },
   ];
 
   // Social links
   const socialLinks = [
     {
-      href: "https://twitter.com",
-      icon: <TwitterIcon />,
-      label: "Twitter",
+      href: "https://t.me/horrasthoghoor",
+      icon: <TelegramIcon />,
+      label: "Telegram",
     },
     {
-      href: "https://instagram.com",
-      icon: <InstagramIcon />,
-      label: "Instagram",
+      href: "https://hurass-althughur.vercel.app/ar",
+      icon: <WebsiteIcon />,
+      label: "Website",
     },
     {
-      href: "https://facebook.com",
+      href: "https://www.facebook.com/share/1A5ihYmTrS/",
       icon: <FacebookIcon />,
       label: "Facebook",
     },
     {
-      href: "https://youtube.com",
-      icon: <YoutubeIcon />,
-      label: "YouTube",
+      href: "https://x.com/horrasthoghoor?s=09",
+      icon: <TwitterIcon />,
+      label: "X (Twitter)",
+    },
+    {
+      href: "https://www.instagram.com/horrasthoghoor?utm_source=qr&igsh=MXJrdGRqa3d5d3B2eA==",
+      icon: <InstagramIcon />,
+      label: "Instagram",
+    },
+    {
+      href: "https://www.threads.net/@dz_14tg",
+      icon: <ThreadsIcon />,
+      label: "Threads",
     },
   ];
   return (

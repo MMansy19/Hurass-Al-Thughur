@@ -40,7 +40,7 @@ export function PDFError({ errorTitle, errorMessage }: ErrorProps) {
         <div className="flex items-center text-red-600 mb-3">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 mr-3"
+            className="h-6 w-6 mx-3"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"

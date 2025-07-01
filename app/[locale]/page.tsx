@@ -37,10 +37,10 @@ export default async function Home({
       link: `/${locale}/magazine`,
     },
     {
-      title: messages.common.dawah,
-      description: home.dawahDescription,
-      image: "/images/dawah.svg",
-      link: `/${locale}/dawah`,
+      title: messages.common.articles,
+      description: home.articlesDescription,
+      image: "/images/articles.svg",
+      link: `/${locale}/articles`,
     },
     {
       title: messages.common.library,
@@ -67,10 +67,10 @@ export default async function Home({
               {messages.common.magazine}
             </Link>
             <Link
-              href={`/${locale}/dawah`}
+              href={`/${locale}/articles`}
               className="px-8 py-3 bg-transparent border-2 border-white text-white rounded-md font-bold hover:bg-white hover:text-emerald-700 transition-colors"
             >
-              {messages.common.dawah}
+              {messages.common.articles}
             </Link>
           </div>
         </div>

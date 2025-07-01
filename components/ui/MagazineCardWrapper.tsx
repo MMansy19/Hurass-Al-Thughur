@@ -21,9 +21,6 @@ export default function MagazineCardWrapper({
   issue,
   locale,
 }: MagazineCardWrapperProps) {
-  const handleView = (id: string) => {
-    window.location.href = `/${locale}/magazine/issue/${id}`;
-  };
 
   const handleDownload = (id: string) => {
     // Create PDF download using the same logic as the issue page
@@ -38,7 +35,6 @@ export default function MagazineCardWrapper({
   return (
     <AccessibleMagazineCard
       issue={issue}
-      onView={handleView}
       onDownload={handleDownload}
       locale={locale}
     />

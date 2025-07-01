@@ -76,15 +76,15 @@ export const Button = memo(
             <LoadingSpinner
               size={size === "sm" ? "sm" : "md"}
               color="white"
-              className="mr-2"
+              className="mx-2"
             />
           )}
           {!loading && icon && iconPosition === "left" && (
-            <span className="mr-2">{icon}</span>
+            <span className="mx-2">{icon}</span>
           )}
           {children}
           {!loading && icon && iconPosition === "right" && (
-            <span className="ml-2">{icon}</span>
+            <span className="mx-2">{icon}</span>
           )}
         </button>
       );

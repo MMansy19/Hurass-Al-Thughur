@@ -17,7 +17,7 @@ const Logo = ({ locale, messages }: LogoProps) => {
       href={`/${locale}`}
       className={`flex items-center group ${styles.logoAnimation}`}
     >
-      <div className="relative overflow-hidden rounded-full border-2 border-emerald-500 md:mr-3 rtl:md:mr-0 rtl:md:ml-3 mr-2 rtl:mr-0 rtl:ml-2">
+      <div className="relative overflow-hidden rounded-full border-2 border-emerald-500 md:mx-3 rtl:md:mr-0 rtl:md:ml-3 mx-2 rtl:mr-0 rtl:ml-2">
         <Image
           src="/images/logo.jpg"
           alt="Hurass Al-Thughur Logo"

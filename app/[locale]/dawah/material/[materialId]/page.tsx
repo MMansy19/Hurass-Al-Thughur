@@ -624,7 +624,7 @@ export default async function DawahMaterialPage({
                       className="inline-flex items-center px-6 py-3 bg-emerald-600 text-white rounded-lg font-semibold hover:bg-emerald-700 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
                     >
                       <svg
-                        className="w-5 h-5 mr-2"
+                        className="w-5 h-5 mx-2"
                         fill="currentColor"
                         viewBox="0 0 20 20"
                       >
@@ -650,7 +650,7 @@ export default async function DawahMaterialPage({
                       className="inline-flex items-center px-6 py-3 border border-emerald-600 text-emerald-600 rounded-lg font-semibold hover:bg-emerald-50 transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
                     >
                       <svg
-                        className="w-5 h-5 mr-2"
+                        className="w-5 h-5 mx-2"
                         fill="currentColor"
                         viewBox="0 0 20 20"
                       >

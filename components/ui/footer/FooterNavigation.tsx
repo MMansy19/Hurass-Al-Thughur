@@ -30,7 +30,7 @@ export default function FooterNavigation({
               className="px-3 py-2 text-emerald-100 hover:text-white hover:bg-emerald-600 transition-colors flex items-center rounded-md"
               aria-label={link.label}
             >
-              <span className="mr-2 rtl:ml-2 rtl:mr-0">{link.icon}</span>
+              <span className="mx-2 rtl:mx-2 rtl:mr-0">{link.icon}</span>
               {link.label}
             </Link>
           </li>

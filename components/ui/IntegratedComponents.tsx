@@ -545,7 +545,7 @@ export const IntegratedHeaderNav = memo<IntegratedHeaderNavProps>(
             aria-current={item.isActive ? "page" : undefined}
           >
             {item.icon && (
-              <span className="mr-2 rtl:ml-2 rtl:mr-0" aria-hidden="true">
+              <span className="mx-2 rtl:mx-2 rtl:mr-0" aria-hidden="true">
                 {item.icon}
               </span>
             )}

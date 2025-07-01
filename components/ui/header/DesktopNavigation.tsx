@@ -41,7 +41,7 @@ const DesktopNavigation = ({
                 ${link.isActive ? `bg-emerald-600 text-white ${styles.activeNavItem}` : "text-gray-700 hover:bg-emerald-50 hover:text-emerald-700"}`}
             >
               <span
-                className={`${isArabic ? "ml-2" : "mr-2"} ${link.isActive ? "text-white" : "text-emerald-600 group-hover:text-emerald-700"}`}
+                className={`${isArabic ? "mx-2" : "mx-2"} ${link.isActive ? "text-white" : "text-emerald-600 group-hover:text-emerald-700"}`}
               >
                 {link.icon}
               </span>
@@ -95,7 +95,7 @@ export const LanguageSwitch = ({
     return (
       <Link
         href={`/${oppositeLocale}${pathname.substring(3) || ""}`}
-        className="md:mr-3 rtl:md:mr-0 rtl:md:ml-3 mr-2 rtl:mr-0 rtl:ml-2 flex items-center justify-center w-8 h-8 bg-emerald-600 text-white rounded-md hover:bg-emerald-700"
+        className="md:mx-3 rtl:md:mr-0 rtl:md:ml-3 mx-2 rtl:mr-0 rtl:mx-2 flex items-center justify-center w-8 h-8 bg-emerald-600 text-white rounded-md hover:bg-emerald-700"
         aria-label={switchText}
       >
         <GlobeIcon />
@@ -106,9 +106,9 @@ export const LanguageSwitch = ({
   return (
     <Link
       href={`/${oppositeLocale}${pathname.substring(3) || ""}`}
-      className="ml-4 rtl:ml-0 rtl:mr-4 flex items-center px-3 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors shadow-sm"
+      className="ml-4 rtl:ml-0 rtl:mx-4 flex items-center px-3 py-2 bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors shadow-sm"
     >
-      <span className={isArabic ? "ml-2" : "mr-2"}>
+      <span className={isArabic ? "mx-2" : "mx-2"}>
         <GlobeIcon />
       </span>
       <span className="whitespace-nowrap">{switchText}</span>

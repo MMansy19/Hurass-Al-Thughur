@@ -216,28 +216,46 @@ interface AccessibleMagazineCardProps {
     fileSize?: string;
     pageCount?: number;
   };
-  onView: (id: string) => void;
   onDownload?: (id: string) => void;
   locale: string;
   delay?: number;
+  readNowText?: string;
+  downloadText?: string;
 }
 
 export const AccessibleMagazineCard = memo<AccessibleMagazineCardProps>(
-  ({ issue, onView, onDownload, locale, delay = 0 }) => {
+  ({ issue, onDownload, locale, delay = 0, readNowText, downloadText }) => {
     const [isPressed, setIsPressed] = useState(false);
     const [announcement, setAnnouncement] = useState("");
     const isArabic = locale === "ar";
 
+    // Default texts if not provided
+    const defaultReadText = readNowText || (isArabic ? "اقرأ الآن" : "Read Now");
+    const defaultDownloadText = downloadText || (isArabic ? "تحميل" : "Download");
+
     const handleView = useCallback(() => {
-      // onView(issue.id);
+      // Navigate to PDF reading page
+      const pdfPath = `/library/pdf/${issue.id}.pdf`;
+      window.open(pdfPath, '_blank');
       setAnnouncement(
         isArabic
           ? `فتح العدد: ${issue.title}`
           : `Opening issue: ${issue.title}`,
       );
-    }, [issue.id, issue.title, onView, isArabic]);
+    }, [issue.id, issue.title, isArabic]);
+
     const handleDownload = useCallback(() => {
-      // onDownload?.(issue.id);
+      // Create download link and trigger download
+      const pdfPath = `/pdfs/${issue.id}.pdf`;
+      const link = document.createElement('a');
+      link.href = pdfPath;
+      link.download = `${issue.title}.pdf`;
+      link.style.display = 'none';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      onDownload?.(issue.id);
       setAnnouncement(
         isArabic
           ? `تم بدء تحميل: ${issue.title}`
@@ -355,7 +373,7 @@ export const AccessibleMagazineCard = memo<AccessibleMagazineCardProps>(
                   id={`issue-details-${issue.id}`}
                 >
                   <svg
-                    className="w-4 h-4 mr-2 rtl:ml-2 rtl:mr-0"
+                    className="w-4 h-4 mx-2 rtl:mx-2 rtl:mr-0"
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     aria-hidden="true"
@@ -383,10 +401,11 @@ export const AccessibleMagazineCard = memo<AccessibleMagazineCardProps>(
                     loading={false}
                     onClick={handleView}
                     aria-label={`${isArabic ? "اقرأ العدد" : "Read issue"}: ${issue.title}`}
+                    className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white"
                   >
-                    <span className="flex items-center flex-row">
+                    <span className="flex items-center justify-center">
                       <svg
-                        className="w-4 h-4 mr-1 rtl:ml-1 rtl:mr-0"
+                        className="w-4 h-4 mx-1 rtl:ml-1 rtl:mr-0"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -399,7 +418,7 @@ export const AccessibleMagazineCard = memo<AccessibleMagazineCardProps>(
                           d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C20.168 18.477 18.582 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
                         />
                       </svg>
-                      {isArabic ? "اقرأ" : "Read"}
+                      {defaultReadText}
                     </span>
                   </MorphingButton>
 
@@ -408,23 +427,24 @@ export const AccessibleMagazineCard = memo<AccessibleMagazineCardProps>(
                       loading={false}
                       onClick={handleDownload}
                       aria-label={`${isArabic ? "تحميل العدد" : "Download issue"}: ${issue.title}`}
+                      className="bg-gray-600 hover:bg-gray-700 text-white px-3"
                     >
-                      <svg
-                        className="w-6 h-6"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                        />
-                      </svg>
-                      <span className="sr-only">
-                        {isArabic ? "تحميل" : "Download"}
+                      <span className="flex items-center justify-center">
+                        <svg
+                          className="w-4 h-4 mx-1 rtl:ml-1 rtl:mr-0"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          aria-hidden="true"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                          />
+                        </svg>
+                        <span className="hidden sm:inline">{defaultDownloadText}</span>
                       </span>
                     </MorphingButton>
                   )}
