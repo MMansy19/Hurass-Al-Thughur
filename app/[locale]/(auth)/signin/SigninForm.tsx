@@ -45,7 +45,8 @@ function SigninForm({ messages }: { messages: Messages }) {
       }
 
       if (data.user) {
-        // Don't store user in localStorage, let the auth provider handle it
+        // Store user data in localStorage
+        window.localStorage.setItem("user", JSON.stringify(data.user));
         toast.success(messages.auth.signinSuccess);
         router.push(`/${locale}`);
       }
