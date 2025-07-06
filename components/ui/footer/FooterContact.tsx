@@ -8,11 +8,13 @@ interface ContactItem {
 interface FooterContactProps {
   title: string;
   contactItems: ContactItem[];
+  locale: string;
 }
 
 export default function FooterContact({
   title,
   contactItems,
+  locale
 }: FooterContactProps) {
   return (
     <div>
@@ -23,7 +25,7 @@ export default function FooterContact({
         {contactItems.map((item, index) => (
           <div key={index} className="flex items-center">
             <span className="mx-3 text-emerald-300">{item.icon}</span>
-            <span className="text-emerald-100">{item.text}</span>
+            <span dir={/^[\d\s\+\-\(\)]+$/.test(item.text) ? 'ltr' : (locale === 'ar' ? 'rtl' : 'ltr')} className="text-emerald-100">{item.text}</span>
           </div>
         ))}
       </div>

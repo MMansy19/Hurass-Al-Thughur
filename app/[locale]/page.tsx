@@ -55,9 +55,9 @@ export default async function Home({
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-emerald-700 to-emerald-500 text-white py-20 rounded-lg">
         <div className="container mx-auto sm:px-4 px-2 flex flex-col items-center text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-relaxed">
             {home.welcome}
-          </h1>
+            </h1>
           <p className="text-xl max-w-2xl mb-8">{home.description}</p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link
@@ -77,11 +77,11 @@ export default async function Home({
       </section>
 
       {/* About Section */}
-      <section className="py-12">
+      <section className="py-6">
         <div className="container mx-auto sm:px-4 px-2">
           <h2 className="text-3xl font-bold mb-6 text-center">{home.about}</h2>
           <div className="max-w-3xl mx-auto">
-            <p className="text-lg text-gray-700 mb-6 text-center">
+            <p className="text-lg text-gray-700 text-center">
               {home.aboutText}
             </p>
           </div>
@@ -89,7 +89,7 @@ export default async function Home({
       </section>
 
       {/* Sections Grid */}
-      <section className="py-12 bg-gray-50">
+      <section className="py-6 bg-gray-50">
         <div className="container mx-auto sm:px-4 px-2">
           <h2 className="text-3xl font-bold mb-10 text-center">
             {home.sections}

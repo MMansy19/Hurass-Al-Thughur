@@ -184,6 +184,7 @@ const Footer = ({ locale, messages }: FooterProps) => {
           <FooterContact
             title={messages.contactUs}
             contactItems={contactInfo}
+            locale={locale}
           />
 
           <FooterSocial title={messages.followUs} socialLinks={socialLinks} />
