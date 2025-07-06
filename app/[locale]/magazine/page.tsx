@@ -4,7 +4,7 @@ import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import SEO from "@/components/ui/SEO";
 import { StructuredData } from "@/components/ui/StructuredData";
-import { MagazineGridWrapper } from "@/components/ui/MagazineGridWrapper";
+// import { MagazineGridWrapper } from "@/components/ui/MagazineGridWrapper";
 
 // Dynamic imports for better code splitting
 const PDFViewerSectionWithSelector = dynamic(
@@ -36,15 +36,6 @@ export async function generateMetadata({
       locale,
       pageName: "magazine",
     }),
-    // Enhanced SEO properties
-    keywords: [
-      locale === "ar" ? "مجلة إسلامية" : "Islamic magazine",
-      locale === "ar" ? "القرآن الكريم" : "Quran",
-      locale === "ar" ? "السنة النبوية" : "Hadith",
-      locale === "ar" ? "الفقه الإسلامي" : "Islamic jurisprudence",
-      locale === "ar" ? "العقيدة" : "Islamic belief",
-      locale === "ar" ? "التاريخ الإسلامي" : "Islamic history",
-    ].join(", "),
     robots: {
       index: true,
       follow: true,
@@ -195,12 +186,12 @@ export default async function EnhancedMagazinePage({
             </h1>
             <p className="text-xl max-w-2xl mb-8">{magazine.description}</p>
             <div className="flex flex-wrap gap-4 justify-center">
-              <Link
+              {/* <Link
                 href={`#latest-issues`}
                 className="px-8 py-3 bg-white text-emerald-700 rounded-md font-bold hover:bg-gray-100 transition-colors"
               >
                 {magazine.latestIssues}
-              </Link>
+              </Link> */}
               <Link
                 href={`#pdf-viewer`}
                 className="px-8 py-3 bg-transparent border-2 border-white text-white rounded-md font-bold hover:bg-white hover:text-emerald-700 transition-colors"
@@ -212,7 +203,7 @@ export default async function EnhancedMagazinePage({
         </section>
 
         {/* Latest Issues Section */}
-        <section
+        {/* <section
           id="latest-issues"
           className="pb-12"
           aria-labelledby="latest-issues-heading"
@@ -253,7 +244,7 @@ export default async function EnhancedMagazinePage({
               columns={3}
             />
           </div>
-        </section>
+        </section> */}
         {/* PDF Viewer Section */}
         <section id="pdf-viewer" aria-labelledby="pdf-viewer-heading">
           <div className="container mx-auto sm:px-4 px-2">
