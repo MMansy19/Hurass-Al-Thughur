@@ -92,7 +92,6 @@ function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
           .select();
 
         if (error) {
-          console.error("Error inserting article:", error);
           toast.error("Failed!");
           return;
         } else {
@@ -115,7 +114,6 @@ function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
           .eq("id", articleId);
 
         if (error) {
-          console.error("Error Editing article:", error);
           toast.error("Failed!");
           return;
         } else {
@@ -123,7 +121,6 @@ function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
         }
       }
     } catch (error) {
-      console.error("Error inserting article:", error);
       toast.error("Failed!");
     }
   }

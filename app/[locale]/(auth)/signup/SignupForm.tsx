@@ -14,11 +14,9 @@ function SignupForm({ messages }: { messages: Messages }) {
     password: "",
   });
 
-  // Getting the locale from the URL parameters
   const params = useParams<{ locale: string }>();
   const { locale } = params;
 
-  // Using the Next.js router to navigate
   const router = useRouter();
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {

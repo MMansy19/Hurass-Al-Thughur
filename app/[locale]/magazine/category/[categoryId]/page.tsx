@@ -10,7 +10,6 @@ import { MagazineGridSkeleton } from "@/components/ui/LoadingStates";
 import { MemoizedPagination } from "@/components/ui/MemoizedComponents";
 import MagazineCardWrapper from "@/components/ui/MagazineCardWrapper";
 
-// Generate metadata for the page
 export async function generateMetadata({
   params,
 }: {
@@ -19,7 +18,6 @@ export async function generateMetadata({
   const { locale, categoryId } = await params;
   const messages = (await import(`@/locales/${locale}.json`)).default;
 
-  // Get category info
   const categoryInfo = getCategoryInfo(categoryId, messages.magazine, locale);
   if (!categoryInfo) return notFound();
 
@@ -56,34 +54,32 @@ interface CategoryInfo {
 
 function getCategoryInfo(
   categoryId: string,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   magazine: any,
   _locale: string,
 ): CategoryInfo | null {
-  // Note: messages are already loaded in the calling function
   const categories: Record<string, CategoryInfo> = {
     "1": {
       id: "1",
       name: magazine.categoryNames.aqeedah,
-      description: "Articles about Islamic creed and beliefs", // Static fallback
+      description: "Articles about Islamic creed and beliefs",
       icon: "🕌",
     },
     "2": {
       id: "2",
       name: magazine.categoryNames.fiqh,
-      description: "Islamic jurisprudence and rulings", // Static fallback
+      description: "Islamic jurisprudence and rulings",
       icon: "⚖️",
     },
     "3": {
       id: "3",
       name: magazine.categoryNames.prophetBiography,
-      description: "Biography of Prophet Muhammad", // Static fallback
+      description: "Biography of Prophet Muhammad",
       icon: "📖",
     },
     "4": {
       id: "4",
       name: magazine.categoryNames.islamicHistory,
-      description: "History of Islamic civilization", // Static fallback
+      description: "History of Islamic civilization",
       icon: "🏛️",
     },
   };
@@ -93,16 +89,12 @@ function getCategoryInfo(
 
 function getIssuesByCategory(
   categoryId: string,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   magazine: any,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   messages: any,
   _locale: string,
 ): MagazineIssue[] {
-  // Mock data filtered by category
   const allIssues: Record<string, MagazineIssue[]> = {
     "1": [
-      // Aqeedah
       {
         id: "1",
         title: magazine.issues.issue1.title,
@@ -132,7 +124,6 @@ function getIssuesByCategory(
       },
     ],
     "2": [
-      // Fiqh
       {
         id: "2",
         title: magazine.issues.issue2.title,
@@ -162,7 +153,6 @@ function getIssuesByCategory(
       },
     ],
     "3": [
-      // Prophet Biography
       {
         id: "3",
         title: magazine.issues.issue3.title,
@@ -183,7 +173,6 @@ function getIssuesByCategory(
       },
     ],
     "4": [
-      // Islamic History
       {
         id: "9",
         title: messages.hardcoded.rightlyGuidedCaliphate,
@@ -209,19 +198,18 @@ export default async function CategoryPage({
   const { magazine } = messages;
   const isArabic = locale === "ar";
 
-  // Get category information
   const categoryInfo = getCategoryInfo(categoryId, magazine, locale);
   if (!categoryInfo) {
     notFound();
   }
-  // Get issues for this category
+
   const categoryIssues = getIssuesByCategory(
     categoryId,
     magazine,
     messages,
     locale,
   );
-  // Skip links for accessibility
+
   const skipLinks = [
     { href: "#main-content", label: messages.hardcoded.skipToMainContent },
     { href: "#issues-grid", label: messages.hardcoded.skipToIssuesGrid },
@@ -231,12 +219,10 @@ export default async function CategoryPage({
     <>
       <SkipLinks links={skipLinks} />
       <main id="main-content" className="space-y-8" role="main">
-        {/* Category Header */}
         <Motion preset="fadeInUp">
           <section className="bg-gradient-to-r from-emerald-700 to-emerald-600 text-white py-16 rounded-xl">
             <div className="container mx-auto sm:px-4 px-2">
               <div className="max-w-4xl mx-auto text-center">
-                {/* Category Icon */}
                 <div
                   className="text-6xl mb-6"
                   role="img"
@@ -250,7 +236,6 @@ export default async function CategoryPage({
                 <p className="text-xl text-emerald-100 mb-8 max-w-3xl mx-auto">
                   {categoryInfo.description}
                 </p>
-                {/* Stats */}{" "}
                 <div className="flex justify-center items-center gap-8 text-sm">
                   <div className="text-center">
                     <div className="text-2xl font-bold">
@@ -272,7 +257,6 @@ export default async function CategoryPage({
                     </div>
                   </div>
                 </div>
-                {/* Breadcrumb */}{" "}
                 <nav
                   aria-label={messages.hardcoded.breadcrumb}
                   className="mt-8 flex justify-center"
@@ -306,12 +290,10 @@ export default async function CategoryPage({
           </section>
         </Motion>
 
-        {/* Issues Grid */}
         {categoryIssues.length > 0 ? (
           <Motion preset="fadeInUp" delay={200}>
             <section id="issues-grid" className="py-8">
               <div className="container mx-auto sm:px-4 px-2">
-                {" "}
                 <div className="mb-8">
                   <h2 className="text-2xl font-bold text-gray-900 mb-4">
                     {isArabic
@@ -339,7 +321,6 @@ export default async function CategoryPage({
                       navigationLabel={`${categoryInfo.name} ${messages.hardcoded.issues}`}
                       locale={locale}
                     >
-                      {" "}
                       {categoryIssues.map((issue, index) => (
                         <Motion
                           key={issue.id}
@@ -352,15 +333,14 @@ export default async function CategoryPage({
                     </AccessibleGrid>
                   </StaggerContainer>
                 </Suspense>
-                {/* Pagination - if needed for large categories */}
                 {categoryIssues.length > 9 && (
                   <div className="mt-12 flex justify-center">
                     <MemoizedPagination
                       currentPage={1}
                       totalPages={Math.ceil(categoryIssues.length / 9)}
-                      onPageChange={(page) =>
-                        console.log("Navigate to page:", page)
-                      }
+                      onPageChange={() => {
+                        // Handle pagination navigation
+                      }}
                       showFirstLast={true}
                       showPrevNext={true}
                       maxVisiblePages={5}
@@ -371,12 +351,11 @@ export default async function CategoryPage({
             </section>
           </Motion>
         ) : (
-          // Empty State
           <Motion preset="fadeInUp" delay={200}>
             <section className="py-16">
               <div className="container mx-auto sm:px-4 px-2 text-center">
                 <div className="max-w-md mx-auto">
-                  <div className="text-6xl mb-6">📚</div>{" "}
+                  <div className="text-6xl mb-6">📚</div>
                   <h3 className="text-2xl font-bold text-gray-900 mb-4">
                     {messages.hardcoded.noIssuesYet}
                   </h3>
@@ -395,11 +374,9 @@ export default async function CategoryPage({
           </Motion>
         )}
 
-        {/* Related Categories */}
         <Motion preset="slideInUp" delay={300}>
           <section className="py-12 bg-gray-50 rounded-xl">
             <div className="container mx-auto sm:px-4 px-2">
-              {" "}
               <h3 className="text-2xl font-bold text-center text-gray-900 mb-8">
                 {messages.hardcoded.otherCategories}
               </h3>

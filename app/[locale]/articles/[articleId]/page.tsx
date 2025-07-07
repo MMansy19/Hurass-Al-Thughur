@@ -26,11 +26,6 @@ async function Article({
   if (!article) {
     return <h1>Article Not Found!</h1>;
   }
-
-  // Translations
-  // const messages = (await import(`@/locales/${locale}.json`)).default;
-
-  // Calculate reading time
   const wordCount = article.content.replace(/<[^>]*>/g, '').split(' ').length;
   const readingTime = Math.ceil(wordCount / 200);
 
@@ -65,7 +60,6 @@ async function Article({
               <span className="text-white font-medium truncate">{article.title.length > 30 ? `${article.title.substring(0, 30)}...` : article.title}</span>
             </nav>
 
-            {/* Article Meta Information */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 bg-emerald-600/30 backdrop-blur-sm rounded-full flex items-center justify-center text-emerald-100 border border-emerald-400/30 flex-shrink-0">
@@ -110,7 +104,6 @@ async function Article({
               </div>
             </div>
 
-            {/* Article Title and Excerpt */}
             <div className="space-y-4 sm:space-y-6">
               <h1 className="text-center sm:text-start md:py-2 text-4xl md:text-6xl lg:text-7xl font-bold leading-tight bg-gradient-to-r from-white to-emerald-100 bg-clip-text text-transparent" dir="auto">
                 {article.title}
@@ -120,7 +113,6 @@ async function Article({
               </p>
             </div>
 
-            {/* Reading Time Estimate */}
             <div className="mt-6 sm:mt-8 flex items-center gap-4">
               <div className="flex items-center gap-2 text-emerald-200">
                 <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -135,38 +127,29 @@ async function Article({
         </div>
       </section>
 
-      {/* Enhanced Article Content */}
       <section className="py-12 sm:py-16 lg:py-24 bg-white">
         <div className="container mx-auto sm:px-4 px-2">
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
               <div className="p-4 sm:p-8 lg:p-12">
-                {/* Article Content */}
-                <div 
-                  id="article" 
-                  className="prose prose-base sm:prose-lg prose-emerald max-w-none
-                    prose-headings:text-gray-900 prose-headings:font-bold
-                    prose-p:text-gray-700 prose-p:leading-relaxed prose-p:text-base sm:prose-p:text-lg
-                    prose-a:text-emerald-600 prose-a:font-medium prose-a:no-underline hover:prose-a:underline
-                    prose-strong:text-gray-900 prose-strong:font-semibold
-                    prose-ul:text-gray-700 prose-ol:text-gray-700
-                    prose-li:text-base sm:prose-li:text-lg prose-li:leading-relaxed
-                    prose-blockquote:border-emerald-500 prose-blockquote:bg-emerald-50 prose-blockquote:px-4 prose-blockquote:py-3 prose-blockquote:rounded-lg
-                    prose-img:rounded-xl prose-img:shadow-lg
-                    [&>*]:mb-4 sm:[&>*]:mb-6
-                    [&>h1]:text-2xl sm:[&>h1]:text-3xl [&>h1]:mt-8 sm:[&>h1]:mt-12 [&>h1]:mb-4 sm:[&>h1]:mb-6
-                    [&>h2]:text-xl sm:[&>h2]:text-2xl [&>h2]:mt-6 sm:[&>h2]:mt-10 [&>h2]:mb-3 sm:[&>h2]:mb-4
-                    [&>h3]:text-lg sm:[&>h3]:text-xl [&>h3]:mt-5 sm:[&>h3]:mt-8 [&>h3]:mb-2 sm:[&>h3]:mb-3"
-                  style={{
-                    lineHeight: locale === 'ar' ? '1.8' : '1.7',
-                    fontSize: '16px',
-                  }}
-                  dir="auto"
-                  dangerouslySetInnerHTML={{ __html: article.content }}
-                />
-                
-                {/* Article Footer */}
-                <div className="mt-12 sm:mt-16 pt-6 sm:pt-8 border-t border-gray-200">
+        <div className="max-w-4xl mx-auto">
+      <section className="py-12 sm:py-16 lg:py-24 bg-white rounded-2xl">
+          <div className="bg-white shadow-xl border border-gray-100 overflow-hidden">
+          <div className="bg-white shadow-xl border border-gray-100 overflow-hidden">
+            <div className="p-4 sm:p-8 lg:p-12">
+              <div
+                id="article"
+                className="prose prose-base sm:prose-lg prose-emerald max-w-none"
+              >
+                <div className="prose-p:text-gray-700 prose-p:leading-relaxed prose-p:text-base sm:prose-p:text-lg">
+                  <h1 className="text-2xl font-bold">{article.title}</h1>
+                  <p className="mt-2">{article.content}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
                   {/* Share Buttons */}
                   <div className="mb-6 sm:mb-8">
                     <ShareButtons 

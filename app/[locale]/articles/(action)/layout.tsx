@@ -8,7 +8,6 @@ function Layout({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  // Getting the locale from the URL parameters
   const params = useParams<{ locale: string }>();
   const { locale } = params;
 

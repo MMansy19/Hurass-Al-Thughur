@@ -7,7 +7,6 @@ import { SkipLinks } from "@/components/ui/AccessibilityComponents";
 import { Motion } from "@/components/ui/AnimationSystem";
 import MagazineIssueViewer from "@/components/magazine/MagazineIssueViewer";
 
-// Generate metadata for the page
 export async function generateMetadata({
   params,
 }: {
@@ -16,7 +15,6 @@ export async function generateMetadata({
   const { locale, id } = await params;
   const messages = (await import(`@/locales/${locale}.json`)).default;
 
-  // Get issue data (you can expand this to fetch from a database)
   const issueData = getMagazineIssue(id, messages.magazine, locale);
 
   if (!issueData) {
@@ -60,7 +58,6 @@ function getMagazineIssue(
 ): MagazineIssue | null {
   const isArabic = locale === "ar";
 
-  // Mock data - in a real app, this would come from a database
   const issues: Record<string, MagazineIssue> = {
     "1": {
       id: "1",
@@ -152,14 +149,12 @@ export default async function MagazineIssuePage({
   const { magazine } = messages;
   const isArabic = locale === "ar";
 
-  // Get issue data
   const issueData = getMagazineIssue(id, magazine, locale);
 
   if (!issueData) {
     notFound();
   }
 
-  // Skip links for accessibility
   const skipLinks = [
     {
       href: "#main-content",
@@ -182,12 +177,10 @@ export default async function MagazineIssuePage({
       <SkipLinks links={skipLinks} />
 
       <main id="main-content" className="space-y-8" role="main">
-        {/* Issue Header */}
         <Motion preset="fadeInUp">
           <section className="bg-gradient-to-r from-emerald-700 to-emerald-600 text-white py-12 rounded-xl">
             <div className="container mx-auto sm:px-4 px-2">
               <div className="max-w-4xl mx-auto">
-                {/* Breadcrumb */}
                 <nav
                   aria-label={isArabic ? "مسار التنقل" : "Breadcrumb"}
                   className="mb-6"
@@ -224,7 +217,6 @@ export default async function MagazineIssuePage({
                   {issueData.description}
                 </p>
 
-                {/* Issue Metadata */}
                 <div className="flex flex-wrap gap-4 text-emerald-100">
                   <div className="flex items-center gap-2">
                     <svg
@@ -286,7 +278,6 @@ export default async function MagazineIssuePage({
                   )}
                 </div>
 
-                {/* Tags */}
                 {issueData.tags && issueData.tags.length > 0 && (
                   <div className="mt-4 flex flex-wrap gap-2">
                     {issueData.tags.map((tag, index) => (
@@ -302,8 +293,8 @@ export default async function MagazineIssuePage({
               </div>
             </div>
           </section>
-        </Motion>{" "}
-        {/* PDF Viewer Section */}
+        </Motion>
+
         <Motion preset="fadeInUp" delay={200}>
           <section id="pdf-viewer" aria-labelledby="pdf-viewer-heading">
             <div className="container mx-auto sm:px-4 px-2">
@@ -377,7 +368,7 @@ export default async function MagazineIssuePage({
             </div>
           </section>
         </Motion>
-        {/* Issue Information */}
+
         <Motion preset="fadeInUp" delay={300}>
           <section id="issue-info" className="py-8">
             <div className="container mx-auto sm:px-4 px-2">
@@ -425,7 +416,6 @@ export default async function MagazineIssuePage({
                   <p className="text-gray-900">{issueData.description}</p>
                 </div>
 
-                {/* Download Section */}
                 <div className="mt-8 p-6 bg-emerald-50 rounded-lg border border-emerald-200">
                   <h3 className="font-semibold text-emerald-900 mb-4 flex items-center gap-2">
                     <svg
@@ -477,7 +467,6 @@ export default async function MagazineIssuePage({
                   </button>
                 </div>
 
-                {/* Navigation */}
                 <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-between">
                   <Link
                     href={`/${locale}/magazine`}

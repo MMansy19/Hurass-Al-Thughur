@@ -16,10 +16,7 @@ export async function loadSignedInUser(setUser: (user: any) => void) {
     } = await supabase.auth.getUser();
 
     if (error) {
-      console.error('Error getting user:', error);
-      // If refresh token is invalid, clear the session
       if (error.message.includes('refresh') || error.message.includes('token')) {
-        console.log('Clearing invalid session...');
         await supabase.auth.signOut({ scope: 'local' });
       }
       setUser(null);
@@ -28,7 +25,6 @@ export async function loadSignedInUser(setUser: (user: any) => void) {
 
     setUser(user);
   } catch (error) {
-    console.error('Unexpected error getting user:', error);
     setUser(null);
   }
 }
@@ -44,7 +40,6 @@ export async function loadArticles(
     .eq("user_id", user_id)
     .order("created_at", { ascending: false });
   if (error) {
-    console.error("Error fetching articles:", error);
     setArticles([]);
   } else {
     setArticles(articles || []);

@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import SEO from "../../components/ui/SEO";
 
-// Generate metadata for the page
 export async function generateMetadata({
   params,
 }: {
@@ -25,10 +24,9 @@ export default async function Home({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  // Import translations
   const messages = (await import(`../../locales/${locale}.json`)).default;
   const { home } = messages;
-  // Feature sections
+
   const sections = [
     {
       title: messages.common.magazine,
@@ -52,7 +50,6 @@ export default async function Home({
 
   return (
     <div className="space-y-12">
-      {/* Hero Section */}
       <section className="bg-gradient-to-r from-emerald-700 to-emerald-500 text-white py-20 rounded-lg">
         <div className="container mx-auto sm:px-4 px-2 flex flex-col items-center text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-relaxed">
@@ -76,7 +73,6 @@ export default async function Home({
         </div>
       </section>
 
-      {/* About Section */}
       <section className="py-6">
         <div className="container mx-auto sm:px-4 px-2">
           <h2 className="text-3xl font-bold mb-6 text-center">{home.about}</h2>
@@ -88,7 +84,6 @@ export default async function Home({
         </div>
       </section>
 
-      {/* Sections Grid */}
       <section className="py-6 bg-gray-50">
         <div className="container mx-auto sm:px-4 px-2">
           <h2 className="text-3xl font-bold mb-10 text-center">

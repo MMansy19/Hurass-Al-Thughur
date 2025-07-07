@@ -168,7 +168,9 @@ export default async function LibraryCategoryPage({
           <section id="search" className="mb-8">
             <AccessibleSearch
               value=""
-              onChange={(value) => console.log("Search:", value)}
+              onChange={() => {
+                // Handle search functionality
+              }}
               placeholder={library.searchPlaceholder}
               suggestions={[
                 library.categoryNames.tawheed,
@@ -259,7 +261,9 @@ export default async function LibraryCategoryPage({
             <MemoizedPagination
               currentPage={1}
               totalPages={1}
-              onPageChange={(page) => console.log("Page:", page)}
+              onPageChange={() => {
+                // Handle pagination navigation
+              }}
             />
           </div>
         </Motion>

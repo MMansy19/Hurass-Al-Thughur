@@ -13,11 +13,9 @@ function SigninForm({ messages }: { messages: Messages }) {
     password: "",
   });
 
-  // Getting the locale from the URL parameters
   const params = useParams<{ locale: string }>();
   const { locale } = params;
 
-  // Using the Next.js router to navigate
   const router = useRouter();
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -39,19 +37,16 @@ function SigninForm({ messages }: { messages: Messages }) {
       });
 
       if (error) {
-        console.error('Sign in error:', error);
         toast.error(`${messages.auth.signinError}: ${error.message}`);
         return;
       }
 
       if (data.user) {
-        // Store user data in localStorage
         window.localStorage.setItem("user", JSON.stringify(data.user));
         toast.success(messages.auth.signinSuccess);
         router.push(`/${locale}`);
       }
     } catch (error) {
-      console.error('Unexpected sign in error:', error);
       toast.error(`${messages.auth.signinError}: An unexpected error occurred`);
     }
   }

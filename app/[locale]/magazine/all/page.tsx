@@ -12,7 +12,6 @@ import { MagazineGridSkeleton } from "@/components/ui/LoadingStates";
 import { MemoizedPagination } from "@/components/ui/MemoizedComponents";
 import MagazineCardWrapper from "@/components/ui/MagazineCardWrapper";
 
-// Generate metadata for the page
 export async function generateMetadata({
   params,
 }: {
@@ -190,7 +189,9 @@ export default async function AllMagazinesPage({
                   <h2 className="sr-only">{messages.hardcoded.searchIssues}</h2>
                   <AccessibleSearch
                     value=""
-                    onChange={(value) => console.log("Search:", value)}
+                    onChange={() => {
+                      // Handle search functionality
+                    }}
                     placeholder={messages.hardcoded.searchIssuesPlaceholder}
                     suggestions={[
                       messages.hardcoded.faith,
@@ -286,9 +287,9 @@ export default async function AllMagazinesPage({
                 <MemoizedPagination
                   currentPage={1}
                   totalPages={2}
-                  onPageChange={(page) =>
-                    console.log("Navigate to page:", page)
-                  }
+                  onPageChange={() => {
+                    // Handle pagination navigation
+                  }}
                   showFirstLast={true}
                   showPrevNext={true}
                   maxVisiblePages={5}
