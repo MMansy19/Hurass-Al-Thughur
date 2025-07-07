@@ -77,6 +77,7 @@ const Header = ({ locale, messages }: HeaderProps) => {
             isArabic={isArabic}
             oppositeLocale={oppositeLocale}
             pathname={pathname}
+            locale={locale}
             messages={{
               switchLanguage: messages.switchLanguage,
               signin: messages.signin,

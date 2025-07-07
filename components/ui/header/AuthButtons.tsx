@@ -16,11 +16,8 @@ interface AuthButtonsProps {
 function AuthButtons({ messages, isMobile = false }: AuthButtonsProps) {
   const { user, loading, signOut } = useAuth();
 
-  // Getting the locale from the URL parameters
   const params = useParams<{ locale: string }>();
   const { locale } = params;
-
-  // Using the Next.js router to navigate
   const router = useRouter();
 
   async function handleSignOut() {
@@ -35,7 +32,7 @@ function AuthButtons({ messages, isMobile = false }: AuthButtonsProps) {
   }
 
   if (loading) {
-    return <div className="w-20 h-10"></div>; // Placeholder to prevent layout shift
+    return <div className="w-20 h-10"></div>;
   }
   
   if (user) {
@@ -69,7 +66,7 @@ function AuthButtons({ messages, isMobile = false }: AuthButtonsProps) {
       <div className="flex items-center gap-1">
         <Link
           href={`/${locale}/signin`}
-          className="w-8 h-8 flex items-center justify-center text-emerald-700 hover:text-emerald-800 hover:bg-emerald-50 rounded-md transition-colors"
+          className="w-10 h-10 flex items-center justify-center text-emerald-700 hover:text-emerald-800 hover:bg-emerald-50 rounded-md transition-colors"
           title={messages.signin}
         >
           <svg
