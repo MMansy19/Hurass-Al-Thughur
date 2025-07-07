@@ -262,6 +262,7 @@ export default async function LibraryBrochurePage({
               {" "}
               <PDFViewer
                 pdfFile={brochureData.pdfUrl}
+                locale={locale}
                 messages={{
                   previousPage: library.previousPage,
                   nextPage: library.nextPage,
@@ -288,6 +289,7 @@ export default async function LibraryBrochurePage({
                   single: isArabic ? "صفحة واحدة" : "Single",
                   noMatches: isArabic ? "لا توجد مطابقات" : "No matches",
                   matches: isArabic ? "مطابقات" : "matches",
+                  page: isArabic ? "صفحة" : "Page",
                 }}
                 className="min-h-[600px]"
               />

@@ -61,6 +61,7 @@
   },
   "magazine": {
     "title": "Hurass Magazine",
+    "page": "Page",
     "description": "Browse magazine issues and PDF files with high quality",
     "latestIssues": "Latest Issues",
     "allIssues": "All Issues",

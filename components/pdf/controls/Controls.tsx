@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, useEffect } from "react";
 
 interface PDFControlsWrapperProps {
   children: ReactNode;
@@ -53,6 +53,7 @@ interface PageIndicatorProps {
   currentPage: number;
   totalPages: number;
   onPageChange?: (page: number) => void;
+  pageLabel?: string;
 }
 
 /**
@@ -62,8 +63,14 @@ export function PageIndicator({
   currentPage,
   totalPages,
   onPageChange,
+  pageLabel = "Page",
 }: PageIndicatorProps) {
   const [inputValue, setInputValue] = useState(currentPage.toString());
+
+  // Sync input value when currentPage changes externally (e.g., from navigation buttons)
+  useEffect(() => {
+    setInputValue(currentPage.toString());
+  }, [currentPage]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -78,7 +85,7 @@ export function PageIndicator({
   return (
     <form onSubmit={handleSubmit} className="flex items-center gap-1 sm:gap-2">
       <span className="text-xs sm:text-sm text-gray-600 hidden sm:inline">
-        Page
+        {pageLabel}
       </span>
       <input
         type="number"

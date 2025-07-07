@@ -118,6 +118,7 @@ export default function PDFViewerSectionWithSelector({
             pdfUrl={selectedIssue.pdfUrl}
             title={selectedIssue.title}
             messages={magazine}
+            locale={locale}
           />
         </Suspense>
       </div>

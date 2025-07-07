@@ -58,7 +58,9 @@ interface PDFViewerProps {
     single: string;
     noMatches: string;
     matches: string;
+    page: string;
   };
+  locale: string;
   onError?: () => void;
   enableAnnotations?: boolean;
   enableBookmarks?: boolean;
@@ -95,6 +97,7 @@ MemoizedPage.displayName = 'MemoizedPage';
 export default function PDFViewer({
   pdfFile,
   messages,
+  locale,
   onError,
   enableAnnotations = true,
   enableBookmarks = true,
@@ -114,6 +117,7 @@ export default function PDFViewer({
     onDocumentLoadSuccess: baseOnDocumentLoadSuccess,
     setPageNumber,
     setScale,
+    isMobile,
   } = usePDFViewer();
 
   // Device optimization
@@ -176,6 +180,15 @@ export default function PDFViewer({
     };
   }, [pdfFile]); // Re-run when PDF file changes
 
+  // Reset zoom and page when PDF file changes
+  useEffect(() => {
+    // Use 80% zoom for mobile, 100% for desktop
+    setScale(isMobile ? 0.6 : 0.8);
+    setPageNumber(1); // Reset to first page
+    setError(null); // Clear any previous errors
+    setPageWidth(0); // Reset page width to trigger auto-fit
+  }, [pdfFile, setScale, setPageNumber, setError, isMobile]);
+
   // Enhanced document load handler with performance monitoring and preloading
   const onDocumentLoadSuccess = useCallback(
     (pdf: any) => {
@@ -183,6 +196,10 @@ export default function PDFViewer({
       performanceMonitor.startTimer('totalLoad');
       
       baseOnDocumentLoadSuccess(pdf);
+
+      // Reset to first page and mobile-responsive zoom when new document loads
+      setPageNumber(1);
+      setScale(isMobile ? 0.6 : 0.8);
 
       // Preload strategy based on device capabilities
       if (deviceOptimization.shouldPreload) {
@@ -230,7 +247,7 @@ export default function PDFViewer({
       performanceMonitor.endTimer('totalLoad');
       performanceMonitor.logMetrics();
     },
-    [baseOnDocumentLoadSuccess, deviceOptimization],
+    [baseOnDocumentLoadSuccess, deviceOptimization, setPageNumber, setScale, isMobile],
   );
 
   // Enhanced zoom functions
@@ -305,15 +322,23 @@ export default function PDFViewer({
         const viewport = page.getViewport({ scale: 1 });
         setPageWidth(viewport.width);
         
-        // Auto-fit after first page loads
+        // Don't auto-fit when switching PDFs - maintain user's preferred zoom (100%)
+        // Only auto-fit if the page is extremely large and would be unusable
         requestAnimationFrame(() => {
           if (containerRef.current && viewMode === "single") {
-            fitPage();
+            const containerWidth = containerRef.current.offsetWidth - (showSidebar ? 300 : 40);
+            const pageWidthAt100 = viewport.width;
+            
+            // Only auto-fit if the page at 100% zoom is more than 50% larger than container
+            // This preserves 100% zoom for most documents while handling extremely large ones
+            if (pageWidthAt100 > containerWidth * 1.5) {
+              fitPage();
+            }
           }
         });
       }
     },
-    [pageWidth, viewMode, fitPage],
+    [pageWidth, viewMode, fitPage, showSidebar],
   );
 
   // Keyboard shortcuts with enhanced functionality
@@ -443,6 +468,30 @@ export default function PDFViewer({
     [showSidebar, sidebarMode],
   );
 
+  // Direct navigation handlers to ensure page changes work
+  const handlePreviousPage = useCallback(() => {
+    console.log('Previous page clicked, current page:', pageNumber, 'numPages:', numPages);
+    if (pageNumber > 1) {
+      const newPage = pageNumber - 1;
+      setPageNumber(newPage);
+      console.log('Setting page to:', newPage);
+    }
+  }, [pageNumber, setPageNumber, numPages]);
+
+  const handleNextPage = useCallback(() => {
+    console.log('Next page clicked, current page:', pageNumber, 'numPages:', numPages);
+    if (pageNumber < numPages && numPages > 0) {
+      const newPage = pageNumber + 1;
+      setPageNumber(newPage);
+      console.log('Setting page to:', newPage);
+    }
+  }, [pageNumber, numPages, setPageNumber]);
+
+  // Add debugging for page number changes
+  useEffect(() => {
+    console.log('Page number changed to:', pageNumber, 'Total pages:', numPages);
+  }, [pageNumber, numPages]);
+
   return (
     <PDFContainer
       ref={containerRef}
@@ -454,51 +503,83 @@ export default function PDFViewer({
         {/* Primary Navigation */}
         <div className="flex items-center sm:gap-2 gap-1">
           <NavigationButton
-            onClick={() => changePage(-1)}
+            onClick={handlePreviousPage}
             disabled={pageNumber <= 1}
             label={messages.previousPage}
             icon={
-              <svg
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-            }
-          />
+              locale === "ar" ? (
+                <svg
+                  className="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  className="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l-7 7 7 7"
+                  />
+                </svg>
+              )}
+            isNext={false}
+          />  
 
           <PageIndicator
             currentPage={pageNumber}
             totalPages={numPages}
             onPageChange={setPageNumber}
+            pageLabel={messages.page}
           />
 
           <NavigationButton
-            onClick={() => changePage(1)}
+            onClick={handleNextPage}
             disabled={pageNumber >= numPages}
             label={messages.nextPage}
             icon={
-              <svg
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            }
+              locale === "ar" ? (
+                <svg
+                  className="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  className="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 19l7-7-7-7"
+                  />
+                </svg>
+              )}
             isNext={true}
           />
         </div>

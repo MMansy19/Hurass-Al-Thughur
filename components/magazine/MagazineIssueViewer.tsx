@@ -24,10 +24,11 @@ export default function MagazineIssueViewer({
   pdfUrl,
   title,
   messages,
+  locale,
 }: MagazineIssueViewerProps) {
   return (
     <Suspense fallback={<PDFViewerSkeleton />}>
-      <PDFViewerSection pdfUrl={pdfUrl} title={title} messages={messages} />
+      <PDFViewerSection pdfUrl={pdfUrl} title={title} messages={messages} locale={locale} />
     </Suspense>
   );
 }

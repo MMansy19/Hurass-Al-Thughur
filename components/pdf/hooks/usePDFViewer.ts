@@ -55,16 +55,20 @@ export function usePDFViewer(): UsePDFViewerResult {
   // Auto-adjust scale for mobile devices with better initial values
   useEffect(() => {
     if (isMobile) {
-      setScale(0.7); // Slightly larger scale for mobile readability
+      setScale(0.8); // Slightly larger scale for mobile readability
     } else {
-      setScale(1.2); // Better default scale for desktop
+      setScale(1.0); // Default 100% scale for desktop
     }
   }, [isMobile]);
 
   function changePage(offset: number) {
     setPageNumber((prev) => {
       const newPage = prev + offset;
-      return Math.min(Math.max(1, newPage), numPages);
+      // Only change page if numPages is properly set
+      if (numPages > 0) {
+        return Math.min(Math.max(1, newPage), numPages);
+      }
+      return prev; // Return current page if numPages isn't set yet
     });
   }
 
@@ -85,7 +89,7 @@ export function usePDFViewer(): UsePDFViewerResult {
   }
 
   function resetZoom() {
-    setScale(isMobile ? 0.7 : 1.2); // Match initial values
+    setScale(isMobile ? 0.8 : 1.0); // Match initial values - 100% for desktop
   }
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
@@ -93,13 +97,10 @@ export function usePDFViewer(): UsePDFViewerResult {
     setPageNumber(1);
     setError(null);
     
-    // Auto-adjust scale based on document and screen size
-    if (typeof window !== "undefined") {
-      const devicePixelRatio = window.devicePixelRatio || 1;
-      const baseScale = isMobile ? 0.7 : 1.2;
-      setScale(baseScale * Math.min(devicePixelRatio, 2)); // Optimize for high-DPI displays
-    }
+    // Reset to default scale (100% for desktop, 80% for mobile)
+    setScale(isMobile ? 0.8 : 1.0);
   }
+
   return {
     numPages,
     pageNumber,

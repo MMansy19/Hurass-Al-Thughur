@@ -70,6 +70,7 @@ export default async function PDFViewPage({
         <PDFViewerSection
           pdfUrl={pdfUrl}
           title={pdfTitle}
+          locale={locale}
           messages={{
             previousPage: library.previousPage,
             nextPage: library.nextPage,
@@ -98,6 +99,7 @@ export default async function PDFViewPage({
             outline: library.outline,
             noMatches: library.noMatches,
             matches: library.matches,
+            page: locale === "ar" ? "صفحة" : "Page",
           }}
         />
       </div>

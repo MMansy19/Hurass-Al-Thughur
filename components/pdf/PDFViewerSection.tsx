@@ -54,6 +54,7 @@ function SectionHeader({ title }: { title: string }) {
 interface PDFViewerSectionProps {
   pdfUrl: string;
   title: string;
+  locale: string;
   messages: {
     previousPage: string;
     nextPage: string;
@@ -82,6 +83,7 @@ interface PDFViewerSectionProps {
     outline: string;
     noMatches: string;
     matches: string;
+    page: string;
     pdfViewer?: {
       loadingViewer: string;
       loadingDocument: string;
@@ -97,6 +99,7 @@ export default function PDFViewerSection({
   pdfUrl,
   title,
   messages,
+  locale,
 }: PDFViewerSectionProps) {
   const [isClient, setIsClient] = useState(false);
   const [hasError, setHasError] = useState(false);
@@ -156,6 +159,7 @@ export default function PDFViewerSection({
           <Suspense fallback={<PDFLoadingPlaceholder messages={messages} />}>
             {isClient && (
               <PDFViewer
+                locale={locale}
                 pdfFile={pdfUrl}
                 messages={messages}
                 onError={handleError}
