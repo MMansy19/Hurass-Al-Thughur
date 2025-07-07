@@ -44,7 +44,7 @@ function SigninForm({ messages }: { messages: Messages }) {
       if (data.user) {
         window.localStorage.setItem("user", JSON.stringify(data.user));
         toast.success(messages.auth.signinSuccess);
-        router.push(`/${locale}`);
+        router.push(`/${locale}/dashboard`);
       }
     } catch (error) {
       toast.error(`${messages.auth.signinError}: An unexpected error occurred`);

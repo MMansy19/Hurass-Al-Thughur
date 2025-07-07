@@ -46,6 +46,7 @@ export interface CommonMessages {
   goBack: string;
   cancel: string;
   confirm: string;
+  notSignedIn: string;
 }
 
 export interface ErrorMessages {

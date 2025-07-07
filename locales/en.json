@@ -26,7 +26,8 @@
     "send": "Send",
     "goBack": "Go Back",
     "cancel": "Cancel",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "notSignedIn": "You are not signed in. Please sign in or create an account to access this page."
   },
   "auth": {
     "signin": "Sign In",
