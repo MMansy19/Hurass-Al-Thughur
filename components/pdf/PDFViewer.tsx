@@ -5,11 +5,8 @@ import { useEffect, useState, useCallback, useRef, memo, useMemo } from "react";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 
-// Import custom hooks
 import { usePDFViewer } from "./hooks/usePDFViewer";
 import { performanceMonitor, optimizeForDevice } from "./utils/performance";
-
-// Import components
 import {
   PDFControlsWrapper,
   NavigationButton,
@@ -67,7 +64,6 @@ interface PDFViewerProps {
   className?: string;
 }
 
-// Memoized PDF Page component for better performance
 const MemoizedPage = memo(({ 
   pageNumber, 
   scale, 
@@ -103,7 +99,6 @@ export default function PDFViewer({
   enableBookmarks = true,
   className = "",
 }: PDFViewerProps) {
-  // Use custom hook for PDF viewer functionality FIRST
   const {
     numPages,
     pageNumber,
@@ -120,21 +115,18 @@ export default function PDFViewer({
     isMobile,
   } = usePDFViewer();
 
-  // Device optimization
   const deviceOptimization = useMemo(() => optimizeForDevice(), []);
 
-  // Memoize expensive operations
   const documentOptions = useMemo(() => ({
-    // Performance optimizations
     cMapUrl: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/cmaps/',
     cMapPacked: true,
-    enableXfa: false, // Disable XFA forms for faster loading
-    disableAutoFetch: !deviceOptimization.shouldPreload, // Enable auto-fetch based on device
-    disableStream: deviceOptimization.hasSlowConnection, // Disable streaming on slow connections
-    disableRange: deviceOptimization.hasSlowConnection, // Disable range requests on slow connections
-    useOnlyCssZoom: true, // Use CSS zoom for better performance
-    maxImageSize: deviceOptimization.isLowEndDevice ? 8388608 : 16777216, // Adjust max image size
-    verbosity: 0, // Reduce console output
+    enableXfa: false,
+    disableAutoFetch: !deviceOptimization.shouldPreload,
+    disableStream: deviceOptimization.hasSlowConnection,
+    disableRange: deviceOptimization.hasSlowConnection,
+    useOnlyCssZoom: true,
+    maxImageSize: deviceOptimization.isLowEndDevice ? 8388608 : 16777216,
+    verbosity: 0,
   }), [deviceOptimization]);
 
   const pageLoadingComponent = useMemo(() => (
@@ -149,7 +141,6 @@ export default function PDFViewer({
     </div>
   ), []);
 
-  // Enhanced state management
   const [viewMode, setViewMode] = useState<"single" | "continuous" | "facing">(
     "single",
   );
@@ -163,45 +154,32 @@ export default function PDFViewer({
   const [pageWidth, setPageWidth] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Configure PDF.js worker once on component mount with optimizations
   useEffect(() => {
-    const setupWorker = () => {
-      pdfjs.GlobalWorkerOptions.workerSrc = `/pdf-worker/pdf.worker.min.mjs`;
-    };
-    setupWorker();
-
-    // Start performance monitoring
+    pdfjs.GlobalWorkerOptions.workerSrc = `/pdf-worker/pdf.worker.min.mjs`;
     performanceMonitor.reset();
     performanceMonitor.startTimer('documentLoad');
 
     return () => {
-      // Cleanup performance monitoring
       performanceMonitor.reset();
     };
-  }, [pdfFile]); // Re-run when PDF file changes
+  }, [pdfFile]);
 
-  // Reset zoom and page when PDF file changes
   useEffect(() => {
-    // Use 80% zoom for mobile, 100% for desktop
     setScale(isMobile ? 0.6 : 0.8);
-    setPageNumber(1); // Reset to first page
-    setError(null); // Clear any previous errors
-    setPageWidth(0); // Reset page width to trigger auto-fit
+    setPageNumber(1);
+    setError(null);
+    setPageWidth(0);
   }, [pdfFile, setScale, setPageNumber, setError, isMobile]);
 
-  // Enhanced document load handler with performance monitoring and preloading
   const onDocumentLoadSuccess = useCallback(
     (pdf: any) => {
       performanceMonitor.endTimer('documentLoad');
       performanceMonitor.startTimer('totalLoad');
       
       baseOnDocumentLoadSuccess(pdf);
-
-      // Reset to first page and mobile-responsive zoom when new document loads
       setPageNumber(1);
       setScale(isMobile ? 0.6 : 0.8);
 
-      // Preload strategy based on device capabilities
       if (deviceOptimization.shouldPreload) {
         const preloadPages = Math.min(
           deviceOptimization.maxConcurrentPages, 
@@ -210,7 +188,6 @@ export default function PDFViewer({
         
         for (let i = 1; i <= preloadPages; i++) {
           pdf.getPage(i).then((page: any) => {
-            // Pre-render at low resolution for thumbnails
             const scale = deviceOptimization.shouldReduceQuality ? 0.1 : 0.2;
             const viewport = page.getViewport({ scale });
             const canvas = document.createElement('canvas');
@@ -224,13 +201,10 @@ export default function PDFViewer({
                 viewport: viewport,
               });
             }
-          }).catch(() => {
-            // Ignore preload errors
-          });
+          }).catch(() => {});
         }
       }
 
-      // Extract outline/bookmarks if available (defer to avoid blocking)
       setTimeout(() => {
         pdf
           .getOutline()
@@ -239,9 +213,7 @@ export default function PDFViewer({
               setBookmarks(outline);
             }
           })
-          .catch(() => {
-            // No outline available
-          });
+          .catch(() => {});
       }, deviceOptimization.hasSlowConnection ? 500 : 100);
 
       performanceMonitor.endTimer('totalLoad');
@@ -250,7 +222,6 @@ export default function PDFViewer({
     [baseOnDocumentLoadSuccess, deviceOptimization, setPageNumber, setScale, isMobile],
   );
 
-  // Enhanced zoom functions
   const fitWidth = useCallback(() => {
     if (containerRef.current && pageWidth > 0) {
       const containerWidth =
@@ -262,10 +233,10 @@ export default function PDFViewer({
   const fitPage = useCallback(() => {
     if (containerRef.current) {
       const containerHeight = containerRef.current.offsetHeight - 100;
-      const pageHeight = 842; // Standard A4 height in points
+      const pageHeight = 842;
       const containerWidth =
         containerRef.current.offsetWidth - (showSidebar ? 300 : 40);
-      const pageWidthPoints = 595; // Standard A4 width in points
+      const pageWidthPoints = 595;
 
       const scaleHeight = containerHeight / pageHeight;
       const scaleWidth = containerWidth / pageWidthPoints;
@@ -277,7 +248,6 @@ export default function PDFViewer({
     }
   }, [showSidebar, setScale]);
 
-  // Fullscreen functionality
   const toggleFullscreen = useCallback(() => {
     if (!document.fullscreenElement) {
       containerRef.current?.requestFullscreen();
@@ -292,7 +262,6 @@ export default function PDFViewer({
     setAnnotations((prev) => prev.filter((annotation) => annotation.id !== id));
   }, []);
 
-  // Bookmark functionality
   const toggleBookmark = useCallback(
     (pageNum: number) => {
       const existingBookmark = bookmarks.find((b) => b.page === pageNum);
@@ -313,7 +282,6 @@ export default function PDFViewer({
     [bookmarks],
   );
 
-  // Page measurement for responsive scaling with memoization
   const onPageLoadSuccess = useCallback(
     (page: any) => {
       performanceMonitor.endTimer('pageRender');
@@ -322,15 +290,11 @@ export default function PDFViewer({
         const viewport = page.getViewport({ scale: 1 });
         setPageWidth(viewport.width);
         
-        // Don't auto-fit when switching PDFs - maintain user's preferred zoom (100%)
-        // Only auto-fit if the page is extremely large and would be unusable
         requestAnimationFrame(() => {
           if (containerRef.current && viewMode === "single") {
             const containerWidth = containerRef.current.offsetWidth - (showSidebar ? 300 : 40);
             const pageWidthAt100 = viewport.width;
             
-            // Only auto-fit if the page at 100% zoom is more than 50% larger than container
-            // This preserves 100% zoom for most documents while handling extremely large ones
             if (pageWidthAt100 > containerWidth * 1.5) {
               fitPage();
             }
@@ -341,9 +305,8 @@ export default function PDFViewer({
     [pageWidth, viewMode, fitPage, showSidebar],
   );
 
-  // Keyboard shortcuts with enhanced functionality
   useEffect(() => {
-    if (!numPages || !pageNumber) return; // Wait for initialization
+    if (!numPages || !pageNumber) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLInputElement) return;
@@ -414,7 +377,6 @@ export default function PDFViewer({
     toggleBookmark,
   ]);
 
-  // Fullscreen event listener
   useEffect(() => {
     const handleFullscreenChange = () => {
       setIsFullscreen(!!document.fullscreenElement);
@@ -425,13 +387,11 @@ export default function PDFViewer({
       document.removeEventListener("fullscreenchange", handleFullscreenChange);
   }, []);
 
-  // Auto-fit width on container resize
   useEffect(() => {
     if (!containerRef.current || !fitPage) return;
 
     const resizeObserver = new ResizeObserver(() => {
       if (viewMode === "single") {
-        // Auto-adjust scale based on container size
         fitPage();
       }
     });
@@ -440,7 +400,6 @@ export default function PDFViewer({
     return () => resizeObserver.disconnect();
   }, [fitPage, viewMode]);
 
-  // Download functionality
   const handleDownload = useCallback(() => {
     const link = document.createElement("a");
     link.href = pdfFile;
@@ -450,12 +409,10 @@ export default function PDFViewer({
     document.body.removeChild(link);
   }, [pdfFile]);
 
-  // Print functionality
   const handlePrint = useCallback(() => {
     window.print();
   }, []);
 
-  // Sidebar mode handler
   const toggleSidebar = useCallback(
     (mode?: "thumbnails" | "outline" | "bookmarks") => {
       if (showSidebar && sidebarMode === mode) {
@@ -468,29 +425,19 @@ export default function PDFViewer({
     [showSidebar, sidebarMode],
   );
 
-  // Direct navigation handlers to ensure page changes work
   const handlePreviousPage = useCallback(() => {
-    console.log('Previous page clicked, current page:', pageNumber, 'numPages:', numPages);
     if (pageNumber > 1) {
       const newPage = pageNumber - 1;
       setPageNumber(newPage);
-      console.log('Setting page to:', newPage);
     }
   }, [pageNumber, setPageNumber, numPages]);
 
   const handleNextPage = useCallback(() => {
-    console.log('Next page clicked, current page:', pageNumber, 'numPages:', numPages);
     if (pageNumber < numPages && numPages > 0) {
       const newPage = pageNumber + 1;
       setPageNumber(newPage);
-      console.log('Setting page to:', newPage);
     }
   }, [pageNumber, numPages, setPageNumber]);
-
-  // Add debugging for page number changes
-  useEffect(() => {
-    console.log('Page number changed to:', pageNumber, 'Total pages:', numPages);
-  }, [pageNumber, numPages]);
 
   return (
     <PDFContainer
@@ -498,9 +445,7 @@ export default function PDFViewer({
       className={`${isFullscreen ? "fullscreen" : ""} ${className}`}
       data-testid="pdf-viewer"
     >
-      {/* Enhanced Controls */}
       <PDFControlsWrapper>
-        {/* Primary Navigation */}
         <div className="flex items-center sm:gap-2 gap-1">
           <NavigationButton
             onClick={handlePreviousPage}
@@ -584,7 +529,6 @@ export default function PDFViewer({
           />
         </div>
 
-        {/* View Controls */}
         <div className="flex items-center gap-2 md:flex-row flex-col">
           <ViewModeControl
             mode={viewMode}
@@ -610,7 +554,6 @@ export default function PDFViewer({
         </div>
 
         <div className="flex items-center gap-1 md:gap-2 flex-row">
-          {/* Advanced Controls */}
           <AdvancedControls
             onToggleSidebar={() => toggleSidebar("thumbnails")}
             onToggleThumbnails={() => toggleSidebar("thumbnails")}
@@ -625,7 +568,6 @@ export default function PDFViewer({
             printLabel={messages.print}
           />
 
-          {/* Bookmark Control - Only show if enabled */}
           {enableBookmarks && (
             <BookmarkControl
               isBookmarked={bookmarks.some((b) => b.page === pageNumber)}
@@ -636,7 +578,6 @@ export default function PDFViewer({
             />
           )}
 
-          {/* Fullscreen Control */}
           <FullscreenControl
             isFullscreen={isFullscreen}
             onToggle={toggleFullscreen}
@@ -646,7 +587,6 @@ export default function PDFViewer({
       </PDFControlsWrapper>
 
       <div className="flex flex-1 overflow-hidden">
-        {/* Enhanced Sidebar */}
         {showSidebar && (
           <PDFSidebar mode={sidebarMode} onModeChange={setSidebarMode}>
             {sidebarMode === "thumbnails" && (
@@ -713,7 +653,6 @@ export default function PDFViewer({
           </PDFSidebar>
         )}
 
-        {/* Main PDF Document */}
         <PDFDocumentWrapper
           className={`${showSidebar ? "with-sidebar" : ""} ${viewMode}`}
         >
@@ -731,9 +670,7 @@ export default function PDFViewer({
             }
             className="pdf-document"
             options={documentOptions}
-            onItemClick={() => {
-              // This is handled in useEffect now
-            }}
+            onItemClick={() => {}}
           >
             {!error && (
               <>
@@ -749,9 +686,7 @@ export default function PDFViewer({
                       loading={pageLoadingComponent}
                       error={pageErrorComponent}
                       onRenderSuccess={() => {
-                        // Preload next page for smoother navigation
                         if (pageNumber < numPages) {
-                          // This is done automatically by react-pdf with disableAutoFetch: false
                         }
                         performanceMonitor.endTimer('pageRender');
                       }}
@@ -760,7 +695,6 @@ export default function PDFViewer({
                       }}
                     />
 
-                    {/* Render annotations for current page */}
                     {enableAnnotations && (
                       <PDFAnnotations
                         annotations={annotations.filter(
@@ -781,7 +715,7 @@ export default function PDFViewer({
 
                 {viewMode === "continuous" && (
                   <div className="pdf-continuous space-y-4">
-                    {Array.from(new Array(Math.min(numPages, 5)), (_, index) => (
+                    {Array.from({ length: numPages }).map((_, index) => (
                       <div
                         key={`page_${index + 1}`}
                         className="pdf-page-container"
@@ -790,13 +724,12 @@ export default function PDFViewer({
                           pageNumber={index + 1}
                           scale={scale}
                           onLoadSuccess={onPageLoadSuccess}
-                          renderTextLayer={index < 3} // Only render text layer for first 3 pages
-                          renderAnnotationLayer={index < 3} // Only render annotations for first 3 pages
+                          renderTextLayer={index < 3}
+                          renderAnnotationLayer={index < 3}
                           className="pdf-page border border-gray-300 shadow-lg rounded-lg"
                           loading={pageLoadingComponent}
                         />
 
-                        {/* Render annotations for each page */}
                         {enableAnnotations && index < 3 && (
                           <PDFAnnotations
                             annotations={annotations.filter(
@@ -814,21 +747,6 @@ export default function PDFViewer({
                         )}
                       </div>
                     ))}
-                    
-                    {/* Lazy load remaining pages */}
-                    {numPages > 5 && (
-                      <div className="text-center p-8">
-                        <button
-                          onClick={() => {
-                            // Implement lazy loading for remaining pages
-                            console.log('Load more pages');
-                          }}
-                          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-                        >
-                          Load More Pages ({numPages - 5} remaining)
-                        </button>
-                      </div>
-                    )}
                   </div>
                 )}
 
