@@ -44,7 +44,7 @@ function SignupForm({ messages }: { messages: Messages }) {
     if (data.user) {
       window.localStorage.setItem("user", JSON.stringify(data.user));
       toast.success(messages.auth.signupSuccess);
-      router.push(`/${locale}`);
+      router.push(`/${locale}/dashboard`);
     }
 
     if (error) {
