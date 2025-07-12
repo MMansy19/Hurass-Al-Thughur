@@ -90,6 +90,21 @@ export const pdfMetadata: PDFMetadata[] = [
     publishDate: "2025",
     tags: ["fitrah", "guidance", "path", "nature"],
   },
+  {
+    filename: "6.pdf",
+    title: {
+      en: "The Sixth Issue",
+      ar: "العدد السادس",
+    },
+    description: {
+      en: "South America Culture Religion on How to Call",
+      ar: " أمريكا الجنوبية ثقافة دينًا لكيفية الدعوة",
+    },
+    category: "Cultural Studies",
+    author: "ابن عبدالصبور",
+    publishDate: "2025",
+    tags: ["south america", "culture", "religion", "da'wah"],
+  },
 ];
 
 // Helper function to get PDF metadata by filename
