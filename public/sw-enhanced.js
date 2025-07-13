@@ -395,7 +395,7 @@ self.addEventListener("fetch", (event) => {
   }
 
   // Skip Supabase auth/API requests to prevent token caching issues
-  if (event.request.url.includes('.supabase.co')) {
+  if (event.request.url.includes(".supabase.co")) {
     return;
   }
 

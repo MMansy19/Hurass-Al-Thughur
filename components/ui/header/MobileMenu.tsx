@@ -121,7 +121,7 @@ const MobileMenu = ({
               <span className="text-lg">{link.text}</span>
             </Link>
           ))}
-          
+
           {/* Auth Buttons in Mobile Menu */}
           <div className="border-t border-gray-200 pt-4 mt-4 space-y-2">
             <Link
@@ -163,7 +163,6 @@ const MobileMenu = ({
               <span className="text-lg">{messages.signup}</span>
             </Link>
           </div>
-          
         </div>
       </div>
       {/* Overlay for mobile menu */}

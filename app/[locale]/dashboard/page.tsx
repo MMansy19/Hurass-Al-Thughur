@@ -26,8 +26,7 @@ function Dashboard() {
     loadSignedInUser(setUser);
     if (user?.id) {
       loadArticles(user.id, setArticles, setLoading);
-    }
-    else {
+    } else {
       setLoading(false);
     }
   }, [locale, user]);

@@ -64,31 +64,33 @@ interface PDFViewerProps {
   className?: string;
 }
 
-const MemoizedPage = memo(({ 
-  pageNumber, 
-  scale, 
-  onLoadSuccess, 
-  renderTextLayer = true, 
-  renderAnnotationLayer = true, 
-  className,
-  loading,
-  error,
-  onRenderSuccess 
-}: any) => (
-  <Page
-    pageNumber={pageNumber}
-    scale={scale}
-    onLoadSuccess={onLoadSuccess}
-    renderTextLayer={renderTextLayer}
-    renderAnnotationLayer={renderAnnotationLayer}
-    className={className}
-    loading={loading}
-    error={error}
-    onRenderSuccess={onRenderSuccess}
-  />
-));
+const MemoizedPage = memo(
+  ({
+    pageNumber,
+    scale,
+    onLoadSuccess,
+    renderTextLayer = true,
+    renderAnnotationLayer = true,
+    className,
+    loading,
+    error,
+    onRenderSuccess,
+  }: any) => (
+    <Page
+      pageNumber={pageNumber}
+      scale={scale}
+      onLoadSuccess={onLoadSuccess}
+      renderTextLayer={renderTextLayer}
+      renderAnnotationLayer={renderAnnotationLayer}
+      className={className}
+      loading={loading}
+      error={error}
+      onRenderSuccess={onRenderSuccess}
+    />
+  ),
+);
 
-MemoizedPage.displayName = 'MemoizedPage';
+MemoizedPage.displayName = "MemoizedPage";
 
 export default function PDFViewer({
   pdfFile,
@@ -117,29 +119,38 @@ export default function PDFViewer({
 
   const deviceOptimization = useMemo(() => optimizeForDevice(), []);
 
-  const documentOptions = useMemo(() => ({
-    cMapUrl: 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/cmaps/',
-    cMapPacked: true,
-    enableXfa: false,
-    disableAutoFetch: !deviceOptimization.shouldPreload,
-    disableStream: deviceOptimization.hasSlowConnection,
-    disableRange: deviceOptimization.hasSlowConnection,
-    useOnlyCssZoom: true,
-    maxImageSize: deviceOptimization.isLowEndDevice ? 8388608 : 16777216,
-    verbosity: 0,
-  }), [deviceOptimization]);
+  const documentOptions = useMemo(
+    () => ({
+      cMapUrl: "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/cmaps/",
+      cMapPacked: true,
+      enableXfa: false,
+      disableAutoFetch: !deviceOptimization.shouldPreload,
+      disableStream: deviceOptimization.hasSlowConnection,
+      disableRange: deviceOptimization.hasSlowConnection,
+      useOnlyCssZoom: true,
+      maxImageSize: deviceOptimization.isLowEndDevice ? 8388608 : 16777216,
+      verbosity: 0,
+    }),
+    [deviceOptimization],
+  );
 
-  const pageLoadingComponent = useMemo(() => (
-    <div className="flex items-center justify-center h-96 bg-gray-100 rounded-lg">
-      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-    </div>
-  ), []);
+  const pageLoadingComponent = useMemo(
+    () => (
+      <div className="flex items-center justify-center h-96 bg-gray-100 rounded-lg">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      </div>
+    ),
+    [],
+  );
 
-  const pageErrorComponent = useMemo(() => (
-    <div className="flex items-center justify-center h-96 bg-red-50 rounded-lg">
-      <p className="text-red-600">Failed to load page</p>
-    </div>
-  ), []);
+  const pageErrorComponent = useMemo(
+    () => (
+      <div className="flex items-center justify-center h-96 bg-red-50 rounded-lg">
+        <p className="text-red-600">Failed to load page</p>
+      </div>
+    ),
+    [],
+  );
 
   const [viewMode, setViewMode] = useState<"single" | "continuous" | "facing">(
     "single",
@@ -157,7 +168,7 @@ export default function PDFViewer({
   useEffect(() => {
     pdfjs.GlobalWorkerOptions.workerSrc = `/pdf-worker/pdf.worker.min.mjs`;
     performanceMonitor.reset();
-    performanceMonitor.startTimer('documentLoad');
+    performanceMonitor.startTimer("documentLoad");
 
     return () => {
       performanceMonitor.reset();
@@ -173,53 +184,65 @@ export default function PDFViewer({
 
   const onDocumentLoadSuccess = useCallback(
     (pdf: any) => {
-      performanceMonitor.endTimer('documentLoad');
-      performanceMonitor.startTimer('totalLoad');
-      
+      performanceMonitor.endTimer("documentLoad");
+      performanceMonitor.startTimer("totalLoad");
+
       baseOnDocumentLoadSuccess(pdf);
       setPageNumber(1);
       setScale(isMobile ? 0.6 : 0.8);
 
       if (deviceOptimization.shouldPreload) {
         const preloadPages = Math.min(
-          deviceOptimization.maxConcurrentPages, 
-          pdf.numPages
+          deviceOptimization.maxConcurrentPages,
+          pdf.numPages,
         );
-        
+
         for (let i = 1; i <= preloadPages; i++) {
-          pdf.getPage(i).then((page: any) => {
-            const scale = deviceOptimization.shouldReduceQuality ? 0.1 : 0.2;
-            const viewport = page.getViewport({ scale });
-            const canvas = document.createElement('canvas');
-            const context = canvas.getContext('2d');
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
-            
-            if (context) {
-              page.render({
-                canvasContext: context,
-                viewport: viewport,
-              });
-            }
-          }).catch(() => {});
+          pdf
+            .getPage(i)
+            .then((page: any) => {
+              const scale = deviceOptimization.shouldReduceQuality ? 0.1 : 0.2;
+              const viewport = page.getViewport({ scale });
+              const canvas = document.createElement("canvas");
+              const context = canvas.getContext("2d");
+              canvas.height = viewport.height;
+              canvas.width = viewport.width;
+
+              if (context) {
+                page.render({
+                  canvasContext: context,
+                  viewport: viewport,
+                });
+              }
+            })
+            .catch(() => {});
         }
       }
 
-      setTimeout(() => {
-        pdf
-          .getOutline()
-          .then((outline: any) => {
-            if (outline) {
-              setBookmarks(outline);
-            }
-          })
-          .catch(() => {});
-      }, deviceOptimization.hasSlowConnection ? 500 : 100);
+      setTimeout(
+        () => {
+          pdf
+            .getOutline()
+            .then((outline: any) => {
+              if (outline) {
+                setBookmarks(outline);
+              }
+            })
+            .catch(() => {});
+        },
+        deviceOptimization.hasSlowConnection ? 500 : 100,
+      );
 
-      performanceMonitor.endTimer('totalLoad');
+      performanceMonitor.endTimer("totalLoad");
       performanceMonitor.logMetrics();
     },
-    [baseOnDocumentLoadSuccess, deviceOptimization, setPageNumber, setScale, isMobile],
+    [
+      baseOnDocumentLoadSuccess,
+      deviceOptimization,
+      setPageNumber,
+      setScale,
+      isMobile,
+    ],
   );
 
   const fitWidth = useCallback(() => {
@@ -284,17 +307,18 @@ export default function PDFViewer({
 
   const onPageLoadSuccess = useCallback(
     (page: any) => {
-      performanceMonitor.endTimer('pageRender');
-      
+      performanceMonitor.endTimer("pageRender");
+
       if (pageWidth === 0) {
         const viewport = page.getViewport({ scale: 1 });
         setPageWidth(viewport.width);
-        
+
         requestAnimationFrame(() => {
           if (containerRef.current && viewMode === "single") {
-            const containerWidth = containerRef.current.offsetWidth - (showSidebar ? 300 : 40);
+            const containerWidth =
+              containerRef.current.offsetWidth - (showSidebar ? 300 : 40);
             const pageWidthAt100 = viewport.width;
-            
+
             if (pageWidthAt100 > containerWidth * 1.5) {
               fitPage();
             }
@@ -480,9 +504,10 @@ export default function PDFViewer({
                     d="M9 5l-7 7 7 7"
                   />
                 </svg>
-              )}
+              )
+            }
             isNext={false}
-          />  
+          />
 
           <PageIndicator
             currentPage={pageNumber}
@@ -524,7 +549,8 @@ export default function PDFViewer({
                     d="M15 19l7-7-7-7"
                   />
                 </svg>
-              )}
+              )
+            }
             isNext={true}
           />
         </div>
@@ -660,7 +686,7 @@ export default function PDFViewer({
             file={pdfFile}
             onLoadSuccess={onDocumentLoadSuccess}
             onLoadError={(error) => {
-              performanceMonitor.endTimer('documentLoad');
+              performanceMonitor.endTimer("documentLoad");
               setError(error.message);
               onError?.();
             }}
@@ -688,10 +714,10 @@ export default function PDFViewer({
                       onRenderSuccess={() => {
                         if (pageNumber < numPages) {
                         }
-                        performanceMonitor.endTimer('pageRender');
+                        performanceMonitor.endTimer("pageRender");
                       }}
                       onLoadStart={() => {
-                        performanceMonitor.startTimer('pageRender');
+                        performanceMonitor.startTimer("pageRender");
                       }}
                     />
 

@@ -89,9 +89,9 @@ export const AnimatedMagazineCard = memo<AnimatedMagazineCardProps>(
                   onError={(e) => {
                     // Fallback to placeholder if image fails to load
                     const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
+                    target.style.display = "none";
                     const fallback = target.nextElementSibling as HTMLElement;
-                    if (fallback) fallback.style.display = 'flex';
+                    if (fallback) fallback.style.display = "flex";
                   }}
                 />
                 {/* Hidden fallback that shows when image fails */}

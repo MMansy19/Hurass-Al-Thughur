@@ -68,7 +68,6 @@ interface MagazineIssue {
   tags?: string[];
 }
 
-
 export default async function EnhancedMagazinePage({
   params,
 }: {
@@ -171,7 +170,7 @@ export default async function EnhancedMagazinePage({
       },
     },
   };
-  
+
   return (
     <>
       <StructuredData data={structuredData} />
@@ -203,7 +202,7 @@ export default async function EnhancedMagazinePage({
         <section id="pdf-viewer" aria-labelledby="pdf-viewer-heading">
           <div className="container mx-auto sm:px-4 px-2">
             <h2
-              id="pdf-viewer-heading" 
+              id="pdf-viewer-heading"
               className="text-3xl font-bold text-emerald-800 mb-6"
             >
               {magazine.pdfViewer}
@@ -214,8 +213,12 @@ export default async function EnhancedMagazinePage({
                 magazine={magazine}
                 locale={locale}
                 loadingMessage={messages?.hardcoded?.loadingPDFViewer}
-                selectIssueText={messages?.hardcoded?.selectIssue || "Select an issue"}
-                noIssuesText={messages?.hardcoded?.noIssues || "No issues available"}
+                selectIssueText={
+                  messages?.hardcoded?.selectIssue || "Select an issue"
+                }
+                noIssuesText={
+                  messages?.hardcoded?.noIssues || "No issues available"
+                }
               />
             </div>
           </div>

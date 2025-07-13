@@ -21,7 +21,6 @@ export default function MagazineCardWrapper({
   issue,
   locale,
 }: MagazineCardWrapperProps) {
-
   const handleDownload = (id: string) => {
     // Create PDF download using the same logic as the issue page
     const link = document.createElement("a");

@@ -52,9 +52,9 @@ export default async function Home({
     <div className="space-y-12">
       <section className="bg-gradient-to-r from-emerald-700 to-emerald-500 text-white py-20 rounded-lg">
         <div className="container mx-auto sm:px-4 px-2 flex flex-col items-center text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-relaxed">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 leading-relaxed">
             {home.welcome}
-            </h1>
+          </h1>
           <p className="text-xl max-w-2xl mb-8">{home.description}</p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link

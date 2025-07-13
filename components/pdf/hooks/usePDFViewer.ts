@@ -37,14 +37,14 @@ export function usePDFViewer(): UsePDFViewerResult {
   // Debounced resize handler for better performance
   useEffect(() => {
     let timeoutId: NodeJS.Timeout;
-    
+
     const handleResize = () => {
       clearTimeout(timeoutId);
       timeoutId = setTimeout(() => {
         setWidth(window.innerWidth);
       }, 150); // Debounce resize events
     };
-    
+
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -96,7 +96,7 @@ export function usePDFViewer(): UsePDFViewerResult {
     setNumPages(numPages);
     setPageNumber(1);
     setError(null);
-    
+
     // Reset to default scale (100% for desktop, 80% for mobile)
     setScale(isMobile ? 0.8 : 1.0);
   }

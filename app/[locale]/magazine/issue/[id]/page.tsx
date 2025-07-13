@@ -129,10 +129,7 @@ function getMagazineIssue(
       fileSize: "1.9 MB",
       pageCount: 24,
       author: isArabic ? "فريق التحرير" : "Editorial Team",
-      tags: [
-        isArabic ? "الفطرة" : "Fitrah",
-        isArabic ? "الطريق" : "Path",
-      ],
+      tags: [isArabic ? "الفطرة" : "Fitrah", isArabic ? "الطريق" : "Path"],
     },
   };
 

@@ -35,7 +35,6 @@ export const LazyPDFBrowser = createDynamicComponent(
   },
 );
 
-
 // Performance Monitor (Development only)
 export const LazyPerformanceMonitor = createDynamicComponent(
   () => import("@/components/ui/EnhancedPerformanceMonitor"),

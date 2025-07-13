@@ -1,10 +1,5 @@
 import { ReactNode } from "react";
-import {
-  HomeIcon,
-  MagazineIcon,
-  LibraryIcon,
-  ArticlesIcon,
-} from "./Icons";
+import { HomeIcon, MagazineIcon, LibraryIcon, ArticlesIcon } from "./Icons";
 
 interface NavLink {
   href: string;

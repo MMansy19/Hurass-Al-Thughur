@@ -46,7 +46,11 @@ async function Articles({ params }: { params: Promise<{ locale: string }> }) {
         <div className="container mx-auto sm:px-4 px-2 text-center relative z-10">
           <div className="max-w-4xl mx-auto">
             <div className="inline-flex items-center px-4 py-2 bg-emerald-600/30 backdrop-blur-sm rounded-full text-emerald-100 text-sm font-medium mb-6">
-              <svg className="w-4 h-4 mx-2" fill="currentColor" viewBox="0 0 20 20">
+              <svg
+                className="w-4 h-4 mx-2"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
                 <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               {messages.articles.articles}

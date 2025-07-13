@@ -42,7 +42,7 @@ function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
       content: "",
       user_id,
       approved: false,
-    }
+    },
   );
 
   if (locale !== "ar" && locale !== "en") {
@@ -52,7 +52,7 @@ function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
   function handleChange(
     e: React.ChangeEvent<
       HTMLSelectElement | HTMLInputElement | HTMLTextAreaElement
-    >
+    >,
   ) {
     const { name, value } = e.target;
 

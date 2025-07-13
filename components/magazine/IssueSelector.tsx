@@ -38,13 +38,13 @@ export default function IssueSelector({
       >
         {selectIssueText}
       </label>
-      
+
       <div className="relative">
         <button
           id="issue-selector"
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-                  className="relative w-full bg-white border border-gray-300 rounded-lg shadow-sm px-4 py-3 text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 hover:border-gray-400 transition-colors"
+          className="relative w-full bg-white border border-gray-300 rounded-lg shadow-sm px-4 py-3 text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 hover:border-gray-400 transition-colors"
           aria-haspopup="listbox"
           aria-expanded={isOpen}
           aria-labelledby="issue-selector-label"
@@ -56,7 +56,8 @@ export default function IssueSelector({
                 alt={selectedIssue?.title}
                 className="w-10 h-12 object-cover rounded border mr-3"
                 onError={(e) => {
-                  (e.target as HTMLImageElement).src = "/images/magazine/placeholder.svg";
+                  (e.target as HTMLImageElement).src =
+                    "/images/magazine/placeholder.svg";
                 }}
               />
               <div className="mx-2 text-start">
@@ -104,25 +105,24 @@ export default function IssueSelector({
                     setIsOpen(false);
                   }}
                 >
-                      <div className="flex items-center">
+                  <div className="flex items-center">
                     <img
                       src={issue.coverImage}
                       alt={issue.title}
                       className="w-8 h-10 object-cover rounded border mr-3"
                       onError={(e) => {
-                        (e.target as HTMLImageElement).src = "/images/magazine/placeholder.svg";
+                        (e.target as HTMLImageElement).src =
+                          "/images/magazine/placeholder.svg";
                       }}
                     />
-                          <div className="mx-2 text-start">
+                    <div className="mx-2 text-start">
                       <p className="text-sm font-medium truncate">
                         {issue.title}
                       </p>
                       <p className="text-xs text-gray-500 truncate">
                         {issue.description}
                       </p>
-                      <p className="text-xs text-gray-400">
-                        {issue.date}
-                      </p>
+                      <p className="text-xs text-gray-400">{issue.date}</p>
                     </div>
                     {issue.id === selectedIssue?.id && (
                       <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
@@ -149,10 +149,7 @@ export default function IssueSelector({
 
       {/* Overlay to close dropdown when clicking outside */}
       {isOpen && (
-        <div
-          className="fixed inset-0 z-5"
-          onClick={() => setIsOpen(false)}
-        />
+        <div className="fixed inset-0 z-5" onClick={() => setIsOpen(false)} />
       )}
     </div>
   );

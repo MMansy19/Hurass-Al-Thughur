@@ -18,7 +18,7 @@ export async function generateMetadata({
 }
 
 export default async function LibraryPage({
-  params, 
+  params,
 }: {
   params: Promise<{ locale: string }>;
 }) {

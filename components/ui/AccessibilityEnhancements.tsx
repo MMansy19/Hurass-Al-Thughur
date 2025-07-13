@@ -231,13 +231,15 @@ export const AccessibleMagazineCard = memo<AccessibleMagazineCardProps>(
     const isArabic = locale === "ar";
 
     // Default texts if not provided
-    const defaultReadText = readNowText || (isArabic ? "اقرأ الآن" : "Read Now");
-    const defaultDownloadText = downloadText || (isArabic ? "تحميل" : "Download");
+    const defaultReadText =
+      readNowText || (isArabic ? "اقرأ الآن" : "Read Now");
+    const defaultDownloadText =
+      downloadText || (isArabic ? "تحميل" : "Download");
 
     const handleView = useCallback(() => {
       // Navigate to PDF reading page
       const pdfPath = `/library/pdf/${issue.id}.pdf`;
-      window.open(pdfPath, '_blank');
+      window.open(pdfPath, "_blank");
       setAnnouncement(
         isArabic
           ? `فتح العدد: ${issue.title}`
@@ -248,14 +250,14 @@ export const AccessibleMagazineCard = memo<AccessibleMagazineCardProps>(
     const handleDownload = useCallback(() => {
       // Create download link and trigger download
       const pdfPath = `/pdfs/${issue.id}.pdf`;
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = pdfPath;
       link.download = `${issue.title}.pdf`;
-      link.style.display = 'none';
+      link.style.display = "none";
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
-      
+
       onDownload?.(issue.id);
       setAnnouncement(
         isArabic
@@ -325,67 +327,67 @@ export const AccessibleMagazineCard = memo<AccessibleMagazineCardProps>(
             className="w-full h-full focus:outline-none"
           >
             {/* Cover Image Section */}
-                   <div className="relative aspect-[3/4] bg-gradient-to-br from-emerald-100 to-emerald-200 overflow-hidden">
-                     {issue.coverImage ? (
-                       <Motion
-                         preset="scaleIn"
-                         delay={delay + 0.2}
-                         className="absolute inset-0"
-                       >
-                         <img
-                           src={issue.coverImage}
-                           alt={issue.title}
-                           className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                           onError={(e) => {
-                             // Fallback to placeholder if image fails to load
-                             const target = e.target as HTMLImageElement;
-                             target.style.display = 'none';
-                             const fallback = target.nextElementSibling as HTMLElement;
-                             if (fallback) fallback.style.display = 'flex';
-                           }}
-                         />
-                         {/* Hidden fallback that shows when image fails */}
-                         <div className="absolute inset-0 flex items-center justify-center hidden">
-                           <div className="w-20 h-20 text-emerald-600">
-                             <svg
-                               viewBox="0 0 24 24"
-                               fill="currentColor"
-                               className="w-full h-full"
-                             >
-                               <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" />
-                             </svg>
-                           </div>
-                         </div>
-                       </Motion>
-                     ) : (
-                       <Motion
-                         preset="scaleIn"
-                         delay={delay + 0.2}
-                         className="absolute inset-0 flex items-center justify-center"
-                       >
-                         <div className="w-20 h-20 text-emerald-600">
-                           <svg
-                             viewBox="0 0 24 24"
-                             fill="currentColor"
-                             className="w-full h-full"
-                           >
-                             <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" />
-                           </svg>
-                         </div>
-                       </Motion>
-                     )}
-         
-                     {/* Category Badge */}
-                     <Motion
-                       preset="slideInRight"
-                       delay={delay + 0.3}
-                       className="absolute top-3 right-3"
-                     >
-                       <span className="bg-emerald-600 text-white px-2 py-1 rounded-full text-xs font-medium shadow-lg">
-                         {issue.category}
-                       </span>
-                     </Motion>
-                   </div>
+            <div className="relative aspect-[3/4] bg-gradient-to-br from-emerald-100 to-emerald-200 overflow-hidden">
+              {issue.coverImage ? (
+                <Motion
+                  preset="scaleIn"
+                  delay={delay + 0.2}
+                  className="absolute inset-0"
+                >
+                  <img
+                    src={issue.coverImage}
+                    alt={issue.title}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    onError={(e) => {
+                      // Fallback to placeholder if image fails to load
+                      const target = e.target as HTMLImageElement;
+                      target.style.display = "none";
+                      const fallback = target.nextElementSibling as HTMLElement;
+                      if (fallback) fallback.style.display = "flex";
+                    }}
+                  />
+                  {/* Hidden fallback that shows when image fails */}
+                  <div className="absolute inset-0 flex items-center justify-center hidden">
+                    <div className="w-20 h-20 text-emerald-600">
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        className="w-full h-full"
+                      >
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" />
+                      </svg>
+                    </div>
+                  </div>
+                </Motion>
+              ) : (
+                <Motion
+                  preset="scaleIn"
+                  delay={delay + 0.2}
+                  className="absolute inset-0 flex items-center justify-center"
+                >
+                  <div className="w-20 h-20 text-emerald-600">
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="w-full h-full"
+                    >
+                      <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" />
+                    </svg>
+                  </div>
+                </Motion>
+              )}
+
+              {/* Category Badge */}
+              <Motion
+                preset="slideInRight"
+                delay={delay + 0.3}
+                className="absolute top-3 right-3"
+              >
+                <span className="bg-emerald-600 text-white px-2 py-1 rounded-full text-xs font-medium shadow-lg">
+                  {issue.category}
+                </span>
+              </Motion>
+            </div>
             {/* Content Section */}
             <div className="p-6">
               <Motion preset="slideInUp" delay={delay + 0.4}>

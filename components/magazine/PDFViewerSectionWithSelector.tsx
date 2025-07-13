@@ -44,9 +44,11 @@ export default function PDFViewerSectionWithSelector({
   selectIssueText,
   noIssuesText,
 }: PDFViewerSectionWithSelectorProps) {
-  const [selectedIssue, setSelectedIssue] = useState<MagazineIssue | null>(() => {
-    return issues.length > 0 ? (issues[0] || null) : null;
-  });
+  const [selectedIssue, setSelectedIssue] = useState<MagazineIssue | null>(
+    () => {
+      return issues.length > 0 ? issues[0] || null : null;
+    },
+  );
 
   if (!selectedIssue || issues.length === 0) {
     return (
@@ -77,7 +79,8 @@ export default function PDFViewerSectionWithSelector({
             alt={selectedIssue.title}
             className="w-16 h-20 object-cover rounded-lg shadow-sm border"
             onError={(e) => {
-              (e.target as HTMLImageElement).src = "/images/magazine/placeholder.svg";
+              (e.target as HTMLImageElement).src =
+                "/images/magazine/placeholder.svg";
             }}
           />
           <div className="">

@@ -1,4 +1,4 @@
-import { supabase } from '@/supabase/initializing';
+import { supabase } from "@/supabase/initializing";
 
 /**
  * Utility to handle token refresh and session management
@@ -11,7 +11,7 @@ export class TokenManager {
    * Set up automatic token refresh
    */
   static setupAutoRefresh() {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
     // Clear any existing timeout
     if (this.refreshTimeout) {
@@ -20,9 +20,9 @@ export class TokenManager {
 
     // Listen for auth state changes to set up refresh timer
     supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+      if (event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
         this.scheduleTokenRefresh(session);
-      } else if (event === 'SIGNED_OUT') {
+      } else if (event === "SIGNED_OUT") {
         this.clearRefreshTimer();
       }
     });
@@ -40,9 +40,14 @@ export class TokenManager {
     // Calculate time until refresh (refresh 5 minutes before expiry)
     const expiresAt = new Date(session.expires_at * 1000);
     const now = new Date();
-    const timeUntilRefresh = Math.max(0, expiresAt.getTime() - now.getTime() - 5 * 60 * 1000);
+    const timeUntilRefresh = Math.max(
+      0,
+      expiresAt.getTime() - now.getTime() - 5 * 60 * 1000,
+    );
 
-    console.log(`Token refresh scheduled in ${Math.round(timeUntilRefresh / 1000)} seconds`);
+    console.log(
+      `Token refresh scheduled in ${Math.round(timeUntilRefresh / 1000)} seconds`,
+    );
 
     this.refreshTimeout = setTimeout(() => {
       this.refreshToken();
@@ -54,40 +59,43 @@ export class TokenManager {
    */
   static async refreshToken() {
     if (this.isRefreshing) {
-      console.log('Token refresh already in progress');
+      console.log("Token refresh already in progress");
       return;
     }
 
     this.isRefreshing = true;
 
     try {
-      console.log('Refreshing auth token...');
+      console.log("Refreshing auth token...");
       const { data, error } = await supabase.auth.refreshSession();
 
       if (error) {
-        console.error('Token refresh failed:', error);
-        
+        console.error("Token refresh failed:", error);
+
         // If refresh fails, sign out the user
-        if (error.message.includes('refresh') || error.message.includes('token')) {
-          console.log('Invalid refresh token, signing out...');
-          await supabase.auth.signOut({ scope: 'local' });
-          
+        if (
+          error.message.includes("refresh") ||
+          error.message.includes("token")
+        ) {
+          console.log("Invalid refresh token, signing out...");
+          await supabase.auth.signOut({ scope: "local" });
+
           // Clear storage
-          if (typeof window !== 'undefined') {
-            window.localStorage.removeItem('user');
+          if (typeof window !== "undefined") {
+            window.localStorage.removeItem("user");
           }
-          
+
           // Redirect to sign in
           const currentPath = window.location.pathname;
-          const locale = currentPath.split('/')[1] || 'ar';
+          const locale = currentPath.split("/")[1] || "ar";
           window.location.href = `/${locale}/signin`;
         }
       } else if (data.session) {
-        console.log('Token refreshed successfully');
+        console.log("Token refreshed successfully");
         this.scheduleTokenRefresh(data.session);
       }
     } catch (error) {
-      console.error('Unexpected error during token refresh:', error);
+      console.error("Unexpected error during token refresh:", error);
     } finally {
       this.isRefreshing = false;
     }
@@ -108,31 +116,34 @@ export class TokenManager {
    */
   static async validateSession() {
     try {
-      const { data: { session }, error } = await supabase.auth.getSession();
-      
+      const {
+        data: { session },
+        error,
+      } = await supabase.auth.getSession();
+
       if (error) {
-        console.error('Session validation error:', error);
+        console.error("Session validation error:", error);
         return false;
       }
 
       if (!session) {
-        console.log('No active session');
+        console.log("No active session");
         return false;
       }
 
       // Check if token is expired
       const expiresAt = new Date(session.expires_at! * 1000);
       const now = new Date();
-      
+
       if (expiresAt <= now) {
-        console.log('Session expired, attempting refresh...');
+        console.log("Session expired, attempting refresh...");
         await this.refreshToken();
         return false;
       }
 
       return true;
     } catch (error) {
-      console.error('Unexpected error validating session:', error);
+      console.error("Unexpected error validating session:", error);
       return false;
     }
   }
@@ -141,7 +152,7 @@ export class TokenManager {
    * Initialize token management
    */
   static init() {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
     // Set up auto refresh
     this.setupAutoRefresh();
@@ -150,7 +161,7 @@ export class TokenManager {
     this.validateSession();
 
     // Handle page visibility changes
-    document.addEventListener('visibilitychange', () => {
+    document.addEventListener("visibilitychange", () => {
       if (!document.hidden) {
         // Page became visible, validate session
         this.validateSession();
@@ -158,13 +169,13 @@ export class TokenManager {
     });
 
     // Handle focus events
-    window.addEventListener('focus', () => {
+    window.addEventListener("focus", () => {
       this.validateSession();
     });
   }
 }
 
 // Auto-initialize if in browser
-if (typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
   TokenManager.init();
 }

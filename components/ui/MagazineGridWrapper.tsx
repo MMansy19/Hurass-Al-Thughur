@@ -36,7 +36,6 @@ export function MagazineGridWrapper({
   enableAccessibilityFeatures = true,
   className = "",
 }: MagazineGridWrapperProps) {
-
   // Handle issue download action - trigger PDF download
   const handleIssueDownload = useCallback(
     (id: string) => {

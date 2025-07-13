@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 interface ReadingProgressProps {
   target?: string;
 }
 
-export default function ClientReadingProgress({ target = 'article' }: ReadingProgressProps) {
+export default function ClientReadingProgress({
+  target = "article",
+}: ReadingProgressProps) {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -17,13 +19,13 @@ export default function ClientReadingProgress({ target = 'article' }: ReadingPro
       const rect = element.getBoundingClientRect();
       const elementHeight = element.offsetHeight;
       const windowHeight = window.innerHeight;
-      
+
       const elementTop = rect.top;
       const elementBottom = rect.bottom;
-      
+
       // Calculate how much of the element has been scrolled through
       let scrolled = 0;
-      
+
       if (elementTop <= 0 && elementBottom >= windowHeight) {
         // Element is larger than viewport and currently spans the viewport
         scrolled = Math.abs(elementTop) / (elementHeight - windowHeight);
@@ -34,7 +36,7 @@ export default function ClientReadingProgress({ target = 'article' }: ReadingPro
         // Element hasn't entered viewport yet
         scrolled = 0;
       }
-      
+
       setProgress(Math.min(scrolled * 100, 100));
     };
 
@@ -42,11 +44,11 @@ export default function ClientReadingProgress({ target = 'article' }: ReadingPro
       requestAnimationFrame(updateProgress);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
     updateProgress(); // Initial calculation
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, [target]);
 

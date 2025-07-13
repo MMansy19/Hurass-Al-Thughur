@@ -110,32 +110,32 @@ export default async function LocaleLayout({
                   toastOptions={{
                     duration: 4000,
                     style: {
-                      background: '#f9fafb',
-                      color: '#374151',
-                      border: '1px solid #e5e7eb',
-                      borderRadius: '8px',
-                      fontWeight: '500',
+                      background: "#f9fafb",
+                      color: "#374151",
+                      border: "1px solid #e5e7eb",
+                      borderRadius: "8px",
+                      fontWeight: "500",
                     },
                     success: {
                       style: {
-                        background: '#f0f9ff',
-                        color: '#059669',
-                        border: '1px solid #a7f3d0',
+                        background: "#f0f9ff",
+                        color: "#059669",
+                        border: "1px solid #a7f3d0",
                       },
                       iconTheme: {
-                        primary: '#059669',
-                        secondary: '#f0f9ff',
+                        primary: "#059669",
+                        secondary: "#f0f9ff",
                       },
                     },
                     error: {
                       style: {
-                        background: '#fef2f2',
-                        color: '#dc2626',
-                        border: '1px solid #fecaca',
+                        background: "#fef2f2",
+                        color: "#dc2626",
+                        border: "1px solid #fecaca",
                       },
                       iconTheme: {
-                        primary: '#dc2626',
-                        secondary: '#fef2f2',
+                        primary: "#dc2626",
+                        secondary: "#fef2f2",
                       },
                     },
                   }}

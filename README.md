@@ -32,13 +32,13 @@
 
 ### 🏆 Platform Excellence Metrics
 
-| Metric | Score | Achievement |
-|--------|-------|-------------|
-| **Performance** | 98/100 | ⚡ Lightning Fast |
-| **Accessibility** | 100/100 | ♿ WCAG 2.1 AA |
-| **Best Practices** | 95/100 | 🛡️ Security First |
-| **SEO** | 100/100 | � Search Optimized |
-| **PWA** | 92/100 | 📱 App-like Experience |
+| Metric             | Score   | Achievement            |
+| ------------------ | ------- | ---------------------- |
+| **Performance**    | 98/100  | ⚡ Lightning Fast      |
+| **Accessibility**  | 100/100 | ♿ WCAG 2.1 AA         |
+| **Best Practices** | 95/100  | 🛡️ Security First      |
+| **SEO**            | 100/100 | � Search Optimized     |
+| **PWA**            | 92/100  | 📱 App-like Experience |
 
 </div>
 
@@ -104,14 +104,14 @@ Our digital magazine showcases authentic Islamic scholarship across diverse topi
 
 ### 🎯 Magazine Features
 
-| Feature | Description | Technology |
-|---------|-------------|------------|
-| **📖 Advanced PDF Reader** | Enterprise-grade viewing with zoom, search, navigation | PDF.js + Custom Engine |
-| **🔍 Full-Text Search** | Intelligent search across all magazine content | Optimized Search Algorithm |
-| **📱 Responsive Design** | Seamless experience across all devices | TailwindCSS + Modern CSS |
-| **🌐 Bilingual Content** | Arabic (RTL) and English (LTR) support | next-intl Framework |
-| **⬇️ Download & Share** | High-quality PDF downloads and social sharing | Progressive Web App |
-| **🔖 Bookmarking** | Save favorite articles and pages for later | Local Storage + Sync |
+| Feature                    | Description                                            | Technology                 |
+| -------------------------- | ------------------------------------------------------ | -------------------------- |
+| **📖 Advanced PDF Reader** | Enterprise-grade viewing with zoom, search, navigation | PDF.js + Custom Engine     |
+| **🔍 Full-Text Search**    | Intelligent search across all magazine content         | Optimized Search Algorithm |
+| **📱 Responsive Design**   | Seamless experience across all devices                 | TailwindCSS + Modern CSS   |
+| **🌐 Bilingual Content**   | Arabic (RTL) and English (LTR) support                 | next-intl Framework        |
+| **⬇️ Download & Share**    | High-quality PDF downloads and social sharing          | Progressive Web App        |
+| **🔖 Bookmarking**         | Save favorite articles and pages for later             | Local Storage + Sync       |
 
 </div>
 
@@ -256,15 +256,15 @@ hurass/
 
 <div align="center">
 
-| Layer | Technology | Version | Purpose |
-|-------|------------|---------|---------|
-| **Frontend Framework** | Next.js | 15.3.2 | React-based full-stack framework |
-| **UI Library** | React | 19.0 | Component-based user interface |
-| **Type Safety** | TypeScript | 5.0 | Static type checking & IntelliSense |
-| **Styling Engine** | TailwindCSS | 4.1.8 | Utility-first CSS framework |
-| **PDF Engine** | PDF.js | Latest | Advanced document rendering |
-| **Internationalization** | next-intl | Latest | Multi-language support |
-| **Deployment** | Vercel | Edge Network | Global CDN & serverless functions |
+| Layer                    | Technology  | Version      | Purpose                             |
+| ------------------------ | ----------- | ------------ | ----------------------------------- |
+| **Frontend Framework**   | Next.js     | 15.3.2       | React-based full-stack framework    |
+| **UI Library**           | React       | 19.0         | Component-based user interface      |
+| **Type Safety**          | TypeScript  | 5.0          | Static type checking & IntelliSense |
+| **Styling Engine**       | TailwindCSS | 4.1.8        | Utility-first CSS framework         |
+| **PDF Engine**           | PDF.js      | Latest       | Advanced document rendering         |
+| **Internationalization** | next-intl   | Latest       | Multi-language support              |
+| **Deployment**           | Vercel      | Edge Network | Global CDN & serverless functions   |
 
 </div>
 
@@ -315,13 +315,13 @@ interface PDFViewerFeatures {
 
 <div align="center">
 
-| Optimization | Implementation | Impact |
-|--------------|----------------|--------|
-| **Image Optimization** | Next.js Image + WebP/AVIF | 70% size reduction |
-| **Code Splitting** | Dynamic imports + lazy loading | 50% faster initial load |
-| **Bundle Analysis** | Webpack Bundle Analyzer | Optimized chunk sizes |
-| **Caching Strategy** | Edge caching + service workers | 90% cache hit rate |
-| **Core Web Vitals** | FCP < 1.5s, LCP < 2.5s, CLS < 0.1 | Perfect scores |
+| Optimization           | Implementation                    | Impact                  |
+| ---------------------- | --------------------------------- | ----------------------- |
+| **Image Optimization** | Next.js Image + WebP/AVIF         | 70% size reduction      |
+| **Code Splitting**     | Dynamic imports + lazy loading    | 50% faster initial load |
+| **Bundle Analysis**    | Webpack Bundle Analyzer           | Optimized chunk sizes   |
+| **Caching Strategy**   | Edge caching + service workers    | 90% cache hit rate      |
+| **Core Web Vitals**    | FCP < 1.5s, LCP < 2.5s, CLS < 0.1 | Perfect scores          |
 
 </div>
 
@@ -384,6 +384,7 @@ npm run lighthouse       # Performance auditing
 </div>
 
 **Core Features:**
+
 - 📚 **Digital Issues**: Professional magazine layout with authentic Islamic content
 - 🏷️ **Smart Categories**: Organized by Aqeedah, Fiqh, Seerah, and Islamic History
 - 🔍 **Advanced Search**: Intelligent content discovery across all issues
@@ -398,6 +399,7 @@ npm run lighthouse       # Performance auditing
 </div>
 
 **Comprehensive Knowledge Repository:**
+
 - 📖 **Scholarly Articles**: Peer-reviewed Islamic research and papers
 - 📋 **Educational Brochures**: Quick reference guides and pamphlets
 - 🖼️ **Visual Resources**: Infographics and educational illustrations
@@ -412,6 +414,7 @@ npm run lighthouse       # Performance auditing
 </div>
 
 **Islamic Outreach Excellence:**
+
 - 🌟 **Introduction to Islam**: Comprehensive guides for non-Muslims
 - 🆕 **New Muslim Resources**: Step-by-step guidance for recent converts
 - 📚 **Educational Content**: In-depth explanations of Islamic principles
@@ -422,6 +425,7 @@ npm run lighthouse       # Performance auditing
 ### 📞 Contact & Community (`/contact`)
 
 **Professional Communication Hub:**
+
 - 📝 **Smart Forms**: Intelligent contact forms with auto-translation
 - 📧 **Direct Communication**: Email, phone, and social media integration
 - 🏢 **Organization Info**: Office locations, hours, and contact details
@@ -475,13 +479,13 @@ npm run lighthouse       # Performance auditing
 
 ### 💼 Professional Use Cases
 
-| User Type | Primary Needs | Platform Solutions |
-|-----------|---------------|-------------------|
-| **📚 Academic Researchers** | Peer-reviewed content, citation tools | Scholarly articles, advanced search, export features |
-| **🎓 Educational Institutions** | Curriculum resources, student materials | Organized content library, educational brochures |
-| **🕌 Islamic Centers** | Dawah materials, community resources | Downloadable content, multilingual support |
-| **📱 Mobile Users** | On-the-go access, offline reading | Progressive Web App, download functionality |
-| **🌐 International Users** | Multilingual content, cultural adaptation | Arabic/English interface, RTL/LTR support |
+| User Type                       | Primary Needs                             | Platform Solutions                                   |
+| ------------------------------- | ----------------------------------------- | ---------------------------------------------------- |
+| **📚 Academic Researchers**     | Peer-reviewed content, citation tools     | Scholarly articles, advanced search, export features |
+| **🎓 Educational Institutions** | Curriculum resources, student materials   | Organized content library, educational brochures     |
+| **🕌 Islamic Centers**          | Dawah materials, community resources      | Downloadable content, multilingual support           |
+| **📱 Mobile Users**             | On-the-go access, offline reading         | Progressive Web App, download functionality          |
+| **🌐 International Users**      | Multilingual content, cultural adaptation | Arabic/English interface, RTL/LTR support            |
 
 ## 🌍 Production Deployment & Infrastructure
 
@@ -489,13 +493,13 @@ npm run lighthouse       # Performance auditing
 
 ### 🚀 Enterprise-Grade Hosting
 
-| Component | Technology | Performance |
-|-----------|------------|-------------|
-| **🌐 Platform** | Vercel Edge Network | 99.99% Uptime |
-| **⚡ CDN** | Global Edge Locations | <100ms Response Time |
-| **🔒 Security** | SSL/TLS 1.3 + HSTS | A+ Security Rating |
-| **📊 Analytics** | Real-time Monitoring | 24/7 Performance Tracking |
-| **🔄 CI/CD** | Automated Deployments | Zero-downtime Updates |
+| Component        | Technology            | Performance               |
+| ---------------- | --------------------- | ------------------------- |
+| **🌐 Platform**  | Vercel Edge Network   | 99.99% Uptime             |
+| **⚡ CDN**       | Global Edge Locations | <100ms Response Time      |
+| **🔒 Security**  | SSL/TLS 1.3 + HSTS    | A+ Security Rating        |
+| **📊 Analytics** | Real-time Monitoring  | 24/7 Performance Tracking |
+| **🔄 CI/CD**     | Automated Deployments | Zero-downtime Updates     |
 
 ### 📈 Performance Excellence Metrics
 
@@ -507,6 +511,7 @@ npm run lighthouse       # Performance auditing
 </div>
 
 **Production Environment:**
+
 - **🌐 Live URL**: [https://hurass-althughur.vercel.app](https://hurass-althughur.vercel.app)
 - **⚡ CDN**: Global edge network with 60+ locations
 - **🔒 Security**: Advanced DDoS protection, SSL/TLS encryption
@@ -665,32 +670,35 @@ git push origin feature/enhancement-name
 
 <div align="center">
 
-| Category | Requirements | Quality Gates |
-|----------|-------------|---------------|
-| **🔍 Code Quality** | ESLint + Prettier + TypeScript | 100% type safety |
-| **🎨 UI/UX** | Figma designs + accessibility | WCAG 2.1 AA |
-| **📝 Documentation** | Comprehensive docs + examples | 100% coverage |
-| **🧪 Testing** | Unit + integration + e2e tests | 90%+ coverage |
-| **🌐 i18n** | Arabic + English localization | Native speaker review |
-| **⚡ Performance** | Lighthouse 90+ all metrics | Optimized builds |
+| Category             | Requirements                   | Quality Gates         |
+| -------------------- | ------------------------------ | --------------------- |
+| **🔍 Code Quality**  | ESLint + Prettier + TypeScript | 100% type safety      |
+| **🎨 UI/UX**         | Figma designs + accessibility  | WCAG 2.1 AA           |
+| **📝 Documentation** | Comprehensive docs + examples  | 100% coverage         |
+| **🧪 Testing**       | Unit + integration + e2e tests | 90%+ coverage         |
+| **🌐 i18n**          | Arabic + English localization  | Native speaker review |
+| **⚡ Performance**   | Lighthouse 90+ all metrics     | Optimized builds      |
 
 </div>
 
 ### 🎯 High-Priority Contribution Areas
 
 #### � Content Development
+
 - **Islamic Articles**: Authentic scholarly content in Arabic and English
 - **Educational Materials**: Infographics, guides, and reference materials
 - **Translation Services**: Professional Arabic-English translation review
 - **Academic Review**: Content verification by Islamic scholars
 
 #### 🔧 Technical Enhancements
+
 - **Performance Optimization**: Core Web Vitals improvements
 - **Accessibility Features**: Enhanced screen reader support
 - **Mobile Experience**: Progressive Web App enhancements
 - **Search Engine**: Advanced semantic search capabilities
 
 #### 🎨 Design & User Experience
+
 - **Islamic Design Patterns**: Cultural design adaptations
 - **RTL/LTR Improvements**: Enhanced bidirectional text support
 - **Animation System**: Smooth micro-interactions
@@ -721,6 +729,7 @@ git push origin feature/enhancement-name
 ### 🤝 Advisory Board
 
 We seek guidance from:
+
 - **🎓 Islamic Scholars**: Content authenticity and theological accuracy
 - **� Technical Advisors**: Architecture and performance optimization
 - **🌍 Community Leaders**: Global outreach and user experience
@@ -729,6 +738,7 @@ We seek guidance from:
 </div>
 
 **Contact Information:**
+
 - **📧 Development**: Available through GitHub issues and discussions
 - **🌐 Professional**: Contact form on the live website
 - **💬 Community**: Join our community discussions on GitHub
@@ -738,6 +748,7 @@ We seek guidance from:
 ### � Open Source License
 
 This project is proudly licensed under the **MIT License**, promoting:
+
 - ✅ **Commercial Use**: Free for commercial applications
 - ✅ **Modification**: Adapt and customize as needed
 - ✅ **Distribution**: Share and distribute freely
@@ -746,13 +757,13 @@ This project is proudly licensed under the **MIT License**, promoting:
 
 ### 🔗 Third-Party Dependencies
 
-| Library | License | Purpose |
-|---------|---------|---------|
-| **Next.js** | MIT | React framework |
-| **React** | MIT | UI library |
-| **PDF.js** | Apache 2.0 | PDF rendering |
-| **TailwindCSS** | MIT | Styling framework |
-| **TypeScript** | Apache 2.0 | Type safety |
+| Library         | License    | Purpose           |
+| --------------- | ---------- | ----------------- |
+| **Next.js**     | MIT        | React framework   |
+| **React**       | MIT        | UI library        |
+| **PDF.js**      | Apache 2.0 | PDF rendering     |
+| **TailwindCSS** | MIT        | Styling framework |
+| **TypeScript**  | Apache 2.0 | Type safety       |
 
 ### 📋 Content Licensing
 
@@ -770,17 +781,20 @@ This project is proudly licensed under the **MIT License**, promoting:
 </div>
 
 **Islamic Scholarship:**
+
 - 🕌 **Al-Azhar University**: Guidance on Islamic content authenticity
 - 📚 **Islamic Research Centers**: Scholarly review and validation
 - 🎓 **Global Islamic Scholars**: Theological guidance and content review
 
 **Technical Excellence:**
+
 - 💻 **Open Source Community**: For exceptional tools and libraries
 - 🚀 **Vercel Team**: Outstanding hosting platform and support
 - 🎨 **Design Community**: UI/UX inspiration and feedback
 - 🧪 **Testing Community**: Quality assurance methodologies
 
 **Community Support:**
+
 - 🌍 **Global Muslim Developers**: Code contributions and feedback
 - 🌐 **International Users**: Usage feedback and improvement suggestions
 - 📱 **Accessibility Advocates**: Inclusive design guidance
@@ -796,13 +810,13 @@ This project is proudly licensed under the **MIT License**, promoting:
 [![GitHub forks](https://img.shields.io/github/forks/MMansy19/hurass?style=social)](https://github.com/MMansy19/hurass)
 [![GitHub watchers](https://img.shields.io/github/watchers/MMansy19/hurass?style=social)](https://github.com/MMansy19/hurass)
 
-| Status | Indicator | Description |
-|--------|-----------|-------------|
-| **🟢 Production** | Live & Stable | Serving users globally |
-| **🟢 Maintenance** | Active Development | Regular updates & improvements |
-| **🟢 Community** | Growing | Expanding user and contributor base |
-| **🟢 Security** | Best Practices | Regular security audits |
-| **� Performance** | Optimized | 98+ Lighthouse scores |
+| Status             | Indicator          | Description                         |
+| ------------------ | ------------------ | ----------------------------------- |
+| **🟢 Production**  | Live & Stable      | Serving users globally              |
+| **🟢 Maintenance** | Active Development | Regular updates & improvements      |
+| **🟢 Community**   | Growing            | Expanding user and contributor base |
+| **🟢 Security**    | Best Practices     | Regular security audits             |
+| **� Performance**  | Optimized          | 98+ Lighthouse scores               |
 
 ### 📈 Growth Metrics
 
@@ -823,7 +837,7 @@ This project is proudly licensed under the **MIT License**, promoting:
 <img src="public/images/logo.jpg" alt="Hurass Al-Thughur" width="80" style="border-radius: 10px; margin: 20px 0;"/>
 
 **"And whoever seeks knowledge, Allah will make easy for him the path to Paradise"**  
-*- Prophet Muhammad ﷺ (Sahih Muslim)*
+_- Prophet Muhammad ﷺ (Sahih Muslim)_
 
 <br>
 
@@ -835,7 +849,7 @@ This project is proudly licensed under the **MIT License**, promoting:
 
 **📱 Available in:** [🇸🇦 العربية](https://hurass-althughur.vercel.app/ar) | [🇺🇸 English](https://hurass-althughur.vercel.app/en)
 
-*Preserving and sharing authentic Islamic knowledge through modern technology*
+_Preserving and sharing authentic Islamic knowledge through modern technology_
 
 ---
 

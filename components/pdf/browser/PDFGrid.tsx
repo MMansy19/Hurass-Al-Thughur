@@ -14,9 +14,9 @@ export function PDFCard({ name, path, locale, viewText }: PDFCardProps) {
   const displayName = getPDFTitle(name, locale);
   const description = getPDFDescription(name, locale);
   const encodedPath = encodeURIComponent(path.replace("/pdfs/", ""));
-  
+
   // Extract PDF number from filename (e.g., "1.pdf" -> "1")
-  const pdfNumber = name.replace('.pdf', '');
+  const pdfNumber = name.replace(".pdf", "");
   const coverImagePath = `/images/magazine/${pdfNumber}.png`;
 
   return (
@@ -30,9 +30,9 @@ export function PDFCard({ name, path, locale, viewText }: PDFCardProps) {
           onError={(e) => {
             // Fallback to placeholder if image fails to load
             const target = e.target as HTMLImageElement;
-            target.style.display = 'none';
+            target.style.display = "none";
             const fallback = target.nextElementSibling as HTMLElement;
-            if (fallback) fallback.style.display = 'flex';
+            if (fallback) fallback.style.display = "flex";
           }}
         />
         {/* Hidden fallback that shows when image fails */}
@@ -51,7 +51,7 @@ export function PDFCard({ name, path, locale, viewText }: PDFCardProps) {
             </svg>
           </div>
         </div>
-        
+
         {/* PDF Type Badge */}
         <div className="absolute top-3 right-3">
           <span className="bg-red-600 text-white px-2 py-1 rounded-full text-xs font-medium shadow-lg">

@@ -26,7 +26,7 @@ function AuthButtons({ messages, isMobile = false }: AuthButtonsProps) {
       toast.success("Signed out successfully");
       router.push(`/${locale}`);
     } catch (error) {
-      console.error('Sign out error:', error);
+      console.error("Sign out error:", error);
       toast.error("Error signing out. Please try again.");
     }
   }
@@ -34,7 +34,7 @@ function AuthButtons({ messages, isMobile = false }: AuthButtonsProps) {
   if (loading) {
     return <div className="w-20 h-10"></div>;
   }
-  
+
   if (user) {
     return (
       <button

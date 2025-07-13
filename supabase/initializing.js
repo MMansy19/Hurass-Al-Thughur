@@ -13,8 +13,8 @@ export const supabase = createClient(supabaseUrl, supabaseKey, {
     // Detect auth session changes and update accordingly
     detectSessionInUrl: true,
     // Configure storage
-    storage: typeof window !== 'undefined' ? window.localStorage : undefined,
+    storage: typeof window !== "undefined" ? window.localStorage : undefined,
     // Set flow type to 'pkce' for better security
-    flowType: 'pkce'
+    flowType: "pkce",
   },
 });

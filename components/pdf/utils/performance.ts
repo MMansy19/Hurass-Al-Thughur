@@ -2,7 +2,11 @@
  * Performance monitoring utilities for PDF viewer
  */
 
-import { DEVICE_BREAKPOINTS, CONNECTION_TYPES, getPerformancePreset } from '../config/optimization';
+import {
+  DEVICE_BREAKPOINTS,
+  CONNECTION_TYPES,
+  getPerformancePreset,
+} from "../config/optimization";
 
 interface PerformanceMetrics {
   documentLoadTime?: number;
@@ -22,28 +26,28 @@ class PDFPerformanceMonitor {
   endTimer(name: string): number {
     const startTime = this.startTimes.get(name);
     if (!startTime) return 0;
-    
+
     const duration = performance.now() - startTime;
     this.startTimes.delete(name);
-    
+
     // Store the metric
     switch (name) {
-      case 'documentLoad':
+      case "documentLoad":
         this.metrics.documentLoadTime = duration;
         break;
-      case 'pageRender':
+      case "pageRender":
         this.metrics.pageRenderTime = duration;
         break;
-      case 'totalLoad':
+      case "totalLoad":
         this.metrics.totalLoadTime = duration;
         break;
     }
-    
+
     return duration;
   }
 
   getMemoryUsage(): number {
-    if ('memory' in performance) {
+    if ("memory" in performance) {
       const memory = (performance as any).memory;
       return memory.usedJSHeapSize / 1024 / 1024; // Convert to MB
     }
@@ -51,34 +55,40 @@ class PDFPerformanceMonitor {
   }
 
   logMetrics(): void {
-    if (process.env.NODE_ENV === 'development') {
-      console.group('📊 PDF Performance Metrics');
-      
+    if (process.env.NODE_ENV === "development") {
+      console.group("📊 PDF Performance Metrics");
+
       if (this.metrics.documentLoadTime) {
-        console.log(`📄 Document Load: ${this.metrics.documentLoadTime.toFixed(2)}ms`);
+        console.log(
+          `📄 Document Load: ${this.metrics.documentLoadTime.toFixed(2)}ms`,
+        );
       }
-      
+
       if (this.metrics.pageRenderTime) {
-        console.log(`🎨 Page Render: ${this.metrics.pageRenderTime.toFixed(2)}ms`);
+        console.log(
+          `🎨 Page Render: ${this.metrics.pageRenderTime.toFixed(2)}ms`,
+        );
       }
-      
+
       if (this.metrics.totalLoadTime) {
-        console.log(`⏱️ Total Load Time: ${this.metrics.totalLoadTime.toFixed(2)}ms`);
+        console.log(
+          `⏱️ Total Load Time: ${this.metrics.totalLoadTime.toFixed(2)}ms`,
+        );
       }
-      
+
       const memoryUsage = this.getMemoryUsage();
       if (memoryUsage > 0) {
         console.log(`💾 Memory Usage: ${memoryUsage.toFixed(2)} MB`);
       }
-      
+
       console.groupEnd();
     }
   }
 
   getMetrics(): PerformanceMetrics {
-    return { 
-      ...this.metrics, 
-      memoryUsage: this.getMemoryUsage() 
+    return {
+      ...this.metrics,
+      memoryUsage: this.getMemoryUsage(),
     };
   }
 
@@ -95,8 +105,9 @@ export const optimizeForDevice = () => {
   const isMobile = window.innerWidth < DEVICE_BREAKPOINTS.MOBILE;
   const isLowEndDevice = navigator.hardwareConcurrency <= 2;
   const connection = (navigator as any).connection;
-  const hasSlowConnection = connection ? 
-    CONNECTION_TYPES.SLOW.includes(connection.effectiveType) : false;
+  const hasSlowConnection = connection
+    ? CONNECTION_TYPES.SLOW.includes(connection.effectiveType)
+    : false;
 
   const preset = getPerformancePreset(isLowEndDevice, hasSlowConnection);
 
@@ -116,10 +127,10 @@ export const optimizeForDevice = () => {
 // Debounce utility for performance
 export const debounce = <T extends (...args: any[]) => any>(
   func: T,
-  delay: number
+  delay: number,
 ): ((...args: Parameters<T>) => void) => {
   let timeoutId: NodeJS.Timeout;
-  
+
   return (...args: Parameters<T>) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => func(...args), delay);
@@ -129,10 +140,10 @@ export const debounce = <T extends (...args: any[]) => any>(
 // Throttle utility for performance
 export const throttle = <T extends (...args: any[]) => any>(
   func: T,
-  delay: number
+  delay: number,
 ): ((...args: Parameters<T>) => void) => {
   let lastCall = 0;
-  
+
   return (...args: Parameters<T>) => {
     const now = Date.now();
     if (now - lastCall >= delay) {

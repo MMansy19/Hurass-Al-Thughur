@@ -12,12 +12,15 @@ export async function loadSignedInUser(setUser: (user: any) => void) {
   try {
     const {
       data: { user },
-      error
+      error,
     } = await supabase.auth.getUser();
 
     if (error) {
-      if (error.message.includes('refresh') || error.message.includes('token')) {
-        await supabase.auth.signOut({ scope: 'local' });
+      if (
+        error.message.includes("refresh") ||
+        error.message.includes("token")
+      ) {
+        await supabase.auth.signOut({ scope: "local" });
       }
       setUser(null);
       return;
