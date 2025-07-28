@@ -131,7 +131,7 @@ const Footer = ({ locale, messages }: FooterProps) => {
     },
     {
       icon: <PhoneIcon />,
-      text: "+20 100 231 5657",
+      text: "+20 1010352387",
     },
     {
       icon: <ContactIcon />,
