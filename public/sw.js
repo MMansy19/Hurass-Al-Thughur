@@ -437,6 +437,7 @@ define(["./workbox-00a24876"], function (e) {
         { url: "/pdfs/4.pdf", revision: "5d0e5c9e1e7dfe89d27554f887858290" },
         { url: "/pdfs/5.pdf", revision: "60380c1cbe5f2a4ded178208bd1baa69" },
         { url: "/pdfs/6.pdf", revision: "72d2117884fe3a108c8617d992bbc1a7" },
+        { url: "/pdfs/7.pdf", revision: "b0f8c1d2e3a4b5c6d7e8f9a0b1c2d3e4" },
         {
           url: "/sw-enhanced.js",
           revision: "961c5b05a507fdbff0461c22c6a0e3d1",

@@ -131,6 +131,36 @@ function getMagazineIssue(
       author: isArabic ? "فريق التحرير" : "Editorial Team",
       tags: [isArabic ? "الفطرة" : "Fitrah", isArabic ? "الطريق" : "Path"],
     },
+    "6": {
+      id: "6",
+      title: magazine.issues.issue6.title,
+      description: magazine.issues.issue6.description,
+      date: magazine.issues.issue6.date,
+      category: magazine.categoryNames.aqeedah,
+      pdfUrl: "/pdfs/6.pdf",
+      fileSize: "2.0 MB",
+      pageCount: 30,
+      author: isArabic ? "ابن عبد الصبور" : "Ibn Abd al-Sabour",
+      tags: [
+        isArabic ? "الثقافة" : "Culture",
+        isArabic ? "الدعوة" : "Dawah",
+      ],
+    },
+    "7": {
+      id: "7",
+      title: magazine.issues.issue7.title,
+      description: magazine.issues.issue7.description,
+      date: magazine.issues.issue7.date,
+      category: magazine.categoryNames.aqeedah,
+      pdfUrl: "/pdfs/7.pdf",
+      fileSize: "2.0 MB",
+      pageCount: 30,
+      author: isArabic ? "محمد دياب" : "Muhammad Diab",
+      tags: [
+        isArabic ? "الإيمان" : "Faith",
+        isArabic ? "الدعوة" : "Dawah",
+      ],
+    },
   };
 
   return issues[id] || null;
