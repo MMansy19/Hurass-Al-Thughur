@@ -144,17 +144,6 @@ export default async function EnhancedMagazinePage({
       category: magazine.categoryNames.aqeedah,
       tags: [messages.hardcoded.fitrah, messages.hardcoded.guidance],
     },
-    {
-      id: "7",
-      title: magazine.issues.issue7.title,
-      description: magazine.issues.issue7.description,
-      coverImage: "/images/magazine/7.png",
-      pdfUrl: "/pdfs/7.pdf",
-      date: magazine.issues.issue7.date,
-      author: messages.hardcoded.editorialTeam,
-      category: magazine.categoryNames.aqeedah,
-      tags: [messages.hardcoded.fitrah, messages.hardcoded.guidance],
-    }
   ];
 
   const structuredData = {
