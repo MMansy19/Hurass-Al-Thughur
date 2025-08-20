@@ -105,6 +105,21 @@ export const pdfMetadata: PDFMetadata[] = [
     publishDate: "2025",
     tags: ["south america", "culture", "religion", "da'wah"],
   },
+  {
+    filename: "7.pdf",
+    title: {
+      en: "The Seventh Issue",
+      ar: "العدد السابع",
+    },
+    description: {
+      en: "Research on the Prophethood of Muhammad (PBUH)",
+      ar: "بحث في نبوة محمد (صلى الله عليه وسلم)",
+    },
+    category: "Islamic Studies",
+    author: "Islamic Research Council",
+    publishDate: "2025",
+    tags: ["prophethood", "muhammad", "research", "islam"],
+  },
 ];
 
 // Helper function to get PDF metadata by filename
