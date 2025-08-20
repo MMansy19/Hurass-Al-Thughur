@@ -108,8 +108,8 @@ export const pdfMetadata: PDFMetadata[] = [
   {
     filename: "7.pdf",
     title: {
-      en: "The Seventh Issue",
-      ar: "العدد السابع",
+      en: "Proof of the Prophethood of Muhammad",
+      ar: "إثبات نبوة محمد صلى الله عليه وسلم",
     },
     description: {
       en: "Research on the Prophethood of Muhammad (PBUH)",
