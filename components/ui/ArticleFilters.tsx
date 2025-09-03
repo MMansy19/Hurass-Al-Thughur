@@ -17,12 +17,18 @@ export function ArticleFilters({
   onFilteredArticlesChange,
 }: ArticleFiltersProps) {
   const [selectedAuthor, setSelectedAuthor] = useState<string>('');
-  const [searchTitle, setSearchTitle] = useState<string>('');
+  const [selectedTitle, setSelectedTitle] = useState<string>('');
 
   // Get unique authors from articles
   const uniqueAuthors = useMemo(() => {
     const authors = articles.map((article) => article.author);
     return Array.from(new Set(authors)).sort();
+  }, [articles]);
+
+  // Get unique titles from articles
+  const uniqueTitles = useMemo(() => {
+    const titles = articles.map((article) => article.title);
+    return Array.from(new Set(titles)).sort();
   }, [articles]);
 
   // Filter articles based on selected filters
@@ -34,15 +40,13 @@ export function ArticleFilters({
       filtered = filtered.filter((article) => article.author === selectedAuthor);
     }
 
-    // Filter by title search
-    if (searchTitle.trim()) {
-      filtered = filtered.filter((article) =>
-        article.title.toLowerCase().includes(searchTitle.toLowerCase().trim())
-      );
+    // Filter by title
+    if (selectedTitle) {
+      filtered = filtered.filter((article) => article.title === selectedTitle);
     }
 
     return filtered;
-  }, [articles, selectedAuthor, searchTitle]);
+  }, [articles, selectedAuthor, selectedTitle]);
 
   // Update parent component when filtered articles change
   useMemo(() => {
@@ -53,54 +57,44 @@ export function ArticleFilters({
     setSelectedAuthor(e.target.value);
   };
 
-  const handleTitleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTitle(e.target.value);
+  const handleTitleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedTitle(e.target.value);
   };
 
   const clearFilters = () => {
     setSelectedAuthor('');
-    setSearchTitle('');
+    setSelectedTitle('');
   };
 
-  const hasActiveFilters = selectedAuthor || searchTitle.trim();
+  const hasActiveFilters = selectedAuthor || selectedTitle;
 
   return (
     <div className="bg-white shadow-lg rounded-xl p-6 mb-8 border border-gray-100">
       <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-end">
-        {/* Title Search */}
+        {/* Title Filter */}
         <div className="flex-1 min-w-0">
           <label
-            htmlFor="title-search"
+            htmlFor="title-filter"
             className="block text-sm font-medium text-gray-700 mb-2"
           >
-            {messages.articles.searchByTitle || 'Search by Title'}
+            {messages.articles.filterByTitle || 'Filter by Title'}
           </label>
-          <div className="relative">
-            <input
-              id="title-search"
-              type="text"
-              value={searchTitle}
-              onChange={handleTitleSearchChange}
-              placeholder={messages.articles.searchTitlePlaceholder || 'Search article titles...'}
-              className="w-full px-4 py-3 pr-10 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
-              dir={locale === 'ar' ? 'rtl' : 'ltr'}
-            />
-            <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
-              <svg
-                className="h-5 w-5 text-gray-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-            </div>
-          </div>
+          <select
+            id="title-filter"
+            value={selectedTitle}
+            onChange={handleTitleChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors bg-white"
+            dir={locale === 'ar' ? 'rtl' : 'ltr'}
+          >
+            <option value="">
+              {messages.articles.allTitles || 'All Titles'}
+            </option>
+            {uniqueTitles.map((title) => (
+              <option key={title} value={title}>
+                {title.length > 50 ? `${title.substring(0, 50)}...` : title}
+              </option>
+            ))}
+          </select>
         </div>
 
         {/* Author Filter */}
@@ -115,7 +109,7 @@ export function ArticleFilters({
             id="author-filter"
             value={selectedAuthor}
             onChange={handleAuthorChange}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors bg-white"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors bg-white"
             dir={locale === 'ar' ? 'rtl' : 'ltr'}
           >
             <option value="">
@@ -167,11 +161,11 @@ export function ArticleFilters({
                 </button>
               </span>
             )}
-            {searchTitle.trim() && (
+            {selectedTitle && (
               <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                {messages.articles.title}: "{searchTitle.trim()}"
+                {messages.articles.title}: "{selectedTitle.length > 30 ? `${selectedTitle.substring(0, 30)}...` : selectedTitle}"
                 <button
-                  onClick={() => setSearchTitle('')}
+                  onClick={() => setSelectedTitle('')}
                   className="ml-2 text-blue-600 hover:text-blue-800"
                 >
                   ×

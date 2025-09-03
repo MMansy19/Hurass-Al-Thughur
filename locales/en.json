@@ -261,6 +261,8 @@
     "content": "Content",
     "searchByTitle": "Search by Title",
     "searchTitlePlaceholder": "Search article titles...",
+    "filterByTitle": "Filter by Title",
+    "allTitles": "All Titles",
     "filterByAuthor": "Filter by Author",
     "allAuthors": "All Authors",
     "clearFilters": "Clear Filters",

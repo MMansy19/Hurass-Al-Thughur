@@ -266,12 +266,14 @@
     "content": "المحتوى",
     "searchByTitle": "البحث بالعنوان",
     "searchTitlePlaceholder": "ابحث في عناوين المقالات...",
+    "filterByTitle": "تصفية بالعنوان",
+    "allTitles": "جميع العناوين",
     "filterByAuthor": "تصفية بالمؤلف",
     "allAuthors": "جميع المؤلفين",
-    "clearFilters": "مسح المرشحات",
+    "clearFilters": "مسح الفلتر",
     "showingResults": "عرض {count} من {total} مقال",
     "noMatchingArticles": "لا توجد مقالات مطابقة",
-    "noMatchingArticlesDescription": "جرب تعديل معايير البحث أو مسح المرشحات."
+    "noMatchingArticlesDescription": "جرب تعديل معايير البحث أو مسح الفلتر."
   },
   "footer": {
     "rightsReserved": "© 2025 حُراس الثغور. جميع الحقوق محفوظة.",
@@ -376,7 +378,7 @@
     "historyOfIslamic": "تاريخ الحضارة الإسلامية",
     "skipToMainContent": "انتقل إلى المحتوى الرئيسي",
     "skipToSearch": "انتقل إلى البحث",
-    "skipToFilters": "انتقل إلى المرشحات",
+    "skipToFilters": "انتقل إلى الفلتر",
     "skipToIssuesGrid": "انتقل إلى شبكة الإصدارات",
     "skipToLatestIssues": "انتقل إلى آخر الإصدارات",
     "skipToPDFViewer": "انتقل إلى عارض PDF",
