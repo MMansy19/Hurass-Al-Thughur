@@ -263,7 +263,15 @@
     "author": "المؤلف",
     "title": "العنوان",
     "excerpt": "نبذة",
-    "content": "المحتوى"
+    "content": "المحتوى",
+    "searchByTitle": "البحث بالعنوان",
+    "searchTitlePlaceholder": "ابحث في عناوين المقالات...",
+    "filterByAuthor": "تصفية بالمؤلف",
+    "allAuthors": "جميع المؤلفين",
+    "clearFilters": "مسح المرشحات",
+    "showingResults": "عرض {count} من {total} مقال",
+    "noMatchingArticles": "لا توجد مقالات مطابقة",
+    "noMatchingArticlesDescription": "جرب تعديل معايير البحث أو مسح المرشحات."
   },
   "footer": {
     "rightsReserved": "© 2025 حُراس الثغور. جميع الحقوق محفوظة.",

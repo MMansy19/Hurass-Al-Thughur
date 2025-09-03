@@ -172,7 +172,7 @@ async function Article({
 
             <div className="space-y-4 sm:space-y-6">
               <h1
-                className="text-center sm:text-start md:py-2 text-4xl md:text-6xl lg:text-7xl font-bold leading-tight bg-gradient-to-r from-white to-emerald-100 bg-clip-text text-transparent"
+                className="text-center sm:text-start md:py-2 text-4xl md:text-6xl lg:text-7xl font-bold leading-relaxed bg-gradient-to-r from-white to-emerald-100 bg-clip-text text-transparent "
                 dir="auto"
               >
                 {article.title}

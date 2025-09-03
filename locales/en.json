@@ -258,7 +258,15 @@
     "author": "Author",
     "title": "Title",
     "excerpt": "Excerpt",
-    "content": "Content"
+    "content": "Content",
+    "searchByTitle": "Search by Title",
+    "searchTitlePlaceholder": "Search article titles...",
+    "filterByAuthor": "Filter by Author",
+    "allAuthors": "All Authors",
+    "clearFilters": "Clear Filters",
+    "showingResults": "Showing {count} of {total} articles",
+    "noMatchingArticles": "No matching articles found",
+    "noMatchingArticlesDescription": "Try adjusting your search criteria or clearing the filters."
   },
   "footer": {
     "rightsReserved": "© 2025 Hurass Al-Thughur. All rights reserved.",

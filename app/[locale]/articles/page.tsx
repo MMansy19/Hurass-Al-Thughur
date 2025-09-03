@@ -1,7 +1,7 @@
 import { supabase } from "@/supabase/initializing";
 import { ArticleInterface } from "@/types/articles";
 import { PostgrestError } from "@supabase/supabase-js";
-import { EnhancedArticleCard } from "@/components/ui/ArticleComponents";
+import { ArticlesClient } from "@/components/ui/ArticlesClient";
 
 async function Articles({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -65,22 +65,12 @@ async function Articles({ params }: { params: Promise<{ locale: string }> }) {
         </div>
       </section>
 
-      {/* Enhanced Articles Grid */}
-      <section className="py-16 lg:py-24 bg-gradient-to-b from-gray-50 to-white">
-        <div className="container mx-auto sm:px-4 px-2">
-          <div className="grid gap-8 md:gap-12 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            {articles?.map((article, index) => (
-              <EnhancedArticleCard
-                key={article.id}
-                article={article}
-                locale={locale}
-                messages={messages}
-                delay={index * 100}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Articles with Filters */}
+      <ArticlesClient 
+        articles={articles}
+        locale={locale}
+        messages={messages}
+      />
     </>
   );
 }
