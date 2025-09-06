@@ -15,8 +15,8 @@ export function PDFCard({ name, path, locale, viewText }: PDFCardProps) {
   const description = getPDFDescription(name, locale);
   const encodedPath = encodeURIComponent(path.replace("/pdfs/", ""));
 
-  // Extract PDF number from filename (e.g., "1.pdf" -> "1")
-  const pdfNumber = name.replace(".pdf", "");
+  // Extract PDF number from filename (e.g., "1.pdf" or "1.PDF" -> "1")
+  const pdfNumber = name.replace(/\.pdf$/i, "");
   const coverImagePath = `/images/magazine/${pdfNumber}.png`;
 
   return (

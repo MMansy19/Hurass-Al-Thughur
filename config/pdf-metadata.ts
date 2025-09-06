@@ -139,13 +139,13 @@ export const pdfMetadata: PDFMetadata[] = [
 
 // Helper function to get PDF metadata by filename
 export function getPDFMetadata(filename: string): PDFMetadata | undefined {
-  return pdfMetadata.find((pdf) => pdf.filename === filename);
+  return pdfMetadata.find((pdf) => pdf.filename.toLowerCase() === filename.toLowerCase());
 }
 
 // Helper function to get PDF title by locale
 export function getPDFTitle(filename: string, locale: string): string {
   const metadata = getPDFMetadata(filename);
-  if (!metadata) return filename.replace(".pdf", "");
+  if (!metadata) return filename.replace(/\.pdf$/i, "");
 
   const title = locale === "ar" ? metadata.title.ar : metadata.title.en;
   return title || metadata.title.en;
