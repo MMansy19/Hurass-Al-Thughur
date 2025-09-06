@@ -66,7 +66,7 @@ function getMagazineIssue(
       date: magazine.issues.issue1.date,
       category: magazine.categoryNames.aqeedah,
       pdfUrl: "/pdfs/1.pdf",
-      fileSize: "2.5 MB",
+      fileSize: "11.4 MB",
       pageCount: 32,
       author: isArabic ? "فريق التحرير" : "Editorial Team",
       tags: [
@@ -81,7 +81,7 @@ function getMagazineIssue(
       date: magazine.issues.issue2.date,
       category: magazine.categoryNames.fiqh,
       pdfUrl: "/pdfs/2.pdf",
-      fileSize: "3.1 MB",
+      fileSize: "11.3 MB",
       pageCount: 40,
       author: isArabic ? "فريق التحرير" : "Editorial Team",
       tags: [
@@ -96,7 +96,7 @@ function getMagazineIssue(
       date: magazine.issues.issue3.date,
       category: magazine.categoryNames.prophetBiography,
       pdfUrl: "/pdfs/3.pdf",
-      fileSize: "2.8 MB",
+      fileSize: "49.5 MB",
       pageCount: 36,
       author: isArabic ? "فريق التحرير" : "Editorial Team",
       tags: [
@@ -111,7 +111,7 @@ function getMagazineIssue(
       date: magazine.issues.issue4.date,
       category: magazine.categoryNames.aqeedah,
       pdfUrl: "/pdfs/4.pdf",
-      fileSize: "2.2 MB",
+      fileSize: "32.6 MB",
       pageCount: 28,
       author: isArabic ? "فريق التحرير" : "Editorial Team",
       tags: [
@@ -126,7 +126,7 @@ function getMagazineIssue(
       date: magazine.issues.issue5.date,
       category: magazine.categoryNames.aqeedah,
       pdfUrl: "/pdfs/5.pdf",
-      fileSize: "1.9 MB",
+      fileSize: "32.5 MB",
       pageCount: 24,
       author: isArabic ? "فريق التحرير" : "Editorial Team",
       tags: [isArabic ? "الفطرة" : "Fitrah", isArabic ? "الطريق" : "Path"],
@@ -138,7 +138,7 @@ function getMagazineIssue(
       date: magazine.issues.issue6.date,
       category: magazine.categoryNames.aqeedah,
       pdfUrl: "/pdfs/6.pdf",
-      fileSize: "2.0 MB",
+      fileSize: "500 KB",
       pageCount: 30,
       author: isArabic ? "ابن عبد الصبور" : "Ibn Abd al-Sabour",
       tags: [
@@ -153,12 +153,27 @@ function getMagazineIssue(
       date: magazine.issues.issue7.date,
       category: magazine.categoryNames.aqeedah,
       pdfUrl: "/pdfs/7.pdf",
-      fileSize: "2.0 MB",
+      fileSize: "1.28 MB",
       pageCount: 30,
       author: isArabic ? "محمد دياب" : "Muhammad Diab",
       tags: [
         isArabic ? "الإيمان" : "Faith",
         isArabic ? "الدعوة" : "Dawah",
+      ],
+    },
+    "8": {
+      id: "8",
+      title: magazine.issues.issue8.title,
+      description: magazine.issues.issue8.description,
+      date: magazine.issues.issue8.date,
+      category: magazine.categoryNames.culturalStudies,
+      pdfUrl: "/pdfs/8.pdf",
+      fileSize: "610 KB",
+      pageCount: 34,
+      author: isArabic ? "عبدالنور الجزائري" : "Abdel Nour Al-Jazaeri",
+      tags: [
+        isArabic ? "علمنة" : "Secularization",
+        isArabic ? "الشعوب" : "Nations",
       ],
     },
   };

@@ -120,6 +120,21 @@ export const pdfMetadata: PDFMetadata[] = [
     publishDate: "2025",
     tags: ["prophethood", "muhammad", "research", "islam"],
   },
+  {
+    filename: "8.pdf",
+    title: {
+      en: "Secularization of Nations",
+      ar: "علمنة الشعوب",
+    },
+    description: {
+      en: "A Study on the Secularization of Nations and Its Impact on the Islamic World",
+      ar: "دراسة في علمنة الشعوب وتأثيرها على العالم الإسلامي",
+    },
+    category: "Cultural Studies",
+    author: "عبدالنور الجزائري",
+    publishDate: "2025",
+    tags: ["secularization", "nations", "culture", "islam"],
+  },
 ];
 
 // Helper function to get PDF metadata by filename
