@@ -41,6 +41,7 @@ export default async function PDFViewPage({
   const decodedPdfName = decodeURIComponent(pdfName);
   const pdfUrl = getPDFUrl(decodedPdfName);
   const pdfTitle = getPDFTitle(decodedPdfName, locale);
+  const pdfDescription = getPDFDescription(decodedPdfName, locale);
   const pdfMetadata = getPDFMetadata(decodedPdfName);
 
   // Check if PDF exists in our metadata (no more local file checking)
@@ -53,7 +54,7 @@ export default async function PDFViewPage({
       <section className="bg-emerald-700 text-white py-10 rounded-lg">
         <div className="container mx-auto sm:px-4 px-2 px-2">
           <h1 className="text-3xl font-bold mb-2">{pdfTitle}</h1>
-          <p className="text-lg">{library.preview}</p>
+          <p className="text-lg">{pdfDescription}</p>
         </div>
       </section>
       <div className="container mx-auto sm:px-4 px-2 px-2">
