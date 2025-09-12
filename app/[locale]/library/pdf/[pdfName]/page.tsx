@@ -1,10 +1,8 @@
 import { Metadata } from "next/types";
 import { notFound } from "next/navigation";
-import fs from "fs";
-import path from "path";
 import SEO from "@/components/ui/SEO";
 import PDFViewerSection from "@/components/pdf/PDFViewerSection";
-import { getPDFTitle, getPDFDescription, getPDFUrl, shouldUseGoogleDrive } from "@/config/pdf-metadata";
+import { getPDFTitle, getPDFDescription, getPDFUrl, getPDFMetadata } from "@/config/pdf-metadata";
 
 // Generate metadata for the page
 export async function generateMetadata({
@@ -43,23 +41,11 @@ export default async function PDFViewPage({
   const decodedPdfName = decodeURIComponent(pdfName);
   const pdfUrl = getPDFUrl(decodedPdfName);
   const pdfTitle = getPDFTitle(decodedPdfName, locale);
-  const isUsingGoogleDrive = shouldUseGoogleDrive(decodedPdfName);
+  const pdfMetadata = getPDFMetadata(decodedPdfName);
 
-  // For Google Drive files, skip file existence check
-  // For local files, verify if PDF exists
-  if (!isUsingGoogleDrive) {
-    const pdfPath = path.join(process.cwd(), "public", "pdfs", decodedPdfName);
-    const fileExists = (() => {
-      try {
-        return fs.existsSync(pdfPath);
-      } catch {
-        return false;
-      }
-    })();
-
-    if (!fileExists) {
-      notFound();
-    }
+  // Check if PDF exists in our metadata (no more local file checking)
+  if (!pdfMetadata) {
+    notFound();
   }
 
   return (

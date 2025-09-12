@@ -5,8 +5,8 @@ import { useState, useEffect, Suspense } from "react";
 import { PDFErrorBoundary } from "@/utils/error-handling";
 import { PDFViewerSkeleton } from "@/components/ui/LoadingStates";
 
-// Dynamic import of the PDFViewer component with enhanced error handling
-const PDFViewer = dynamic(() => import("./PDFViewer"), {
+// Only import Google Drive PDF Viewer - no more local PDF viewer
+const GoogleDrivePDFViewer = dynamic(() => import("./GoogleDrivePDFViewer"), {
   ssr: false,
   loading: () => <PDFViewerSkeleton />,
 });
@@ -158,10 +158,11 @@ export default function PDFViewerSection({
         <PDFErrorBoundary>
           <Suspense fallback={<PDFLoadingPlaceholder messages={messages} />}>
             {isClient && (
-              <PDFViewer
-                locale={locale}
-                pdfFile={pdfUrl}
+              <GoogleDrivePDFViewer
+                pdfUrl={pdfUrl}
+                title={title}
                 messages={messages}
+                locale={locale}
                 onError={handleError}
               />
             )}
