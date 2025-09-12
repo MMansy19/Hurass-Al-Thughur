@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import SEO from "@/components/ui/SEO";
 import { StructuredData } from "@/components/ui/StructuredData";
+import { getPDFUrl } from "@/config/pdf-metadata";
 
 const PDFViewerSectionWithSelector = dynamic(
   () => import("@/components/magazine/PDFViewerSectionWithSelector"),
@@ -83,7 +84,7 @@ export default async function EnhancedMagazinePage({
       title: magazine.issues.issue1.title,
       description: magazine.issues.issue1.description,
       coverImage: "/images/magazine/1.png",
-      pdfUrl: "/pdfs/1.pdf",
+      pdfUrl: getPDFUrl("1.pdf"),
       date: magazine.issues.issue1.date,
       author: messages.hardcoded.editorialTeam,
       category: magazine.categoryNames.aqeedah,
@@ -94,7 +95,7 @@ export default async function EnhancedMagazinePage({
       title: magazine.issues.issue2.title,
       description: magazine.issues.issue2.description,
       coverImage: "/images/magazine/2.png",
-      pdfUrl: "/pdfs/2.pdf",
+      pdfUrl: getPDFUrl("2.pdf"),
       date: magazine.issues.issue2.date,
       author: messages.hardcoded.editorialTeam,
       category: magazine.categoryNames.fiqh,
@@ -105,7 +106,7 @@ export default async function EnhancedMagazinePage({
       title: magazine.issues.issue3.title,
       description: magazine.issues.issue3.description,
       coverImage: "/images/magazine/3.png",
-      pdfUrl: "/pdfs/3.pdf",
+      pdfUrl: getPDFUrl("3.pdf"),
       date: magazine.issues.issue3.date,
       author: messages.hardcoded.editorialTeam,
       category: magazine.categoryNames.prophetBiography,
@@ -116,7 +117,7 @@ export default async function EnhancedMagazinePage({
       title: magazine.issues.issue4.title,
       description: magazine.issues.issue4.description,
       coverImage: "/images/magazine/4.png",
-      pdfUrl: "/pdfs/4.pdf",
+      pdfUrl: getPDFUrl("4.pdf"),
       date: magazine.issues.issue4.date,
       author: messages.hardcoded.editorialTeam,
       category: magazine.categoryNames.aqeedah,
@@ -127,7 +128,7 @@ export default async function EnhancedMagazinePage({
       title: magazine.issues.issue5.title,
       description: magazine.issues.issue5.description,
       coverImage: "/images/magazine/5.png",
-      pdfUrl: "/pdfs/5.pdf",
+      pdfUrl: getPDFUrl("5.pdf"),
       date: magazine.issues.issue5.date,
       author: messages.hardcoded.editorialTeam,
       category: magazine.categoryNames.aqeedah,
@@ -138,7 +139,7 @@ export default async function EnhancedMagazinePage({
       title: magazine.issues.issue6.title,
       description: magazine.issues.issue6.description,
       coverImage: "/images/magazine/6.png",
-      pdfUrl: "/pdfs/6.pdf",
+      pdfUrl: getPDFUrl("6.pdf"),
       date: magazine.issues.issue6.date,
       author: messages.hardcoded.editorialTeam,
       category: magazine.categoryNames.aqeedah,
