@@ -153,7 +153,7 @@ export const pdfMetadata: PDFMetadata[] = [
     },
     description: {
       en: "A Study on the Secularization of Nations and Its Impact on the Islamic World",
-      ar: "دراسة في علمنة الشعوب وتأثيرها على العالم الإسلامي",
+      ar: "دراسة في علمنة الشعوب وتأثيرها على الإسلام",
     },
     category: "Cultural Studies",
     author: "عبدالنور الجزائري",

@@ -5,15 +5,16 @@ import { getPDFTitle, getPDFDescription } from "@/config/pdf-metadata";
 
 interface PDFCardProps {
   name: string;
-  path: string;
+  path: string; // Still needed for backwards compatibility with API response
   locale: string;
   viewText: string;
 }
 
-export function PDFCard({ name, path, locale, viewText }: PDFCardProps) {
+export function PDFCard({ name, path: _path, locale, viewText }: PDFCardProps) {
   const displayName = getPDFTitle(name, locale);
   const description = getPDFDescription(name, locale);
-  const encodedPath = encodeURIComponent(path.replace("/pdfs/", ""));
+  // Always use the filename for routing, not the full path/URL
+  const encodedFilename = encodeURIComponent(name);
 
   // Extract PDF number from filename (e.g., "1.pdf" or "1.PDF" -> "1")
   const pdfNumber = name.replace(/\.pdf$/i, "");
@@ -85,7 +86,7 @@ export function PDFCard({ name, path, locale, viewText }: PDFCardProps) {
         )}
         <div className="mt-auto">
           <Link
-            href={`/${locale}/library/pdf/${encodedPath}`}
+            href={`/${locale}/library/pdf/${encodedFilename}`}
             className="block w-full px-4 py-2 text-center bg-emerald-600 text-white rounded-md hover:bg-emerald-700 transition-colors font-medium"
           >
             {viewText}
