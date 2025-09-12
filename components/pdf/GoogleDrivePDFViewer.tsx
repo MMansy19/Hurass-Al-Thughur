@@ -191,7 +191,7 @@ export default function GoogleDrivePDFViewer({
       </div>
 
       {/* PDF Content Area */}
-          <div className={`relative bg-white ${isFullscreen ? 'h-[calc(100vh-64px)]' : 'h-[calc(100vh-100px)]'}`}>
+          <div className={`relative bg-white ${isFullscreen ? 'h-[calc(100vh-50px)]' : 'h-[calc(100vh-100px)]'}`}>
         {isLoading && (
           <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
             <div className="text-center">

@@ -59,7 +59,7 @@ export default function PDFViewerSectionWithSelector({
   }
 
   return (
-    <div className="space-y-6">
+    <div>
       {/* Issue Selector */}
       <div className="px-6 py-4 bg-gray-50 border-b">
         <IssueSelector
