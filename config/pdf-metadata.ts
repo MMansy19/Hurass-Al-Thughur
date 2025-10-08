@@ -163,6 +163,24 @@ export const pdfMetadata: PDFMetadata[] = [
     googleDriveId: "1Ho2af8h67f1VZYdcI_5b9_80mGzN9tad",
     useGoogleDrive: true,
   },
+  {
+    filename: "9.pdf",
+    title: {
+      en: "Advocacy Campaigns",
+      ar: "حملات المناصرة",
+    },
+    description: {
+      en: "Perhaps you have asked yourself before, how can I bring about reform in our nation? And perhaps you have also built illusory dreams and high hopes for reform, only to collide with reality. The reason is that you did not build your plan on facts but on illusions. In this booklet is an answer to your question: How to change? With realistic facts, evidence, and examples. We do not claim that the booklet is comprehensive and sufficient for all points, or that it came with solutions that have no alternative, nor that it is complete - perfection belongs to Allah's book alone. But I claim that it will open horizons and understandings for you about the ways of change and reform, and Allah is the guardian of success.",
+      ar: "لعلك سألت نفسك من قبل كيف يمكنني إحداث إصلاح في أمتنا ؟ و لعلك أيضا بنيت أحلامًا وهمية و آمالًا عالية في الإصلاح فأصطدمت مع الواقع ، و السبب أنك لم تبن خطتك على حقائق بل على أوهام و في هذا الكتيب جواب لك عن سؤال كيف التغيير؟ بحقائق واقعية و أدلة و أمثلة لا ندعي أن الكتيب شامل و موفي لكل النقاط أو أنه جاء بالحلول التي لا بديل لها و لا أنه كامل فالكمال لكتاب الله وحده و لكن أدعي أنه سيفتح لك آفاقا و أفهامًا لطرق التغيير و الإصلاح و الله ولي التوفيق ..",
+    },
+    category: "Reform and Change",
+    author: "عمر",
+    publishDate: "2025",
+    tags: ["advocacy", "reform", "change", "islamic-reform", "community-building"],
+    // Google Drive file ID for 9.pdf - Replace with actual file ID when uploaded
+    googleDriveId: "1C-2M7bq2aitxE6LdY54I34LpPOi4BXiY",
+    useGoogleDrive: true,
+  },
 ];
 
 // Helper function to get PDF metadata by filename

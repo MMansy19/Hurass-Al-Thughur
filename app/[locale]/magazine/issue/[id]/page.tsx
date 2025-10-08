@@ -177,6 +177,21 @@ function getMagazineIssue(
         isArabic ? "الشعوب" : "Nations",
       ],
     },
+    "9": {
+      id: "9",
+      title: magazine.issues.issue9.title,
+      description: magazine.issues.issue9.description,
+      date: magazine.issues.issue9.date,
+      category: magazine.categoryNames.communityDevelopment,
+      pdfUrl: getPDFUrl("9.pdf"),
+      fileSize: "2.1 MB",
+      pageCount: 19,
+      author: isArabic ? "عمر" : "Omar",
+      tags: [
+        isArabic ? "المناصرة" : "Advocacy",
+        isArabic ? "الإصلاح" : "Reform",
+      ],
+    },
   };
 
   return issues[id] || null;
