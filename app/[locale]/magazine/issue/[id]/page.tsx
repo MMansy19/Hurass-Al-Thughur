@@ -192,6 +192,21 @@ function getMagazineIssue(
         isArabic ? "الإصلاح" : "Reform",
       ],
     },
+    "10": {
+      id: "10",
+      title: magazine.issues.issue10.title,
+      description: magazine.issues.issue10.description,
+      date: magazine.issues.issue10.date,
+      category: magazine.categoryNames.prophecies,
+      pdfUrl: getPDFUrl("10.pdf"),
+      fileSize: "7.9 MB",
+      pageCount: 22,
+      author: isArabic ? "إنسان" : "Human",
+      tags: [
+        isArabic ? "النبوءات" : "Prophecies",
+        isArabic ? "الأنبياء" : "Prophets",
+      ],
+    },
   };
 
   return issues[id] || null;

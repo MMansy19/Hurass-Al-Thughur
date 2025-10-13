@@ -181,6 +181,24 @@ export const pdfMetadata: PDFMetadata[] = [
     googleDriveId: "1C-2M7bq2aitxE6LdY54I34LpPOi4BXiY",
     useGoogleDrive: true,
   },
+  {
+    filename: "10.pdf",
+    title: {
+      en: "And giving glad tidings of a Messenger to come after me, whose name shall be Ahmad",
+      ar: "ومبشرا برسول يأتي من بعدي اسمه احمد",
+    },
+    description: {
+      en: "In this research, we present the Prophet's ﷺ name 'Ahmad' in the text of Isaiah (42:1) in a precise and concise manner, unlike other explanations available on the internet. We hope that Allah the Blessed and Exalted will accept this work from us and make it sincere for His noble countenance. All praise is due to Allah, Lord of the worlds.",
+      ar: "في هذا البحث، نقوم بعرض اسم الرسول ﷺ «أحمد» في نصِّ إشعياء (42:1) بطريقةٍ محكمةٍ ومختصرة، خلافًا لباقي الشروحات المتاحة على الإنترنت، راجين من الله تبارك وتعالى أن يتقبّل منّا هذا العمل، وأن يجعله خالصًا لوجهه الكريم. والحمدُ لله ربِّ العالمين.",
+    },
+    category: "Biblical Studies",
+    author: "إنسان",
+    publishDate: "2025",
+    tags: ["ahmad", "prophet", "isaiah", "biblical-studies", "prophethood"],
+    // Google Drive file ID for 10.pdf
+    googleDriveId: "1W_TxYtyBiL07DPFG1u2wN3c3RRrJHZbH",
+    useGoogleDrive: true,
+  },
 ];
 
 // Helper function to get PDF metadata by filename
