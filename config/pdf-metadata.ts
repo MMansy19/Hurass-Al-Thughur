@@ -192,7 +192,7 @@ export const pdfMetadata: PDFMetadata[] = [
       ar: "في هذا البحث، نقوم بعرض اسم الرسول ﷺ «أحمد» في نصِّ إشعياء (42:1) بطريقةٍ محكمةٍ ومختصرة، خلافًا لباقي الشروحات المتاحة على الإنترنت، راجين من الله تبارك وتعالى أن يتقبّل منّا هذا العمل، وأن يجعله خالصًا لوجهه الكريم. والحمدُ لله ربِّ العالمين.",
     },
     category: "Biblical Studies",
-    author: "إنسان",
+    author: "عيسى بن محمد",
     publishDate: "2025",
     tags: ["ahmad", "prophet", "isaiah", "biblical-studies", "prophethood"],
     // Google Drive file ID for 10.pdf

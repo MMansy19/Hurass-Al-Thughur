@@ -201,7 +201,7 @@ function getMagazineIssue(
       pdfUrl: getPDFUrl("10.pdf"),
       fileSize: "7.9 MB",
       pageCount: 22,
-      author: isArabic ? "إنسان" : "Human",
+      author: isArabic ? "عيسى بن محمد" : "Isa bin Muhammad",
       tags: [
         isArabic ? "النبوءات" : "Prophecies",
         isArabic ? "الأنبياء" : "Prophets",
