@@ -10,6 +10,7 @@ import { AuthProvider } from "@/components/auth/AuthProvider";
 import { AuthErrorBoundary } from "@/components/auth/AuthErrorBoundary";
 import { inter, arabicFont, criticalCSS } from "@/styles/fonts";
 import { Toaster } from "react-hot-toast";
+import NextTopLoader from "nextjs-toploader";
 
 // Import the Cairo font for Arabic (fallback)
 const cairoFont = Cairo({
@@ -83,6 +84,18 @@ export default async function LocaleLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <body className="antialiased min-h-screen flex flex-col bg-gray-50">
+      <NextTopLoader
+          color="#2299DD"
+          initialPosition={0.08}
+          crawlSpeed={200}
+          height={10}
+          crawl={true}
+          showSpinner={false}
+          easing="ease"
+          speed={200}
+          shadow="0 0 10px #2299DD,0 0 5px #2299DD"
+          zIndex={1600}
+          showAtBottom={false} />
         <PerformanceMonitor />
         <ErrorBoundary>
           <AuthErrorBoundary>
