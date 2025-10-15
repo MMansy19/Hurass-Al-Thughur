@@ -21,6 +21,7 @@ export async function generateMetadata({
     ...SEO({
       title: `${articleInfo.title} - ${messages.dawah.title}`,
       description: articleInfo.excerpt,
+      image: "/images/logo.jpg",
       locale,
       pageName: `dawah-article-${articleId}`,
     }),

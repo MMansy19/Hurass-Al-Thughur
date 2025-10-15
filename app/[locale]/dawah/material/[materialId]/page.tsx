@@ -332,6 +332,7 @@ export async function generateMetadata({
     ...SEO({
       title: `${material.title} - Dawah Materials`,
       description: material.description,
+      image: "/images/logo.jpg",
       locale,
       pageName: `dawah-material-${materialId}`,
     }),
