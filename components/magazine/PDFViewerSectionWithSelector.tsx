@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import IssueSelector from "./IssueSelector";
+import { MagazineIssue } from "@/types/magazine";
 
 // Dynamic import for PDFViewerSection
 const PDFViewerSection = dynamic(
@@ -14,18 +15,6 @@ const PDFViewerSection = dynamic(
     ),
   },
 );
-
-interface MagazineIssue {
-  id: string;
-  title: string;
-  description: string;
-  coverImage: string;
-  pdfUrl: string;
-  date: string;
-  category: string;
-  author?: string;
-  tags?: string[];
-}
 
 interface PDFViewerSectionWithSelectorProps {
   issues: MagazineIssue[];
