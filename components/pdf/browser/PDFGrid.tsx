@@ -85,7 +85,7 @@ export function PDFCard({ pdf, locale, viewText }: PDFCardProps) {
           </h3>
         </div>
         {description && (
-          <p className="text-gray-600 text-sm mb-3 line-clamp-3" dir="auto">
+          <p className="text-gray-600 text-sm mb-3 line-clamp-2 h-10" dir="auto">
             {description}
           </p>
         )}

@@ -18,8 +18,8 @@ interface PDFBrowserProps {
     noPDFsFound: string;
     search: string;
     searchPlaceholder: string;
-    category?: string;
-    allCategories?: string;
+    category: string;
+    allCategories: string;
   };
 }
 
@@ -95,8 +95,8 @@ export default function PDFBrowser({ translations }: PDFBrowserProps) {
           categories={categories}
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}
-          categoryLabel={translations.category || "Category"}
-          allCategoriesLabel={translations.allCategories || "All Categories"}
+          categoryLabel={translations.category}
+          allCategoriesLabel={translations.allCategories}
         />
 
         {/* PDF Grid Component */}

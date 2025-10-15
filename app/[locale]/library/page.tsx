@@ -58,8 +58,8 @@ export default async function LibraryPage({ params }: LibraryPageProps) {
                     noPDFsFound: messages.library.noPDFsFound,
                     search: messages.library.search,
                     searchPlaceholder: messages.library.searchPlaceholder,
-                    category: messages.library.categories,
-                    allCategories: messages.common.allCategories || "All Categories",
+                    category: messages.library.categoryLabel,
+                    allCategories: messages.library.allCategoriesLabel,
                   }}
                 />
             </section>

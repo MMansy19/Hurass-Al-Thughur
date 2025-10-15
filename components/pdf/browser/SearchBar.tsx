@@ -10,8 +10,8 @@ interface SearchBarProps {
   categories?: string[];
   selectedCategory: string;
   setSelectedCategory: (category: string) => void;
-  categoryLabel?: string;
-  allCategoriesLabel?: string;
+  categoryLabel: string;
+  allCategoriesLabel: string;
 }
 
 export function SearchBar({
@@ -22,8 +22,8 @@ export function SearchBar({
   categories = [],
   selectedCategory,
   setSelectedCategory,
-  categoryLabel = "Category",
-  allCategoriesLabel = "All Categories",
+  categoryLabel,
+  allCategoriesLabel 
 }: SearchBarProps) {
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
@@ -34,9 +34,9 @@ export function SearchBar({
   };
 
   return (
-    <div className="mb-6 space-y-4">
+    <div className="mb-6 flex flex-col sm:flex-row gap-4">
       {/* Search Input */}
-      <div className="relative">
+      <div className="relative w-full">
         <input
           type="text"
           placeholder={placeholder}
@@ -64,7 +64,7 @@ export function SearchBar({
 
       {/* Category Selector */}
       {categories.length > 0 && (
-        <div className="relative">
+        <div className="relative min-w-[200px] sm:w-64">
           <select
             value={selectedCategory}
             onChange={handleCategoryChange}
