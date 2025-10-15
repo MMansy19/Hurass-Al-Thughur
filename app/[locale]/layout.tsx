@@ -85,7 +85,7 @@ export default async function LocaleLayout({
       </head>
       <body className="antialiased min-h-screen flex flex-col bg-gray-50">
       <NextTopLoader
-          color="#2299DD"
+          color="#059669"
           initialPosition={0.08}
           crawlSpeed={200}
           height={10}
