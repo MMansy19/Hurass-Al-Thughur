@@ -185,23 +185,6 @@ export async function searchPDFs(
   return data || [];
 }
 
-// Get unique categories
-export async function getPDFCategories(): Promise<string[]> {
-  const { data, error } = await supabase
-    .from('pdfs')
-    .select('category')
-    .eq('is_published', true)
-    .not('category', 'is', null);
-
-  if (error) {
-    console.error('Error fetching PDF categories:', error);
-    return [];
-  }
-
-  const categories = [...new Set(data.map(item => item.category).filter(Boolean))];
-  return categories.sort();
-}
-
 // Backward compatibility functions for existing code
 export async function getPDFMetadata(filename: string): Promise<PDFRecord | null> {
   return getPDFByFilename(filename);
@@ -232,4 +215,27 @@ export async function getPDFDescription(
     return getPDFDescriptionFromRecord(pdf, locale);
   }
   return undefined;
+}
+
+// Get all unique categories from PDFs
+export async function getPDFCategories(): Promise<string[]> {
+  const { data, error } = await supabase
+    .from('pdfs')
+    .select('category')
+    .eq('is_published', true)
+    .not('category', 'is', null);
+
+  if (error) {
+    console.error('Error fetching PDF categories:', error);
+    return [];
+  }
+
+  // Extract unique categories
+  const categories = Array.from(new Set(
+    data
+      .map(item => item.category)
+      .filter(category => category && category.trim() !== '')
+  )).sort();
+
+  return categories;
 }
