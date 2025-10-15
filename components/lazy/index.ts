@@ -22,16 +22,9 @@ function createDynamicComponent<T = Record<string, unknown>>(
 
 // PDF Components (Heavy components that should be code-split)
 export const LazyPDFViewer = createDynamicComponent(
-  () => import("@/components/pdf/PDFViewer"),
+  () => import("@/components/pdf/PDFViewerSection"),
   {
     displayName: "LazyPDFViewer",
-  },
-);
-
-export const LazyPDFBrowser = createDynamicComponent(
-  () => import("@/components/pdf/PDFBrowser"),
-  {
-    displayName: "LazyPDFBrowser",
   },
 );
 
@@ -40,21 +33,5 @@ export const LazyPerformanceMonitor = createDynamicComponent(
   () => import("@/components/ui/EnhancedPerformanceMonitor"),
   {
     displayName: "LazyPerformanceMonitor",
-  },
-);
-
-// Chart components (if you add analytics)
-export const LazyChart = createDynamicComponent(
-  () => Promise.resolve({ default: () => null }),
-  {
-    displayName: "LazyChart",
-  },
-);
-
-// Advanced PDF tools
-export const LazyPDFAnnotationTool = createDynamicComponent(
-  () => Promise.resolve({ default: () => null }),
-  {
-    displayName: "LazyPDFAnnotationTool",
   },
 );

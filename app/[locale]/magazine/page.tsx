@@ -4,7 +4,8 @@ import { Suspense } from "react";
 import dynamic from "next/dynamic";
 import SEO from "@/components/ui/SEO";
 import { StructuredData } from "@/components/ui/StructuredData";
-import { getPDFUrl } from "@/config/pdf-metadata";
+import { getMagazineIssues, convertToMagazineIssue, getCoverImageFromPDF } from "@/utils/pdf-helpers";
+import { MagazineIssue } from "@/types/magazine";
 
 const PDFViewerSectionWithSelector = dynamic(
   () => import("@/components/magazine/PDFViewerSectionWithSelector"),
@@ -57,18 +58,6 @@ export async function generateMetadata({
   };
 }
 
-interface MagazineIssue {
-  id: string;
-  title: string;
-  description: string;
-  coverImage: string;
-  pdfUrl: string;
-  date: string;
-  category: string;
-  author?: string;
-  tags?: string[];
-}
-
 export default async function EnhancedMagazinePage({
   params,
 }: {
@@ -78,74 +67,24 @@ export default async function EnhancedMagazinePage({
   const messages = (await import(`@/locales/${locale}.json`)).default;
   const { magazine } = messages;
 
-  const magazineIssues: MagazineIssue[] = [
-    {
-      id: "1",
-      title: magazine.issues.issue1.title,
-      description: magazine.issues.issue1.description,
-      coverImage: "/images/magazine/1.png",
-      pdfUrl: getPDFUrl("1.pdf"),
-      date: magazine.issues.issue1.date,
-      author: messages.hardcoded.editorialTeam,
-      category: magazine.categoryNames.aqeedah,
-      tags: [messages.hardcoded.faith, messages.hardcoded.monotheism],
-    },
-    {
-      id: "2",
-      title: magazine.issues.issue2.title,
-      description: magazine.issues.issue2.description,
-      coverImage: "/images/magazine/2.png",
-      pdfUrl: getPDFUrl("2.pdf"),
-      date: magazine.issues.issue2.date,
-      author: messages.hardcoded.editorialTeam,
-      category: magazine.categoryNames.fiqh,
-      tags: [messages.hardcoded.jurisprudence, messages.hardcoded.rulings],
-    },
-    {
-      id: "3",
-      title: magazine.issues.issue3.title,
-      description: magazine.issues.issue3.description,
-      coverImage: "/images/magazine/3.png",
-      pdfUrl: getPDFUrl("3.pdf"),
-      date: magazine.issues.issue3.date,
-      author: messages.hardcoded.editorialTeam,
-      category: magazine.categoryNames.prophetBiography,
-      tags: [messages.hardcoded.prophetsBiography, messages.hardcoded.ethics],
-    },
-    {
-      id: "4",
-      title: magazine.issues.issue4.title,
-      description: magazine.issues.issue4.description,
-      coverImage: "/images/magazine/4.png",
-      pdfUrl: getPDFUrl("4.pdf"),
-      date: magazine.issues.issue4.date,
-      author: messages.hardcoded.editorialTeam,
-      category: magazine.categoryNames.aqeedah,
-      tags: [messages.hardcoded.faith, messages.hardcoded.prophethood],
-    },
-    {
-      id: "5",
-      title: magazine.issues.issue5.title,
-      description: magazine.issues.issue5.description,
-      coverImage: "/images/magazine/5.png",
-      pdfUrl: getPDFUrl("5.pdf"),
-      date: magazine.issues.issue5.date,
-      author: messages.hardcoded.editorialTeam,
-      category: magazine.categoryNames.aqeedah,
-      tags: [messages.hardcoded.fitrah, messages.hardcoded.guidance],
-    },
-    {
-      id: "6",
-      title: magazine.issues.issue6.title,
-      description: magazine.issues.issue6.description,
-      coverImage: "/images/magazine/6.png",
-      pdfUrl: getPDFUrl("6.pdf"),
-      date: magazine.issues.issue6.date,
-      author: messages.hardcoded.editorialTeam,
-      category: magazine.categoryNames.aqeedah,
-      tags: [messages.hardcoded.fitrah, messages.hardcoded.guidance],
-    },
-  ];
+  // Fetch magazine issues from Supabase
+  const pdfRecords = await getMagazineIssues();
+  const magazineIssues: MagazineIssue[] = pdfRecords.map(pdf => {
+    const converted = convertToMagazineIssue(pdf, locale);
+    return {
+      id: converted.id,
+      title: converted.title,
+      description: converted.description,
+      coverImage: getCoverImageFromPDF(pdf) || "/images/magazine/default.png",
+      pdfUrl: converted.pdfUrl,
+      date: converted.date,
+      category: converted.category,
+      author: converted.author || undefined,
+      tags: converted.tags || undefined,
+      fileSize: converted.fileSize || undefined,
+      pageCount: converted.pageCount || undefined,
+    };
+  });
 
   const structuredData = {
     "@context": "https://schema.org",

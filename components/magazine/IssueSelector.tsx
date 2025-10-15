@@ -1,18 +1,7 @@
 "use client";
 
 import { useState } from "react";
-
-interface MagazineIssue {
-  id: string;
-  title: string;
-  description: string;
-  coverImage: string;
-  pdfUrl: string;
-  date: string;
-  category: string;
-  author?: string;
-  tags?: string[];
-}
+import { MagazineIssue } from "@/types/magazine";
 
 interface IssueSelectorProps {
   issues: MagazineIssue[];

@@ -1,5 +1,6 @@
 import { Metadata } from "next/types";
 import SEO from "@/components/ui/SEO";
+import { SkipLinks } from "@/components/ui/AccessibilityComponents";
 import PDFBrowser from "@/components/pdf/PDFBrowser";
 
 export async function generateMetadata({
@@ -9,6 +10,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const messages = (await import(`@/locales/${locale}.json`)).default;
+
   return SEO({
     title: messages.library.title,
     description: messages.library.description,
@@ -17,41 +19,51 @@ export async function generateMetadata({
   });
 }
 
-export default async function LibraryPage({
-  params,
-}: {
+interface LibraryPageProps {
   params: Promise<{ locale: string }>;
-}) {
+  searchParams?: Promise<{ category?: string; search?: string }>;
+}
+
+export default async function LibraryPage({ params }: LibraryPageProps) {
   const { locale } = await params;
+  
   const messages = (await import(`@/locales/${locale}.json`)).default;
-  const { library } = messages;
 
   return (
-    <div className="space-y-12">
-      <section className="bg-gradient-to-r from-emerald-700 to-emerald-900 text-white py-10 rounded-lg shadow-lg">
-        <div className="container mx-auto sm:px-4 px-2 text-center">
-          <h1 className="text-3xl md:text-4xl font-bold">{library.title}</h1>
-          <p className="text-xl mt-2 max-w-2xl mx-auto">
-            {library.description}
-          </p>
-        </div>
-      </section>
+    <>
+      <SkipLinks links={[
+        { href: '#main-content', label: messages.accessibility?.skipToContent || 'Skip to main content' },
+        { href: '#library-grid', label: messages.accessibility?.skipToLibrary || 'Skip to library' }
+      ]} />
+      <main id="main-content" className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+        {/* Header */}
+        <header className="bg-white/80 backdrop-blur-sm border-b border-slate-200/50">
+          <div className="container mx-auto px-4 py-8">
+            <div className="text-center">
+              <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
+                {messages.library.title}
+              </h1>
+              <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+                {messages.library.description}
+              </p>
+            </div>
+          </div>
+        </header>
 
-      {/* PDF Browser Section */}
-      <section className="py-8">
-        <div className="container mx-auto sm:px-4 px-2">
-          <h2 className="text-2xl font-bold mb-6">{library.pdfs}</h2>
-          <PDFBrowser
-            translations={{
-              browseAllPDFs: library.browsePDFs,
-              viewPDF: library.viewPDF,
-              noPDFsFound: library.noPDFsFound,
-              search: library.search,
-              searchPlaceholder: library.searchPlaceholder,
-            }}
-          />
-        </div>
-      </section>
-    </div>
+        <section className="container mx-auto sm:p-4 p-2">
+                <PDFBrowser
+                  translations={{
+                    browseAllPDFs: messages.library.browsePDFs,
+                    viewPDF: messages.library.viewPDF,
+                    noPDFsFound: messages.library.noPDFsFound,
+                    search: messages.library.search,
+                    searchPlaceholder: messages.library.searchPlaceholder,
+                    category: messages.library.categoryLabel,
+                    allCategories: messages.library.allCategoriesLabel,
+                  }}
+                />
+            </section>
+        </main>
+    </>
   );
 }
