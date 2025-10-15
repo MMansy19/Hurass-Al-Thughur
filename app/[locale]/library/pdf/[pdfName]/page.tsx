@@ -21,6 +21,7 @@ export async function generateMetadata({
     return SEO({
       title: messages.library.title,
       description: messages.library.description,
+      image: "/images/logo.jpg",
       locale,
       pageName: "library",
     });
@@ -28,10 +29,12 @@ export async function generateMetadata({
 
   const pdfTitle = getPDFTitleFromRecord(pdfData, locale);
   const pdfDescription = getPDFDescriptionFromRecord(pdfData, locale);
+  const coverImageUrl = getCoverImageFromPDF(pdfData);
 
   return SEO({
     title: `${messages.library.title} - ${pdfTitle}`,
     description: pdfDescription || messages.library.description,
+    image: coverImageUrl || "/images/logo.jpg",
     locale,
     pageName: "library",
   });
