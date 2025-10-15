@@ -13,6 +13,7 @@ export async function generateMetadata({
   return SEO({
     title: messages.home.title,
     description: messages.home.description,
+    image: "/images/logo.jpg",
     locale,
     pageName: "",
   });

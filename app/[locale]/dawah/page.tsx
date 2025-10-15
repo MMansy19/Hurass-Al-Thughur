@@ -13,6 +13,7 @@ export async function generateMetadata({
   return SEO({
     title: messages.dawah.title,
     description: messages.dawah.description,
+    image: "/images/logo.jpg",
     locale,
     pageName: "dawah",
   });
