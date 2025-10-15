@@ -32,6 +32,7 @@ export async function generateMetadata({
     ...SEO({
       title: messages.magazine.title,
       description: messages.magazine.description,
+      image: "/images/logo.jpg",
       locale,
       pageName: "magazine",
     }),
