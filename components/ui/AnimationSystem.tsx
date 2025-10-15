@@ -293,103 +293,7 @@ StaggerContainer.displayName = "StaggerContainer";
 
 
 
-// Loading animation with multiple states
-interface LoadingAnimationProps {
-    type?: "spinner" | "dots" | "pulse" | "wave";
-    size?: "sm" | "md" | "lg";
-    color?: string;
-    className?: string;
-}
 
-export const LoadingAnimation = memo<LoadingAnimationProps>(
-    ({ type = "spinner", size = "md", color = "#059669", className = "" }) => {
-        const sizeMap = {
-            sm: { size: 20, strokeWidth: 2 },
-            md: { size: 32, strokeWidth: 3 },
-            lg: { size: 48, strokeWidth: 4 },
-        };
-
-        const { size: svgSize, strokeWidth } = sizeMap[size];
-
-        if (type === "spinner") {
-            return (
-                <div className={`inline-flex items-center justify-center ${className}`}>
-                    <svg
-                        width={svgSize}
-                        height={svgSize}
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        className="animate-spin"
-                    >
-                        <circle
-                            cx="12"
-                            cy="12"
-                            r="10"
-                            stroke={`${color}20`}
-                            strokeWidth={strokeWidth}
-                        />
-                        <path
-                            d="M12 2a10 10 0 0 1 10 10"
-                            stroke={color}
-                            strokeWidth={strokeWidth}
-                            strokeLinecap="round"
-                        />
-                    </svg>
-                </div>
-            );
-        }
-
-        if (type === "dots") {
-            return (
-                <div className={`flex space-x-1 ${className}`}>
-                    {[0, 1, 2].map((i) => (
-                        <div
-                            key={i}
-                            className="w-2 h-2 rounded-full animate-pulse"
-                            style={{
-                                backgroundColor: color,
-                                animationDelay: `${i * 0.2}s`,
-                                animationDuration: "1.4s",
-                            }}
-                        />
-                    ))}
-                </div>
-            );
-        }
-
-        if (type === "pulse") {
-            return (
-                <div
-                    className={`w-4 h-4 rounded-full animate-ping ${className}`}
-                    style={{ backgroundColor: color }}
-                />
-            );
-        }
-
-        if (type === "wave") {
-            return (
-                <div className={`flex space-x-1 ${className}`}>
-                    {[0, 1, 2, 3, 4].map((i) => (
-                        <div
-                            key={i}
-                            className="w-1 bg-current rounded-full animate-pulse"
-                            style={{
-                                height: "16px",
-                                backgroundColor: color,
-                                animationDelay: `${i * 0.1}s`,
-                                animationDuration: "0.9s",
-                            }}
-                        />
-                    ))}
-                </div>
-            );
-        }
-
-        return null;
-    },
-);
-
-LoadingAnimation.displayName = "LoadingAnimation";
 
 
 
@@ -445,7 +349,6 @@ export const useReducedMotion = () => {
 export default {
     Motion,
     StaggerContainer,
-    LoadingAnimation,
     animationPresets,
     durations,
     easings,
