@@ -14,6 +14,7 @@ export async function generateMetadata({
   return SEO({
     title: messages.library.title,
     description: messages.library.description,
+    image: "/images/logo.jpg",
     locale,
     pageName: "library",
   });

@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import { Metadata } from "next/types";
 import { redirect } from "next/navigation";
 import SEO from "@/components/ui/SEO";
 
@@ -12,6 +12,7 @@ export async function generateMetadata({
   return SEO({
     title: messages.library.title,
     description: messages.library.description,
+    image: "/images/logo.jpg",
     locale,
     pageName: "library",
   });
