@@ -1,32 +1,37 @@
 "use client";
 
 import Link from "next/link";
-import { getPDFTitle, getPDFDescription } from "@/config/pdf-metadata";
+import { PDFRecord } from "@/types/pdf";
+import { getPDFTitleFromRecord, getPDFDescriptionFromRecord, getCoverImageFromPDF } from "@/utils/pdf-helpers";
+import Image from "next/image";
 
 interface PDFCardProps {
-  name: string;
-  path: string; // Still needed for backwards compatibility with API response
+  pdf: PDFRecord;
   locale: string;
   viewText: string;
 }
 
-export function PDFCard({ name, path: _path, locale, viewText }: PDFCardProps) {
-  const displayName = getPDFTitle(name, locale);
-  const description = getPDFDescription(name, locale);
+export function PDFCard({ pdf, locale, viewText }: PDFCardProps) {
+  const displayName = getPDFTitleFromRecord(pdf, locale);
+  const description = getPDFDescriptionFromRecord(pdf, locale);
+  const coverImageUrl = getCoverImageFromPDF(pdf);
+  
   // Always use the filename for routing, not the full path/URL
-  const encodedFilename = encodeURIComponent(name);
+  const encodedFilename = encodeURIComponent(pdf.filename);
 
-  // Extract PDF number from filename (e.g., "1.pdf" or "1.PDF" -> "1")
-  const pdfNumber = name.replace(/\.pdf$/i, "");
-  const coverImagePath = `/images/magazine/${pdfNumber}.png`;
+  // Fallback cover image path for old system
+  const pdfNumber = pdf.filename.replace(/\.pdf$/i, "");
+  const fallbackCoverImagePath = `/images/magazine/${pdfNumber}.png`;
 
   return (
     <div className="border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white">
       {/* Cover Image Section */}
       <div className="relative aspect-[3/4] bg-gradient-to-br from-emerald-100 to-emerald-200 overflow-hidden">
-        <img
-          src={coverImagePath}
+        <Image
+          src={coverImageUrl || fallbackCoverImagePath}
           alt={displayName}
+          width={400}
+          height={533}
           className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
           onError={(e) => {
             // Fallback to placeholder if image fails to load
@@ -62,7 +67,7 @@ export function PDFCard({ name, path: _path, locale, viewText }: PDFCardProps) {
       </div>
 
       {/* Content Section */}
-      <div className="p-4 flex flex-col h-auto">
+      <div className="p-4 flex flex-col min-h-[200px]">
         <div className="flex items-center mb-3">
           <svg
             className="w-6 h-6 text-red-500 mr-2 flex-shrink-0"
@@ -80,10 +85,45 @@ export function PDFCard({ name, path: _path, locale, viewText }: PDFCardProps) {
           </h3>
         </div>
         {description && (
-          <p className="text-gray-600 text-sm mb-4 line-clamp-3" dir="auto">
+          <p className="text-gray-600 text-sm mb-3 line-clamp-3" dir="auto">
             {description}
           </p>
         )}
+        
+        {/* Metadata */}
+        <div className="space-y-1 text-xs text-gray-500 mb-3">
+          {pdf.author && (
+            <div className="flex items-center space-x-1 rtl:space-x-reverse">
+              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+              </svg>
+              <span>{pdf.author}</span>
+            </div>
+          )}
+        </div>
+
+        {/* Tags */}
+        {pdf.tags && pdf.tags.length > 0 && (
+          <div className="mb-3">
+            <div className="flex flex-wrap gap-1">
+              {pdf.tags.slice(0, 3).map((tag, tagIndex) => (
+                <span
+                  key={tagIndex}
+                  className="px-2 py-1 bg-emerald-100 text-emerald-700 text-xs rounded"
+                >
+                  {tag}
+                </span>
+              ))}
+              {pdf.tags.length > 3 && (
+                <span className="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">
+                  +{pdf.tags.length - 3}
+                </span>
+              )}
+            </div>
+          </div>
+        )}
+        
+        {/* Button pushed to bottom */}
         <div className="mt-auto">
           <Link
             href={`/${locale}/library/pdf/${encodedFilename}`}
@@ -98,7 +138,7 @@ export function PDFCard({ name, path: _path, locale, viewText }: PDFCardProps) {
 }
 
 interface PDFGridProps {
-  pdfs: Array<{ name: string; path: string }>;
+  pdfs: PDFRecord[];
   locale: string;
   viewText: string;
   emptyMessage: string;
@@ -116,11 +156,10 @@ export function PDFGrid({
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      {pdfs.map((pdf, index) => (
+      {pdfs.map((pdf) => (
         <PDFCard
-          key={index}
-          name={pdf.name}
-          path={pdf.path}
+          key={pdf.id}
+          pdf={pdf}
           locale={locale}
           viewText={viewText}
         />

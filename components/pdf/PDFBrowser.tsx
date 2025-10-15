@@ -18,6 +18,8 @@ interface PDFBrowserProps {
     noPDFsFound: string;
     search: string;
     searchPlaceholder: string;
+    category?: string;
+    allCategories?: string;
   };
 }
 
@@ -29,9 +31,12 @@ export default function PDFBrowser({ translations }: PDFBrowserProps) {
   // Use custom hook for PDF browser functionality
   const {
     filteredPDFs,
+    categories,
     isLoading,
     searchTerm,
     setSearchTerm,
+    selectedCategory,
+    setSelectedCategory,
     error,
     retryFetch,
   } = usePDFBrowser();
@@ -87,6 +92,11 @@ export default function PDFBrowser({ translations }: PDFBrowserProps) {
           setSearchTerm={setSearchTerm}
           placeholder={translations.searchPlaceholder}
           searchLabel={translations.search}
+          categories={categories}
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+          categoryLabel={translations.category || "Category"}
+          allCategoriesLabel={translations.allCategories || "All Categories"}
         />
 
         {/* PDF Grid Component */}

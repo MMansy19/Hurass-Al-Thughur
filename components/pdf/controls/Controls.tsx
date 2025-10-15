@@ -7,7 +7,7 @@ interface PDFControlsWrapperProps {
 }
 
 /**
- * Wrapper component for PDF controls
+ * Wrapper component for PDF controls (NOT USED)
  */
 export function PDFControlsWrapper({ children }: PDFControlsWrapperProps) {
   return (

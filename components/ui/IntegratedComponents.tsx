@@ -360,6 +360,7 @@ export const IntegratedPDFViewer = memo<IntegratedPDFViewerProps>(
               <LazyPDFViewer
                 pdfUrl={pdfUrl}
                 title={title}
+                locale={locale}
                 messages={messages}
               />
             </Suspense>
