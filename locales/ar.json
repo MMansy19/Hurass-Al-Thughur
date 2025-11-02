@@ -300,8 +300,49 @@
     "clearFilters": "مسح الفلتر",
     "showingResults": "عرض {count} من {total} مقال",
     "noMatchingArticles": "لا توجد مقالات مطابقة",
-    "noMatchingArticlesDescription": "جرب تعديل معايير البحث أو مسح الفلتر."
+    "noMatchingArticlesDescription": "جرب تعديل معايير البحث أو مسح الفلتر.",
+    "titlePlaceholder": "اكتب عنوان المقال...",
+    "authorPlaceholder": "اسم المؤلف...",
+    "excerptPlaceholder": "اكتب ملخص قصير للمقال...",
+    "excerptHelper": "ملخص قصير يظهر في قائمة المقالات",
+    "contentHelper": "محتوى المقال الرئيسي",
+    "creatingArticle": "إنشاء مقال جديد",
+    "editingArticle": "تعديل المقال",
+    "addArticleDescription": "شارك أفكارك ومعرفتك مع المجتمع من خلال كتابة مقال جديد",
+    "editArticleDescription": "قم بتحديث وتطوير محتوى مقالك",
+    "startWriting": "ابدأ رحلتك في الكتابة وانشر مقالك الأول"
   },
+  "dashboard": {
+    "welcome": "مرحباً",
+    "manageArticles": "إدارة مقالاتك"
+  },
+  "search": {
+    "placeholder": "ابحث في مقالاتك...",
+    "noResults": "لا توجد مقالات تطابق البحث"
+  },
+  "filter": {
+    "all": "جميع المقالات",
+    "approved": "المنشورة",
+    "pending": "في الانتظار"
+  },
+  "stats": {
+    "total": "إجمالي المقالات",
+    "approved": "المنشورة",
+    "pending": "في الانتظار"
+  },
+  "status": {
+    "approved": "منشور",
+    "pending": "في الانتظار"
+  },
+  "confirm": {
+    "deleteArticle": "هل أنت متأكد من حذف هذا المقال؟ لا يمكن التراجع عن هذا الإجراء."
+  },
+  "success": {
+    "addSuccess": "تم إضافة المقال بنجاح!",
+    "editSuccess": "تم تحديث المقال بنجاح!",
+    "deleteArticle": "تم حذف المقال بنجاح!"
+  },
+
   "footer": {
     "rightsReserved": "© 2025 حُراس الثغور. جميع الحقوق محفوظة.",
     "terms": "الشروط والأحكام",
@@ -333,7 +374,13 @@
   "errors": {
     "pdfNotFound": "لم يتم العثور على ملف PDF",
     "loadingError": "خطأ في تحميل المحتوى",
-    "networkError": "خطأ في الاتصال بالشبكة"
+    "networkError": "خطأ في الاتصال بالشبكة",
+    "fillAllFields": "يرجى ملء جميع الحقول.",
+    "addFailed": "فشل في إضافة المقال!",
+    "editFailed": "فشل في تحديث المقال!",
+    "deleteArticle": "فشل في حذف المقال. يرجى المحاولة مرة أخرى.",
+    "generalError": "حدث خطأ غير متوقع!",
+    "articleNotFound": "المقال غير موجود"
   },
   "pdfViewer": {
     "loadingViewer": "تحميل عارض PDF",

@@ -110,7 +110,7 @@ export default async function LocaleLayout({
                     signup: messages.auth.signup,
                   }}
                 />
-                <main className="container mx-auto sm:px-2 py-8 flex-grow">
+                <main className="container mx-auto sm:px-2 flex-grow">
                   <div className="h-16 md:h-20"></div>
                   <div className="animate-fadeIn">{children}</div>
                 </main>

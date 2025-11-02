@@ -6,6 +6,8 @@ export interface ArticleInterface {
   title: string;
   excerpt: string;
   content: string;
+  approved?: boolean;
+  user_id?: string;
 }
 
 export interface MultiLanguageText {

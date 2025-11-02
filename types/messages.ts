@@ -53,6 +53,11 @@ export interface ErrorMessages {
   articleNotFound: string;
   somethingWentWrong: string;
   tryAgain: string;
+  fillAllFields: string;
+  addFailed: string;
+  editFailed: string;
+  deleteArticle: string;
+  generalError: string;
 }
 
 export interface Messages {
