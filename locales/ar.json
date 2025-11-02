@@ -313,6 +313,7 @@
     "startWriting": "ابدأ رحلتك في الكتابة وانشر مقالك الأول"
   },
   "dashboard": {
+    "title": "لوحة التحكم",
     "welcome": "مرحباً",
     "manageArticles": "إدارة مقالاتك"
   },

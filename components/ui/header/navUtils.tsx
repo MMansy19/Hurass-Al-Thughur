@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { HomeIcon, MagazineIcon, LibraryIcon, ArticlesIcon } from "./Icons";
+import { HomeIcon, MagazineIcon, LibraryIcon, ArticlesIcon, DashboardIcon } from "./Icons";
 
 interface NavLink {
   href: string;
@@ -18,7 +18,9 @@ interface NavLinkParams {
     library: string;
     articles: string;
     contact: string;
+    dashboard?: string;
   };
+  isAuthenticated?: boolean;
 }
 
 /**
@@ -28,8 +30,9 @@ export const buildNavLinks = ({
   locale,
   pathname,
   messages,
+  isAuthenticated = false,
 }: NavLinkParams): NavLink[] => {
-  return [
+  const baseLinks = [
     {
       href: `/${locale}`,
       icon: <HomeIcon />,
@@ -52,7 +55,19 @@ export const buildNavLinks = ({
       href: `/${locale}/articles`,
       icon: <ArticlesIcon />,
       text: messages.articles,
-      isActive: pathname.includes("/articles"),
+      isActive: pathname.includes("/articles") && !pathname.includes("/dashboard"),
     },
   ];
+
+  // Add dashboard link only for authenticated users
+  if (isAuthenticated && messages.dashboard) {
+    baseLinks.splice(1, 0, {
+      href: `/${locale}/dashboard`,
+      icon: <DashboardIcon />,
+      text: messages.dashboard,
+      isActive: pathname.includes("/dashboard"),
+    });
+  }
+
+  return baseLinks;
 };

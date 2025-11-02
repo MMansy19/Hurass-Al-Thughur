@@ -6,6 +6,7 @@ import styles from "./Header.module.css";
 
 // Import custom hooks
 import useScrollHeader from "./hooks/useScrollHeader";
+import { useAuth } from "@/components/auth/AuthProvider";
 
 // Import components
 import Logo from "./header/Logo";
@@ -29,12 +30,14 @@ interface HeaderProps {
     siteName: string;
     signin: string;
     signup: string;
+    dashboard?: string;
   };
 }
 
 const Header = ({ locale, messages }: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { scrolled, headerHeight } = useScrollHeader();
+  const { user } = useAuth();
   const isArabic = locale === "ar";
   const oppositeLocale = isArabic ? "en" : "ar";
   const pathname = usePathname();
@@ -43,8 +46,14 @@ const Header = ({ locale, messages }: HeaderProps) => {
   useEffect(() => {
     setIsMenuOpen(false);
   }, [pathname]);
-  // Generate navigation links
-  const navLinks = buildNavLinks({ locale, pathname, messages });
+  
+  // Generate navigation links with authentication state
+  const navLinks = buildNavLinks({ 
+    locale, 
+    pathname, 
+    messages, 
+    isAuthenticated: !!user 
+  });
   return (
     <header
       className={`fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300 ${scrolled ? `bg-white/95 shadow-md py-2 ${styles.headerScrolled}` : "bg-white/90 py-3"}`}
@@ -66,6 +75,7 @@ const Header = ({ locale, messages }: HeaderProps) => {
               switchLanguage: messages.switchLanguage,
               signin: messages.signin,
               signup: messages.signup,
+              ...(messages.dashboard && { dashboard: messages.dashboard }),
             }}
           />{" "}
           {/* Mobile Navigation */}
@@ -82,6 +92,7 @@ const Header = ({ locale, messages }: HeaderProps) => {
               switchLanguage: messages.switchLanguage,
               signin: messages.signin,
               signup: messages.signup,
+              ...(messages.dashboard && { dashboard: messages.dashboard }),
             }}
           />
         </div>

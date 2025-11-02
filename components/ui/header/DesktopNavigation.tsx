@@ -20,6 +20,7 @@ interface DesktopNavigationProps {
     switchLanguage: string;
     signin: string;
     signup: string;
+    dashboard?: string;
   };
 }
 
@@ -52,7 +53,11 @@ const DesktopNavigation = ({
       </ul>{" "}
       <div className="flex">
         <AuthButtons
-          messages={{ signin: messages.signin, signup: messages.signup }}
+          messages={{ 
+            signin: messages.signin, 
+            signup: messages.signup,
+            ...(messages.dashboard && { dashboard: messages.dashboard })
+          }}
         />
         {/* Language Switch - Desktop */}
         <LanguageSwitch

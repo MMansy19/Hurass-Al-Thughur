@@ -297,6 +297,38 @@
     "noMatchingArticles": "No matching articles found",
     "noMatchingArticlesDescription": "Try adjusting your search criteria or clearing the filters."
   },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome",
+    "manageArticles": "Manage Your Articles"
+  },
+  "search": {
+    "placeholder": "Search your articles...",
+    "noResults": "No articles match your search"
+  },
+  "filter": {
+    "all": "All Articles",
+    "approved": "Published",
+    "pending": "Pending"
+  },
+  "stats": {
+    "total": "Total Articles",
+    "approved": "Published",
+    "pending": "Pending"
+  },
+  "status": {
+    "approved": "Published",
+    "pending": "Pending"
+  },
+  "confirm": {
+    "deleteArticle": "Are you sure you want to delete this article? This action cannot be undone."
+  },
+  "success": {
+    "addSuccess": "Article added successfully!",
+    "editSuccess": "Article updated successfully!",
+    "deleteArticle": "Article deleted successfully!"
+  },
+
   "footer": {
     "rightsReserved": "© 2025 Hurass Al-Thughur. All rights reserved.",
     "terms": "Terms and Conditions",
@@ -327,7 +359,13 @@
   "errors": {
     "pdfNotFound": "PDF file not found",
     "loadingError": "Error loading content",
-    "networkError": "Network connection error"
+    "networkError": "Network connection error",
+    "fillAllFields": "Please fill in all fields.",
+    "addFailed": "Failed to add article!",
+    "editFailed": "Failed to update article!",
+    "deleteArticle": "Failed to delete article. Please try again.",
+    "generalError": "An unexpected error occurred!",
+    "articleNotFound": "Article not found"
   },
   "pdfViewer": {
     "loadingViewer": "Loading PDF Viewer",

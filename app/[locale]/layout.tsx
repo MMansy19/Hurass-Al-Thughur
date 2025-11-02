@@ -108,6 +108,7 @@ export default async function LocaleLayout({
                     ...messages.common,
                     signin: messages.auth.signin,
                     signup: messages.auth.signup,
+                    dashboard: messages.dashboard?.title || (locale === 'ar' ? 'لوحة التحكم' : 'Dashboard'),
                   }}
                 />
                 <main className="container mx-auto sm:px-2 flex-grow">
