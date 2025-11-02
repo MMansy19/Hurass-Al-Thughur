@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { ArticleInterface } from '@/types/articles';
 import { EnhancedArticleCard } from '@/components/ui/ArticleComponents';
 import { ArticleFilters } from '@/components/ui/ArticleFilters';
+import { useAuth } from '@/components/auth/AuthProvider';
+
 interface ArticlesClientProps {
   articles: ArticleInterface[];
   locale: string;
@@ -13,6 +15,7 @@ interface ArticlesClientProps {
 
 export function ArticlesClient({ articles, locale, messages }: ArticlesClientProps) {
   const [filteredArticles, setFilteredArticles] = useState<ArticleInterface[]>(articles);
+  const { user } = useAuth();
 
   const handleFilteredArticlesChange = (filtered: ArticleInterface[]) => {
     setFilteredArticles(filtered);
@@ -34,7 +37,7 @@ export function ArticlesClient({ articles, locale, messages }: ArticlesClientPro
             </div>
             
             {/* Publish Article Button - Only show for authenticated users */}
-        
+            {user && (
               <div className="flex-shrink-0">
                 <Link
                   href={`/${locale}/articles/add`}
@@ -53,6 +56,7 @@ export function ArticlesClient({ articles, locale, messages }: ArticlesClientPro
                   </span>
                 </Link>
               </div>
+            )}
           </div>
         </div>
       </section>
@@ -85,6 +89,7 @@ export function ArticlesClient({ articles, locale, messages }: ArticlesClientPro
                 </p>
                 
                 {/* Call-to-action for adding articles */}
+                {user && (
                   <div className="mt-6">
                     <Link
                       href={`/${locale}/articles/add`}
@@ -105,6 +110,7 @@ export function ArticlesClient({ articles, locale, messages }: ArticlesClientPro
                       {locale === 'ar' ? 'انشر مقالا' : 'Publish Article'}
                     </Link>
                   </div>
+                )}
               </div>
             </div>
           ) : (
@@ -122,6 +128,26 @@ export function ArticlesClient({ articles, locale, messages }: ArticlesClientPro
           )}
         </div>
       </section>
+
+      {/* Floating Action Button for Mobile - Only for authenticated users */}
+      {user && (
+        <div className="fixed bottom-6 right-6 z-50 lg:hidden">
+          <Link
+            href={`/${locale}/articles/add`}
+            className="flex items-center justify-center w-14 h-14 bg-gradient-to-r from-emerald-600 to-blue-600 text-white rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 group"
+            title={locale === 'ar' ? 'انشر مقالا' : 'Publish Article'}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="w-6 h-6 group-hover:scale-110 transition-transform"
+            >
+              <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32L19.513 8.2Z" />
+            </svg>
+          </Link>
+        </div>
+      )}
     </>
   );
 }

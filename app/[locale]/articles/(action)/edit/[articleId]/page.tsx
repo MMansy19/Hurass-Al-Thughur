@@ -90,9 +90,9 @@ function EditArticle({
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-blue-50">
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto md:px-4 py-8">
         {/* Header Section */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 px-4">
           <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-blue-500 to-emerald-600 rounded-2xl mb-6">
             <svg
               xmlns="http://www.w3.org/2000/svg"

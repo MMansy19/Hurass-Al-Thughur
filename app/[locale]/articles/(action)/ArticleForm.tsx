@@ -135,7 +135,7 @@ function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
     <div className="max-w-4xl mx-auto">
       <form
         onSubmit={handleSubmit}
-        className="bg-white rounded-2xl shadow-lg p-8 space-y-6"
+        className="bg-white rounded-2xl shadow-lg sm:p-8 py-8 px-4 space-y-6"
       >
         {/* Language Selection */}
         <div className="space-y-2">
