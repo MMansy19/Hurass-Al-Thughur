@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useEffect, useState, useCallback, useMemo } from "react";
+import { useEffect, useState, useCallback, useMemo, useRef } from "react";
 import { loadMessages, loadArticles } from "./utils";
 import { ArticleInterface } from "@/types/articles";
 import DeleteArticleButton from "./DeleteArticleButton";
@@ -15,6 +15,10 @@ function Dashboard() {
   const [articlesLoading, setArticlesLoading] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedFilter, setSelectedFilter] = useState<string>("all");
+  
+  // Use ref to track if articles have been loaded to prevent duplicate requests
+  const articlesLoadedRef = useRef<boolean>(false);
+  const loadingRef = useRef<boolean>(false);
 
   const params = useParams();
   const { locale } = params;
@@ -27,27 +31,63 @@ function Dashboard() {
     }
   }, [locale]);
 
-  // Load articles only when user is available and changes
+  // Load articles only when user is available - using ref to prevent infinite loops
   const loadUserArticles = useCallback(async () => {
-    if (user?.id && !articlesLoading) {
-      console.log('Loading articles for user:', user.id);
+    if (user?.id && !loadingRef.current && !articlesLoadedRef.current) {
+      loadingRef.current = true;
       setArticlesLoading(true);
-      await loadArticles(user.id, setArticles, setArticlesLoading);
-    }
-  }, [user?.id, articlesLoading]);
-
-  // Refresh articles function
-  const refreshArticles = useCallback(async () => {
-    if (user?.id) {
-      console.log('Refreshing articles for user:', user.id);
-      await loadArticles(user.id, setArticles, setArticlesLoading);
+      
+      try {
+        await loadArticles(user.id, setArticles, setArticlesLoading);
+        articlesLoadedRef.current = true;
+      } catch (error) {
+        console.error('Error loading articles:', error);
+      } finally {
+        loadingRef.current = false;
+      }
     }
   }, [user?.id]);
 
+  // Refresh articles function - this one can be called manually
+  const refreshArticles = useCallback(async () => {
+    if (user?.id && !loadingRef.current) {
+      loadingRef.current = true;
+      articlesLoadedRef.current = false; // Reset the loaded flag for refresh
+      
+      try {
+        await loadArticles(user.id, setArticles, setArticlesLoading);
+        articlesLoadedRef.current = true;
+      } catch (error) {
+        console.error('Error refreshing articles:', error);
+      } finally {
+        loadingRef.current = false;
+      }
+    }
+  }, [user?.id]);
+
+  // Load articles when user becomes available
   useEffect(() => {
-    console.log('Dashboard useEffect triggered:', { userId: user?.id, authLoading, articlesLoading });
-    loadUserArticles();
-  }, [loadUserArticles]);
+    if (user?.id && !authLoading) {
+      loadUserArticles();
+    }
+  }, [user?.id, authLoading, loadUserArticles]);
+
+  // Reset loaded state when user changes
+  useEffect(() => {
+    if (!user?.id) {
+      articlesLoadedRef.current = false;
+      loadingRef.current = false;
+      setArticles([]);
+      setArticlesLoading(false);
+    }
+  }, [user?.id]);
+
+  // Handle article deletion optimistically
+  const handleArticleDeleted = useCallback((deletedArticleId: number) => {
+    setArticles(prevArticles => 
+      prevArticles.filter(article => article.id !== deletedArticleId)
+    );
+  }, []);
 
   // Filter articles based on search query and selected filter (memoized for performance)
   const filteredArticles = useMemo(() => {
@@ -459,6 +499,7 @@ function Dashboard() {
                     <DeleteArticleButton
                       articleId={article.id}
                       messages={messages}
+                      onDelete={() => handleArticleDeleted(article.id)}
                     />
                   </div>
                 </div>

@@ -6,9 +6,11 @@ import { useState } from "react";
 function DeleteArticleButton({
   articleId,
   messages,
+  onDelete,
 }: {
   articleId: number;
   messages?: Messages;
+  onDelete?: () => void;
 }) {
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -32,7 +34,13 @@ function DeleteArticleButton({
         toast.error(messages?.errors?.deleteArticle || "فشل في حذف المقال. يرجى المحاولة مرة أخرى.");
       } else {
         toast.success(messages?.success?.deleteArticle || "تم حذف المقال بنجاح!");
-        window.location.reload();
+        // Use callback instead of page reload for better performance
+        if (onDelete) {
+          onDelete();
+        } else {
+          // Fallback to reload if no callback provided
+          window.location.reload();
+        }
       }
     } catch (error) {
       toast.error(messages?.errors?.deleteArticle || "فشل في حذف المقال. يرجى المحاولة مرة أخرى.");

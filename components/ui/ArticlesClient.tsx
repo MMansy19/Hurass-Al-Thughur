@@ -5,8 +5,6 @@ import Link from 'next/link';
 import { ArticleInterface } from '@/types/articles';
 import { EnhancedArticleCard } from '@/components/ui/ArticleComponents';
 import { ArticleFilters } from '@/components/ui/ArticleFilters';
-import { useAuth } from '@/components/auth/AuthProvider';
-
 interface ArticlesClientProps {
   articles: ArticleInterface[];
   locale: string;
@@ -15,7 +13,6 @@ interface ArticlesClientProps {
 
 export function ArticlesClient({ articles, locale, messages }: ArticlesClientProps) {
   const [filteredArticles, setFilteredArticles] = useState<ArticleInterface[]>(articles);
-  const { user } = useAuth();
 
   const handleFilteredArticlesChange = (filtered: ArticleInterface[]) => {
     setFilteredArticles(filtered);
