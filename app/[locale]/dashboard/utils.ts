@@ -1,16 +1,17 @@
 import { supabase } from "@/supabase/initializing";
 import { ArticleInterface } from "@/types/articles";
+import { Messages } from "@/types/messages";
 
 export async function loadMessages(
   locale: string,
-  setMessages: (messages: any) => void,
+  setMessages: (messages: Messages | null) => void,
 ) {
   try {
     const messagesModule = await import(`@/locales/${locale}.json`);
     setMessages(messagesModule.default);
   } catch (error) {
     console.error('Failed to load messages:', error);
-    setMessages({});
+    setMessages(null);
   }
 }
 

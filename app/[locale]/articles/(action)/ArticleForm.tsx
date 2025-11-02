@@ -18,6 +18,7 @@ function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
   const params = useParams();
   const { locale, articleId }: { locale?: string; articleId?: string } = params;
 
+  // Get user data first
   const user = window.localStorage.getItem("user");
 
   let user_id = "";
@@ -33,6 +34,7 @@ function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
     }
   }
 
+  // All hooks must be at the top level - no conditional calls
   const [formData, setFormData] = useState(
     initialData || {
       lang: locale || "ar",
@@ -45,6 +47,9 @@ function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
     },
   );
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Conditional return AFTER all hooks
   if (locale !== "ar" && locale !== "en") {
     return <h1>Error Page.</h1>;
   }
@@ -70,8 +75,6 @@ function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
       content: value,
     }));
   }
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -125,6 +128,7 @@ function ArticleForm({ method, initialData, messages }: AddArticleFormProps) {
         }
       }
     } catch (error) {
+      console.error('Article submission error:', error);
       toast.error(messages.errors?.generalError || "حدث خطأ غير متوقع!");
     } finally {
       setIsSubmitting(false);

@@ -43,6 +43,7 @@ function DeleteArticleButton({
         }
       }
     } catch (error) {
+      console.error('Delete article error:', error);
       toast.error(messages?.errors?.deleteArticle || "فشل في حذف المقال. يرجى المحاولة مرة أخرى.");
     } finally {
       setIsDeleting(false);

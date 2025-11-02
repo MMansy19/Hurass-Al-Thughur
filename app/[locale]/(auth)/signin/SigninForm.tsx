@@ -47,6 +47,7 @@ function SigninForm({ messages }: { messages: Messages }) {
         router.push(`/${locale}/dashboard`);
       }
     } catch (error) {
+      console.error('Sign in error:', error);
       toast.error(`${messages.auth.signinError}: An unexpected error occurred`);
     }
   }
