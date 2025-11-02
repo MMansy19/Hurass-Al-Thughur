@@ -22,7 +22,7 @@ function AddArticle({ params }: { params: Promise<{ locale: string }> }) {
   if (!resolvedParams || !messages) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        Loading...
+        {messages?.common?.loading || 'Loading...'}
       </div>
     );
   }

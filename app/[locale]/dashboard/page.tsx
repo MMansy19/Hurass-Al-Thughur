@@ -72,9 +72,6 @@ function Dashboard() {
           <div className="flex justify-center items-center min-h-[400px]">
             <div className="text-center">
               <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-emerald-600 mx-auto mb-4"></div>
-              <p className="text-xl font-semibold text-gray-700">
-                {messages?.common?.loading || 'Loading...'}
-              </p>
             </div>
           </div>
         </div>

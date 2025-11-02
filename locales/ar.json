@@ -381,7 +381,11 @@
     "editFailed": "فشل في تحديث المقال!",
     "deleteArticle": "فشل في حذف المقال. يرجى المحاولة مرة أخرى.",
     "generalError": "حدث خطأ غير متوقع!",
-    "articleNotFound": "المقال غير موجود"
+    "articleNotFound": "المقال غير موجود",
+    "authenticationError": "خطأ في المصادقة",
+    "sessionProblem": "حدثت مشكلة في جلستك. يرجى تسجيل الدخول مرة أخرى.",
+    "reloadPage": "إعادة تحميل الصفحة",
+    "goToSignIn": "الذهاب إلى تسجيل الدخول"
   },
   "pdfViewer": {
     "loadingViewer": "تحميل عارض PDF",

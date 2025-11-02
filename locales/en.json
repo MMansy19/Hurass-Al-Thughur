@@ -365,7 +365,11 @@
     "editFailed": "Failed to update article!",
     "deleteArticle": "Failed to delete article. Please try again.",
     "generalError": "An unexpected error occurred!",
-    "articleNotFound": "Article not found"
+    "articleNotFound": "Article not found",
+    "authenticationError": "Authentication Error",
+    "sessionProblem": "There was a problem with your session. Please sign in again.",
+    "reloadPage": "Reload Page",
+    "goToSignIn": "Go to Sign In"
   },
   "pdfViewer": {
     "loadingViewer": "Loading PDF Viewer",
