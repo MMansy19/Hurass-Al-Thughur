@@ -1,52 +1,43 @@
 import { supabase } from "@/supabase/initializing";
+import { ArticleInterface } from "@/types/articles";
 
 export async function loadMessages(
   locale: string,
   setMessages: (messages: any) => void,
 ) {
-  const messagesModule = await import(`@/locales/${locale}.json`);
-  setMessages(messagesModule.default);
-}
-
-export async function loadSignedInUser(setUser: (user: any) => void) {
   try {
-    const {
-      data: { user },
-      error,
-    } = await supabase.auth.getUser();
-
-    if (error) {
-      if (
-        error.message.includes("refresh") ||
-        error.message.includes("token")
-      ) {
-        await supabase.auth.signOut({ scope: "local" });
-      }
-      setUser(null);
-      return;
-    }
-
-    setUser(user);
+    const messagesModule = await import(`@/locales/${locale}.json`);
+    setMessages(messagesModule.default);
   } catch (error) {
-    setUser(null);
+    console.error('Failed to load messages:', error);
+    setMessages({});
   }
 }
 
 export async function loadArticles(
   user_id: string,
-  setArticles: (articles: any[]) => void,
+  setArticles: (articles: ArticleInterface[]) => void,
   setLoading: (loading: boolean) => void,
 ) {
-  const { data: articles, error } = await supabase
-    .from("articles")
-    .select("*")
-    .eq("user_id", user_id)
-    .order("created_at", { ascending: false });
-  if (error) {
+  try {
+    setLoading(true);
+    
+    const { data: articles, error } = await supabase
+      .from("articles")
+      .select("*")
+      .eq("user_id", user_id)
+      .order("created_at", { ascending: false });
+    
+    if (error) {
+      console.error('Failed to load articles:', error);
+      setArticles([]);
+    } else {
+      setArticles(articles || []);
+    }
+  } catch (error) {
+    console.error('Unexpected error loading articles:', error);
     setArticles([]);
-  } else {
-    setArticles(articles || []);
+  } finally {
+    setLoading(false);
   }
-
-  setLoading(false);
 }

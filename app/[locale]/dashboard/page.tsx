@@ -2,51 +2,70 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { loadSignedInUser, loadMessages, loadArticles } from "./utils";
+import { useEffect, useState, useCallback, useMemo } from "react";
+import { loadMessages, loadArticles } from "./utils";
 import { ArticleInterface } from "@/types/articles";
 import DeleteArticleButton from "./DeleteArticleButton";
 import { Messages } from "@/types/messages";
-import { User } from "@supabase/supabase-js";
+import { useAuth } from "@/components/auth/AuthProvider";
 
 function Dashboard() {
   const [messages, setMessages] = useState<Messages>({} as Messages);
-  const [user, setUser] = useState<User | null>(null);
   const [articles, setArticles] = useState<ArticleInterface[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [articlesLoading, setArticlesLoading] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedFilter, setSelectedFilter] = useState<string>("all");
 
   const params = useParams();
   const { locale } = params;
+  const { user, loading: authLoading } = useAuth();
 
+  // Load messages only when locale changes
   useEffect(() => {
     if (typeof locale === "string") {
       loadMessages(locale, setMessages);
     }
+  }, [locale]);
 
-    loadSignedInUser(setUser);
-    if (user?.id) {
-      loadArticles(user.id, setArticles, setLoading);
-    } else {
-      setLoading(false);
+  // Load articles only when user is available and changes
+  const loadUserArticles = useCallback(async () => {
+    if (user?.id && !articlesLoading) {
+      console.log('Loading articles for user:', user.id);
+      setArticlesLoading(true);
+      await loadArticles(user.id, setArticles, setArticlesLoading);
     }
-  }, [locale, user]);
+  }, [user?.id, articlesLoading]);
 
-  // Filter articles based on search query and selected filter
-  const filteredArticles = articles.filter((article) => {
-    const matchesSearch = 
-      article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      article.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
-    
-    if (selectedFilter === "all") return matchesSearch;
-    if (selectedFilter === "approved") return matchesSearch && article.approved;
-    if (selectedFilter === "pending") return matchesSearch && !article.approved;
-    
-    return matchesSearch;
-  });
+  // Refresh articles function
+  const refreshArticles = useCallback(async () => {
+    if (user?.id) {
+      console.log('Refreshing articles for user:', user.id);
+      await loadArticles(user.id, setArticles, setArticlesLoading);
+    }
+  }, [user?.id]);
 
-  if (loading) {
+  useEffect(() => {
+    console.log('Dashboard useEffect triggered:', { userId: user?.id, authLoading, articlesLoading });
+    loadUserArticles();
+  }, [loadUserArticles]);
+
+  // Filter articles based on search query and selected filter (memoized for performance)
+  const filteredArticles = useMemo(() => {
+    return articles.filter((article) => {
+      const matchesSearch = 
+        article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        article.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
+      
+      if (selectedFilter === "all") return matchesSearch;
+      if (selectedFilter === "approved") return matchesSearch && article.approved;
+      if (selectedFilter === "pending") return matchesSearch && !article.approved;
+      
+      return matchesSearch;
+    });
+  }, [articles, searchQuery, selectedFilter]);
+
+  // Show loading while authentication is being checked
+  if (authLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-blue-50">
         <div className="container mx-auto px-4 py-8">
@@ -54,7 +73,7 @@ function Dashboard() {
             <div className="text-center">
               <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-emerald-600 mx-auto mb-4"></div>
               <p className="text-xl font-semibold text-gray-700">
-                {messages?.common?.loading}
+                {messages?.common?.loading || 'Loading...'}
               </p>
             </div>
           </div>
@@ -239,24 +258,49 @@ function Dashboard() {
               </div>
             </div>
             
-            <Link
-              href={`/${locale}/articles/add`}
-              className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-emerald-600 to-blue-600 text-white rounded-xl hover:from-emerald-700 hover:to-blue-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                className="w-5 h-5"
+            <div className="flex items-center gap-3">
+              <button
+                onClick={refreshArticles}
+                disabled={articlesLoading}
+                className="inline-flex items-center gap-2 px-4 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-all duration-300 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+                title={locale === 'ar' ? 'تحديث المقالات' : 'Refresh Articles'}
               >
-                <path
-                  fillRule="evenodd"
-                  d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              {messages.articles.addNewArticle}
-            </Link>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className={`w-5 h-5 ${articlesLoading ? 'animate-spin' : ''}`}
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M4.755 10.059a7.5 7.5 0 0 1 12.548-3.364l1.903 1.903h-3.183a.75.75 0 1 0 0 1.5h4.992a.75.75 0 0 0 .75-.75V4.356a.75.75 0 0 0-1.5 0v3.18l-1.9-1.9A9 9 0 0 0 3.306 9.67a.75.75 0 1 0 1.45.388Zm15.408 3.352a.75.75 0 0 0-.919.53 7.5 7.5 0 0 1-12.548 3.364l-1.902-1.903h3.183a.75.75 0 0 0 0-1.5H2.984a.75.75 0 0 0-.75.75v4.992a.75.75 0 0 0 1.5 0v-3.18l1.9 1.9a9 9 0 0 0 15.059-4.035.75.75 0 0 0-.53-.918Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                <span className="hidden sm:inline">
+                  {locale === 'ar' ? 'تحديث' : 'Refresh'}
+                </span>
+              </button>
+              
+              <Link
+                href={`/${locale}/articles/add`}
+                className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-emerald-600 to-blue-600 text-white rounded-xl hover:from-emerald-700 hover:to-blue-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-5 h-5"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                {messages.articles.addNewArticle}
+              </Link>
+            </div>
           </div>
         </div>
 

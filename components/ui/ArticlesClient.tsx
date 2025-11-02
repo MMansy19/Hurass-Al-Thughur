@@ -1,9 +1,11 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { ArticleInterface } from '@/types/articles';
 import { EnhancedArticleCard } from '@/components/ui/ArticleComponents';
 import { ArticleFilters } from '@/components/ui/ArticleFilters';
+import { useAuth } from '@/components/auth/AuthProvider';
 
 interface ArticlesClientProps {
   articles: ArticleInterface[];
@@ -13,6 +15,7 @@ interface ArticlesClientProps {
 
 export function ArticlesClient({ articles, locale, messages }: ArticlesClientProps) {
   const [filteredArticles, setFilteredArticles] = useState<ArticleInterface[]>(articles);
+  const { user } = useAuth();
 
   const handleFilteredArticlesChange = (filtered: ArticleInterface[]) => {
     setFilteredArticles(filtered);
@@ -23,17 +26,42 @@ export function ArticlesClient({ articles, locale, messages }: ArticlesClientPro
       {/* Filters Section */}
       <section className="py-8 bg-gray-50">
         <div className="container mx-auto sm:px-4 px-2">
-          <ArticleFilters
-            articles={articles}
-            locale={locale}
-            messages={messages}
-            onFilteredArticlesChange={handleFilteredArticlesChange}
-          />
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+            <div className="flex-1">
+              <ArticleFilters
+                articles={articles}
+                locale={locale}
+                messages={messages}
+                onFilteredArticlesChange={handleFilteredArticlesChange}
+              />
+            </div>
+            
+            {/* Publish Article Button - Only show for authenticated users */}
+        
+              <div className="flex-shrink-0">
+                <Link
+                  href={`/${locale}/articles/add`}
+                  className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-emerald-600 to-blue-600 text-white rounded-xl hover:from-emerald-700 hover:to-blue-700 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 group"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    className="w-5 h-5 group-hover:scale-110 transition-transform"
+                  >
+                    <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32L19.513 8.2Z" />
+                  </svg>
+                  <span className="whitespace-nowrap">
+                    {locale === 'ar' ? 'انشر مقالا' : 'Publish Article'}
+                  </span>
+                </Link>
+              </div>
+          </div>
         </div>
       </section>
 
       {/* Enhanced Articles Grid */}
-      <section className="py-16 lg:py-24 bg-gradient-to-b from-gray-50 to-white">
+      <section className="py-8 bg-gradient-to-b from-gray-50 to-white">
         <div className="container mx-auto sm:px-4 px-2">
           {filteredArticles.length === 0 ? (
             <div className="text-center py-12">
@@ -58,6 +86,28 @@ export function ArticlesClient({ articles, locale, messages }: ArticlesClientPro
                   {messages.articles.noMatchingArticlesDescription || 
                     'Try adjusting your search criteria or clearing the filters.'}
                 </p>
+                
+                {/* Call-to-action for adding articles */}
+                  <div className="mt-6">
+                    <Link
+                      href={`/${locale}/articles/add`}
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        className="w-4 h-4"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                      {locale === 'ar' ? 'انشر مقالا' : 'Publish Article'}
+                    </Link>
+                  </div>
               </div>
             </div>
           ) : (

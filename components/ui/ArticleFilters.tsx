@@ -69,7 +69,7 @@ export function ArticleFilters({
   const hasActiveFilters = selectedAuthor || selectedTitle;
 
   return (
-    <div className="bg-white shadow-lg rounded-xl p-6 mb-8 border border-gray-100">
+    <div className="bg-white shadow-lg rounded-xl p-6 border border-gray-100">
       <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-end">
         {/* Title Filter */}
         <div className="flex-1 min-w-0">
