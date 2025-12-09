@@ -7,15 +7,15 @@
     "singleQuote": false
   },
   "scripts": {
-    "dev": "next dev",
-    "dev:turbo": "next dev --turbopack",
-    "build": "npm run copy-worker && next build",
-    "start": "next start",
+    "dev": "node init && next dev",
+    "dev:turbo": "node init && next dev --turbopack",
+    "build": "node init && npm run copy-worker && next build",
+    "start": "node init && next start",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "type-check": "tsc --noEmit",
     "analyze": "ANALYZE=true npm run build",
-    "copy-worker": "node -p \"const fs=require('fs'),path=require('path');try{const src=path.join('node_modules','pdfjs-dist','build','pdf.worker.min.mjs'),dest='public/pdf-worker';fs.mkdirSync(dest,{recursive:true});fs.copyFileSync(src,path.join(dest,'pdf.worker.min.mjs'));'✅ PDF worker copied'}catch{try{const src=path.join('node_modules','pdfjs-dist','build','pdf.worker.js'),dest='public/pdf-worker';fs.copyFileSync(src,path.join(dest,'pdf.worker.js'));'✅ PDF worker (js) copied'}catch{'⚠️ PDF worker copy skipped'}}\"",
+    "copy-worker": "node -p \"const fs=require('fs'),path=require('path');try{const src=path.join('node_modules','pdfjs-dist','build','pdf.worker.min.mjs'),dest='public/pdf-worker';fs.mkdirSync(dest,{recursive:true});fs.copyFileSync(src,path.join(dest,'pdf.worker.min.mjs'));'\u2705 PDF worker copied'}catch{try{const src=path.join('node_modules','pdfjs-dist','build','pdf.worker.js'),dest='public/pdf-worker';fs.copyFileSync(src,path.join(dest,'pdf.worker.js'));'\u2705 PDF worker (js) copied'}catch{'\u26a0\ufe0f PDF worker copy skipped'}}\"",
     "postinstall": "npm run copy-worker"
   },
   "dependencies": {
@@ -24,7 +24,7 @@
     "@next/bundle-analyzer": "^15.3.3",
     "@supabase/supabase-js": "^2.49.9",
     "dayjs": "^1.11.13",
-    "next": "15.3.2",
+    "next": "15.3.6",
     "next-intl": "^4.1.0",
     "next-pwa": "^5.6.0",
     "nextjs-toploader": "^3.9.17",
