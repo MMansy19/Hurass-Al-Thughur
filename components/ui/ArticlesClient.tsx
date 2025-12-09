@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import Link from 'next/link';
 import { ArticleInterface } from '@/types/articles';
 import { EnhancedArticleCard } from '@/components/ui/ArticleComponents';
@@ -17,9 +17,9 @@ export function ArticlesClient({ articles, locale, messages }: ArticlesClientPro
   const [filteredArticles, setFilteredArticles] = useState<ArticleInterface[]>(articles);
   const { user } = useAuth();
 
-  const handleFilteredArticlesChange = (filtered: ArticleInterface[]) => {
+  const handleFilteredArticlesChange = useCallback((filtered: ArticleInterface[]) => {
     setFilteredArticles(filtered);
-  };
+  }, []);
 
   return (
     <>

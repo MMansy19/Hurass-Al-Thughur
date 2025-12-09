@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { ArticleInterface } from '@/types/articles';
 
 interface ArticleFiltersProps {
@@ -49,7 +49,7 @@ export function ArticleFilters({
   }, [articles, selectedAuthor, selectedTitle]);
 
   // Update parent component when filtered articles change
-  useMemo(() => {
+  useEffect(() => {
     onFilteredArticlesChange(filteredArticles);
   }, [filteredArticles, onFilteredArticlesChange]);
 
