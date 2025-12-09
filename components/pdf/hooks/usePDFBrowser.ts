@@ -17,7 +17,7 @@ export function usePDFBrowser() {
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch PDF list and categories from Supabase
+  // Fetch PDF list and categories from local metadata
   const fetchPDFList = async () => {
     try {
       setIsLoading(true);

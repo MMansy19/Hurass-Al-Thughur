@@ -1,6 +1,6 @@
-// Updated PDF types for Supabase integration
+// Updated PDF types for local storage integration
 export interface PDFRecord {
-  id: number;
+  id: string; // Changed from number to string for local system
   created_at: string;
   updated_at: string;
   filename: string;
@@ -12,18 +12,11 @@ export interface PDFRecord {
   author?: string;
   publish_date?: string;
   tags?: string[];
-  file_size_mb?: number;
+  file_size?: number; // File size in bytes
   page_count?: number;
-  google_drive_id?: string; // Google Drive file ID for PDF
-  cover_image_id?: string; // Google Drive file ID for cover image
-  is_issue: boolean;
+  google_drive_id?: string; // Google Drive file ID for PDF (optional)
+  cover_image_id?: string; // Not used in local system
   issue_number?: number;
-  is_published: boolean;
-  is_featured: boolean;
-  meta_description_ar?: string;
-  meta_description_en?: string;
-  slug_ar?: string;
-  slug_en?: string;
 }
 
 // Compatibility interface for existing code
@@ -66,7 +59,7 @@ export interface MagazineIssue {
 
 // Library PDF interface
 export interface LibraryPDF {
-  id: number;
+  id: string; // Changed from number to string for consistency
   filename: string;
   title: string;
   description?: string | undefined;

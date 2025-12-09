@@ -12,7 +12,15 @@ export interface PDFMetadata {
   author?: string;
   publishDate?: string;
   tags?: string[];
-  // Google Drive configuration
+  // Cover image path (relative to /public)
+  coverImage?: string;
+  // Issue number for magazine issues
+  issueNumber?: number;
+  // File size in bytes
+  fileSize?: number;
+  // Page count
+  pageCount?: number;
+  // Google Drive configuration (optional fallback)
   googleDriveId?: string;
   googleDriveUrl?: string;
   useGoogleDrive?: boolean;
@@ -33,7 +41,8 @@ export const pdfMetadata: PDFMetadata[] = [
     author: "Islamic Theology Department",
     publishDate: "2025",
     tags: ["fitrah", "covenant", "worship", "islam"],
-    // Google Drive file ID for 1.pdf
+    coverImage: "https://drive.google.com/thumbnail?id=165qhoNO3jaAv1phnp9JuMbJ8XCjFLs8K&sz=w400",
+    issueNumber: 1,
     googleDriveId: "1UMurarFB8eXjj02YPHmlL_MQXq_8_7pi",
     useGoogleDrive: true,
   },
@@ -51,7 +60,8 @@ export const pdfMetadata: PDFMetadata[] = [
     author: "Dr. Abdullah Al-Lughawi",
     publishDate: "2025",
     tags: ["tawhid", "linguistics", "denial", "aqeedah"],
-    // Google Drive file ID for 2.pdf
+    coverImage: "https://drive.google.com/thumbnail?id=18UvCcwJfE8lShKMYrDhTunQhLc6lWQ5s&sz=w400",
+    issueNumber: 2,
     googleDriveId: "1JODOLrX6CxxW00jqq0L2yOMb5RLU6oUa",
     useGoogleDrive: true,
   },
@@ -69,7 +79,8 @@ export const pdfMetadata: PDFMetadata[] = [
     author: "Historical Studies Council",
     publishDate: "2025",
     tags: ["prophethood", "orientalism", "zallaqa", "history"],
-    // Google Drive file ID for 3.pdf
+    coverImage: "https://drive.google.com/thumbnail?id=11SIlfpzELfa1Yy-ObvbGxnKtNgY5FTU8&sz=w400",
+    issueNumber: 3,
     googleDriveId: "11fOWS30NTx5AnzGRBMjOePsoskNd76yy",
     useGoogleDrive: true,
   },
@@ -87,7 +98,8 @@ export const pdfMetadata: PDFMetadata[] = [
     author: "Islamic Research Council",
     publishDate: "2025",
     tags: ["atheism", "prophethood", "revolution", "spirituality"],
-    // Google Drive file ID for 4.pdf
+    coverImage: "https://drive.google.com/thumbnail?id=1xxJQB-AsDblzQTWUVRwAU5NVxW-EWbND&sz=w400",
+    issueNumber: 4,
     googleDriveId: "1remp7L3mJJhHqlCg-o3lOeprR8yvf3Jx",
     useGoogleDrive: true,
   },
@@ -105,7 +117,8 @@ export const pdfMetadata: PDFMetadata[] = [
     author: "Fitrah Studies Department",
     publishDate: "2025",
     tags: ["fitrah", "guidance", "path", "nature"],
-    // Google Drive file ID for 5.pdf
+    coverImage: "https://drive.google.com/thumbnail?id=1Shq5I80oHvd-JfRQCqoLDSTSiz7byJUo&sz=w400",
+    issueNumber: 5,
     googleDriveId: "1JunB2K2-P9WMzvJ0Ik_v4g8IPvwW4hzR",
     useGoogleDrive: true,
   },
@@ -123,7 +136,8 @@ export const pdfMetadata: PDFMetadata[] = [
     author: "ابن عبدالصبور",
     publishDate: "2025",
     tags: ["south america", "culture", "religion", "da'wah"],
-    // Google Drive file ID for 6.pdf
+    coverImage: "https://drive.google.com/thumbnail?id=10K6J55tR2fLw903D6l5BkwhT4iRbCe32&sz=w400",
+    issueNumber: 6,
     googleDriveId: "1V1Chf-tZOQaQtG9hqVyjpeF7ySouTGG1",
     useGoogleDrive: true,
   },
@@ -141,7 +155,7 @@ export const pdfMetadata: PDFMetadata[] = [
     author: "Islamic Research Council",
     publishDate: "2025",
     tags: ["prophethood", "muhammad", "research", "islam"],
-    // Google Drive file ID for 7.pdf
+    coverImage: "https://drive.google.com/thumbnail?id=1nVPuv7r2UJTfgohlfDb5Q7Ok4j4pE5YV&sz=w400",
     googleDriveId: "1KmJKaAAdaRGkhWTdpf0wX_Crc1i2cYEx",
     useGoogleDrive: true,
   },
@@ -159,7 +173,7 @@ export const pdfMetadata: PDFMetadata[] = [
     author: "عبدالنور الجزائري",
     publishDate: "2025",
     tags: ["secularization", "nations", "culture", "islam"],
-    // Google Drive file ID for 8.pdf
+    coverImage: "https://drive.google.com/thumbnail?id=1BfQQbo0EWj6oAhPD8aDxTQyWD3_mpS4v&sz=w400",
     googleDriveId: "1Ho2af8h67f1VZYdcI_5b9_80mGzN9tad",
     useGoogleDrive: true,
   },
@@ -177,7 +191,7 @@ export const pdfMetadata: PDFMetadata[] = [
     author: "عمر",
     publishDate: "2025",
     tags: ["advocacy", "reform", "change", "islamic-reform", "community-building"],
-    // Google Drive file ID for 9.pdf - Replace with actual file ID when uploaded
+    coverImage: "https://drive.google.com/thumbnail?id=1iZzhdNagJleRNvv5T4hd8Wb_V1Xq6HzZ&sz=w400",
     googleDriveId: "1C-2M7bq2aitxE6LdY54I34LpPOi4BXiY",
     useGoogleDrive: true,
   },
@@ -195,7 +209,7 @@ export const pdfMetadata: PDFMetadata[] = [
     author: "عيسى بن محمد",
     publishDate: "2025",
     tags: ["ahmad", "prophet", "isaiah", "biblical-studies", "prophethood"],
-    // Google Drive file ID for 10.pdf
+    coverImage: "https://drive.google.com/thumbnail?id=1-hGLMiQoAA7OqOppFPseauV8wSnFg531&sz=w400",
     googleDriveId: "1W_TxYtyBiL07DPFG1u2wN3c3RRrJHZbH",
     useGoogleDrive: true,
   },

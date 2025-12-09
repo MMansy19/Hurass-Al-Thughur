@@ -1,5 +1,5 @@
-import { supabase } from "@/supabase/initializing";
 import { PDFRecord, MagazineIssue, LibraryPDF } from "@/types/pdf";
+import { pdfMetadata, PDFMetadata } from "@/config/pdf-metadata";
 
 // Helper function to generate Google Drive preview URL
 export function getGoogleDrivePreviewUrl(fileId: string): string {
@@ -16,11 +16,36 @@ export function getGoogleDriveCoverImageUrl(fileId: string): string {
   return `https://drive.google.com/thumbnail?id=${fileId}&sz=w400-h600`;
 }
 
+// Convert PDFMetadata to PDFRecord format
+function metadataToPDFRecord(metadata: PDFMetadata, index: number): PDFRecord {
+  return {
+    id: String(index + 1),
+    filename: metadata.filename,
+    title_en: metadata.title.en,
+    title_ar: metadata.title.ar,
+    description_en: metadata.description?.en || "",
+    description_ar: metadata.description?.ar || "",
+    category: metadata.category || "Uncategorized",
+    author: metadata.author,
+    publish_date: metadata.publishDate,
+    tags: metadata.tags || [],
+    cover_image_id: undefined, // Not using Google Drive for cover images
+    google_drive_id: metadata.googleDriveId,
+    file_size: metadata.fileSize,
+    page_count: metadata.pageCount,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    issue_number: metadata.issueNumber,
+  };
+}
+
 // Get PDF URL from database record
 export function getPDFUrlFromRecord(pdf: PDFRecord): string {
+  // Use Google Drive if available
   if (pdf.google_drive_id) {
     return getGoogleDrivePreviewUrl(pdf.google_drive_id);
   }
+  // Fallback to local PDFs stored in /public/pdfs/
   return `/pdfs/${pdf.filename}`;
 }
 
@@ -37,82 +62,58 @@ export function getPDFDescriptionFromRecord(pdf: PDFRecord, locale: string): str
   return pdf.description_en || pdf.description_ar;
 }
 
-// Get cover image URL from PDF cover image ID
+// Get cover image URL from PDF metadata (Google Drive or local images)
 export function getCoverImageFromPDF(pdf: PDFRecord): string | undefined {
-  if (pdf.cover_image_id) {
-    return getGoogleDriveCoverImageUrl(pdf.cover_image_id);
-  }
-  return undefined;
+  // Find the metadata for this PDF
+  const metadata = pdfMetadata.find(m => m.filename === pdf.filename);
+  
+  // Return the cover image URL (can be Google Drive thumbnail or local path)
+  return metadata?.coverImage || undefined;
 }
 
-// Fetch all magazine issues from Supabase
+// Fetch all magazine issues from local metadata
 export async function getMagazineIssues(): Promise<PDFRecord[]> {
-  const { data, error } = await supabase
-    .from('magazine_issues')
-    .select('*')
-    .order('issue_number', { ascending: true });
-
-  if (error) {
-    console.error('Error fetching magazine issues:', error);
-    return [];
-  }
-
-  return data || [];
+  // Filter PDFs that have issue numbers (magazine issues)
+  const magazineMetadata = pdfMetadata.filter(m => m.issueNumber !== undefined);
+  
+  return magazineMetadata
+    .map((metadata, index) => metadataToPDFRecord(metadata, index))
+    .sort((a, b) => (a.issue_number || 0) - (b.issue_number || 0));
 }
 
 // Fetch specific magazine issue by issue number
 export async function getMagazineIssueByNumber(issueNumber: number): Promise<PDFRecord | null> {
-  const { data, error } = await supabase
-    .rpc('get_magazine_issue', { issue_num: issueNumber })
-    .single();
-
-  if (error) {
-    console.error('Error fetching magazine issue:', error);
+  const metadata = pdfMetadata.find(m => m.issueNumber === issueNumber);
+  
+  if (!metadata) {
     return null;
   }
-
-  return data as PDFRecord | null;
+  
+  return metadataToPDFRecord(metadata, issueNumber - 1);
 }
 
-// Fetch all library PDFs from Supabase
+// Fetch all library PDFs from local metadata
 export async function getAllPDFs(category?: string): Promise<PDFRecord[]> {
-  let query = supabase
-    .from('pdfs')
-    .select('*')
-    .order('created_at', { ascending: false });
-
+  let filteredMetadata = pdfMetadata;
+  
   if (category) {
-    query = query.eq('category', category);
+    filteredMetadata = pdfMetadata.filter(m => m.category === category);
   }
-
-  const { data, error } = await query;
-
-  if (error) {
-    console.error('Error fetching library PDFs:', error);
-    return [];
-  }
-
-  return data || [];
+  
+  return filteredMetadata.map((metadata, index) => metadataToPDFRecord(metadata, index));
 }
 
 // Get PDF by filename
 export async function getPDFByFilename(filename: string): Promise<PDFRecord | null> {
-  const { data, error } = await supabase
-    .from('pdfs')
-    .select('*')
-    .eq('filename', filename)
-    .eq('is_published', true)
-    .single();
-
-  if (error) {
-    console.error('Error fetching PDF by filename:', error);
+  const metadata = pdfMetadata.find(m => m.filename.toLowerCase() === filename.toLowerCase());
+  
+  if (!metadata) {
     return null;
   }
-
-  return data;
+  
+  const index = pdfMetadata.indexOf(metadata);
+  return metadataToPDFRecord(metadata, index);
 }
-
-// Analytics functions removed - not needed for this implementation
 
 // Convert database record to MagazineIssue interface for compatibility
 export function convertToMagazineIssue(
@@ -128,7 +129,7 @@ export function convertToMagazineIssue(
     category: pdf.category || '',
     pdfUrl: getPDFUrlFromRecord(pdf),
     coverImageUrl: getCoverImageFromPDF(pdf),
-    fileSize: pdf.file_size_mb ? `${pdf.file_size_mb} MB` : undefined,
+    fileSize: pdf.file_size ? `${(pdf.file_size / 1024 / 1024).toFixed(2)} MB` : undefined,
     pageCount: pdf.page_count || undefined,
     author: pdf.author || undefined,
     tags: pdf.tags || undefined
@@ -151,38 +152,39 @@ export function convertToLibraryPDF(pdf: PDFRecord, locale: string): LibraryPDF 
   };
 }
 
-// Search PDFs by query
+// Search PDFs by query (local implementation)
 export async function searchPDFs(
   query: string, 
   isIssue?: boolean, 
   category?: string
 ): Promise<PDFRecord[]> {
-  let supabaseQuery = supabase
-    .from('pdfs')
-    .select('*')
-    .eq('is_published', true);
-
+  let filteredMetadata = pdfMetadata;
+  
+  // Filter by issue status
   if (isIssue !== undefined) {
-    supabaseQuery = supabaseQuery.eq('is_issue', isIssue);
+    if (isIssue) {
+      filteredMetadata = filteredMetadata.filter(m => m.issueNumber !== undefined);
+    } else {
+      filteredMetadata = filteredMetadata.filter(m => m.issueNumber === undefined);
+    }
   }
-
+  
+  // Filter by category
   if (category) {
-    supabaseQuery = supabaseQuery.eq('category', category);
+    filteredMetadata = filteredMetadata.filter(m => m.category === category);
   }
-
-  // Search in title and description fields
-  supabaseQuery = supabaseQuery.or(
-    `title_ar.ilike.%${query}%,title_en.ilike.%${query}%,description_ar.ilike.%${query}%,description_en.ilike.%${query}%,author.ilike.%${query}%`
+  
+  // Search in title, description, and author fields
+  const searchLower = query.toLowerCase();
+  filteredMetadata = filteredMetadata.filter(m => 
+    m.title.ar.toLowerCase().includes(searchLower) ||
+    m.title.en.toLowerCase().includes(searchLower) ||
+    m.description?.ar?.toLowerCase().includes(searchLower) ||
+    m.description?.en?.toLowerCase().includes(searchLower) ||
+    m.author?.toLowerCase().includes(searchLower)
   );
-
-  const { data, error } = await supabaseQuery.order('created_at', { ascending: false });
-
-  if (error) {
-    console.error('Error searching PDFs:', error);
-    return [];
-  }
-
-  return data || [];
+  
+  return filteredMetadata.map((metadata, index) => metadataToPDFRecord(metadata, index));
 }
 
 // Backward compatibility functions for existing code
@@ -217,25 +219,11 @@ export async function getPDFDescription(
   return undefined;
 }
 
-// Get all unique categories from PDFs
+// Get all unique categories from PDFs (local implementation)
 export async function getPDFCategories(): Promise<string[]> {
-  const { data, error } = await supabase
-    .from('pdfs')
-    .select('category')
-    .eq('is_published', true)
-    .not('category', 'is', null);
-
-  if (error) {
-    console.error('Error fetching PDF categories:', error);
-    return [];
-  }
-
-  // Extract unique categories
-  const categories = Array.from(new Set(
-    data
-      .map(item => item.category)
-      .filter(category => category && category.trim() !== '')
-  )).sort();
-
-  return categories;
+  const categories = [...new Set(pdfMetadata
+    .map(m => m.category)
+    .filter(Boolean) as string[])];
+  
+  return categories.sort();
 }
