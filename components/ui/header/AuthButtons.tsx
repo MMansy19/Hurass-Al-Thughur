@@ -11,6 +11,8 @@ interface AuthButtonsProps {
     signin: string;
     signup: string;
     dashboard?: string;
+    signout?: string;
+
   };
   isMobile?: boolean;
 }
@@ -149,7 +151,7 @@ function AuthButtons({ messages, isMobile = false }: AuthButtonsProps) {
                     clipRule="evenodd"
                   />
                 </svg>
-                Sign Out
+                {messages.signout || "Sign Out"}
               </button>
             </div>
           </div>
