@@ -30,6 +30,7 @@ interface HeaderProps {
     siteName: string;
     signin: string;
     signup: string;
+    signout?: string;
     dashboard?: string;
   };
 }
@@ -75,6 +76,7 @@ const Header = ({ locale, messages }: HeaderProps) => {
               switchLanguage: messages.switchLanguage,
               signin: messages.signin,
               signup: messages.signup,
+              
               ...(messages.dashboard && { dashboard: messages.dashboard }),
             }}
           />{" "}
