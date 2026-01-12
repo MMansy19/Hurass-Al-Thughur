@@ -26,6 +26,7 @@ interface MobileMenuProps {
     switchLanguage: string;
     signin: string;
     signup: string;
+    signout?: string;
     dashboard?: string;
   };
 }
@@ -96,6 +97,7 @@ const MobileMenu = ({
           messages={{ 
             signin: messages.signin, 
             signup: messages.signup,
+            signout: messages.signout,
             ...(messages.dashboard && { dashboard: messages.dashboard })
           }}
           isMobile={true}
